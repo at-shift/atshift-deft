@@ -42,6 +42,13 @@ intended site's MCP connection is already available.
    step at a time. Let the user complete necessary sign-in and individual consent
    in the actual client/WordPress UI. Never request credentials in chat or enable
    publication access just to connect. Do not ask for this guide a second time.
+   Use the actual client and visible menu labels from docs/CONNECTIONS.md. Codex
+   desktop, Codex CLI/IDE and ChatGPT web are separate setup routes. If a menu is
+   missing, clarify the screen instead of repeating an assumed Settings > MCP path.
+   For a 403 or cloud-only connection failure, follow Cloud Connection Errors in
+   docs/CONNECTIONS.md. Check hosting/WAF and overseas REST API restrictions, not
+   just credentials. Do not automatically recreate keys or disable protections;
+   an administrator must approve the scope of any server-side exception.
 3. Discover tools and call read-only context through this AI's authenticated MCP
    connection. Require a successful live response with transport.connectedToAI=true
    and transport.mcpEndpoint matching the intended site's exact endpoint. A guide,

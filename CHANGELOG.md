@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.1 - 2026-10-31 (source checkpoint)
+
+- Add a separate Codex desktop connection profile with the observed menu path,
+  Streamable HTTP selection and explicit Authorization header instructions.
+- Clarify the ChatGPT web creation menu and Claude's private No sign-in/header
+  route without treating those clients as interchangeable with CLI configuration.
+- Document cloud-only connection failures and Xserver REST API restrictions;
+  require narrowly scoped, administrator-approved changes instead of disabling protections.
+- Record the user-reported Claude connection and sample draft save separately
+  from unverified preview, publication, file transfer and OAuth workflows.
+- Explain theme-aligned versus separate article layouts in the AI-led onboarding
+  guide, preserving component constraints and the optional private sample.
+- Refresh Japanese connection guidance, translation catalogs and regression tests.
+  Keep saved data, API routes, owner isolation and authentication behavior unchanged.
+- Update source only. The published GitHub Release and installable ZIP remain
+  at 0.5.0; no new release asset, tag, WordPress.org update or site deployment.
+
 ## 0.5.0 - 2026-10-31
 
 - Name the product atshift DEFT: Delegate Execution. Focus on Thinking.

@@ -1,7 +1,7 @@
-# Existing Japanese interface copy, migrated without expanding translation coverage.
+# Japanese interface copy for onboarding and client connection guidance.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.5.0\n"
+"Project-Id-Version: atshift DEFT 0.5.1\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,3 +57,51 @@ msgstr "この範囲で接続を許可"
 
 msgid "Deny"
 msgstr "許可しない"
+
+#: connection-profiles.js
+msgid "ChatGPT (web: Chat / Work)"
+msgstr "ChatGPT（Web版：Chat / Work）"
+
+#: connection-profiles.js
+msgid "Open Settings > Plugins > View agents, then Add > Add custom MCP server. The installed-plugin settings list is not the creation screen. Labels may vary by version."
+msgstr "「設定 → プラグイン → エージェント一覧を見る」から、「追加 → カスタムMCPサーバーを追加」へ進みます。設定内のインストール済み一覧とは別の画面です。表示名はバージョンで変わる場合があります。"
+
+#: connection-profiles.js
+msgid "Install the created plugin, select it in the intended Chat or Work conversation, and ask the AI to confirm live context. A visible add menu does not prove that DEFT OAuth works with this account."
+msgstr "作成したプラグインをインストールし、利用するChatまたはWorkの会話で選んで、AIに実際の接続確認を依頼します。追加メニューがあるだけでは、そのアカウントでDEFTのOAuth接続が動くとは確認できません。"
+
+#: connection-profiles.js
+msgid "In Claude Desktop, open Settings > Connectors > Add to reach Add custom connector. The first screen asks for a name and MCP server URL; check the following authentication screen before choosing a route."
+msgstr "Claude.appでは「設定 → コネクタ → 追加」から「カスタムコネクタを追加」を開きます。最初の画面は名前とMCPサーバーURLの入力です。その先の認証画面を確認してから接続経路を選びます。"
+
+#: connection-profiles.js
+msgid "In Claude Desktop, open Settings > Connectors > Add. On the web, use the visible Connectors entry. Confirm Request headers is actually available before creating a key; the name and URL form alone does not prove header support."
+msgstr "Claude.appでは「設定 → コネクタ → 追加」を開きます。Web版では表示されているコネクタの入口を使います。キーを作る前に「Request headers」が実際に使えるか確認してください。名前とURLの入力欄だけではヘッダー対応を確認できません。"
+
+#: connection-profiles.js
+msgid "Codex (desktop app)"
+msgstr "Codex（デスクトップ版）"
+
+#: connection-profiles.js
+msgid "Local desktop MCP setup, separate from ChatGPT web OAuth. The steps match the desktop screens checked on 2026-10-31; if labels differ, confirm the visible screen instead of guessing."
+msgstr "ローカルのデスクトップ版MCP設定で、ChatGPT Web版のOAuthとは別の経路です。手順は2026-10-31に確認した画面に基づきます。表示名が違う場合は、推測せず実際の画面を確認してください。"
+
+#: connection-profiles.js
+msgid "Open Settings > Plugins > Add > Add MCP server."
+msgstr "「設定 → プラグイン → 追加 → MCPサーバーを追加」を開きます。"
+
+#: connection-profiles.js
+msgid "Enter a server name, select Streamable HTTP (not STDIO), and paste the full MCP endpoint into URL."
+msgstr "サーバーに名前を付け、「ストリーミング可能なHTTP」を選び、MCP endpoint全体をURL欄へ貼り付けます。STDIOではありません。"
+
+#: connection-profiles.js
+msgid "For this header-based route, leave Bearer token environment variable empty. Under Headers, set the name to Authorization and the value to Bearer <connection-key>, with one space after Bearer. Never put the key in chat or screenshots."
+msgstr "このヘッダー方式では「Bearer トークン環境変数」は空欄にします。「ヘッダー」の左欄はAuthorization、右欄はBearerと接続キーの間に半角スペースを1つ入れた値です。キーをチャットやスクリーンショットへ含めないでください。"
+
+#: connection-profiles.js
+msgid "Save. To edit later, open the MCP tab in Plugins and select the gear beside the server name you chose. Keep that server enabled."
+msgstr "保存します。後から編集する場合は、プラグイン内のMCPタブで、自分で付けたサーバー名の横にある歯車を押します。そのサーバーを有効にしておきます。"
+
+#: connection-profiles.js
+msgid "Return to the same Codex conversation and ask for a read-only context check. If the tools are still missing, use Restart when offered or restart the app and resume. A saved setting alone is not a connection check."
+msgstr "元のCodexの会話へ戻り、読み取り専用の接続確認を依頼します。ツールがまだ出ない場合は、再起動の操作が表示されていれば使い、なければアプリを再起動して再開します。設定の保存だけでは接続確認になりません。"

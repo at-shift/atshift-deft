@@ -1,6 +1,11 @@
 # Installation and User Guide
 
-**atshift DEFT 0.5.0** / October 31, 2026
+**atshift DEFT 0.5.1 source** / October 31, 2026
+
+The published Release and ZIP linked below remain 0.5.0. This guide also covers
+the 0.5.1 connection guidance in source; installing the older ZIP does not add
+those updates. To test the current bundled guide, build from source using the
+[WordPress build instructions](../wordpress/atshift-deft/README.md#install).
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
 
@@ -88,6 +93,14 @@ If the AI cannot display a portable preview or lacks permission to retrieve one,
 ## 5. Connect Your AI
 
 Use the exact client route shown under **AI connections**. The [AI Client Connection Routes](../wordpress/atshift-deft/docs/CONNECTIONS.md) document distinguishes ChatGPT, Claude, Gemini, their CLI clients, and other MCP clients. Availability can vary by account, region, and application; a configuration route is not a certification of end-to-end compatibility.
+
+For **Codex desktop**, choose its separate desktop entry, then use **Settings > Plugins > Add > Add MCP server**. Select **Streamable HTTP**, not STDIO. Later edits use the gear beside your server name in the **MCP** tab. Follow the field-by-field header instructions in [Codex Desktop App](../wordpress/atshift-deft/docs/CONNECTIONS.md#codex-desktop-app), not the CLI environment template.
+
+For **Claude Desktop**, use **Settings > Connectors > Add**. If your private connector offers **Request headers**, choose **No sign-in** and add `Authorization` with the full value `Bearer <connection-key>`. This skips OAuth, not DEFT authentication. Follow the [Claude steps](../wordpress/atshift-deft/docs/CONNECTIONS.md#claude); never share an owner's key in an organization connector.
+
+For **ChatGPT web**, the observed Japanese entry is **設定 > プラグイン > エージェント一覧を見る > 追加 > カスタムMCPサーバーを追加**. The last menu is in the plugin directory, not the installed-plugin settings list. DEFT uses OAuth here; successful Codex testing does not establish Chat/Work compatibility. See [ChatGPT Web Entry](../wordpress/atshift-deft/docs/CONNECTIONS.md#chatgpt-web-entry).
+
+If a cloud connector fails while a local client works, check hosting access restrictions as well as credentials. On Xserver, review the domain's **WordPress security > Overseas access restrictions > REST API access restriction** with its administrator. Do not disable protections wholesale; see [Cloud Connection Errors](../wordpress/atshift-deft/docs/CONNECTIONS.md#cloud-connection-errors).
 
 ### OAuth
 
@@ -234,6 +247,7 @@ Resume with the same WordPress account. Deactivation retains data, but retention
 | Article changed | Reload the article and use its latest saved version. |
 | Private storage unavailable | Ask the host administrator to check the paths, constants, public boundaries, and permissions. |
 | API returns 401/403 | Check the account, scope, credential expiry, and session/nonce where applicable. Do not disable authentication. |
+| Cloud connector returns 403 or cannot connect, but a local client works | Check hosting/WAF logs and overseas REST API restrictions. Review a narrowly scoped exception with the administrator; see [Cloud Connection Errors](../wordpress/atshift-deft/docs/CONNECTIONS.md#cloud-connection-errors). |
 | Image is missing | Check ownership, purpose, hash, authentication, and external-image restrictions. |
 | No publish button | Use an explicitly authorized publishing AI connection and give the intended timing. |
 | Publication is invalidated / blocked | Recheck the latest article, files, and permissions, then request a new reservation. |

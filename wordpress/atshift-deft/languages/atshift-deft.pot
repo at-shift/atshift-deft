@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.5.0\n"
+"Project-Id-Version: atshift DEFT 0.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2081,8 +2081,16 @@ msgstr ""
 msgid "Shared copy registered. Personal definition retained."
 msgstr ""
 
+#: connection-profiles.js:5
+msgid "ChatGPT (web: Chat / Work)"
+msgstr ""
+
 #: connection-profiles.js:6
 msgid "Use OAuth with a pre-registered client ID and PKCE S256. A fixed connection key is not used. Actual availability depends on your ChatGPT account and its custom MCP settings."
+msgstr ""
+
+#: connection-profiles.js:7
+msgid "Open Settings > Plugins > View agents, then Add > Add custom MCP server. The installed-plugin settings list is not the creation screen. Labels may vary by version."
 msgstr ""
 
 #: connection-profiles.js:7
@@ -2093,12 +2101,20 @@ msgstr ""
 msgid "Enter the MCP endpoint and client ID in the AI's custom MCP connection. Sign in to WordPress and approve only the access you need."
 msgstr ""
 
+#: connection-profiles.js:7
+msgid "Install the created plugin, select it in the intended Chat or Work conversation, and ask the AI to confirm live context. A visible add menu does not prove that DEFT OAuth works with this account."
+msgstr ""
+
 #: connection-profiles.js:9
 msgid "Claude (OAuth)"
 msgstr ""
 
 #: connection-profiles.js:10
 msgid "Use a pre-registered OAuth client and your own WordPress login. Confirm that your connector accepts a public client with PKCE S256 and no client secret."
+msgstr ""
+
+#: connection-profiles.js:11
+msgid "In Claude Desktop, open Settings > Connectors > Add to reach Add custom connector. The first screen asks for a name and MCP server URL; check the following authentication screen before choosing a route."
 msgstr ""
 
 #: connection-profiles.js:11
@@ -2118,7 +2134,7 @@ msgid "Conditional: Request headers is a limited beta. Use only a connector priv
 msgstr ""
 
 #: connection-profiles.js:15
-msgid "Open Customize > Connectors > Add custom connector. Confirm Request headers is available before creating a key."
+msgid "In Claude Desktop, open Settings > Connectors > Add. On the web, use the visible Connectors entry. Confirm Request headers is actually available before creating a key; the name and URL form alone does not prove header support."
 msgstr ""
 
 #: connection-profiles.js:15
@@ -2178,98 +2194,126 @@ msgid "Restart Gemini CLI and check /mcp. Do not enable trust or automatic appro
 msgstr ""
 
 #: connection-profiles.js:29
-msgid "Codex (local CLI / IDE)"
+msgid "Codex (desktop app)"
 msgstr ""
 
 #: connection-profiles.js:30
-msgid "Direct HTTP route using bearer_token_env_var. This does not enable the ChatGPT web connector or prove hosted Codex can reach this site."
+msgid "Local desktop MCP setup, separate from ChatGPT web OAuth. The steps match the desktop screens checked on 2026-10-31; if labels differ, confirm the visible screen instead of guessing."
 msgstr ""
 
-#: connection-profiles.js:31
-msgid "Merge the template into ~/.codex/config.toml, retaining existing servers and policies."
-msgstr ""
-
-#: connection-profiles.js:31
-msgid "Make the named environment variable available to the local Codex process through your secure launch environment."
-msgstr ""
-
-#: connection-profiles.js:31
-msgid "Start a new session and check codex mcp list. Confirm context before editing an article."
+#: connection-profiles.js:32
+msgid "Open Settings > Plugins > Add > Add MCP server."
 msgstr ""
 
 #: connection-profiles.js:33
-msgid "Other AI / custom MCP client"
+msgid "Enter a server name, select Streamable HTTP (not STDIO), and paste the full MCP endpoint into URL."
 msgstr ""
 
 #: connection-profiles.js:34
-msgid "Requires Streamable HTTP and a secure custom Authorization header. OAuth-only or chat-only clients cannot use this key. A cloud client also needs a reachable HTTPS site."
+msgid "For this header-based route, leave Bearer token environment variable empty. Under Headers, set the name to Authorization and the value to Bearer <connection-key>, with one space after Bearer. Never put the key in chat or screenshots."
 msgstr ""
 
 #: connection-profiles.js:35
-msgid "Select HTTP / Streamable HTTP in the client's MCP settings, not legacy SSE or stdio."
+msgid "Save. To edit later, open the MCP tab in Plugins and select the gear beside the server name you chose. Keep that server enabled."
 msgstr ""
 
-#: connection-profiles.js:35
-msgid "Enter the endpoint and store Authorization: Bearer <connection-key> in its secure settings. Do not put the key in a URL."
-msgstr ""
-
-#: connection-profiles.js:35
-msgid "Keep the credential private to one WordPress owner and confirm an authenticated request below. Client file transfer and preview display need separate verification."
-msgstr ""
-
-#: connection-profiles.js:37
-msgid "Other OAuth MCP client"
+#: connection-profiles.js:36
+msgid "Return to the same Codex conversation and ask for a read-only context check. If the tools are still missing, use Restart when offered or restart the app and resume. A saved setting alone is not a connection check."
 msgstr ""
 
 #: connection-profiles.js:38
-msgid "Pre-registered public OAuth client, authorization code with PKCE S256, exact resource indicator and rotating refresh tokens. No client secret or dynamic registration."
+msgid "Codex (local CLI / IDE)"
 msgstr ""
 
 #: connection-profiles.js:39
-msgid "Register this client's exact callback URL with the site administrator."
-msgstr ""
-
-#: connection-profiles.js:39
-msgid "Configure the client ID and endpoint, then authorize your own WordPress account."
+msgid "Direct HTTP route using bearer_token_env_var. This does not enable the ChatGPT web connector or prove hosted Codex can reach this site."
 msgstr ""
 
 #: connection-profiles.js:40
+msgid "Merge the template into ~/.codex/config.toml, retaining existing servers and policies."
+msgstr ""
+
+#: connection-profiles.js:40
+msgid "Make the named environment variable available to the local Codex process through your secure launch environment."
+msgstr ""
+
+#: connection-profiles.js:40
+msgid "Start a new session and check codex mcp list. Confirm context before editing an article."
+msgstr ""
+
+#: connection-profiles.js:42
+msgid "Other AI / custom MCP client"
+msgstr ""
+
+#: connection-profiles.js:43
+msgid "Requires Streamable HTTP and a secure custom Authorization header. OAuth-only or chat-only clients cannot use this key. A cloud client also needs a reachable HTTPS site."
+msgstr ""
+
+#: connection-profiles.js:44
+msgid "Select HTTP / Streamable HTTP in the client's MCP settings, not legacy SSE or stdio."
+msgstr ""
+
+#: connection-profiles.js:44
+msgid "Enter the endpoint and store Authorization: Bearer <connection-key> in its secure settings. Do not put the key in a URL."
+msgstr ""
+
+#: connection-profiles.js:44
+msgid "Keep the credential private to one WordPress owner and confirm an authenticated request below. Client file transfer and preview display need separate verification."
+msgstr ""
+
+#: connection-profiles.js:46
+msgid "Other OAuth MCP client"
+msgstr ""
+
+#: connection-profiles.js:47
+msgid "Pre-registered public OAuth client, authorization code with PKCE S256, exact resource indicator and rotating refresh tokens. No client secret or dynamic registration."
+msgstr ""
+
+#: connection-profiles.js:48
+msgid "Register this client's exact callback URL with the site administrator."
+msgstr ""
+
+#: connection-profiles.js:48
+msgid "Configure the client ID and endpoint, then authorize your own WordPress account."
+msgstr ""
+
+#: connection-profiles.js:49
 msgid "AI without MCP (JSON proposal)"
 msgstr ""
 
-#: connection-profiles.js:41
+#: connection-profiles.js:50
 msgid "No connection key needed. Give the AI the guide, receive an article JSON proposal, then import and save it in WordPress. This fallback does not automatically save or publish."
 msgstr ""
 
-#: connection-profiles.js:42
+#: connection-profiles.js:51
 msgid "Download the AI guide and ask the AI to read it before preparing an article."
 msgstr ""
 
-#: connection-profiles.js:42
+#: connection-profiles.js:51
 msgid "Import its article JSON with Import snapshot, then save and review the private preview. Use a fresh article handoff for later edits."
 msgstr ""
 
-#: connection-profiles.js:61
+#: connection-profiles.js:70
 msgid "Choose your AI and client first."
 msgstr ""
 
-#: connection-profiles.js:64
+#: connection-profiles.js:73
 msgid "A valid credential-free HTTP(S) MCP endpoint is required."
 msgstr ""
 
-#: connection-profiles.js:65
+#: connection-profiles.js:74
 msgid "HTTPS is required outside local development."
 msgstr ""
 
-#: connection-profiles.js:66
+#: connection-profiles.js:75
 msgid "This cloud connector cannot reach a local/private address. Use an approved public HTTPS test site; no tunnel is opened automatically."
 msgstr ""
 
-#: connection-profiles.js:67
+#: connection-profiles.js:76
 msgid "Confirm that this client supports private, per-owner header credentials."
 msgstr ""
 
-#: connection-profiles.js:68
+#: connection-profiles.js:77
 msgid "Client settings available. A successful request confirms authentication, not the complete article/file/preview workflow."
 msgstr ""
 

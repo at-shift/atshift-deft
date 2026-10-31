@@ -1,4 +1,4 @@
-# atshift DEFT 0.5.0
+# atshift DEFT 0.5.1
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
@@ -10,19 +10,20 @@ Use **Article handoff** for file-based edits, or connect an MCP client to resume
 your own drafts directly. Initial connection setup is required; publishing requires
 a separately granted publishing key and the publisher role (or administrator).
 
-An experimental WordPress plugin for structured article snapshots. This alpha
+An experimental WordPress plugin for structured article snapshots. This build
 is intended only for an isolated test site, not a production website.
 
 ## Install
 
 Build scoped PHP dependencies with `npm run build:php-deps`, then build the ZIP with `npm run pack:wordpress` from the repository. Upload
-`atshift-deft-0.5.0.zip` through Plugins >
+`atshift-deft-0.5.1.zip` through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
-This development snapshot has no GitHub Release asset or tag.
+This 0.5.1 source checkpoint has no GitHub Release asset or tag. The published
+Release and downloadable ZIP remain 0.5.0 and do not include these guidance updates.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
-This 0.5.0 is a local, uncommitted and unpushed rename, not a release.
+The 0.5.1 changes improve connection setup and documentation without changing data formats.
 When upgrading from Structured Fields Prototype, back up the site, deactivate the
 old plugin, then install and activate atshift DEFT. Do not delete the old data.
 The changed folder/main file is a different WordPress plugin identity, not an

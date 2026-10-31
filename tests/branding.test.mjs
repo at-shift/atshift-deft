@@ -20,6 +20,9 @@ test('package, plugin, text domain and readme agree on the DEFT identity', () =>
   assert.equal(entry.match(/Version: (\S+)/)[1], pkg.version);
   assert.equal(entry.match(/const VERSION = '([^']+)'/)[1], pkg.version);
   assert.equal(read(`${plugin}readme.txt`).match(/Stable tag: (\S+)/)[1], pkg.version);
+  for (const name of ['atshift-deft.pot', 'atshift-deft-ja.po']) {
+    assert.ok(read(`${plugin}languages/${name}`).includes(`Project-Id-Version: atshift DEFT ${pkg.version}\\n`), name);
+  }
   assert.ok(!existsSync(new URL('../wordpress/structured-fields/structured-fields.php', import.meta.url)));
 });
 

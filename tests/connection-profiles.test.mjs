@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
+import { createHash } from "node:crypto";
 import { JSDOM } from "jsdom";
 import { installI18n } from "./wp-i18n-fixture.mjs";
 
@@ -13,7 +14,7 @@ const api = window.sfConnectionProfiles;
 const endpoint = "https://example.org/site/?rest_route=%2Fstructured-fields%2Fmcp";
 
 test("all clients have distinct, honest routes; OAuth and JSON never issue a key", () => {
-  assert.equal(new Set(api.profiles.map(p => p.id)).size, 10);
+  assert.equal(new Set(api.profiles.map(p => p.id)).size, 11);
   for (const id of ["chatgpt", "gemini", "claude-oauth", "oauth", "json", "unknown", ""]) {
     assert.equal(api.route(id, endpoint, true).allowed, false);
     assert.equal(api.template(id, endpoint), null);
@@ -72,6 +73,72 @@ test("Codex TOML uses a dedicated environment name and retains approval prompts"
   assert.match(publish.env, /^SF_PUBLISHING_KEY_/);
 });
 
+test("desktop and web instructions use distinct observed menus and authentication", () => {
+  const desktop = api.profiles.find(p => p.id === "codex-desktop");
+  assert.equal(api.route(desktop.id, endpoint).allowed, true);
+  assert.equal(api.route(desktop.id, "http://example.org/mcp").allowed, false);
+  assert.equal(api.template(desktop.id, endpoint), null);
+  assert.match(desktop.steps.join("\n"), /Settings > Plugins > Add > Add MCP server/);
+  assert.match(desktop.steps.join("\n"), /Streamable HTTP \(not STDIO\)/);
+  assert.match(desktop.steps.join("\n"), /leave Bearer token environment variable empty/);
+  assert.match(desktop.steps.join("\n"), /name to Authorization.*value to Bearer <connection-key>/);
+  assert.match(desktop.steps.join("\n"), /MCP tab.*gear beside the server name/);
+  assert.match(desktop.steps.join("\n"), /read-only context check/);
+  const web = api.profiles.find(p => p.id === "chatgpt");
+  assert.equal(web.auth, "oauth");
+  assert.equal(api.route(web.id, endpoint).allowed, false);
+  assert.match(web.steps.join("\n"), /View agents, then Add > Add custom MCP server/);
+  assert.match(web.steps.join("\n"), /does not prove that DEFT OAuth works/);
+  const claudeOAuth = api.profiles.find(p => p.id === "claude-oauth");
+  const claudeHeader = api.profiles.find(p => p.id === "claude");
+  assert.match(claudeOAuth.steps.join("\n"), /Settings > Connectors > Add/);
+  assert.match(claudeOAuth.steps.join("\n"), /check the following authentication screen/);
+  assert.match(claudeHeader.steps.join("\n"), /form alone does not prove header support/);
+  assert.equal(api.route(claudeHeader.id, endpoint).allowed, false);
+});
+
+test("downloaded guide documents private Claude headers and scoped cloud troubleshooting", () => {
+  const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+  const connections = read("wordpress/atshift-deft/docs/CONNECTIONS.md");
+  const onboarding = read("wordpress/atshift-deft/includes/class-onboarding.php");
+  const guide = read("wordpress/atshift-deft/AI-GUIDE.md");
+  const english = read("docs/GETTING-STARTED.md");
+  const japanese = read("wordpress/atshift-deft/GETTING-STARTED.ja.md");
+  assert.match(onboarding, /file_get_contents\( __DIR__ \. '\/\.\.\/docs\/CONNECTIONS\.md' \)/);
+  assert.match(connections, /No sign-in means no OAuth flow here, not anonymous access/);
+  assert.match(connections, /Bearer <connection-key>/);
+  assert.match(connections, /sample article creation and draft save/);
+  assert.match(connections, /draft-only completion, not publication/);
+  assert.match(connections, /user-reported result from one setup/);
+  assert.match(connections, /preview, file transfer, publication and the separate OAuth route remain unverified/);
+  assert.match(japanese, /サンプル記事の作成・下書き保存/);
+  assert.match(japanese, /公開はしていません/);
+  assert.match(connections, /## Cloud Connection Errors/);
+  assert.match(connections, /obtain approval before changes/);
+  assert.match(connections, /Do not turn off\s+all overseas restrictions, WAF, login protection or DEFT authentication/);
+  assert.match(connections, /DEFT does not change these server settings itself/);
+  assert.match(guide, /Do not automatically recreate keys or disable protections/);
+  for (const document of [english, japanese]) {
+    assert.match(document, /CONNECTIONS\.md#cloud-connection-errors/);
+    assert.match(document, /Xserver/);
+  }
+});
+
+test("Japanese client guidance resolves from the compiled path-specific catalog", () => {
+  const hash = createHash("md5").update("connection-profiles.js").digest("hex");
+  const catalog = JSON.parse(readFileSync(new URL(`../wordpress/atshift-deft/languages/atshift-deft-ja-${hash}.json`, import.meta.url), "utf8"));
+  const translated = {};
+  installI18n(translated).setLocaleData(catalog.locale_data.messages, "atshift-deft");
+  runInNewContext(source, { window: translated, URL });
+  const profiles = translated.sfConnectionProfiles.profiles;
+  const desktop = profiles.find(p => p.id === "codex-desktop");
+  assert.equal(desktop.label, "Codex（デスクトップ版）");
+  assert.match(desktop.steps.join("\n"), /Bearer トークン環境変数.*空欄/);
+  assert.match(desktop.steps.join("\n"), /サーバー名の横にある歯車/);
+  assert.match(profiles.find(p => p.id === "chatgpt").steps.join("\n"), /エージェント一覧を見る/);
+  assert.match(profiles.find(p => p.id === "claude-oauth").steps.join("\n"), /設定 → コネクタ → 追加/);
+});
+
 test("connection UI gates key creation, exports no secrets and keeps issued scope fixed", async () => {
   const php = readFileSync(new URL("../wordpress/atshift-deft/includes/connections-page.php", import.meta.url), "utf8");
   const dom = new JSDOM(php.replace(/<\?php[\s\S]*?\?>/g, ""), { runScripts: "outside-only", url: "https://example.org/wp-admin/" });
@@ -100,6 +167,11 @@ test("connection UI gates key creation, exports no secrets and keeps issued scop
       select(id); assert.equal($("key-setup").hidden, true);
       $("connection-form").dispatchEvent(new w.Event("submit", { cancelable: true })); await settle();
     }
+    assert.equal(requests.filter(r => r.options.method === "POST").length, 0);
+    select("codex-desktop");
+    assert.equal($("connection-create").disabled, false);
+    assert.equal($("client-template-section").hidden, true);
+    assert.match($("client-steps").textContent, /leave Bearer token environment variable empty/);
     assert.equal(requests.filter(r => r.options.method === "POST").length, 0);
     select("claude"); assert.equal($("connection-create").disabled, true);
     $("client-confirm").checked = true; $("client-confirm").dispatchEvent(new w.Event("change"));

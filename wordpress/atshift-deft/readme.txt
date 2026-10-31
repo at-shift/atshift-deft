@@ -2,7 +2,7 @@
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,12 @@ No. Existing drafts remain private. Immediate or scheduled publication requires
 the owning user's publishing authorization through the supported connection.
 
 == Changelog ==
+
+= 0.5.1 =
+* Add separate Codex desktop setup and clarify the observed ChatGPT web and Claude connector menus.
+* Document private Claude header authentication and cloud-only connection troubleshooting, including Xserver REST API restrictions.
+* Clarify theme-aligned or separate article layouts and record the scope of actual client checks.
+* Update Japanese connection guidance and regression tests without changing saved data or authentication behavior.
 
 = 0.5.0 =
 * Guide the user from AI-guide download to AI-led connection, an optional private sample and their own article.

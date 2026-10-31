@@ -5,7 +5,7 @@
 Turn a conversation with your preferred AI into a structured WordPress article: layout, draft, preview, and immediate or scheduled publication.
 DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-The current version, **0.5.0**, is a development release. Start on an isolated test site with a backup.
+The current source version is **0.5.1**, a development checkpoint. The published Release and installable ZIP remain **0.5.0**; the updated bundled connection guidance requires a build from the 0.5.1 source. Start on an isolated test site with a backup.
 
 ## Getting Started
 
@@ -90,7 +90,7 @@ The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twent
 
 Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## Scope of 0.5.0
+## Scope of 0.5.1
 
 DEFT is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
 Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.

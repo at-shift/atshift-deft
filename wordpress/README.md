@@ -1,6 +1,7 @@
-# atshift DEFT for WordPress 0.5.0
+# atshift DEFT for WordPress 0.5.1
 
-0.5.0 is the first public atshift DEFT development release.
+0.5.1 is a source checkpoint for connection setup and guidance improvements.
+The first public development Release and downloadable ZIP remain 0.5.0.
 For installation and everyday use, see the [Installation and User Guide](../docs/GETTING-STARTED.md).
 See [V0.5.0.md](../docs/V0.5.0.md) for identity and legacy activation steps.
 
@@ -11,7 +12,7 @@ this does not imply a WordPress.org release or a production installation.
 
 Development candidate, not for production use. Earlier `0.2.0` labels were local-only
 prototype labels and were never released. The browser package and WordPress
-plugin use the same alpha version.
+plugin use the same development version.
 Known issues and deferred work are tracked in `../docs/FOLLOW-UP.md`.
 Japanese installation and usage instructions are in
 [GETTING-STARTED.ja.md](atshift-deft/GETTING-STARTED.ja.md), also included in the ZIP.
