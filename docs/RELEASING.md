@@ -1,5 +1,16 @@
 # Release and Update Channels
 
+## 0.7.1 Review Candidate
+
+The current source produced `atshift-deft-0.7.1-wordpress-org.zip`, accepted as an
+update to the existing pending WordPress.org application, not a second application.
+Both locally built channels report 0.7.1 and include the same translation files.
+The existing v0.7.0 GitHub Release, tag and assets remain unchanged. Do not publish
+a new GitHub Release or upload the review candidate without separate approval.
+The 0.7.0 submission record is retained; `WORDPRESS-ORG-REVIEW-0.7.1.md` records the
+new artifact, checker results and upload confirmation. Existing sites are not
+updated by preparing or submitting a ZIP. The application is still awaiting review.
+
 ## 0.7.0 Artifacts
 
 - GitHub: `atshift-deft-0.7.0.zip`, its `.sha256`, and `atshift-deft-update.json`.

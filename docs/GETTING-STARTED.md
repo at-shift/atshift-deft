@@ -1,8 +1,10 @@
 # Installation and User Guide
 
-**atshift DEFT 0.7.0** / October 31, 2026
+**atshift DEFT 0.7.1 review candidate** / November 1, 2026
 
-The 0.7.0 plugin ZIP adds destinations, classifications and public structure JSON. After upgrading,
+The 0.7.1 candidate adds recoverable drafts and private reservations in destination lists.
+The GitHub download links below still point to the published 0.7.0 release; use the
+separately supplied candidate ZIP when testing 0.7.1. After upgrading,
 download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.

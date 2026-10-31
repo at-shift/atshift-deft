@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.1 - 2026-11-01 (review candidate)
+
+- Add recoverable, owner-only draft trash and restoration to the workspace, REST and MCP. Keep immutable versions, files and shared components; reject stale operations and other owners' drafts.
+- Display the draft owner's name and role, move the independent DEFT menu below Settings, and explain the private workspace and destination lists.
+- Exclude published and newly reserved articles from the draft list without deleting the saved data used for public rendering.
+- Create private `Scheduled (DEFT)` entries in the selected post, page or eligible custom-type list when a reservation is confirmed. Revalidate permissions, credentials, content and classifications before publishing into the same entry; do not use WordPress's unguarded `future` publication path.
+- Return cancelled, invalidated and failed reservations to drafts, retain hidden placeholders for safe reuse, and block native editing/deletion or premature publication of active reserved entries.
+- Add owner-scoped publication discovery, refresh AI instructions and Japanese catalogs, and retain legacy reservation handling until rescheduled or executed.
+- Submit an updated WordPress.org review ZIP without the GitHub updater to the existing pending application. The existing v0.7.0 GitHub Release and assets remain unchanged; acceptance for review is not approval or a directory release.
+
 ## 0.7.0 - 2026-11-01
 
 - Discover account-eligible existing post types through MCP and REST; choose a post, page or public custom type for each initial publication without a separate DEFT allowlist.

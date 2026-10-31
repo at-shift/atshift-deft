@@ -14,7 +14,7 @@ Work with your AI on the article, ask it to create the page design and column la
 
 DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-The current version, **0.7.0**, adds per-article publication destinations, existing categories/tags and public structure JSON with JSON-LD. Start on an isolated test site with a backup.
+The latest GitHub release, **0.7.0**, adds per-article publication destinations, existing categories/tags and public structure JSON with JSON-LD. The **0.7.1 review candidate** adds recoverable drafts, owner information and private reservations in destination lists; it is not yet a GitHub Release. Start on an isolated test site with a backup.
 
 ## Getting Started
 

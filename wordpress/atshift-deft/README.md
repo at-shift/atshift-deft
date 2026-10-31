@@ -1,4 +1,4 @@
-# atshift DEFT 0.7.0
+# atshift DEFT 0.7.1
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
@@ -32,6 +32,10 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
+This is the 0.7.1 review candidate. The GitHub links below still point to the
+published 0.7.0 release; its files have not been replaced. To test this candidate,
+use the separately supplied 0.7.1 ZIP, not the older release download.
+
 Download `atshift-deft-0.7.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.0), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
@@ -41,6 +45,9 @@ For manual installation, place the `atshift-deft` folder in `wp-content/plugins`
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
 Version 0.7.0 adds per-article destinations, existing category/tag selection and public structure JSON with JSON-LD. Saved-data identities and connection permissions are preserved.
+Version 0.7.1 adds owner-only draft trash/restoration, owner information and private
+reservation entries in destination lists. Cancelled or blocked reservations return
+to drafts; saved rendering data is retained after publication.
 Existing 0.5.x installations need one manual ZIP replacement. Thereafter the GitHub
 package supports normal WordPress updates, preserving the site's automatic-update
 preference and verifying the exact release ZIP with SHA-256. The WordPress.org

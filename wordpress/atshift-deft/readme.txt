@@ -4,7 +4,7 @@ Tags: ai, mcp, publishing, structured-content
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.7.0
+Stable tag: 0.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -146,6 +146,14 @@ GitHub privacy: https://docs.github.com/en/site-policy/privacy-policies/github-g
 The GitHub updater is excluded from WordPress.org packages.
 
 == Changelog ==
+
+= 0.7.1 =
+* Add owner-only draft trash and restoration through the workspace, REST and MCP, preserving saved versions and files.
+* Show the draft owner's display name and role; place the DEFT menu below Settings.
+* Remove published and newly reserved articles from the private draft list while retaining rendering data.
+* Show private DEFT reservations in the chosen post, page or custom-type list and publish into the same entry only after revalidation.
+* Return cancelled, invalidated or failed reservations to drafts; prevent native editing or premature publication of reserved entries.
+* Refresh the AI guide, workspace help and Japanese catalogs. Download a fresh AI guide after upgrading.
 
 = 0.7.0 =
 * Choose a post, page or eligible existing custom post type separately for each article.
