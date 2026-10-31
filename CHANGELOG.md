@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.1 - 2026-10-31 (source checkpoint)
+## 0.5.1 - 2026-10-31
 
 - Add a separate Codex desktop connection profile with the observed menu path,
   Streamable HTTP selection and explicit Authorization header instructions.
@@ -14,8 +14,8 @@
   guide, preserving component constraints and the optional private sample.
 - Refresh Japanese connection guidance, translation catalogs and regression tests.
   Keep saved data, API routes, owner isolation and authentication behavior unchanged.
-- Update source only. The published GitHub Release and installable ZIP remain
-  at 0.5.0; no new release asset, tag, WordPress.org update or site deployment.
+- Distribute the installable WordPress ZIP and SHA-256 through GitHub Release.
+  This does not update WordPress.org or deploy to existing sites.
 
 ## 0.5.0 - 2026-10-31
 

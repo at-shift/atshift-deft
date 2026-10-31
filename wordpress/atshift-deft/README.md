@@ -15,11 +15,11 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Build scoped PHP dependencies with `npm run build:php-deps`, then build the ZIP with `npm run pack:wordpress` from the repository. Upload
-`atshift-deft-0.5.1.zip` through Plugins >
+Download `atshift-deft-0.5.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
-This 0.5.1 source checkpoint has no GitHub Release asset or tag. The published
-Release and downloadable ZIP remain 0.5.0 and do not include these guidance updates.
+Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
+build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
+archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)

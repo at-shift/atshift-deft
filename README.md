@@ -5,14 +5,14 @@
 Turn a conversation with your preferred AI into a structured WordPress article: layout, draft, preview, and immediate or scheduled publication.
 DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-The current source version is **0.5.1**, a development checkpoint. The published Release and installable ZIP remain **0.5.0**; the updated bundled connection guidance requires a build from the 0.5.1 source. Start on an isolated test site with a backup.
+The current version, **0.5.1**, is a development release with updated AI connection guidance. Start on an isolated test site with a backup.
 
 ## Getting Started
 
 ### STEP 1. Install the Plugin
 
-[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.0/atshift-deft-0.5.0.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
-You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.0). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.1/atshift-deft-0.5.1.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1). GitHub's **Download ZIP** contains source code, not the installable plugin package.
 
 ### STEP 2. Give the Guide to Your AI
 

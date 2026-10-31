@@ -7,16 +7,16 @@ DEFT は **Delegate Execution. Focus on Thinking.** の略です。
 
 1. テストサイトをバックアップします。
 2. プラグイン一覧で旧 **Structured Fields Prototype** を停止します。データは削除しません。
-3. `atshift-deft-0.5.0.zip` をインストールし、**atshift DEFT** を有効化します。
+3. `atshift-deft-0.5.1.zip` をインストールし、**atshift DEFT** を有効化します。
 4. 保存済み記事・部品・接続・予約を確認します。旧版と新版は同時に有効化しません。
 
 slugが変わるため、旧版への上書き更新ではありません。旧版は停止したまま残せます。
 内部の保存名・権限名・接続URLは引き継ぎます。MCP endpoint、OAuth issuer、
 `page=structured-fields` を手作業で `atshift-deft` に置き換えないでください。
 
-対象ソース: **0.5.1** / 2026-10-31
+対象: **0.5.1** / 2026-10-31
 
-以下で案内する公開済みRelease・ZIPは0.5.0です。0.5.1はソース更新のみで、新しい配布ZIPは公開していません。接続案内の更新をプラグイン内で試す場合は、後述の開発者向け手順で0.5.1のソースからビルドします。0.5.0のZIPを入れ直すだけでは案内は更新されません。
+0.5.1の配布ZIPには接続案内の更新を含みます。更新後はDEFTからAI用手順書をダウンロードし直してください。以前ダウンロードしたファイルは自動更新されません。
 
 この版は検証用です。本番サイトではなく、バックアップを取得した独立したテストサイトで試してください。
 既存の atshift Fields / CFS を置き換えるプラグインではありません。既存投稿の移行も行いません。
@@ -41,11 +41,11 @@ MCPに対応しないAIでは、従来のファイル受け渡し方式も使え
 
 1. テストサイトのWordPressとデータベースをバックアップする。
 2. 管理者でログインし、「プラグイン」→「新規追加」→「プラグインのアップロード」を開く。
-3. `atshift-deft-0.5.0.zip` を選択し、インストール・有効化する。
+3. `atshift-deft-0.5.1.zip` を選択し、インストール・有効化する。
 4. 左メニューの **atshift DEFT** を開く。
 5. **Components** に初期部品の **Introduction** と **Article resources** が表示されることを確認する。
 
-インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.0) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.orgからの配布は行っていません。
+インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.orgからの配布は行っていません。
 開発者はリポジトリで `npm run build:php-deps`、`npm run pack:wordpress` の順に実行すると `.local/releases/` に依存ライブラリ同梱ZIPとSHA-256を作成できます。
 サーバーへNode.jsや別のAIサービスを設置する必要はありません。
 
