@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.1 - 2026-11-01 (review candidate)
+## 0.7.1 - 2026-11-01
 
 - Add recoverable, owner-only draft trash and restoration to the workspace, REST and MCP. Keep immutable versions, files and shared components; reject stale operations and other owners' drafts.
 - Display the draft owner's name and role, move the independent DEFT menu below Settings, and explain the private workspace and destination lists.
@@ -9,6 +9,7 @@
 - Return cancelled, invalidated and failed reservations to drafts, retain hidden placeholders for safe reuse, and block native editing/deletion or premature publication of active reserved entries.
 - Add owner-scoped publication discovery, refresh AI instructions and Japanese catalogs, and retain legacy reservation handling until rescheduled or executed.
 - Submit an updated WordPress.org review ZIP without the GitHub updater to the existing pending application. The existing v0.7.0 GitHub Release and assets remain unchanged; acceptance for review is not approval or a directory release.
+- Distribute 0.7.1 through GitHub with the installable update-enabled ZIP, SHA-256 and update metadata. Preserve translations, user update preferences and the separately submitted WordPress.org artifact.
 
 ## 0.7.0 - 2026-11-01
 

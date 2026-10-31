@@ -1,10 +1,8 @@
 # Installation and User Guide
 
-**atshift DEFT 0.7.1 review candidate** / November 1, 2026
+**atshift DEFT 0.7.1** / November 1, 2026
 
-The 0.7.1 candidate adds recoverable drafts and private reservations in destination lists.
-The GitHub download links below still point to the published 0.7.0 release; use the
-separately supplied candidate ZIP when testing 0.7.1. After upgrading,
+Version 0.7.1 adds recoverable drafts and private reservations in destination lists. After upgrading,
 download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
@@ -13,7 +11,7 @@ This is a development release. Start on an isolated test site with a backup, not
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.0/atshift-deft-0.7.0.zip) and activate **atshift DEFT**.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.1/atshift-deft-0.7.1.zip) and activate **atshift DEFT**.
 2. Open DEFT, choose **Download AI guide**, and give that file to your usual AI.
 3. Say, **"Read this guide and walk me through connecting to my site."** Follow the client-specific setup and authorize only the required access.
 4. After the AI verifies the connection, try the optional sample or start your own article. Ask for page composition and responsive columns as well as text; a layout reference image is optional.
@@ -46,7 +44,7 @@ The HTTP exception is for an explicitly configured loopback development environm
 ## 2. Install DEFT
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.7.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.0). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.7.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.1). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
 4. Upload the ZIP, install it, and activate **atshift DEFT**.
 5. Open **atshift DEFT** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.

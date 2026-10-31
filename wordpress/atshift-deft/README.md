@@ -32,11 +32,7 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-This is the 0.7.1 review candidate. The GitHub links below still point to the
-published 0.7.0 release; its files have not been replaced. To test this candidate,
-use the separately supplied 0.7.1 ZIP, not the older release download.
-
-Download `atshift-deft-0.7.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.0), which also includes its SHA-256 checksum. Upload it through Plugins >
+Download `atshift-deft-0.7.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.1), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
@@ -52,6 +48,7 @@ Existing 0.5.x installations need one manual ZIP replacement. Thereafter the Git
 package supports normal WordPress updates, preserving the site's automatic-update
 preference and verifying the exact release ZIP with SHA-256. The WordPress.org
 package excludes this adapter. Both packages include the same translation files.
+The WordPress.org application is awaiting review; the separate submission is not a directory release.
 After upgrading, download a fresh AI guide from Articles and ask your AI to read it.
 When upgrading from Structured Fields Prototype, back up the site, deactivate the
 old plugin, then install and activate atshift DEFT. Do not delete the old data.

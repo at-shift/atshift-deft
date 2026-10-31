@@ -1,22 +1,22 @@
 # atshift DEFT 試作版の導入・利用手順
 
 DEFT は **Delegate Execution. Focus on Thinking.** の略です。
-0.7.1 のプラグインslugは `atshift-deft` です。審査用候補版のため、まず独立したテストサイトで試してください。
+0.7.1 のプラグインslugは `atshift-deft` です。開発初期のため、まず独立したテストサイトで試してください。
 
 ### 旧 Structured Fields Prototype からの移行
 
 1. テストサイトをバックアップします。
 2. プラグイン一覧で旧 **Structured Fields Prototype** を停止します。データは削除しません。
-3. `atshift-deft-0.7.0.zip` をインストールし、**atshift DEFT** を有効化します。
+3. `atshift-deft-0.7.1.zip` をインストールし、**atshift DEFT** を有効化します。
 4. 保存済み記事・部品・接続・予約を確認します。旧版と新版は同時に有効化しません。
 
 slugが変わるため、旧版への上書き更新ではありません。旧版は停止したまま残せます。
 内部の保存名・権限名・接続URLは引き継ぎます。MCP endpoint、OAuth issuer、
 `page=structured-fields` を手作業で `atshift-deft` に置き換えないでください。
 
-対象: **0.7.1 審査用候補版** / 2026-11-01
+対象: **0.7.1** / 2026-11-01
 
-0.7.1では下書きのごみ箱・復元、所有者表示、投稿先一覧への非公開予約記事の表示を追加しました。以下のGitHubリンクは公開済み0.7.0のままです。0.7.1を検証するときは別途提供された候補版ZIPを使用してください。既存ReleaseのZIPは差し替えていません。
+0.7.1では下書きのごみ箱・復元、所有者表示、投稿先一覧への非公開予約記事の表示を追加しました。GitHub版はWordPressの更新機構に対応しています。WordPress.orgの申請版は審査待ちで、公開済み0.7.0のReleaseやZIPは差し替えていません。
 
 0.7.0では投稿先・既存カテゴリー/タグの選択と、公開内容だけの構造JSON・JSON-LD出力に対応しました。更新後はDEFTからAI用手順書をダウンロードし直し、AIに読ませてください。以前ダウンロードしたファイルは自動更新されません。
 
@@ -54,11 +54,11 @@ AIに「この下書きをゴミ箱に入れて」「ゴミ箱から復元して
 
 1. テストサイトのWordPressとデータベースをバックアップする。
 2. 管理者でログインし、「プラグイン」→「新規追加」→「プラグインのアップロード」を開く。
-3. `atshift-deft-0.7.0.zip` を選択し、インストール・有効化する。
+3. `atshift-deft-0.7.1.zip` を選択し、インストール・有効化する。
 4. 左メニューの **atshift DEFT** を開く。
 5. **Components** に初期部品の **Introduction** と **Article resources** が表示されることを確認する。
 
-インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.0) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.org版は申請準備中で、配布開始は承認後です。
+インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.1) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.org版は審査待ちで、配布開始は承認後です。
 開発者はリポジトリで `npm run build:php-deps`、`npm run pack:wordpress` の順に実行すると `.local/releases/` に依存ライブラリ同梱ZIPとSHA-256を作成できます。
 サーバーへNode.jsや別のAIサービスを設置する必要はありません。
 
