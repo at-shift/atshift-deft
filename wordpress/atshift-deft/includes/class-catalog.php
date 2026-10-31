@@ -109,6 +109,10 @@ final class Catalog {
         $out['guidance'] = json_decode( $row['guidance'] ) ?: (object) array( 'contentKind' => 'general', 'suitableFor' => array(), 'avoidFor' => array() );
         $recipe = json_decode( $row['recipe'] );
         $out['layout'] = $recipe->layout ?? 'custom';
+        $current_recipe = $row['revision'] === $row['selected_revision'];
+        $out['appearance'] = $current_recipe ? ( $recipe->appearance ?? null ) : null;
+        // Only content-free shared recipes are discoverable through the AI context.
+        $out['structureRecipe'] = $current_recipe && 'structure' === $row['definition_kind'] ? $recipe : null;
         $out['presentations'] = array_map( static function( $v ) use ( $recipe ) { return array( 'id' => $v->id, 'name' => $v->name,
             'disclosure' => isset( $recipe->layout ) && 'qa' === $recipe->layout ? ( 'accordion' === $v->id ? 'expandable' : 'visible' ) : 'unspecified' ); }, $c->variants );
         $out['fields'] = array_map( static function( $f ) { return array( 'key' => $f->key, 'type' => $f->type, 'label' => $f->label, 'required' => $f->required ); }, $c->fields );

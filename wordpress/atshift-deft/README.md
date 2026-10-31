@@ -1,4 +1,4 @@
-# atshift DEFT 0.5.2
+# atshift DEFT 0.6.0
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
@@ -15,7 +15,7 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Download `atshift-deft-0.5.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2), which also includes its SHA-256 checksum. Upload it through Plugins >
+Download `atshift-deft-0.6.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.6.0), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
@@ -23,7 +23,11 @@ archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
-The 0.5.2 changes clarify the draft-to-publication workflow without changing data formats or permissions.
+Version 0.6.0 adds bounded shared-component styling and a GitHub-only update adapter without changing saved data identities or AI permissions.
+Existing 0.5.x installations need one manual ZIP replacement. Thereafter the GitHub
+package supports normal WordPress updates, preserving the site's automatic-update
+preference and verifying the exact release ZIP with SHA-256. The WordPress.org
+package excludes this adapter. Both packages include the same translation files.
 After upgrading, download a fresh AI guide from Articles and ask your AI to read it.
 When upgrading from Structured Fields Prototype, back up the site, deactivate the
 old plugin, then install and activate atshift DEFT. Do not delete the old data.
@@ -72,6 +76,18 @@ Access tokens last ten minutes; refresh tokens rotate within a 30-day consent gr
 Refresh reuse revokes the grant. See [CONNECTIONS.md](docs/CONNECTIONS.md).
 Actual ChatGPT, Claude and Gemini account flows still require a public HTTPS test.
 Automatic client registration and remote client metadata fetching are not supported.
+
+## Component Appearance
+
+Version 0.6.0 lets an authorized AI create reusable shared
+structures with typed appearance options: colors, spacing, borders, typography,
+column proportions and link buttons.
+The AI checks live `styleStructures` capability, reuses existing styled components
+first, and creates a new component only when needed. It does not edit theme
+Additional CSS, send raw CSS, or overwrite existing shared definitions.
+Decoration targets stable field keys, stays within the component, and travels with
+the saved snapshot into previews and publication. Existing articles retain their
+saved styles. See [AI-GUIDE.md](AI-GUIDE.md) for supported recipes and limitations.
 
 ## Publish a Saved Draft
 

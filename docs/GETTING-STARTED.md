@@ -1,8 +1,8 @@
 # Installation and User Guide
 
-**atshift DEFT 0.5.2** / October 31, 2026
+**atshift DEFT 0.6.0** / October 31, 2026
 
-The 0.5.2 plugin ZIP includes the new draft-to-publication guidance. After upgrading,
+The 0.6.0 plugin ZIP includes shared component styling. After upgrading,
 download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
@@ -11,7 +11,7 @@ This is a development release. Start on an isolated test site with a backup, not
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.2/atshift-deft-0.5.2.zip) and activate **atshift DEFT**.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.6.0/atshift-deft-0.6.0.zip) and activate **atshift DEFT**.
 2. Open DEFT, choose **Download AI guide**, and give that file to your usual AI.
 3. Say, **"Read this guide and walk me through connecting to my site."** Follow the client-specific setup and authorize only the required access.
 4. After the AI verifies the connection, try the optional sample or start your own article.
@@ -40,7 +40,7 @@ The HTTP exception is for an explicitly configured loopback development environm
 ## 2. Install DEFT
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.5.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.6.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.6.0). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
 4. Upload the ZIP, install it, and activate **atshift DEFT**.
 5. Open **atshift DEFT** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.
@@ -146,7 +146,9 @@ Ask about layout as well as wording. You can describe the arrangement or show a 
 - **Use the current theme's look:** "Keep the design consistent with my site." The AI reuses suitable registered components; theme styles apply where those components do not override them. Theme-specific design elements must be supported by the available components.
 - **Assemble a separate article layout:** "Use an image-and-text two-column section, followed by the event details." The AI combines existing components and, with authoring permission, can fill a genuine gap with a supported stack, two-column or Q&A structure. Columns stack on narrow screens.
 
-The AI should reuse your stated preference or suggest a suitable layout, not require a design questionnaire. A reference image is a guide to structure, not a guarantee of exact reproduction. MCP does not supply an inventory of the theme's styles, and theme settings are not changed automatically. A separate layout still appears within the theme, so check both directions in the owner-only theme preview. Additional custom styling requires a separate designer/administrator task, not arbitrary code through the AI connection.
+The AI should reuse your stated preference or suggest a suitable layout, not require a design questionnaire. A reference image is a guide to structure, not a guarantee of exact reproduction. MCP does not supply an inventory of the theme's styles, and theme settings are not changed automatically. A separate layout still appears within the theme, so check both directions in the owner-only theme preview.
+
+An authoring connection can decorate supported structures inside DEFT. For example: "Give the deadline a contrasting background and make the registration link a button. Keep this design reusable without touching my theme." The AI reuses a styled catalog component or registers a new content-free appearance recipe. Colors, spacing, borders, typography and column proportions are bounded settings, not raw CSS. The generated decoration is stored with the component and saved article, including portable previews and publication. Existing articles keep their original revisions. Styles outside this contract and custom designer-authored markup still require a separate designer/administrator task.
 
 Chat attachments do not transfer automatically. The AI client must be able to read actual file bytes and make the HTTP upload. Word documents and text can serve as source material for the AI, but managed uploads are limited to JPEG, PNG, WebP, and PDF.
 

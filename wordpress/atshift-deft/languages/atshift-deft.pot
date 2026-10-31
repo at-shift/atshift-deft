@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.5.2\n"
+"Project-Id-Version: atshift DEFT 0.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,9 +24,19 @@ msgstr ""
 msgid "Delegate execution. Focus on thinking. Create structured articles with your preferred AI."
 msgstr ""
 
+#. Author of the plugin
+#: atshift-deft.php
+msgid "at-shift"
+msgstr ""
+
+#. Author URI of the plugin
+#: atshift-deft.php
+msgid "https://plugins.at-shift.net/"
+msgstr ""
+
 #: includes/catalog-page.php:9
 #: includes/catalog-page.php:28
-#: includes/plugin.php:226
+#: includes/plugin.php:227
 msgid "Components"
 msgstr ""
 
@@ -47,7 +57,7 @@ msgid "New example"
 msgstr ""
 
 #: includes/catalog-page.php:16
-#: includes/plugin.php:280
+#: includes/plugin.php:281
 msgid "Refresh components"
 msgstr ""
 
@@ -144,7 +154,7 @@ msgstr ""
 
 #: includes/class-ai-workflow.php:45
 #: includes/class-mcp.php:75
-#: includes/plugin.php:157
+#: includes/plugin.php:158
 msgid "Article not found."
 msgstr ""
 
@@ -380,106 +390,110 @@ msgstr ""
 msgid "Shared component usage is unavailable."
 msgstr ""
 
-#: includes/class-catalog.php:130
+#: includes/class-catalog.php:134
 msgid "Invalid catalog query."
 msgstr ""
 
-#: includes/class-catalog.php:131
+#: includes/class-catalog.php:135
 msgid "Invalid catalog scope."
 msgstr ""
 
-#: includes/class-catalog.php:144
+#: includes/class-catalog.php:148
 msgid "Invalid revision."
 msgstr ""
 
-#: includes/class-catalog.php:146
-#: includes/class-catalog.php:208
+#: includes/class-catalog.php:150
+#: includes/class-catalog.php:212
 msgid "Component not found."
 msgstr ""
 
-#: includes/class-catalog.php:167
+#: includes/class-catalog.php:171
 msgid "Use JSON within the request size limit."
 msgstr ""
 
-#: includes/class-catalog.php:180
+#: includes/class-catalog.php:184
 msgid "Use the content-free structure recipe to update this definition."
 msgstr ""
 
-#: includes/class-catalog.php:199
+#: includes/class-catalog.php:203
 msgid "Catalog is busy. Retry later."
 msgstr ""
 
-#: includes/class-catalog.php:204
+#: includes/class-catalog.php:208
 msgid "Personal component changed before sharing."
 msgstr ""
 
-#: includes/class-catalog.php:207
+#: includes/class-catalog.php:211
 msgid "Catalog changed. Reload before editing."
 msgstr ""
 
-#: includes/class-catalog.php:209
+#: includes/class-catalog.php:213
 msgid "Keep the registered machine key when updating a component."
 msgstr ""
 
-#: includes/class-catalog.php:210
+#: includes/class-catalog.php:214
 msgid "This machine key is already registered in this scope."
 msgstr ""
 
-#: includes/class-catalog.php:215
+#: includes/class-catalog.php:219
 msgid "Existing definitions are not converted automatically."
 msgstr ""
 
-#: includes/class-catalog.php:226
+#: includes/class-catalog.php:230
 msgid "An equivalent shared component is inactive. Ask a component manager to review it."
 msgstr ""
 
-#: includes/class-catalog.php:232
+#: includes/class-catalog.php:236
 msgid "Reuse the existing definition instead of creating a copy."
 msgstr ""
 
-#: includes/class-catalog.php:234
+#: includes/class-catalog.php:238
 msgid "Personal component limit reached (20). Reuse or revise existing definitions."
 msgstr ""
 
-#: includes/class-catalog.php:238
+#: includes/class-catalog.php:242
 msgid "Your shared component creation limit is reached. Reuse existing definitions or ask the site administrator to adjust the limit."
 msgstr ""
 
-#: includes/class-catalog.php:241
+#: includes/class-catalog.php:245
 msgid "Component exceeds 512 KiB."
 msgstr ""
 
-#: includes/class-catalog.php:245
+#: includes/class-catalog.php:249
 msgid "Catalog storage limit reached."
 msgstr ""
 
-#: includes/class-catalog.php:247
+#: includes/class-catalog.php:251
 #: includes/class-store.php:103
 msgid "InnoDB tables are required."
 msgstr ""
 
-#: includes/class-catalog.php:249
+#: includes/class-catalog.php:253
 #: includes/class-store.php:105
 msgid "Could not start transaction."
 msgstr ""
 
-#: includes/class-catalog.php:251
+#: includes/class-catalog.php:255
 msgid "Could not save component."
 msgstr ""
 
-#: includes/class-catalog.php:255
+#: includes/class-catalog.php:259
 msgid "Could not save catalog."
 msgstr ""
 
-#: includes/class-catalog.php:293
+#: includes/class-catalog.php:297
 msgid "Reload the personal component before sharing."
 msgstr ""
 
-#: includes/class-catalog.php:314
+#: includes/class-catalog.php:318
 msgid "Choose an active catalog revision or a component pinned in your saved article."
 msgstr ""
 
-#: includes/class-component-builder.php:30
+#: includes/class-component-appearance.php:111
+msgid "Appearance must reference distinct existing field keys and options supported by their types and layout."
+msgstr ""
+
+#: includes/class-component-builder.php:31
 msgid "Q&A requires question (text) and answer (textarea), in that order."
 msgstr ""
 
@@ -525,7 +539,7 @@ msgid "Secure MCP connection unavailable."
 msgstr ""
 
 #: includes/class-connections.php:110
-#: includes/plugin.php:141
+#: includes/plugin.php:142
 msgid "Payload exceeds 4 MB."
 msgstr ""
 
@@ -535,6 +549,30 @@ msgstr ""
 
 #: includes/class-connections.php:155
 msgid "The publishing connection is no longer authorized."
+msgstr ""
+
+#: includes/class-github-updater.php:93
+msgid "Create structured articles with your preferred AI."
+msgstr ""
+
+#: includes/class-github-updater.php:94
+msgid "View release notes on GitHub"
+msgstr ""
+
+#: includes/class-github-updater.php:102
+msgid "The GitHub update could not be verified. Check for updates again."
+msgstr ""
+
+#: includes/class-github-updater.php:106
+msgid "Could not create a temporary update file."
+msgstr ""
+
+#: includes/class-github-updater.php:111
+msgid "The GitHub update download failed."
+msgstr ""
+
+#: includes/class-github-updater.php:116
+msgid "The update ZIP failed its SHA-256 integrity check."
 msgstr ""
 
 #: includes/class-mcp.php:102
@@ -1094,8 +1132,8 @@ msgstr ""
 
 #: includes/class-review.php:136
 #: includes/class-review.php:150
-#: includes/plugin.php:228
-#: includes/plugin.php:271
+#: includes/plugin.php:229
+#: includes/plugin.php:272
 msgid "Review"
 msgstr ""
 
@@ -1128,8 +1166,8 @@ msgid "Expired"
 msgstr ""
 
 #: includes/class-review.php:160
-#: includes/plugin.php:225
-#: includes/plugin.php:258
+#: includes/plugin.php:226
+#: includes/plugin.php:259
 msgid "Articles"
 msgstr ""
 
@@ -1409,7 +1447,7 @@ msgid "Could not revoke transfer."
 msgstr ""
 
 #: includes/connections-page.php:9
-#: includes/plugin.php:227
+#: includes/plugin.php:228
 msgid "AI connections"
 msgstr ""
 
@@ -1595,176 +1633,176 @@ msgstr ""
 msgid "Deactivate Structured Fields Prototype before activating atshift DEFT. Saved data will be retained. You do not need to delete the old plugin."
 msgstr ""
 
-#: includes/plugin.php:41
+#: includes/plugin.php:42
 msgid "Structured drafts"
 msgstr ""
 
-#: includes/plugin.php:51
+#: includes/plugin.php:52
 msgid "atshift DEFT author"
 msgstr ""
 
-#: includes/plugin.php:52
+#: includes/plugin.php:53
 msgid "atshift DEFT designer"
 msgstr ""
 
-#: includes/plugin.php:53
+#: includes/plugin.php:54
 msgid "atshift DEFT publisher"
 msgstr ""
 
-#: includes/plugin.php:123
+#: includes/plugin.php:124
 msgid "Review not found."
 msgstr ""
 
-#: includes/plugin.php:130
+#: includes/plugin.php:131
 msgid "This local media file is missing, unsupported or inaccessible."
 msgstr ""
 
-#: includes/plugin.php:142
+#: includes/plugin.php:143
 msgid "Use application/json."
 msgstr ""
 
-#: includes/plugin.php:145
+#: includes/plugin.php:146
 msgid "Supply snapshot and integer expectedVersion only."
 msgstr ""
 
-#: includes/plugin.php:155
+#: includes/plugin.php:156
 msgid "Invalid version."
 msgstr ""
 
-#: includes/plugin.php:201
+#: includes/plugin.php:202
 msgid "This preview requires its authorized WordPress session and exact saved version."
 msgstr ""
 
-#: includes/plugin.php:201
-#: includes/plugin.php:208
+#: includes/plugin.php:202
+#: includes/plugin.php:209
 msgid "Private preview"
 msgstr ""
 
-#: includes/plugin.php:208
+#: includes/plugin.php:209
 msgid "A referenced media file is unavailable, changed or no longer permitted."
 msgstr ""
 
-#: includes/plugin.php:228
 #: includes/plugin.php:229
+#: includes/plugin.php:230
 msgid "Review structured article"
 msgstr ""
 
-#: includes/plugin.php:241
+#: includes/plugin.php:242
 msgid "Close"
 msgstr ""
 
-#: includes/plugin.php:250
+#: includes/plugin.php:251
 msgid "New article"
 msgstr ""
 
-#: includes/plugin.php:251
+#: includes/plugin.php:252
 msgid "Download article handoff"
 msgstr ""
 
-#: includes/plugin.php:251
+#: includes/plugin.php:252
 msgid "Article handoff"
 msgstr ""
 
-#: includes/plugin.php:252
+#: includes/plugin.php:253
 msgid "Import snapshot"
 msgstr ""
 
-#: includes/plugin.php:253
+#: includes/plugin.php:254
 msgid "Load sample"
 msgstr ""
 
-#: includes/plugin.php:254
+#: includes/plugin.php:255
 msgid "Media sample"
 msgstr ""
 
-#: includes/plugin.php:255
+#: includes/plugin.php:256
 msgid "Refresh articles"
 msgstr ""
 
-#: includes/plugin.php:257
+#: includes/plugin.php:258
 msgid "Private drafts"
 msgstr ""
 
-#: includes/plugin.php:259
+#: includes/plugin.php:260
 #: admin.js:84
 msgid "No article selected"
 msgstr ""
 
-#: includes/plugin.php:264
+#: includes/plugin.php:265
 msgid "View published post"
 msgstr ""
 
-#: includes/plugin.php:265
+#: includes/plugin.php:266
 msgid "Cancel reservation"
 msgstr ""
 
-#: includes/plugin.php:268
+#: includes/plugin.php:269
 msgid "Save draft"
 msgstr ""
 
-#: includes/plugin.php:269
+#: includes/plugin.php:270
 msgid "Export snapshot"
 msgstr ""
 
-#: includes/plugin.php:270
+#: includes/plugin.php:271
 msgid "Open theme preview"
 msgstr ""
 
-#: includes/plugin.php:275
+#: includes/plugin.php:276
 msgid "Edit article"
 msgstr ""
 
-#: includes/plugin.php:276
+#: includes/plugin.php:277
 msgid "Title"
 msgstr ""
 
-#: includes/plugin.php:278
+#: includes/plugin.php:279
 msgid "Component"
 msgstr ""
 
-#: includes/plugin.php:279
+#: includes/plugin.php:280
 msgid "Add component"
 msgstr ""
 
-#: includes/plugin.php:285
+#: includes/plugin.php:286
 msgid "Private files"
 msgstr ""
 
-#: includes/plugin.php:288
+#: includes/plugin.php:289
 msgid "Use"
 msgstr ""
 
-#: includes/plugin.php:289
+#: includes/plugin.php:290
 #: admin.js:164
 msgid "Reference only"
 msgstr ""
 
-#: includes/plugin.php:289
+#: includes/plugin.php:290
 #: admin.js:165
 msgid "Publication candidate"
 msgstr ""
 
-#: includes/plugin.php:290
+#: includes/plugin.php:291
 msgid "Add files"
 msgstr ""
 
-#: includes/plugin.php:296
+#: includes/plugin.php:297
 msgid "Article media"
 msgstr ""
 
-#: includes/plugin.php:298
+#: includes/plugin.php:299
 msgid "Existing WordPress media"
 msgstr ""
 
-#: includes/plugin.php:300
+#: includes/plugin.php:301
 msgid "Search media"
 msgstr ""
 
-#: includes/plugin.php:301
+#: includes/plugin.php:302
 msgid "More results"
 msgstr ""
 
-#: includes/plugin.php:305
+#: includes/plugin.php:306
 msgid "WordPress theme preview"
 msgstr ""
 

@@ -61,7 +61,7 @@ test("a translator PO compiles to MO and four path-hashed JS catalogs", () => {
 });
 
 test("distribution contains current translation files and excludes backups", () => {
-  const zip = unzipSync(readFileSync(new URL(`../.local/releases/atshift-deft-${version}.zip`, import.meta.url)));
+  const zip = unzipSync(readFileSync(process.env.SF_TEST_ZIP || new URL(`../.local/releases/atshift-deft-${version}.zip`, import.meta.url)));
   for (const name of readdirSync(new URL("languages/", plugin))) {
     if (!/\.(pot|po|mo|json)$/.test(name)) continue;
     const data = zip[`atshift-deft/languages/${name}`];

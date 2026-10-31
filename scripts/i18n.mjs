@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { readdirSync, readFileSync, writeFileSync, renameSync, unlinkSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync, renameSync, unlinkSync, mkdtempSync, mkdirSync, cpSync, rmSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,8 +16,14 @@ function wp(...args) {
 }
 const mode = process.argv[2];
 if (mode === "pot") {
-  wp("make-pot", source, `${languages}/atshift-deft.pot`, "--domain=atshift-deft", "--exclude=vendor,languages",
-    '--headers={"POT-Creation-Date":""}', '--file-comment=Copyright (C) 2026 at-shift\nThis file is distributed under the GPLv2 or later.');
+  mkdirSync(resolve(root, '.local'), { recursive: true });
+  const stage = mkdtempSync(resolve(root, '.local/i18n-source-'));
+  try {
+    cpSync(resolve(root, source), stage, { recursive: true, filter: path => !/\/(vendor|languages)(\/|$)/.test(path) });
+    cpSync(resolve(root, 'distribution/github/class-github-updater.php'), join(stage, 'includes/class-github-updater.php'));
+    wp("make-pot", stage, `${languages}/atshift-deft.pot`, "--domain=atshift-deft", "--slug=atshift-deft", "--exclude=vendor,languages",
+      '--headers={"POT-Creation-Date":""}', '--file-comment=Copyright (C) 2026 at-shift\nThis file is distributed under the GPLv2 or later.');
+  } finally { rmSync(stage, { recursive: true, force: true }); }
 } else if (mode === "compile") {
   const directory = resolve(root, process.argv[3] || languages);
   for (const file of readdirSync(directory).sort()) {

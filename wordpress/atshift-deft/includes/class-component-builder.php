@@ -19,6 +19,7 @@ final class ComponentBuilder {
         $properties['guidance'] = self::guidance_schema();
         $required = array_keys( $properties );
         $properties['behaviors'] = Behaviors::bindings_schema();
+        $properties['appearance'] = ComponentAppearance::schema();
         return array( 'type' => 'object', 'additionalProperties' => false, 'required' => $required, 'properties' => $properties );
     }
 
@@ -28,14 +29,17 @@ final class ComponentBuilder {
         if ( $qa && ( 2 !== count( $recipe->fields ) || 'question' !== $recipe->fields[0]->key || 'text' !== $recipe->fields[0]->type ||
             // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
             'answer' !== $recipe->fields[1]->key || 'textarea' !== $recipe->fields[1]->type ) ) throw new \InvalidArgumentException( __( 'Q&A requires question (text) and answer (textarea), in that order.', 'atshift-deft' ) );
-        $html = '<section class="sf-built sf-built-' . $recipe->layout . '"' . ( $qa ? ' data-sf-layout="qa"' : '' ) . '>';
+        $appearance = isset( $recipe->appearance ) ? ComponentAppearance::compile( $recipe->appearance, $recipe ) : array( 'class' => '', 'css' => '' );
+        $styled = '' !== $appearance['class'];
+        $html = '<section class="sf-built sf-built-' . $recipe->layout . ( $styled ? ' ' . $appearance['class'] : '' ) . '"' . ( $qa ? ' data-sf-layout="qa"' : '' ) . '>';
         foreach ( $recipe->fields as $index => $f ) {
             $key = esc_attr( $f->key ); $value = esc_html( $f->value );
+            $class = $styled ? ' class="sf-appearance-' . ( $qa ? 'field' : 'value' ) . '-' . $key . '"' : '';
             $tag = 'text' === $f->type && 0 === $index ? 'h3' : 'p';
-            if ( 'image' === $f->type ) $field = '<img data-field="' . $key . '" src="' . esc_attr( $f->value ) . '" alt="' . esc_attr( $f->alt ) . '">';
-            elseif ( 'link' === $f->type ) $field = '<a data-field="' . $key . '" href="' . esc_attr( $f->value ) . '">' . esc_html( $f->alt ) . '</a>';
-            else $field = '<' . $tag . ' data-field="' . $key . '">' . $value . '</' . $tag . '>';
-            $html .= $qa ? $field : '<div class="sf-built-field">' . $field . '</div>';
+            if ( 'image' === $f->type ) $field = '<img' . $class . ' data-field="' . $key . '" src="' . esc_attr( $f->value ) . '" alt="' . esc_attr( $f->alt ) . '">';
+            elseif ( 'link' === $f->type ) $field = '<a' . $class . ' data-field="' . $key . '" href="' . esc_attr( $f->value ) . '">' . esc_html( $f->alt ) . '</a>';
+            else $field = '<' . $tag . $class . ' data-field="' . $key . '">' . $value . '</' . $tag . '>';
+            $html .= $qa ? $field : '<div class="sf-built-field' . ( $styled ? ' sf-appearance-field-' . $key : '' ) . '">' . $field . '</div>';
         }
         $html .= '</section>';
         $c = (object) array( 'id' => $recipe->id, 'key' => $recipe->key, 'name' => $recipe->name, 'purpose' => $recipe->purpose,
@@ -44,6 +48,7 @@ final class ComponentBuilder {
                 (object) array( 'id' => 'list', 'name' => 'Visible answer', 'classes' => '' ),
                 (object) array( 'id' => 'accordion', 'name' => 'Expandable answer', 'classes' => '' ),
             ) : array( (object) array( 'id' => 'default', 'name' => 'Default', 'classes' => '' ) ) );
+        $c->css .= $appearance['css'];
         if ( property_exists( $recipe, 'behaviors' ) ) $c->behaviors = $recipe->behaviors;
         return Snapshot::component( $c );
     }

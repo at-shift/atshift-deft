@@ -50,12 +50,17 @@ test('plugin URLs use the root entry after bootstrap extraction', () => {
 });
 
 test('installable ZIP has only the new plugin root and includes guarded bootstrap', () => {
-  const file = new URL(`../.local/releases/atshift-deft-${pkg.version}.zip`, import.meta.url);
+  const file = process.env.SF_TEST_ZIP || new URL(`../.local/releases/atshift-deft-${pkg.version}.zip`, import.meta.url);
   const files = unzipSync(readFileSync(file));
   assert.ok(Object.keys(files).length > 400);
   assert.ok(Object.keys(files).every((name) => name.startsWith('atshift-deft/') && !name.includes('structured-fields.php')));
   assert.equal(Buffer.from(files['atshift-deft/LICENSE']).toString(), read('LICENSE'));
-  for (const path of ['atshift-deft.php', 'includes/plugin.php', 'includes/legacy-guard.php', 'includes/runtime.php', 'readme.txt']) {
+  const entry = Buffer.from(files['atshift-deft/atshift-deft.php']).toString();
+  const normalized = entry.replace(' * Update URI: https://github.com/at-shift/atshift-deft\n', '')
+    .replace("require_once __DIR__ . '/includes/class-github-updater.php';\n\\AtshiftDeft\\GitHubUpdater::register( __FILE__ );\n", '');
+  assert.equal(normalized, read(`${plugin}atshift-deft.php`));
+  assert.equal(entry.includes('GitHubUpdater'), Boolean(files['atshift-deft/includes/class-github-updater.php']));
+  for (const path of ['includes/plugin.php', 'includes/class-component-appearance.php', 'includes/legacy-guard.php', 'includes/runtime.php', 'readme.txt']) {
     assert.equal(Buffer.from(files[`atshift-deft/${path}`]).toString(), read(`${plugin}${path}`));
   }
 });

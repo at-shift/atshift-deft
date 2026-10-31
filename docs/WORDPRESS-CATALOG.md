@@ -1,5 +1,41 @@
 # WordPress Component Catalog (0.1.0-alpha.6)
 
+## Typed Appearance (0.6.0)
+
+`recipe.appearance` extends the existing bounded `catalog/structures` and personal
+recipe contracts. The `create-structure` MCP tool exposes the same schema; it is
+still authoring-only and create-only. No arbitrary-code or theme access is granted.
+Inspect `capabilities.styleStructures` before using it.
+
+Shared structure summaries include `appearance` and a content-free
+`structureRecipe` for the current revision. Personal recipes are not exposed this
+way. Historical component reads do not mislabel the current recipe as historical
+styling. Existing raw designer components remain unchanged.
+
+The compiler accepts typed container/field settings, six-digit hex colors or
+inherit/currentColor, bounded pixel integers and fixed enum values. It generates
+component-scoped selectors keyed by the normalized appearance and layout. Field
+targets use stable keys, not block IDs or child positions. There are no selectors,
+CSS strings, resource URLs, positioning, hiding or script inputs. Column ratios
+stack at 600px; Q&A question styling also targets the generated summary; link
+buttons retain visible keyboard focus. Omitted settings inherit the theme.
+
+The existing component revision covers the generated HTML and CSS. No snapshot
+schema or database migration is needed. Saved articles remain pinned; updates do
+not recolor previously saved articles. Different appearances can coexist in one
+article. Normalized duplicate designs reuse an existing shared component, under
+the same catalog lock and quotas. Theme Additional CSS is neither written nor
+automatically migrated. Custom designer-authored CSS retains its existing trust
+boundary and is not made safe merely by this new compiler.
+
+Regression test: run `tests/wordpress-appearance.php` with WP-CLI `eval-file` in a
+disposable local database named `sf_deft_appearance_*`, with DEFT and MCP Adapter
+active. The suite creates local fixtures and a local publication; drop the entire
+disposable database afterward. Optional `SF_APPEARANCE_LEGACY` contains released
+unstyled recipe hashes; `SF_APPEARANCE_ARTIFACT_DIR` receives private QA artifacts.
+
+## Original Catalog Contract
+
 For the optional alpha.10 MCP connection and its narrower draft-only permissions,
 see [ALPHA10.md](ALPHA10.md). The REST catalog API below remains session-based.
 

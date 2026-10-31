@@ -1,7 +1,10 @@
 # Japanese interface copy for onboarding and client connection guidance.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.5.2\n"
+"Project-Id-Version: atshift DEFT 0.6.0\n"
+"PO-Revision-Date: 2026-10-31 20:31+0900\n"
+"Last-Translator: at-shift (AI-assisted)\n"
+"Language-Team: Japanese\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -161,3 +164,31 @@ msgstr "このアカウントには公開アクセスを許可する権限があ
 #: includes/class-onboarding.php
 msgid "Only grant this access to a trusted AI connection: it can publish without another WordPress approval. Initial publication only is supported; later draft edits do not update the public post."
 msgstr "信頼するAI接続だけに許可してください。WordPressでの再承認なしに公開できる権限です。現在は初回公開のみ対応し、公開後の下書き編集は公開記事に反映されません。"
+
+#: includes/class-component-appearance.php
+msgid "Appearance must reference distinct existing field keys and options supported by their types and layout."
+msgstr "装飾には重複しない既存のフィールド名を指定し、その入力タイプとレイアウトで利用できる設定を使用してください。"
+
+#: includes/class-github-updater.php
+msgid "Create structured articles with your preferred AI."
+msgstr "普段使うAIで構造化された記事を作成します。"
+
+#: includes/class-github-updater.php
+msgid "View release notes on GitHub"
+msgstr "GitHubでリリースノートを表示"
+
+#: includes/class-github-updater.php
+msgid "The GitHub update could not be verified. Check for updates again."
+msgstr "GitHubの更新を確認できませんでした。更新をもう一度確認してください。"
+
+#: includes/class-github-updater.php
+msgid "Could not create a temporary update file."
+msgstr "更新用の一時ファイルを作成できませんでした。"
+
+#: includes/class-github-updater.php
+msgid "The GitHub update download failed."
+msgstr "GitHubから更新ファイルをダウンロードできませんでした。"
+
+#: includes/class-github-updater.php
+msgid "The update ZIP failed its SHA-256 integrity check."
+msgstr "更新ZIPのSHA-256整合性チェックに失敗しました。"

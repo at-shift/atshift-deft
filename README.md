@@ -5,14 +5,15 @@
 Turn a conversation with your preferred AI into a structured WordPress article: layout, draft, preview, and immediate or scheduled publication.
 DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-The current version, **0.5.2**, is a development release with clearer steps from draft to publication. Start on an isolated test site with a backup.
+The current version, **0.6.0**, adds reusable component styling and verified GitHub updates. Start on an isolated test site with a backup.
 
 ## Getting Started
 
 ### STEP 1. Install the Plugin
 
-[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.2/atshift-deft-0.5.2.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
-You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.6.0/atshift-deft-0.6.0.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.6.0). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+Upgrading from 0.5.x requires this ZIP replacement once. GitHub packages from 0.6.0 onward receive later official releases through the normal WordPress plugin update screen. Automatic updates remain your choice.
 
 ### STEP 2. Give the Guide to Your AI
 
@@ -31,6 +32,8 @@ Your site administrator must activate the official **WordPress MCP Adapter 0.7.1
 The guide includes an optional sample for trying draft saving and previews without preparing any materials. You can skip it.
 Tell the AI who your article is for and what you want to communicate. Add supporting documents or a layout reference image when useful.
 You can discuss design and columns too: **work with your current theme's look** or **assemble a separate article layout** from available components. A reference image is optional; the AI checks what the site supports before proposing a layout.
+
+DEFT supports **reusable component appearance**: an authorized AI can register bounded colors, spacing, borders, typography, column proportions and link-button styling inside DEFT. These styled components are shared through the existing catalog and travel with saved articles and previews. No theme Additional CSS changes are needed.
 
 > Create an announcement for first-time visitors. Organize these materials so the date and registration instructions are easy to find.
 
@@ -98,7 +101,7 @@ The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twent
 
 Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## Scope of 0.5.2
+## Scope of 0.6.0
 
 DEFT is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
 Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.
@@ -121,6 +124,12 @@ See [FOLLOW-UP.md](docs/FOLLOW-UP.md) for known limitations and [CHANGELOG.md](C
 
 The WordPress UI uses gettext and supports additional POT, PO/MO, and JavaScript JSON catalogs.
 The bundled Japanese catalog currently covers only some existing guidance, not the entire interface.
+Both distribution channels include the same versioned POT, Japanese PO/MO and JavaScript catalogs. No additional complete language translations are claimed.
+
+## Distribution Channels
+
+The GitHub ZIP includes a GitHub-only updater; the separate WordPress.org submission ZIP does not. Their core features, plugin slug, data identifiers and translation files are identical. The submission branch is `wordpress-org/0.6.0`; submission is not approval or WordPress.org availability.
+See [Release and Update Channels](docs/RELEASING.md) for packaging, verification, first-upgrade and channel-switching steps.
 See [Adding Translation Files](wordpress/atshift-deft/languages/README.md).
 
 ## Development and Build

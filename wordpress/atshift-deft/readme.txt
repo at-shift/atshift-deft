@@ -1,8 +1,10 @@
 === atshift DEFT ===
+Contributors: atshift
+Tags: ai, mcp, publishing, structured-content
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.5.2
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,7 +12,7 @@ Structured drafts, scoped AI connections, and owner-authorized immediate or sche
 
 == Description ==
 
-This is an experimental plugin for isolated test sites, not a production release.
+This is an early release. Evaluate it on an isolated test site before production use.
 It does not replace atshift Fields or migrate existing posts.
 DEFT stands for Delegate Execution. Focus on Thinking.
 
@@ -32,6 +34,8 @@ These Markdown files are required documentation shipped with the plugin.
 3. Open atshift DEFT and download the AI guide.
 4. Provision private local storage outside all public document roots before uploading files.
 5. For MCP access, install the official WordPress MCP Adapter 0.7.1 or newer separately.
+6. Give the downloaded guide to your AI, follow connection setup, then try the optional private sample.
+7. Describe the article and its layout, review the saved preview, and explicitly request publication only after granting publishing access.
 
 Private storage requires PHP fileinfo, local Unix permissions and explicit server
 configuration. HTTPS is required except for explicitly local loopback development.
@@ -41,15 +45,47 @@ No AI provider credentials or external AI service are bundled with this plugin.
 
 = Is this ready for production? =
 
-No. This development build is for evaluation on an isolated test site. The matching Stable tag
-identifies this package for validation; it does not indicate a production release.
+Evaluate this early release on an isolated test site first. Published-post updates,
+ownership transfers and file-retention controls are not yet implemented.
+Back up before upgrading and review the documented permission boundaries.
 
 = Does installing the plugin publish existing drafts? =
 
 No. Existing drafts remain private. Immediate or scheduled publication requires
 the owning user's publishing authorization through the supported connection.
 
+= Can my AI decorate components without editing my theme? =
+
+Yes. An authorized authoring connection can reuse or create shared structures with
+typed color, spacing, border, typography, column and link-button options. DEFT
+generates component-scoped CSS. Saved articles retain their component revisions.
+Arbitrary CSS and JavaScript are not accepted by the AI structure-creation tool.
+
+== External Services ==
+
+DEFT does not call an AI provider on its own. You connect your chosen external AI
+client through the separately installed WordPress MCP Adapter. That authorized
+client receives the shared component catalog and the owner's requested drafts,
+previews and files. Sending material to that client is subject to the provider's
+terms and privacy policy. Connection setup and publication access are opt-in.
+OAuth uses administrator-registered clients; it does not fetch remote client metadata.
+
+The WordPress.org distribution uses WordPress.org updates only. The separate GitHub
+distribution checks api.github.com for official at-shift/atshift-deft releases and
+downloads update metadata and ZIPs from github.com. It sends its plugin version
+and the request IP address, not article contents, credentials or site URL. GitHub
+terms: https://docs.github.com/en/site-policy/github-terms/github-terms-of-service
+GitHub privacy: https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement
+The GitHub updater is excluded from WordPress.org packages.
+
 == Changelog ==
+
+= 0.6.0 =
+* Add reusable shared component appearance with bounded settings and component-scoped CSS.
+* Carry styling through saved snapshots, previews and publication without modifying theme Additional CSS.
+* Preserve field-key targeting, shared reuse, author isolation and existing article revisions.
+* Include matching translation catalogs and separate WordPress.org and GitHub distribution packages.
+* The GitHub-only package supports verified release updates through WordPress; existing 0.5.x installs need one manual ZIP upgrade.
 
 = 0.5.2 =
 * Add publication and scheduling steps to Articles and AI connections, including Japanese guidance.

@@ -1,6 +1,6 @@
 {
   "name": "atshift-deft",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,6 +14,8 @@
     "build:wordpress": "node scripts/build-wordpress.mjs",
     "prepack:wordpress": "npm run build:wordpress",
     "pack:wordpress": "node scripts/package-wordpress.mjs",
+    "pack:wordpress-org": "SF_DISTRIBUTION=wordpress-org node scripts/package-wordpress.mjs",
+    "test:distribution": "node --test tests/distribution.test.mjs",
     "test:wordpress": "php tests/wordpress-integration.php",
     "test:wordpress-http": "node --test tests/wordpress-http.test.mjs",
     "test:wordpress-assets": "php tests/wordpress-assets.php && node --test tests/wordpress-assets-http.test.mjs",

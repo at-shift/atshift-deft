@@ -82,7 +82,7 @@ final class Mcp {
             if ( is_wp_error( $result ) ) return $result;
             $publish = Connections::can_publish();
             $authoring = Connections::can_author();
-            $result['capabilities'] = array( 'createStructure' => $authoring, 'createPersonal' => false, 'registerShared' => false, 'manageShared' => false, 'publish' => $publish,
+            $result['capabilities'] = array( 'createStructure' => $authoring, 'styleStructures' => $authoring, 'createPersonal' => false, 'registerShared' => false, 'manageShared' => false, 'publish' => $publish,
                 'transferFiles' => $authoring && true === Assets::permission(), 'portablePreview' => $authoring );
             $result['transport'] = array( 'mcpEndpoint' => rest_url( ltrim( $publish ? Connections::PUBLISH_ROUTE : Connections::ROUTE, '/' ) ), 'connectedToAI' => true, 'credentialsIncluded' => false );
             $result['publication'] = array( 'enabled' => $publish, 'siteTimeZone' => wp_timezone_string(), 'humanPresenceVerified' => false, 'instructions' => Publications::instructions() );
@@ -90,7 +90,7 @@ final class Mcp {
                 'fileTypes' => array_values( Assets::MIMES ), 'attachmentAccessProvidedByClient' => true,
                 'steps' => array( 'context', 'reuse-or-create-structure', 'save-draft', 'list-media', 'prepare-file-transfer-if-needed', 'save-draft-with-references', 'get-preview', 'user-requested-publication' ) );
             $result['instructions'] = ( $publish ? "Publishing tools are authorized. Follow publication.instructions. " : "Publishing is not authorized. " )
-                . ( $authoring ? "Authoring tools are authorized: create-structure (create-only bounded recipes), list-media, prepare-file-transfer and get-preview. No raw code or shared-definition updates. " : "Authoring tools require a newly authorized connection. Existing draft-only keys cannot register structures, transfer files or export portable previews. " )
+                . ( $authoring ? "Authoring tools are authorized: create-structure (create-only bounded recipes, including typed appearance), list-media, prepare-file-transfer and get-preview. Reuse styled components first; create a new shared structure for a missing appearance without changing existing definitions or theme Additional CSS. No raw code or shared-definition updates. " : "Authoring tools require a newly authorized connection. Existing draft-only keys cannot register structures, style structures, transfer files or export portable previews. " )
                 . "No review decisions or account administration. Reuse available components.\n\n" . $result['instructions'];
             return $result;
         }

@@ -63,7 +63,7 @@ final class CatalogContext {
             return array( 'schemaVersion' => 1, 'pluginVersion' => VERSION, 'instructions' => file_get_contents( dirname( __DIR__ ) . '/AI-GUIDE.md' ),
                 'language' => array( 'replyLanguage' => $reply ?: ( $conversation ?: $locale ), 'source' => $reply ? 'explicit' : ( $conversation ? 'conversation' : 'wordpress-user-locale' ),
                     'userLocale' => $locale, 'contentLanguage' => $content ?: null, 'countryInference' => false ),
-                'capabilities' => array( 'createStructure' => true, 'createPersonal' => true, 'registerShared' => Catalog::can_register(), 'manageShared' => Catalog::can_manage(), 'publish' => false ),
+                'capabilities' => array( 'createStructure' => true, 'styleStructures' => true, 'createPersonal' => true, 'registerShared' => Catalog::can_register(), 'manageShared' => Catalog::can_manage(), 'publish' => false ),
                 'limits' => array( 'personalComponents' => 20, 'sharedComponentsPerCreator' => Catalog::shared_limit( get_current_user_id() ),
                     'privateMediaBytesPerUser' => Assets::user_limit( get_current_user_id() ), 'siteComponents' => 100, 'versionsPerComponent' => 30, 'fieldsPerPersonalComponent' => 12 ),
                 'catalogToken' => self::token( $rows ), 'components' => $items, 'matches' => $matches, 'matching' => 'lexical-hint-not-semantic-judgment',

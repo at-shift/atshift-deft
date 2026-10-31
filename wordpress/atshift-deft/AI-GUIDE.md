@@ -127,10 +127,11 @@ suggest a suitable composition rather than blocking article creation on a choice
 The MCP context does not expose the active theme's styles or design inventory.
 Do not claim to have inspected or applied them without actual evidence. Portable
 previews omit the theme and JavaScript; a separate article layout can still be
-affected by the theme on the site. Never change theme settings, shared definitions,
-or upload arbitrary HTML/CSS/JS as part of this guidance. Explain unsupported needs
-and offer the closest available layout. If new styling is needed, identify the
-separate designer/administrator task without asking the user to write code.
+affected by the theme on the site. Never change theme settings or Additional CSS,
+overwrite shared definitions, or upload arbitrary HTML/CSS/JS as part of this
+guidance. Use the bounded component appearance workflow below for new decoration.
+Explain unsupported needs and offer the closest available layout; custom markup
+or styles outside this contract remain a separate designer/administrator task.
 
 After the text-only sample, mention these layout options if not already explained;
 do not automatically add components or media to the sample to demonstrate them.
@@ -269,6 +270,66 @@ an instruction to ignore a newer conversational language preference.
 8. Using a shared definition does not grant permission to update or retire it.
    Management is separate; saved articles keep their pinned revisions. The usage
    list is not a permission grant for using retired/old versions in new articles.
+
+## Reusable Component Appearance
+
+Decoration belongs to the DEFT component, not the theme's Additional CSS. Never
+use a browser, another connector, customizer, global styles or theme files to work
+around this boundary. Reuse an existing styled component before making another.
+
+1. Read live context and check `capabilities.styleStructures`. Older installations
+   or draft-only connections may not support it; do not claim success or fall back
+   to theme editing. An authoring connection is required.
+2. Inspect each component's `appearance`, fields and presentations. Shared bounded
+   components expose a content-free `structureRecipe`; copy it only when a distinct
+   reusable appearance is genuinely missing. Keep field keys and types stable. Give
+   the new definition a new ID/key and generic name, purpose and guidance. Do not
+   place article text, filenames, URLs or client details in the shared definition.
+3. Call `create-structure` with `expectedVersion: 0`, the new recipe and a fresh
+   reuse receipt. Set optional `recipe.appearance` using the live schema:
+   - `container`: background/text color, border, corner radius, padding, spacing,
+     typography and optional subtle shadow. `gap` is for stack/columns, not Q&A.
+     Omit overrides to inherit the theme.
+   - `columns`: equal, label-value, wide-left or wide-right for columns layouts.
+     All supported column ratios stack below 600px.
+   - `fields`: entries identified by `key`, never by position. `box` decorates the
+     field area, `text` styles text, `span: "full"` spans both columns, and
+     `linkStyle: "button"` presents a real link as a keyboard-focusable button.
+     Image fields do not accept text styles; Q&A and stack do not accept column spans.
+   Colors are six-digit hex, `inherit` or `currentColor`; lengths are bounded integer
+   pixels, not CSS strings. Raw selectors, classes, CSS functions/URLs, scripts,
+   fixed overlays, hiding content and external resources are not accepted.
+4. Always use the returned component ID/revision, including `reused: true`. This
+   is a shared catalog component available to other authors, not a private copy.
+   Identical markup/style contracts reuse the existing entry; ordinary creation
+   quotas still apply. No AI connection may update an existing shared definition.
+5. Read the draft again and change only the requested blocks to the new component
+   revision, retaining their IDs and values. Save with the current expectedVersion.
+   Do not silently migrate other articles or change their pinned component versions.
+6. Inspect the saved preview, including narrow screens, contrast, link focus and
+   Q&A behavior where relevant. Component HTML/CSS travels with the immutable
+   snapshot into portable previews and publication. Theme typography may still
+   differ; portable previews intentionally do not include the site theme.
+
+Example appearance for a two-column announcement with fields `heading`, `body`,
+`deadline` and `registration` (the fields must actually exist in that recipe):
+
+```json
+{
+  "container": {"backgroundColor":"#ffffff","borderColor":"#cbd5d1","borderRadius":8,"padding":20,"gap":16},
+  "columns":"wide-left",
+  "fields":[
+    {"key":"heading","span":"full","text":{"color":"#153d38","fontSize":28,"fontWeight":"bold"}},
+    {"key":"deadline","box":{"backgroundColor":"#fff0ec","padding":16},"text":{"color":"#8c2920","fontWeight":"bold"}},
+    {"key":"registration","linkStyle":"button","text":{"color":"#153d38","fontWeight":"bold"}}
+  ]
+}
+```
+
+Custom designer-authored components without `structureRecipe` cannot be converted
+or restyled automatically through this bounded workflow. Reuse them as registered,
+or propose a supported structure while preserving the article's information.
+Existing theme CSS is never deleted or migrated automatically.
 
 ## Scripted Behavior
 

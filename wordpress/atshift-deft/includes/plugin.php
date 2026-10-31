@@ -12,6 +12,7 @@ require_once __DIR__ . '/class-transfer.php';
 require_once __DIR__ . '/class-review.php';
 require_once __DIR__ . '/class-catalog.php';
 require_once __DIR__ . '/class-component-usage.php';
+require_once __DIR__ . '/class-component-appearance.php';
 require_once __DIR__ . '/class-component-builder.php';
 require_once __DIR__ . '/class-catalog-context.php';
 require_once __DIR__ . '/class-onboarding.php';
