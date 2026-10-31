@@ -29,8 +29,11 @@ Your site administrator must activate the official **WordPress MCP Adapter 0.7.1
 
 The guide includes an optional sample for trying draft saving and previews without preparing any materials. You can skip it.
 Tell the AI who your article is for and what you want to communicate. Add supporting documents or a layout reference image when useful.
+You can discuss design and columns too: **work with your current theme's look** or **assemble a separate article layout** from available components. A reference image is optional; the AI checks what the site supports before proposing a layout.
 
 > Create an announcement for first-time visitors. Organize these materials so the date and registration instructions are easy to find.
+
+For example, add "Keep the look of my current theme" or "Use a two-column layout inspired by this image." Check the theme-based result in the owner-only WordPress preview; portable previews omit theme styles. This does not automatically change your theme or promise an exact design copy.
 
 ### STEP 5. Review and Choose When to Publish
 

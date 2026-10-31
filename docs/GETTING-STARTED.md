@@ -128,6 +128,15 @@ Example:
 
 Portable previews are for checking structure and content. They omit the theme and JavaScript, embed images up to a combined 2 MiB, and report omitted images or PDF contents. Use **Open theme preview** while signed in as the owner to check the actual theme. Public preview links are not issued.
 
+### Choose a Design Direction
+
+Ask about layout as well as wording. You can describe the arrangement or show a reference image; neither code nor a reference image is required.
+
+- **Use the current theme's look:** "Keep the design consistent with my site." The AI reuses suitable registered components; theme styles apply where those components do not override them. Theme-specific design elements must be supported by the available components.
+- **Assemble a separate article layout:** "Use an image-and-text two-column section, followed by the event details." The AI combines existing components and, with authoring permission, can fill a genuine gap with a supported stack, two-column or Q&A structure. Columns stack on narrow screens.
+
+The AI should reuse your stated preference or suggest a suitable layout, not require a design questionnaire. A reference image is a guide to structure, not a guarantee of exact reproduction. MCP does not supply an inventory of the theme's styles, and theme settings are not changed automatically. A separate layout still appears within the theme, so check both directions in the owner-only theme preview. Additional custom styling requires a separate designer/administrator task, not arbitrary code through the AI connection.
+
 Chat attachments do not transfer automatically. The AI client must be able to read actual file bytes and make the HTTP upload. Word documents and text can serve as source material for the AI, but managed uploads are limited to JPEG, PNG, WebP, and PDF.
 
 ### Small Manual Edits

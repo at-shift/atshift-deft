@@ -770,11 +770,11 @@ msgid "Give this guide to your usual AI"
 msgstr ""
 
 #: includes/class-onboarding.php:18
-msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article."
+msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article. Ask about layout as well as wording: work with your theme's look or assemble a separate article layout, using a reference image if helpful."
 msgstr ""
 
 #: includes/class-onboarding.php:28
-#: includes/class-onboarding.php:94
+#: includes/class-onboarding.php:95
 msgid "Workspace access is required."
 msgstr ""
 
@@ -782,12 +782,12 @@ msgstr ""
 msgid "The current catalog could not be read."
 msgstr ""
 
-#: includes/class-onboarding.php:94
-#: includes/class-onboarding.php:97
+#: includes/class-onboarding.php:95
+#: includes/class-onboarding.php:98
 msgid "AI guide"
 msgstr ""
 
-#: includes/class-onboarding.php:97
+#: includes/class-onboarding.php:98
 msgid "The AI guide could not be prepared. Please try again."
 msgstr ""
 

@@ -17,8 +17,8 @@ msgstr "AIと接続する"
 msgid "Give this guide to your usual AI"
 msgstr "手順書を、いつものAIへ"
 
-msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article."
-msgstr "手順書をダウンロードして、いつものAIに読ませてください。AIが接続を案内し、接続を確認できたら、そのまま記事作成の相談へ進みます。"
+msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article. Ask about layout as well as wording: work with your theme's look or assemble a separate article layout, using a reference image if helpful."
+msgstr "手順書をダウンロードして、いつものAIに読ませてください。AIが接続を案内し、接続を確認できたら、そのまま記事作成の相談へ進みます。文章だけでなく、段組や見た目も相談できます。「今のテーマに馴染ませたい」「記事用に別のレイアウトを組みたい」など、希望や参考画像をAIに伝えてください。"
 
 #, php-format
 msgid "atshift DEFT requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged."

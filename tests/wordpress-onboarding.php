@@ -28,6 +28,7 @@ try {
     wp_set_current_user( $users[0] ); update_user_meta( $users[0], 'locale', 'ja' );
     $first = sfo_render();
     sfo_check( str_contains( $first, 'id="sf-ai-welcome"' ) && str_contains( $first, '手順書をダウンロードして、いつものAIに読ませてください' ) && str_contains( $first, 'AIが接続を案内し' ), 'First Articles visit starts with giving the guide to AI in Japanese' );
+    sfo_check( str_contains( $first, '段組や見た目も相談できます' ) && str_contains( $first, '今のテーマに馴染ませたい' ) && str_contains( $first, '記事用に別のレイアウトを組みたい' ), 'Japanese introduction explains theme-aware and separate article layout choices' );
     sfo_check( str_contains( $first, '<dialog id="sf-ai-welcome"' ) && str_contains( $first, 'id="sf-ai-welcome-download"' ) && ! str_contains( $first, 'AIへの自動接続・記事の公開には対応していません' ), 'First-use modal contains the focused instruction and download without technical detail' );
     sfo_check( str_contains( $first, 'id="sf-ai-guide"' ) && str_contains( $first, 'AI用手順書をダウンロード' ), 'Download is available before creating or selecting an article' );
     $dom = new DOMDocument(); @$dom->loadHTML( '<?xml encoding="UTF-8">' . $first ); $xpath = new DOMXPath( $dom );
@@ -59,6 +60,8 @@ try {
     sfo_check( str_contains( $doc, 'transport.connectedToAI=true' ) && str_contains( $doc, 'transport.mcpEndpoint matching' ) && str_contains( $doc, 'Do not save a test draft, upload a file or publish as a connection check' ), 'Connection verification requires live tools and remains read-only' );
     sfo_check( str_contains( $doc, 'No separate sample file or real materials are needed' ) && str_contains( $doc, 'Fictional practice brief' ) && str_contains( $doc, 'Proceed only after the user chooses the sample' ), 'One downloaded guide contains a fictional sample requiring explicit opt-in' );
     sfo_check( str_contains( $doc, 'The sample is optional, not an onboarding gate' ) && str_contains( $doc, 'Do not offer it' ) && str_contains( $doc, 'existing article brief without asking for it again' ), 'Skipping, resuming and completing the sample preserve the original conversation' );
+    sfo_check( str_contains( $doc, '### Design and Layout Guidance' ) && str_contains( $doc, 'Work with the current theme\'s look' ) && str_contains( $doc, 'Assemble a separate article layout' ) && str_contains( $doc, 'Do not add a mandatory design questionnaire' ), 'AI guidance introduces both layout directions without another onboarding gate' );
+    sfo_check( str_contains( $doc, 'MCP context does not expose the active theme\'s styles' ) && str_contains( $doc, 'pixel-perfect reproduction' ) && str_contains( $doc, 'do not automatically add components or media to the sample' ), 'Design guidance preserves theme-inspection limits and the bounded sample' );
     sfo_check( str_contains( $doc, 'expectedVersion 0 and fresh block IDs' ) && str_contains( $doc, 'different article ID for' ) && str_contains( $doc, 'set-publication or schedule the sample' ) && str_contains( $doc, 'capabilities.portablePreview' ), 'Sample instructions isolate drafts, forbid publication and respect preview authority' );
     preg_match( '/```json\n(.*?)\n```/s', $doc, $matches );
     $data = json_decode( $matches[1] ?? '', false, 128, JSON_THROW_ON_ERROR );

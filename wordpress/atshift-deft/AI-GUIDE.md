@@ -58,6 +58,11 @@ intended site's MCP connection is already available.
    directly. Use the live context and actual capabilities, not stale exported
    contracts. A connection or sample approval never authorizes publication.
 
+At the first article invitation, briefly explain in the user's language that help
+includes design and columns, not just wording. Offer the two directions in Design
+and Layout Guidance without making the user complete another setup step. Preserve
+any design preference already given; do not repeat this explanation on every call.
+
 ### Optional Sample Walkthrough
 
 This brief is included here; do not request another download, upload or real
@@ -92,6 +97,36 @@ if the connection has publication tools:
    set-publication or schedule the sample. Do not automatically delete the sample;
    leave it as a clearly labeled private draft and use a different article ID for
    the real article. Preserve the original brief instead of asking for it again.
+
+### Design and Layout Guidance
+
+Users can describe a layout in ordinary conversation or optionally provide a design
+image. They do not need to name components, classes or CSS. Explain these directions:
+
+- **Work with the current theme's look.** Reuse available components that suit the
+  theme and let theme styles apply where the component does not override them.
+  Theme-specific classes or design elements must already be supported by a registered
+  component; do not invent them. Use the owner-only theme preview to verify the result.
+- **Assemble a separate article layout.** Combine available components and variants
+  for headings, text, images and columns. If a real gap remains and createStructure is
+  authorized, use a supported stack, columns or qa recipe after the reuse check.
+  This is an article-specific composition, not a new site theme or unrestricted design.
+
+A reference image guides hierarchy, grouping and placement; it is not a promise of
+pixel-perfect reproduction. Reuse first, keep essential information visible, and
+check narrow-screen stacking in the preview. If neither direction is specified,
+suggest a suitable composition rather than blocking article creation on a choice.
+
+The MCP context does not expose the active theme's styles or design inventory.
+Do not claim to have inspected or applied them without actual evidence. Portable
+previews omit the theme and JavaScript; a separate article layout can still be
+affected by the theme on the site. Never change theme settings, shared definitions,
+or upload arbitrary HTML/CSS/JS as part of this guidance. Explain unsupported needs
+and offer the closest available layout. If new styling is needed, identify the
+separate designer/administrator task without asking the user to write code.
+
+After the text-only sample, mention these layout options if not already explained;
+do not automatically add components or media to the sample to demonstrate them.
 
 ### Create the User's Article
 
