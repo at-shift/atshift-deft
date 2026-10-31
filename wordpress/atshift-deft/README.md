@@ -1,4 +1,4 @@
-# atshift DEFT 0.5.1
+# atshift DEFT 0.5.2
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
@@ -15,7 +15,7 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Download `atshift-deft-0.5.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1), which also includes its SHA-256 checksum. Upload it through Plugins >
+Download `atshift-deft-0.5.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
@@ -23,7 +23,8 @@ archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
-The 0.5.1 changes improve connection setup and documentation without changing data formats.
+The 0.5.2 changes clarify the draft-to-publication workflow without changing data formats or permissions.
+After upgrading, download a fresh AI guide from Articles and ask your AI to read it.
 When upgrading from Structured Fields Prototype, back up the site, deactivate the
 old plugin, then install and activate atshift DEFT. Do not delete the old data.
 The changed folder/main file is a different WordPress plugin identity, not an
@@ -71,6 +72,28 @@ Access tokens last ten minutes; refresh tokens rotate within a 30-day consent gr
 Refresh reuse revokes the grant. See [CONNECTIONS.md](docs/CONNECTIONS.md).
 Actual ChatGPT, Claude and Gemini account flows still require a public HTTPS test.
 Automatic client registration and remote client metadata fetching are not supported.
+
+## Publish a Saved Draft
+
+**Save draft** and **Review** do not publish. Open **Articles > How to publish or
+schedule** for the in-plugin steps.
+
+1. Save and check **Open theme preview**.
+2. Open **AI connections** using the draft owner's WordPress account (administrator
+   or **atshift DEFT publisher**). For a key-based client, select **Allow immediate
+   and scheduled public publication of my drafts**, then **Create connection**.
+   Add its returned publishing URL and new key as a separate AI connection; keep
+   the draft connection. For OAuth, choose **Use the publishing endpoint** and
+   authorize publication with the same owner account and an application that permits it.
+3. Return to your AI conversation, verify publication access, and say "Publish
+   this draft now and give me the URL" or specify a date, time and time zone.
+4. Check **Articles > Publication** and **View published post**. A scheduled article
+   is not public yet; **Cancel reservation** cancels a pending schedule.
+
+Only grant this access to a trusted client: there is no second WordPress approval.
+Never paste a key into chat. Missing publication options require administrator
+help with the same account, not another person's connection. Setup alone does
+not request publication; the optional sample stays private.
 
 An opt-in **atshift DEFT publisher** can create a separate publishing key.
 Its displayed endpoint additionally exposes get-publication, set-publication and

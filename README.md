@@ -5,18 +5,19 @@
 Turn a conversation with your preferred AI into a structured WordPress article: layout, draft, preview, and immediate or scheduled publication.
 DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-The current version, **0.5.1**, is a development release with updated AI connection guidance. Start on an isolated test site with a backup.
+The current version, **0.5.2**, is a development release with clearer steps from draft to publication. Start on an isolated test site with a backup.
 
 ## Getting Started
 
 ### STEP 1. Install the Plugin
 
-[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.1/atshift-deft-0.5.1.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
-You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.2/atshift-deft-0.5.2.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2). GitHub's **Download ZIP** contains source code, not the installable plugin package.
 
 ### STEP 2. Give the Guide to Your AI
 
 Open **atshift DEFT** in WordPress and choose **Download AI guide** in the welcome dialog. Attach the file to your usual AI conversation or add it to your chat project's files.
+After upgrading, download a fresh guide using the same button in **Articles** and ask the AI to read it; an earlier copy does not update itself.
 
 > Read this guide and walk me through connecting to my site.
 
@@ -37,8 +38,15 @@ For example, add "Keep the look of my current theme" or "Use a two-column layout
 
 ### STEP 5. Review and Choose When to Publish
 
-Check the preview and request changes in the conversation. To delegate publication, an authorized publisher must separately enable publication access for the connection. Then say **"Publish now"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."**
-The guided workflow keeps articles as drafts unless you ask to publish. The sample walkthrough does not publish or schedule anything.
+**Saving a draft or approving Review does not publish it.** Check the preview, then:
+
+1. **First time only:** open **atshift DEFT > AI connections** as the draft owner (administrator or **atshift DEFT publisher**).
+2. For a key-based client, check **Allow immediate and scheduled public publication of my drafts**, choose **Create connection**, and add the returned publishing URL and new key as a separate AI connection. Keep the draft connection; its key does not gain publishing rights. For OAuth, choose **Use the publishing endpoint** and grant publication access with the same owner account.
+3. Return to your AI conversation, verify publication access, then say **"Publish this draft now and give me the public URL"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."**
+4. Check the returned result or **Articles > Publication**. **View published post** opens a published article; a scheduled article is not public yet. **Cancel reservation** cancels a pending schedule.
+
+Grant publication access only to a trusted connection: it can publish **without another WordPress approval**. Keep keys in secure client settings, never chat. Initial publication only is supported; later draft saves do not update a published post.
+The sample walkthrough remains draft-only. For role requirements, OAuth setup and troubleshooting, see [Publish Now or Schedule](docs/GETTING-STARTED.md#7-publish-now-or-schedule).
 
 See the [Installation and User Guide](docs/GETTING-STARTED.md) for detailed steps and [AI Client Connection Routes](wordpress/atshift-deft/docs/CONNECTIONS.md) for client-specific setup.
 A [Japanese user guide](wordpress/atshift-deft/GETTING-STARTED.ja.md) is also available.
@@ -90,7 +98,7 @@ The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twent
 
 Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## Scope of 0.5.1
+## Scope of 0.5.2
 
 DEFT is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
 Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.

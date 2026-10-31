@@ -16,6 +16,18 @@
 #sf-client-environment {
   overflow-wrap: anywhere;
 }
+#sf-publication-help {
+  margin: 16px 0;
+  max-width: 78ch;
+  overflow-wrap: anywhere;
+}
+#sf-publication-help summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+#sf-publication-help li {
+  margin-bottom: 12px;
+}
 #sf-oauth-setup {
   overflow-wrap: anywhere;
 }

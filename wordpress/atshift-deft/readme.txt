@@ -2,7 +2,7 @@
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,12 @@ No. Existing drafts remain private. Immediate or scheduled publication requires
 the owning user's publishing authorization through the supported connection.
 
 == Changelog ==
+
+= 0.5.2 =
+* Add publication and scheduling steps to Articles and AI connections, including Japanese guidance.
+* Guide the AI from a saved draft through separately authorized publication and result confirmation.
+* Expand README and user-guide steps for key-based and OAuth connections without changing permissions or saved data.
+* Download a fresh AI guide after upgrading; existing guide files do not update automatically.
 
 = 0.5.1 =
 * Add separate Codex desktop setup and clarify the observed ChatGPT web and Claude connector menus.

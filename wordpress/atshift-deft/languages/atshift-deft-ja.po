@@ -1,7 +1,7 @@
 # Japanese interface copy for onboarding and client connection guidance.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.5.1\n"
+"Project-Id-Version: atshift DEFT 0.5.2\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,3 +105,59 @@ msgstr "保存します。後から編集する場合は、プラグイン内の
 #: connection-profiles.js
 msgid "Return to the same Codex conversation and ask for a read-only context check. If the tools are still missing, use Restart when offered or restart the app and resume. A saved setting alone is not a connection check."
 msgstr "元のCodexの会話へ戻り、読み取り専用の接続確認を依頼します。ツールがまだ出ない場合は、再起動の操作が表示されていれば使い、なければアプリを再起動して再開します。設定の保存だけでは接続確認になりません。"
+
+#: includes/class-onboarding.php
+msgid "How to publish or schedule"
+msgstr "公開・予約の手順"
+
+#: includes/class-onboarding.php
+msgid "Save draft and Review do not publish. Ask your AI to publish through a separately authorized publishing connection."
+msgstr "下書きの保存やReviewでの承認だけでは公開されません。別途許可した公開用接続を使い、AIに公開を依頼します。"
+
+#: includes/class-onboarding.php
+msgid "Save your changes and check Open theme preview."
+msgstr "変更を保存し、「Open theme preview」でテーマを含めた表示を確認します。"
+
+#: includes/class-onboarding.php
+msgid "First time only: open AI connections with the same WordPress account that owns the draft and choose your AI client."
+msgstr "初回のみ、下書きを所有するWordPressアカウントでAI connectionsを開き、利用するAIを選びます。"
+
+#: includes/class-onboarding.php
+msgid "Open AI connections"
+msgstr "AI接続設定を開く"
+
+#: includes/class-onboarding.php
+msgid "For a connection key, select the following option and choose Create connection:"
+msgstr "キー方式では、次の項目を選んで「接続を作成」を押します。"
+
+#: includes/class-onboarding.php includes/connections-page.php
+msgid "Allow immediate and scheduled public publication of my drafts"
+msgstr "自分の下書きの即時公開・予約公開を許可"
+
+#: includes/connections-page.php
+msgid "Create connection"
+msgstr "接続を作成"
+
+#: includes/class-onboarding.php
+msgid "Add the returned publishing URL and new key to your AI as a separate connection. Keep the draft connection; its permissions do not change. Put the key in secure connection settings, never in chat."
+msgstr "表示された公開用URLと新しいキーを、AI側に別の接続として追加します。下書き用接続は残します。その権限は変わりません。キーは安全な接続設定に入力し、チャットには貼らないでください。"
+
+#: includes/class-onboarding.php
+msgid "For OAuth, choose Use the publishing endpoint and authorize publication with the draft owner account. The registered application must permit publication access."
+msgstr "OAuth方式では「Use the publishing endpoint」を選び、下書きの所有者アカウントで公開を許可します。登録済みアプリ側も公開アクセスを許可している必要があります。"
+
+#: includes/class-onboarding.php
+msgid "Return to the same AI conversation. Ask it to verify publication access, then say \"Publish this draft now\" or give the publication date, time and time zone. Connection setup alone does not request publication."
+msgstr "同じAIとの会話へ戻り、公開権限の接続確認を依頼します。その後「この下書きを今すぐ公開して」、または公開したい日付・時刻・タイムゾーンを伝えます。接続設定が終わっただけでは公開の依頼になりません。"
+
+#: includes/class-onboarding.php
+msgid "Check the AI result and Publication status in Articles. Published posts have View published post; scheduled posts are not public yet. Use Cancel reservation to cancel a pending schedule."
+msgstr "AIの結果と記事画面のPublication状態を確認します。公開後は「View published post」で公開ページを開けます。予約済みはまだ公開されていません。「Cancel reservation」で予約を取り消せます。"
+
+#: includes/class-onboarding.php
+msgid "Your account cannot grant publication access. Ask your administrator about the atshift DEFT publisher role for this same account; do not switch to another owner to publish this draft."
+msgstr "このアカウントには公開アクセスを許可する権限がありません。同じアカウントにatshift DEFT publisher権限を付けるか、管理者に相談してください。別の所有者に切り替えてこの下書きを公開することはできません。"
+
+#: includes/class-onboarding.php
+msgid "Only grant this access to a trusted AI connection: it can publish without another WordPress approval. Initial publication only is supported; later draft edits do not update the public post."
+msgstr "信頼するAI接続だけに許可してください。WordPressでの再承認なしに公開できる権限です。現在は初回公開のみ対応し、公開後の下書き編集は公開記事に反映されません。"

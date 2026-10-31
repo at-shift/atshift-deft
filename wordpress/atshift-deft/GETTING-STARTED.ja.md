@@ -1,22 +1,22 @@
 # atshift DEFT 試作版の導入・利用手順
 
 DEFT は **Delegate Execution. Focus on Thinking.** の略です。
-0.5.1 のプラグインslugは `atshift-deft` です。開発版のため、まず独立したテストサイトで試してください。
+0.5.2 のプラグインslugは `atshift-deft` です。開発版のため、まず独立したテストサイトで試してください。
 
 ### 旧 Structured Fields Prototype からの移行
 
 1. テストサイトをバックアップします。
 2. プラグイン一覧で旧 **Structured Fields Prototype** を停止します。データは削除しません。
-3. `atshift-deft-0.5.1.zip` をインストールし、**atshift DEFT** を有効化します。
+3. `atshift-deft-0.5.2.zip` をインストールし、**atshift DEFT** を有効化します。
 4. 保存済み記事・部品・接続・予約を確認します。旧版と新版は同時に有効化しません。
 
 slugが変わるため、旧版への上書き更新ではありません。旧版は停止したまま残せます。
 内部の保存名・権限名・接続URLは引き継ぎます。MCP endpoint、OAuth issuer、
 `page=structured-fields` を手作業で `atshift-deft` に置き換えないでください。
 
-対象: **0.5.1** / 2026-10-31
+対象: **0.5.2** / 2026-10-31
 
-0.5.1の配布ZIPには接続案内の更新を含みます。更新後はDEFTからAI用手順書をダウンロードし直してください。以前ダウンロードしたファイルは自動更新されません。
+0.5.2の配布ZIPには下書きから公開までの案内を追加しています。更新後はDEFTからAI用手順書をダウンロードし直し、AIに読ませてください。以前ダウンロードしたファイルは自動更新されません。
 
 この版は検証用です。本番サイトではなく、バックアップを取得した独立したテストサイトで試してください。
 既存の atshift Fields / CFS を置き換えるプラグインではありません。既存投稿の移行も行いません。
@@ -41,11 +41,11 @@ MCPに対応しないAIでは、従来のファイル受け渡し方式も使え
 
 1. テストサイトのWordPressとデータベースをバックアップする。
 2. 管理者でログインし、「プラグイン」→「新規追加」→「プラグインのアップロード」を開く。
-3. `atshift-deft-0.5.1.zip` を選択し、インストール・有効化する。
+3. `atshift-deft-0.5.2.zip` を選択し、インストール・有効化する。
 4. 左メニューの **atshift DEFT** を開く。
 5. **Components** に初期部品の **Introduction** と **Article resources** が表示されることを確認する。
 
-インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.orgからの配布は行っていません。
+インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.orgからの配布は行っていません。
 開発者はリポジトリで `npm run build:php-deps`、`npm run pack:wordpress` の順に実行すると `.local/releases/` に依存ライブラリ同梱ZIPとSHA-256を作成できます。
 サーバーへNode.jsや別のAIサービスを設置する必要はありません。
 
@@ -207,12 +207,15 @@ Word・テキストなどはAIが記事の資料として読み、サイトへ�
 
 ### AIに公開日時を設定してもらう
 
-1. 管理者が担当者を **atshift DEFT publisher** にする。既存ユーザーは自動変更されません。
-2. 担当者が **AI connections** で **Allow immediate and scheduled public publication of my drafts** を明示的に選び、新しいキーを発行する。
-3. そのキーと発行時の専用URLをAIの接続設定へ登録する。以前の下書きキーの権限は変わりません。
-4. 記事を確認し、「すぐ公開して」または「11月5日午前9時、日本時間で公開して」のように希望を伝える。
+**「下書きを保存」やReviewの承認だけでは公開されません。** AIに公開を依頼する方式です。
+記事画面とAI接続画面の **「公開・予約の手順」** から、必要な設定を確認できます。
+
+1. 下書きを所有するWordPressアカウントで進めます。管理者は公開権限を持っています。その他の担当者は **atshift DEFT publisher** が必要です。公開の選択肢がなければ管理者へ相談してください。別のアカウントに切り替えたり、他人のキーを使ったりしません。
+2. 初回のみ **atshift DEFT → AI connections** で利用するAIを選びます。キー方式では **Allow immediate and scheduled public publication of my drafts**（自分の下書きの即時公開・予約公開を許可）を選び、**Create connection** で新しいキーを発行します。
+3. 発行された公開用URLと新しいキーを、AI側に別の接続として追加します。下書き用の接続は残します。以前のキーの権限は変わらず、URLだけの変更でも公開できません。キーは接続設定に入力し、チャットには貼りません。OAuth方式では、管理者が公開アクセスを許可した登録済みアプリを選び、**Use the publishing endpoint** と本人のWordPress同意画面で `sf:publish` を許可します。
+4. 同じAIとの会話へ戻り、読み取り専用で公開権限の接続確認を依頼します。保存済み記事を確認して、「この下書きを今すぐ公開して。公開URLも教えて」または「11月5日午前9時、日本時間で公開して」のように希望を伝えます。接続設定が終わっただけでは公開の依頼になりません。
 5. AIが不足する日時・タイムゾーンだけ質問し、最新保存版を指定して公開・予約を設定する。
-6. AIの結果と **Articles** の **Publication** 状態を確認する。予約取消はAIまたは **Cancel reservation** から行う。
+6. AIの結果と **Articles** の **Publication** 状態を確認します。公開後は **View published post** から公開ページを開けます。予約済みはまだ公開されていません。予約取消はAIまたは **Cancel reservation** から行います。
 
 このキーは追加のWordPress承認なしに公開できる強い権限です。会話で希望を聞くようAIへ指示しますが、
 サーバーが実際の人の発言を証明する仕組みではありません。信頼する接続先だけに許可してください。

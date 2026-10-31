@@ -9,6 +9,7 @@ function connections_page() {
         <h1><?php esc_html_e( 'AI connections', 'atshift-deft' ); ?></h1>
         <p><?php esc_html_e( 'Give the guide to your usual AI first, then follow its connection guidance here. Connections last up to 30 days.', 'atshift-deft' ); ?></p>
         <p><a class="button" href="<?php echo esc_url( Onboarding::url() ); ?>"><span class="dashicons dashicons-download" aria-hidden="true"></span> <?php esc_html_e( 'Download AI guide', 'atshift-deft' ); ?></a></p>
+        <?php Onboarding::publication_help( true ); ?>
         <p id="sf-connection-status" role="status"></p>
         <p><label for="sf-connection-client"><?php esc_html_e( 'Your AI / client', 'atshift-deft' ); ?></label><br>
         <select id="sf-connection-client"><option value=""><?php esc_html_e( 'Choose a client', 'atshift-deft' ); ?></option></select></p>

@@ -1,8 +1,8 @@
 # Installation and User Guide
 
-**atshift DEFT 0.5.1** / October 31, 2026
+**atshift DEFT 0.5.2** / October 31, 2026
 
-The 0.5.1 plugin ZIP includes the updated connection guidance. After upgrading,
+The 0.5.2 plugin ZIP includes the new draft-to-publication guidance. After upgrading,
 download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
@@ -11,7 +11,7 @@ This is a development release. Start on an isolated test site with a backup, not
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.1/atshift-deft-0.5.1.zip) and activate **atshift DEFT**.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.2/atshift-deft-0.5.2.zip) and activate **atshift DEFT**.
 2. Open DEFT, choose **Download AI guide**, and give that file to your usual AI.
 3. Say, **"Read this guide and walk me through connecting to my site."** Follow the client-specific setup and authorize only the required access.
 4. After the AI verifies the connection, try the optional sample or start your own article.
@@ -40,7 +40,7 @@ The HTTP exception is for an explicitly configured loopback development environm
 ## 2. Install DEFT
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.5.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.1). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.5.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.2). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
 4. Upload the ZIP, install it, and activate **atshift DEFT**.
 5. Open **atshift DEFT** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.
@@ -158,13 +158,16 @@ To try saving without AI, choose **New article**, enter a **Title**, add **Intro
 
 ## 7. Publish Now or Schedule
 
-Publication is a separate, powerful permission. Grant it only to a trusted client.
+**Save draft** and **Review** do not publish. You publish by asking your AI, not by
+finding a Publish button in the draft editor. **Articles > How to publish or
+schedule** links to setup. Publication is a separate, powerful permission; grant
+it only to a trusted client.
 
-1. Have an administrator assign **atshift DEFT publisher** to the intended staff account.
-2. Authorize a publishing connection. For a key-based connection, explicitly select **Allow immediate and scheduled public publication of my drafts**, create a new connection, and configure its dedicated endpoint and key. For OAuth, grant the publishing endpoint/scope during consent.
-3. Review the article, then say **"Publish now"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."**
+1. Use the WordPress account that owns the draft. An administrator already has publication capability; other staff need **atshift DEFT publisher**. If the option is missing, ask your administrator about this same account. Do not switch owners or share keys.
+2. First time only, open **atshift DEFT > AI connections** and select your client. For a key-based connection, select **Allow immediate and scheduled public publication of my drafts**, choose **Create connection**, and add the returned publishing URL and new key as a separate AI connection. Keep the draft connection; changing its URL alone or reusing its old key will not work. Put the new key only in secure client settings. For OAuth, choose **Use the publishing endpoint**, use an administrator-registered application that permits publication, and grant `sf:publish` in individual consent with the same WordPress owner.
+3. Return to the same AI conversation and ask for a read-only publication-access check. Review the saved article, then say **"Publish this draft now and give me the public URL"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."** Setup alone is not a request to publish.
 4. The AI should ask for any missing timing details, then use the latest saved version to publish or schedule it.
-5. Check the result and the article's **Publication** state. Cancel a pending reservation through the AI or **Cancel reservation**.
+5. Check the result and **Articles > Publication**. **View published post** opens the returned public URL after publication. A scheduled article is not public yet. Cancel a pending reservation through the AI or **Cancel reservation**.
 
 An authorized connection can publish without an additional WordPress approval screen. The guide instructs the AI to ask for your intent, but the server does not prove that a human gave an instruction in chat. The separate **Review** record is not a publication gate.
 

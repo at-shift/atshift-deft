@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.2 - 2026-10-31
+
+- Add discoverable publication steps to Articles and AI connections, with Japanese
+  guidance and matching README/user-guide instructions for key and OAuth clients.
+- Guide the AI from a saved draft to an explicitly requested publication without
+  granting access automatically or treating setup, Review or sample approval as publication intent.
+- Keep publication permissions, saved data and initial-publication limits unchanged.
+- After upgrading, download a fresh AI guide and give it to your AI; previously
+  downloaded guides do not update themselves.
+
 ## 0.5.1 - 2026-10-31
 
 - Add a separate Codex desktop connection profile with the observed menu path,

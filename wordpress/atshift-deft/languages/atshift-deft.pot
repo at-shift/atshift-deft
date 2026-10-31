@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.5.1\n"
+"Project-Id-Version: atshift DEFT 0.5.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgid "New example"
 msgstr ""
 
 #: includes/catalog-page.php:16
-#: includes/plugin.php:279
+#: includes/plugin.php:280
 msgid "Refresh components"
 msgstr ""
 
@@ -773,21 +773,74 @@ msgstr ""
 msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article. Ask about layout as well as wording: work with your theme's look or assemble a separate article layout, using a reference image if helpful."
 msgstr ""
 
-#: includes/class-onboarding.php:28
-#: includes/class-onboarding.php:95
+#: includes/class-onboarding.php:29
+msgid "How to publish or schedule"
+msgstr ""
+
+#: includes/class-onboarding.php:30
+msgid "Save draft and Review do not publish. Ask your AI to publish through a separately authorized publishing connection."
+msgstr ""
+
+#: includes/class-onboarding.php:32
+msgid "Save your changes and check Open theme preview."
+msgstr ""
+
+#: includes/class-onboarding.php:33
+msgid "First time only: open AI connections with the same WordPress account that owns the draft and choose your AI client."
+msgstr ""
+
+#: includes/class-onboarding.php:35
+msgid "Open AI connections"
+msgstr ""
+
+#: includes/class-onboarding.php:37
+msgid "For a connection key, select the following option and choose Create connection:"
+msgstr ""
+
+#: includes/class-onboarding.php:37
+#: includes/connections-page.php:54
+msgid "Allow immediate and scheduled public publication of my drafts"
+msgstr ""
+
+#: includes/class-onboarding.php:38
+msgid "Add the returned publishing URL and new key to your AI as a separate connection. Keep the draft connection; its permissions do not change. Put the key in secure connection settings, never in chat."
+msgstr ""
+
+#: includes/class-onboarding.php:39
+msgid "For OAuth, choose Use the publishing endpoint and authorize publication with the draft owner account. The registered application must permit publication access."
+msgstr ""
+
+#: includes/class-onboarding.php:41
+msgid "Return to the same AI conversation. Ask it to verify publication access, then say \"Publish this draft now\" or give the publication date, time and time zone. Connection setup alone does not request publication."
+msgstr ""
+
+#: includes/class-onboarding.php:42
+msgid "Check the AI result and Publication status in Articles. Published posts have View published post; scheduled posts are not public yet. Use Cancel reservation to cancel a pending schedule."
+msgstr ""
+
+#: includes/class-onboarding.php:45
+msgid "Your account cannot grant publication access. Ask your administrator about the atshift DEFT publisher role for this same account; do not switch to another owner to publish this draft."
+msgstr ""
+
+#: includes/class-onboarding.php:47
+msgid "Only grant this access to a trusted AI connection: it can publish without another WordPress approval. Initial publication only is supported; later draft edits do not update the public post."
+msgstr ""
+
+#: includes/class-onboarding.php:54
+#: includes/class-onboarding.php:122
 msgid "Workspace access is required."
 msgstr ""
 
-#: includes/class-onboarding.php:31
+#: includes/class-onboarding.php:57
 msgid "The current catalog could not be read."
 msgstr ""
 
-#: includes/class-onboarding.php:95
-#: includes/class-onboarding.php:98
+#: includes/class-onboarding.php:122
+#: includes/class-onboarding.php:125
 msgid "AI guide"
 msgstr ""
 
-#: includes/class-onboarding.php:98
+#: includes/class-onboarding.php:125
 msgid "The AI guide could not be prepared. Please try again."
 msgstr ""
 
@@ -1364,181 +1417,177 @@ msgstr ""
 msgid "Give the guide to your usual AI first, then follow its connection guidance here. Connections last up to 30 days."
 msgstr ""
 
-#: includes/connections-page.php:13
+#: includes/connections-page.php:14
 msgid "Your AI / client"
 msgstr ""
 
-#: includes/connections-page.php:14
+#: includes/connections-page.php:15
 msgid "Choose a client"
 msgstr ""
 
-#: includes/connections-page.php:16
+#: includes/connections-page.php:17
 msgid "This client supports an Authorization header stored privately for my account, not shared with other staff."
 msgstr ""
 
-#: includes/connections-page.php:18
+#: includes/connections-page.php:19
 msgid "Connection instructions"
 msgstr ""
 
-#: includes/connections-page.php:20
+#: includes/connections-page.php:21
 msgid "Official connection instructions"
 msgstr ""
 
-#: includes/connections-page.php:23
+#: includes/connections-page.php:24
 msgid "OAuth connection"
 msgstr ""
 
-#: includes/connections-page.php:25
+#: includes/connections-page.php:26
 msgid "Registered application"
 msgstr ""
 
-#: includes/connections-page.php:26
+#: includes/connections-page.php:27
 msgid "Use the publishing endpoint"
 msgstr ""
 
-#: includes/connections-page.php:27
-#: includes/connections-page.php:59
+#: includes/connections-page.php:28
+#: includes/connections-page.php:60
 msgid "MCP endpoint"
 msgstr ""
 
-#: includes/connections-page.php:28
+#: includes/connections-page.php:29
 msgid "OAuth client ID"
 msgstr ""
 
-#: includes/connections-page.php:29
+#: includes/connections-page.php:30
 msgid "In your AI's MCP settings, choose OAuth and enter this endpoint and client ID. Leave the client secret empty. Continue to WordPress, sign in with your own account and review the requested access."
 msgstr ""
 
-#: includes/connections-page.php:30
+#: includes/connections-page.php:31
 msgid "Protocol details"
 msgstr ""
 
-#: includes/connections-page.php:32
+#: includes/connections-page.php:33
 msgid "Register an application (administrator)"
 msgstr ""
 
-#: includes/connections-page.php:33
+#: includes/connections-page.php:34
 msgid "Use the exact callback URL shown by the AI service. Registration is shared; each staff member authorizes their own WordPress account. This version supports pre-registered public clients with PKCE S256, not automatic client registration."
 msgstr ""
 
-#: includes/connections-page.php:35
+#: includes/connections-page.php:36
 msgid "Application name"
 msgstr ""
 
-#: includes/connections-page.php:36
+#: includes/connections-page.php:37
 msgid "Service"
 msgstr ""
 
-#: includes/connections-page.php:36
+#: includes/connections-page.php:37
 msgid "ChatGPT"
 msgstr ""
 
-#: includes/connections-page.php:36
+#: includes/connections-page.php:37
 msgid "Claude"
 msgstr ""
 
-#: includes/connections-page.php:36
+#: includes/connections-page.php:37
 msgid "Gemini"
 msgstr ""
 
-#: includes/connections-page.php:36
+#: includes/connections-page.php:37
 msgid "Other"
 msgstr ""
 
-#: includes/connections-page.php:37
+#: includes/connections-page.php:38
 msgid "Exact callback URL"
 msgstr ""
 
-#: includes/connections-page.php:38
+#: includes/connections-page.php:39
 msgid "Permit requesting layouts, files and previews"
 msgstr ""
 
-#: includes/connections-page.php:39
+#: includes/connections-page.php:40
 msgid "Permit requesting publication access"
 msgstr ""
 
-#: includes/connections-page.php:40
+#: includes/connections-page.php:41
 msgid "Register application"
 msgstr ""
 
-#: includes/connections-page.php:47
+#: includes/connections-page.php:48
 msgid "1. Create a connection"
 msgstr ""
 
-#: includes/connections-page.php:49
+#: includes/connections-page.php:50
 msgid "Connection name"
 msgstr ""
 
-#: includes/connections-page.php:50
+#: includes/connections-page.php:51
 msgid "My AI app"
 msgstr ""
 
-#: includes/connections-page.php:51
+#: includes/connections-page.php:52
 msgid "Allow reusable layouts, private file transfers and portable previews"
 msgstr ""
 
-#: includes/connections-page.php:53
-msgid "Allow immediate and scheduled public publication of my drafts"
-msgstr ""
-
-#: includes/connections-page.php:55
+#: includes/connections-page.php:56
 msgid "Create connection"
 msgstr ""
 
-#: includes/connections-page.php:57
+#: includes/connections-page.php:58
 msgid "Publishing access lets this AI publish without another WordPress approval. Revoking the key cancels pending reservations; key expiry does not. Existing draft-only keys stay draft-only."
 msgstr ""
 
-#: includes/connections-page.php:58
+#: includes/connections-page.php:59
 msgid "2. Add it to your AI's connection settings"
 msgstr ""
 
-#: includes/connections-page.php:61
+#: includes/connections-page.php:62
 msgid "Copy MCP endpoint"
 msgstr ""
 
-#: includes/connections-page.php:62
+#: includes/connections-page.php:63
 msgid "This route uses Streamable HTTP with an Authorization: Bearer header. OAuth clients use the separate OAuth setup."
 msgstr ""
 
-#: includes/connections-page.php:65
 #: includes/connections-page.php:66
+#: includes/connections-page.php:67
 msgid "Configuration template (no secret)"
 msgstr ""
 
-#: includes/connections-page.php:68
+#: includes/connections-page.php:69
 msgid "Download configuration template"
 msgstr ""
 
-#: includes/connections-page.php:71
+#: includes/connections-page.php:72
 msgid "Shown once. Put this key in your AI app's secure connection settings, not in a chat or the AI guide."
 msgstr ""
 
-#: includes/connections-page.php:72
+#: includes/connections-page.php:73
 msgid "Connection key"
 msgstr ""
 
-#: includes/connections-page.php:75
+#: includes/connections-page.php:76
 msgid "Copy connection key"
 msgstr ""
 
-#: includes/connections-page.php:76
+#: includes/connections-page.php:77
 msgid "Done"
 msgstr ""
 
-#: includes/connections-page.php:80
+#: includes/connections-page.php:81
 msgid "Return to the same AI conversation"
 msgstr ""
 
-#: includes/connections-page.php:81
+#: includes/connections-page.php:82
 msgid "Ask your AI to check the connection and continue your article. It will confirm a successful live context response before proceeding. Never paste the key in chat."
 msgstr ""
 
-#: includes/connections-page.php:82
+#: includes/connections-page.php:83
 msgid "Your connections"
 msgstr ""
 
-#: includes/connections-page.php:82
+#: includes/connections-page.php:83
 msgid "Check connection"
 msgstr ""
 
@@ -1661,61 +1710,61 @@ msgstr ""
 msgid "Open theme preview"
 msgstr ""
 
-#: includes/plugin.php:274
+#: includes/plugin.php:275
 msgid "Edit article"
 msgstr ""
 
-#: includes/plugin.php:275
+#: includes/plugin.php:276
 msgid "Title"
 msgstr ""
 
-#: includes/plugin.php:277
+#: includes/plugin.php:278
 msgid "Component"
 msgstr ""
 
-#: includes/plugin.php:278
+#: includes/plugin.php:279
 msgid "Add component"
 msgstr ""
 
-#: includes/plugin.php:284
+#: includes/plugin.php:285
 msgid "Private files"
 msgstr ""
 
-#: includes/plugin.php:287
+#: includes/plugin.php:288
 msgid "Use"
 msgstr ""
 
-#: includes/plugin.php:288
+#: includes/plugin.php:289
 #: admin.js:164
 msgid "Reference only"
 msgstr ""
 
-#: includes/plugin.php:288
+#: includes/plugin.php:289
 #: admin.js:165
 msgid "Publication candidate"
 msgstr ""
 
-#: includes/plugin.php:289
+#: includes/plugin.php:290
 msgid "Add files"
 msgstr ""
 
-#: includes/plugin.php:295
+#: includes/plugin.php:296
 msgid "Article media"
 msgstr ""
 
-#: includes/plugin.php:297
+#: includes/plugin.php:298
 msgid "Existing WordPress media"
 msgstr ""
 
-#: includes/plugin.php:299
+#: includes/plugin.php:300
 msgid "Search media"
 msgstr ""
 
-#: includes/plugin.php:300
+#: includes/plugin.php:301
 msgid "More results"
 msgstr ""
 
-#: includes/plugin.php:304
+#: includes/plugin.php:305
 msgid "WordPress theme preview"
 msgstr ""
 

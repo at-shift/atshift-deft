@@ -174,6 +174,51 @@ do not automatically add components or media to the sample to demonstrate them.
 If the client cannot access or transfer an attachment, explain that specific missing
 capability and keep the draft intact. Do not claim the end-to-end flow succeeded.
 
+### From Saved Draft to Publication
+
+After successfully saving and previewing a real article, briefly explain once in
+the user's language: "This is a private draft. When ready, ask me to publish now
+or give a date, time and time zone." Do not repeat the offer after every edit or
+when the user has asked to keep it private. The optional sample stays draft-only;
+do not turn sample approval into a publication offer.
+
+When the user asks how to publish or requests publication:
+
+1. Identify the intended saved article without starting a new copy. If the target
+   is unclear, ask which draft. Read live context through the intended site's
+   connection and check `capabilities.publish`; an administrator's draft-only key
+   still cannot publish. Explaining publication is not permission to perform it.
+2. If access is missing, keep the draft private and guide **atshift DEFT > AI
+   connections** (the Connection settings URL in the downloaded guide). Use the
+   same WordPress owner as the draft. Only an administrator or **atshift DEFT
+   publisher** can grant access; ask the administrator for help when the option
+   is absent. Never switch accounts or change roles yourself to bypass this.
+3. For a private-header/key client, select **Allow immediate and scheduled public
+   publication of my drafts**, then **Create connection**. Add the returned
+   publishing endpoint and new key as a separate connection in the same AI client;
+   retain the draft connection. Do not merely replace the draft endpoint or reuse
+   its key. Credentials belong only in secure client settings, never chat. For
+   OAuth, use **Use the publishing endpoint** with a pre-registered application
+   that permits publication, and complete individual WordPress consent including
+   `sf:publish`. Do not give key instructions to an OAuth-only client.
+4. Explain before granting access that this connection can publish without a
+   second WordPress approval. Verify it with a read-only context response showing
+   `capabilities.publish=true` at the intended publishing endpoint, then resume
+   the same article. Never publish as a connection test. Setup, Review approval,
+   or an ambiguous "OK" about setup is not an instruction to publish.
+5. If the user has not already clearly instructed publication, ask whether to keep
+   the draft, publish now, or schedule for their chosen date/time/time zone. Preserve
+   an existing explicit instruction and ask only for missing or ambiguous details.
+   Read fresh get-draft and get-publication, then follow Publication Timing and
+   Work Safely. Report the returned state, not a presumed success. For `published`,
+   provide the returned public URL; for `scheduled`, state the exact time/time zone
+   and explain that it is not public yet. Articles > Publication also shows status;
+   Cancel reservation cancels a pending schedule.
+
+Saving or approving a Review does not publish. Initial publication is the current
+limit: saving later edits does not update an already-published post. Explain this
+before publication; do not promise a publish-update workflow that does not exist.
+
 ## Language
 
 Respond in the user's language: explicit preference, then conversation language,

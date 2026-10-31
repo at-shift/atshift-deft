@@ -270,6 +270,7 @@ function admin_page() {
                 <a class="button" id="sf-preview" target="_blank" rel="noopener" hidden><?php esc_html_e( 'Open theme preview', 'atshift-deft' ); ?> <span class="dashicons dashicons-external" aria-hidden="true"></span></a>
                 <button class="button" id="sf-review" disabled><span class="dashicons dashicons-visibility" aria-hidden="true"></span> <?php esc_html_e( 'Review', 'atshift-deft' ); ?></button>
             </div>
+            <?php Onboarding::publication_help(); ?>
             <details id="sf-editor" hidden>
                 <summary><?php esc_html_e( 'Edit article', 'atshift-deft' ); ?></summary>
                 <label for="sf-article-title"><?php esc_html_e( 'Title', 'atshift-deft' ); ?></label><input id="sf-article-title" type="text" maxlength="200">
