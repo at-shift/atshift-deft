@@ -1,6 +1,6 @@
 <?php
-// WP-CLI eval-file, after installing a disposable GitHub package with a 0.5.9 fixture header.
-if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! str_starts_with( DB_NAME, 'sf_deft_appearance_' ) ) {
+// WP-CLI eval-file, after installing a disposable 0.5.9 fixture or released 0.6.0 GitHub package.
+if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:appearance|post_types)_[a-f0-9]+$/D', DB_NAME ) ) {
     throw new RuntimeException( 'Use a disposable local release-test database.' );
 }
 use AtshiftDeft\GitHubUpdater;
@@ -11,7 +11,7 @@ $zip = file_get_contents( $artifact . '/atshift-deft-' . $manifest['version'] . 
 $file = 'atshift-deft/atshift-deft.php';
 $entry = WP_PLUGIN_DIR . '/' . $file;
 $header = get_plugin_data( $entry, false, false );
-if ( '0.5.9' !== $header['Version'] || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older-header fixture first.' );
+if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
 $GLOBALS['deft_update_checks'] = 0;
 function deft_update_check( $ok, $message ) {
     if ( ! $ok ) throw new RuntimeException( $message );
@@ -60,7 +60,7 @@ try {
     $update = GitHubUpdater::update( false, $header, $file, array( 'ja' ) );
     deft_update_check( $update['version'] === $manifest['version'] && $update['package'] === $manifest['package'], 'New stable release is offered with exact installable ZIP.' );
     deft_update_check( ! array_key_exists( 'autoupdate', $update ), 'Updater does not override the auto-update preference.' );
-    foreach ( array( '0.5.9', '0.5.8' ) as $older ) {
+    foreach ( array( $header['Version'], '0.5.8' ) as $older ) {
         $old = $manifest; $old['version'] = $older; set_site_transient( GitHubUpdater::CACHE, $old );
         deft_update_check( false === GitHubUpdater::update( false, $header, $file, array() ), 'Equal or older versions are not offered: ' . $older );
     }

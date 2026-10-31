@@ -1,7 +1,7 @@
 # Japanese interface copy for onboarding and client connection guidance.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.6.0\n"
+"Project-Id-Version: atshift DEFT 0.7.0\n"
 "PO-Revision-Date: 2026-10-31 20:31+0900\n"
 "Last-Translator: at-shift (AI-assisted)\n"
 "Language-Team: Japanese\n"
@@ -192,3 +192,71 @@ msgstr "GitHubから更新ファイルをダウンロードできませんでし
 #: includes/class-github-updater.php
 msgid "The update ZIP failed its SHA-256 integrity check."
 msgstr "更新ZIPのSHA-256整合性チェックに失敗しました。"
+
+#: admin.js
+#. translators: 1: destination label; 2: WordPress post type identifier.
+#, javascript-format
+msgid "Destination: %1$s (%2$s)"
+msgstr "公開先: %1$s (%2$s)"
+
+#: includes/class-publications.php
+msgid "This publication destination is unavailable or not permitted for this account."
+msgstr "この公開先は利用できないか、このアカウントには利用権限がありません。"
+
+#: includes/class-publications.php
+msgid "The publication destination is no longer available or permitted. Nothing was published."
+msgstr "公開先が利用できなくなったか、権限が失われました。公開は行われていません。"
+
+#: includes/class-publications.php
+msgid "The publication post no longer matches its destination or owner."
+msgstr "公開する投稿の公開先または所有者が、保存された設定と一致しません。"
+
+#: admin.js
+msgid "No terms"
+msgstr "指定なし"
+
+#: admin.js
+#. translators: %s: selected category, tag or custom taxonomy names.
+#, javascript-format
+msgid "Classification: %s"
+msgstr "分類: %s"
+
+#: includes/class-publications.php
+msgid "Use JSON within 8 KiB."
+msgstr "8 KiB以内のJSONを使用してください。"
+
+#: includes/class-publications.php
+msgid "The draft, media, categories, tags or behavior policy changed. Set publication again."
+msgstr "下書き、素材、カテゴリー、タグ、または動作方針が変更されました。公開を再設定してください。"
+
+#: includes/class-publications.php
+msgid "Could not commit the publication categories or tags."
+msgstr "公開するカテゴリーまたはタグの確定に失敗しました。"
+
+#: includes/class-taxonomies.php
+msgid "A selected taxonomy is duplicated, unavailable or not permitted for this destination."
+msgstr "選択した分類が重複しているか、この投稿先では利用できない、または利用権限がありません。"
+
+#: includes/class-taxonomies.php
+msgid "This taxonomy requires a term. Choose an existing term or omit it to use WordPress defaults."
+msgstr "この分類には項目の指定が必要です。既存の項目を選ぶか、分類の指定を省略してWordPressの既定値を使用してください。"
+
+#: includes/class-taxonomies.php
+msgid "A selected term is missing, duplicated, not permitted or over the selection limit."
+msgstr "選択した分類項目が存在しない、重複している、利用権限がない、または選択数の上限を超えています。"
+
+#: includes/class-taxonomies.php
+msgid "The selected categories or tags changed. Set publication again."
+msgstr "選択したカテゴリーまたはタグが変更されました。公開を再設定してください。"
+
+#: includes/class-taxonomies.php
+msgid "WordPress could not assign the selected categories or tags. Nothing was published."
+msgstr "選択したカテゴリーまたはタグをWordPressに設定できませんでした。公開は行われていません。"
+
+#: includes/class-taxonomies.php
+msgid "WordPress did not retain the selected categories or tags. Nothing was published."
+msgstr "WordPressが選択したカテゴリーまたはタグを保持しませんでした。公開は行われていません。"
+
+#: includes/class-public-structure.php
+msgid "Public structure not found."
+msgstr "公開構造が見つかりません。"

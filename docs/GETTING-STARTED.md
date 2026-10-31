@@ -1,8 +1,8 @@
 # Installation and User Guide
 
-**atshift DEFT 0.6.0** / October 31, 2026
+**atshift DEFT 0.7.0** / October 31, 2026
 
-The 0.6.0 plugin ZIP includes shared component styling. After upgrading,
+The 0.7.0 plugin ZIP adds destinations, classifications and public structure JSON. After upgrading,
 download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
@@ -11,13 +11,17 @@ This is a development release. Start on an isolated test site with a backup, not
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.6.0/atshift-deft-0.6.0.zip) and activate **atshift DEFT**.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.0/atshift-deft-0.7.0.zip) and activate **atshift DEFT**.
 2. Open DEFT, choose **Download AI guide**, and give that file to your usual AI.
 3. Say, **"Read this guide and walk me through connecting to my site."** Follow the client-specific setup and authorize only the required access.
-4. After the AI verifies the connection, try the optional sample or start your own article.
+4. After the AI verifies the connection, try the optional sample or start your own article. Ask for page composition and responsive columns as well as text; a layout reference image is optional.
 5. Review the preview and request changes. With a separately authorized publishing connection, tell the AI to publish now or specify a date, time, and time zone.
 
 The plugin does not configure the AI application automatically. Initial setup is required, and client capabilities vary. Never paste passwords or connection keys into chat.
+
+You also choose where each article
+will appear: a normal post, a page or an eligible existing custom post type.
+If you have not chosen, the AI asks where to publish and waits for your answer.
 
 ## 1. Prepare the Site
 
@@ -40,7 +44,7 @@ The HTTP exception is for an explicitly configured loopback development environm
 ## 2. Install DEFT
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.6.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.6.0). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.7.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.0). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
 4. Upload the ZIP, install it, and activate **atshift DEFT**.
 5. Open **atshift DEFT** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.
@@ -141,7 +145,9 @@ Portable previews are for checking structure and content. They omit the theme an
 
 ### Choose a Design Direction
 
-Ask about layout as well as wording. You can describe the arrangement or show a reference image; neither code nor a reference image is required.
+Ask for page composition and column layout as well as wording: section order,
+headings, image-and-text columns, stacked sections or Q&A. You can describe the
+arrangement or show a reference image; neither code nor a reference image is required.
 
 - **Use the current theme's look:** "Keep the design consistent with my site." The AI reuses suitable registered components; theme styles apply where those components do not override them. Theme-specific design elements must be supported by the available components.
 - **Assemble a separate article layout:** "Use an image-and-text two-column section, followed by the event details." The AI combines existing components and, with authoring permission, can fill a genuine gap with a supported stack, two-column or Q&A structure. Columns stack on narrow screens.
@@ -168,15 +174,56 @@ it only to a trusted client.
 1. Use the WordPress account that owns the draft. An administrator already has publication capability; other staff need **atshift DEFT publisher**. If the option is missing, ask your administrator about this same account. Do not switch owners or share keys.
 2. First time only, open **atshift DEFT > AI connections** and select your client. For a key-based connection, select **Allow immediate and scheduled public publication of my drafts**, choose **Create connection**, and add the returned publishing URL and new key as a separate AI connection. Keep the draft connection; changing its URL alone or reusing its old key will not work. Put the new key only in secure client settings. For OAuth, choose **Use the publishing endpoint**, use an administrator-registered application that permits publication, and grant `sf:publish` in individual consent with the same WordPress owner.
 3. Return to the same AI conversation and ask for a read-only publication-access check. Review the saved article, then say **"Publish this draft now and give me the public URL"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."** Setup alone is not a request to publish.
-4. The AI should ask for any missing timing details, then use the latest saved version to publish or schedule it.
+4. The AI should ask for any missing timing details, then use the latest saved version to publish or schedule it. In the destination-enabled build described below, it also asks where to publish if you have not chosen a destination for this article.
 5. Check the result and **Articles > Publication**. **View published post** opens the returned public URL after publication. A scheduled article is not public yet. Cancel a pending reservation through the AI or **Cancel reservation**.
 
 An authorized connection can publish without an additional WordPress approval screen. The guide instructs the AI to ask for your intent, but the server does not prove that a human gave an instruction in chat. The separate **Review** record is not a publication gate.
 
 Changes to the reserved article, files, or behavior policy stop the reservation; review the latest content and request a new reservation. **Revoke** cancels pending reservations. Expiry alone prevents new operations but does not cancel an already accepted reservation. A publication already in progress may finish, and revocation does not unpublish an existing post.
 
-Reservations wait inside DEFT and create a normal WordPress post when executed. WP-Cron may run late on low-traffic sites; use a server cron job when timing matters. Updating an already-published post is not implemented: a later **Save draft** does not update its public content.
+### Choose Where Each Article Appears
+
+Version 0.7.0 lets you choose a normal post, a page or an eligible
+existing custom post type for each article. Say "make this a page" or "publish it
+under Events". If you have not selected one, the AI asks **"Where would you like
+to publish this article?"**, lists the available publishable destinations, and
+waits for your answer before publishing or scheduling. With only one available
+destination, it names that destination and asks whether to use it.
+
+If you already specified the destination for this article, the AI validates and
+states it with the intended timing without asking again. A different article gets
+its own choice; choosing a destination alone is not a publication instruction.
+The AI uses the exact `postType` in the publication request. Pages and custom
+types require their native WordPress creation/publication rights as well as DEFT
+access. Missing, ambiguous or unavailable destinations are not silently replaced
+with normal posts. See [Publication Destinations](PUBLICATION-DESTINATIONS.md) for
+limits.
+
+### Choose Categories and Tags
+
+Once the destination is chosen, ask for an existing category or tags, or let the
+AI suggest a small relevant selection for you to confirm with the destination and
+timing. It checks that destination's available taxonomies first, including public
+custom taxonomies. A page without categories is not forced to use post categories.
+No new terms are created. If you have no preference, the AI explains the site's
+WordPress defaults; a normal post normally receives the default category.
+
+Native taxonomy assignment permissions are required in addition to DEFT access.
+The DEFT publisher role alone does not grant them. Ask an administrator if the
+selection is unavailable; no role changes are made automatically. The selected
+terms appear in **Articles > Publication**. Renaming, deleting or moving a selected
+term in its hierarchy, detaching a taxonomy or losing permissions stops a pending
+reservation. Reconfirm the latest selection before rescheduling.
+
+Reservations wait inside DEFT and create a WordPress entry in the selected destination when executed. Older API requests without a destination retain the ordinary-post default for compatibility; the AI guide must not use that default to skip asking. WP-Cron may run late on low-traffic sites; use a server cron job when timing matters. Updating an already-published post is not implemented: a later **Save draft** does not update its public content.
 Published managed files are served from pinned private copies, not automatically added to the normal Media Library. Deactivation stops reservations, managed-file delivery, and styles.
+
+### Public Machine-Readable Content
+
+Published DEFT pages provide minimal JSON-LD and a content-only structure JSON link.
+Drafts, private settings and account details are excluded. Withdrawing publication
+also withdraws the endpoint. See [Public Structure](PUBLIC-STRUCTURE.md) for the
+format, access-control integration, cache caveats and optional SEO opt-out.
 
 ## 8. Manual JSON Fallback
 

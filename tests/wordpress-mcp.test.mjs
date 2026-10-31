@@ -63,7 +63,7 @@ test("official MCP client discovers tools; new authoring tools still deny old ke
   assert.equal((await fetch(key.endpoint)).status,401);
   assert.equal((await a.request(key.endpoint)).status,401);
   client=await connect(key.token,key.endpoint);
-  assert.deepEqual((await client.listTools()).tools.map(t=>t.name).sort(),["context","list-drafts","get-draft","save-draft","create-structure","list-media","prepare-file-transfer","get-preview"].map(n=>`structured-fields-${n}`).sort());
+  assert.deepEqual((await client.listTools()).tools.map(t=>t.name).sort(),["context","list-post-types","list-taxonomies","list-terms","list-drafts","get-draft","save-draft","create-structure","list-media","prepare-file-transfer","get-preview"].map(n=>`structured-fields-${n}`).sort());
   assert.equal((await call(client,"get-preview",{articleId:data.users[0].id,expectedVersion:1})).raw.isError,true);
   assert.equal((await call(client,"list-media",{articleId:data.users[0].id})).raw.isError,true);
   assert.equal((await call(client,"context")).data.capabilities.createStructure,false);

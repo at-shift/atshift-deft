@@ -1,14 +1,15 @@
 # Release and Update Channels
 
-## 0.6.0 Artifacts
+## 0.7.0 Artifacts
 
-- GitHub: `atshift-deft-0.6.0.zip`, its `.sha256`, and `atshift-deft-update.json`.
-- WordPress.org submission: `atshift-deft-0.6.0-wordpress-org.zip` and its `.sha256`.
-- Both ZIPs install as `atshift-deft/atshift-deft.php`, report version 0.6.0 and include the same POT, Japanese PO/MO and JS catalogs. Japanese remains a partial UI translation.
+- GitHub: `atshift-deft-0.7.0.zip`, its `.sha256`, and `atshift-deft-update.json`.
+- WordPress.org submission: `atshift-deft-0.7.0-wordpress-org.zip` and its `.sha256`.
+- Both ZIPs install as `atshift-deft/atshift-deft.php`, report version 0.7.0 and include the same POT, Japanese PO/MO and JS catalogs. Japanese remains a partial UI translation.
 - Core PHP, JavaScript, CSS, component definitions and saved-data identifiers are identical. Only the GitHub ZIP adds `Update URI`, updater bootstrap and `includes/class-github-updater.php`.
 
-`main` defaults to GitHub packaging. The submission branch `wordpress-org/0.6.0`
-pins the same source commit plus `distribution.json` set to `wordpress-org`.
+`main` defaults to GitHub packaging. If separately approved, a submission branch
+`wordpress-org/0.7.0` can pin the release source commit plus `distribution.json` set
+to `wordpress-org`. Do not update a submission branch or submit without approval.
 The optional updater source lives outside the plugin directory and is never part
 of the submission ZIP. Keeping it in the repository allows shared tests and
 translation extraction without copying feature code between branches.
@@ -22,7 +23,7 @@ translation extraction without copying feature code between branches.
 5. Confirm the submission ZIP has no updater, `Update URI` or GitHub runtime HTTP requests. Compare both archives and every language file byte-for-byte outside the allowed adapter differences.
 6. Obtain explicit approval immediately before pushing branches, publishing a release or submitting the plugin ZIP. Submission is not approval; record the actual WordPress.org result separately.
 
-Publish a non-draft, non-prerelease GitHub Release tagged `v0.6.0`, targeting the
+Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.0`, targeting the
 verified `main` commit. Upload the three GitHub files above before publishing.
 Do not rebuild or replace the ZIP after its manifest/checksum are published.
 Download the public assets independently and verify their bytes and SHA-256.
@@ -46,7 +47,7 @@ and plugin-version User-Agent. WordPress handles update permissions, filesystem
 credentials and automatic-update preferences. No user preference is enabled or
 disabled by the adapter.
 
-0.5.x has no GitHub updater. Back up, upload the 0.6.0 GitHub ZIP via **Plugins >
+0.5.x has no GitHub updater. Back up, upload the 0.7.0 GitHub ZIP via **Plugins >
 Add New > Upload Plugin**, and choose **Replace current with uploaded** once.
 Subsequent newer releases appear through normal plugin updates. Inactive plugins
 cannot run this adapter; activate DEFT to check GitHub updates.

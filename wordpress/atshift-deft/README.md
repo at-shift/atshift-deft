@@ -1,21 +1,38 @@
-# atshift DEFT 0.6.0
+# atshift DEFT 0.7.0
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
-Start at **Articles > Download AI guide**. Give the downloaded Markdown file to
-the AI you normally use and describe the new article. It includes current shared
-component contracts and schemas, not private drafts or credentials. The first-visit
-introduction is shown once per account/site; the download remains available.
-Use **Article handoff** for file-based edits, or connect an MCP client to resume
-your own drafts directly. Initial connection setup is required; publishing requires
-a separately granted publishing key and the publisher role (or administrator).
+**Start with one thing in DEFT: download the guide for your AI.**
+
+Give it to the AI you already use, then follow its instructions to connect to
+WordPress. Once a compatible AI client is connected and authorized, you can create
+and publish new articles through that conversation, without opening DEFT for
+everyday authoring.
+
+Work with your AI on the article, ask it to create the page design and column
+layout, and tell it where the article should appear. Review the result, then
+simply ask, **"Publish it."** Ask your AI to select existing categories and tags,
+too. Published DEFT articles also output JSON-LD and a public, content-only
+structure that other AI tools can read.
+
+**Focus on creating content. Let your AI handle the assembly and publication.**
+
+*Initial setup, permission changes, reconnection and private theme-based previews
+can still require WordPress sign-in. Site maintenance remains a separate responsibility.*
+
+The guide is available at **Articles > Download AI guide**. It includes current
+shared component contracts and schemas, not private drafts or credentials. The
+first-visit introduction is shown once per account/site; the download remains
+available. Publishing requires separately granted publication access and the
+publisher role (or administrator). Use **Article handoff** for file-based edits,
+or connect an MCP client to resume your own drafts directly.
 
 An experimental WordPress plugin for structured article snapshots. This build
 is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Download `atshift-deft-0.6.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.6.0), which also includes its SHA-256 checksum. Upload it through Plugins >
+Download `atshift-deft-0.7.0.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.0), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
@@ -23,7 +40,7 @@ archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
-Version 0.6.0 adds bounded shared-component styling and a GitHub-only update adapter without changing saved data identities or AI permissions.
+Version 0.7.0 adds per-article destinations, existing category/tag selection and public structure JSON with JSON-LD. Saved-data identities and connection permissions are preserved.
 Existing 0.5.x installations need one manual ZIP replacement. Thereafter the GitHub
 package supports normal WordPress updates, preserving the site's automatic-update
 preference and verifying the exact release ZIP with SHA-256. The WordPress.org
@@ -77,6 +94,16 @@ Refresh reuse revokes the grant. See [CONNECTIONS.md](docs/CONNECTIONS.md).
 Actual ChatGPT, Claude and Gemini account flows still require a public HTTPS test.
 Automatic client registration and remote client metadata fetching are not supported.
 
+## Page Composition and Columns
+
+Ask your AI to assemble the page, not just write its text: arrange headings,
+images and body sections, combine stacked sections with responsive two-column
+layouts, or use a supported Q&A list or accordion. Describe the design or provide
+an optional reference image. The AI reuses available components and can create
+supported missing structures with authoring permission. Columns stack on narrow
+screens. Keep your theme's look or request a separate article layout; this does
+not replace the site theme or guarantee an exact copy of a reference image.
+
 ## Component Appearance
 
 Version 0.6.0 lets an authorized AI create reusable shared
@@ -119,6 +146,34 @@ bind exact content/media/policy and stop if any change. Revocation cancels pendi
 reservations; expiry blocks new requests but preserves previously authorized jobs.
 WordPress cron may run late; use a server cron for reliable due-event processing.
 Only initial publication is supported. Later draft saves do not update the public post.
+Version 0.7.0 adds
+`list-post-types` to both MCP endpoints. Choose where each article appears: a normal
+post, page or eligible existing public custom type. If you have not chosen for
+this article, the AI asks **"Where would you like to publish this article?"**,
+offers available publishable destinations and waits for your answer. An existing
+choice is validated and stated with the timing without asking again. Choosing
+a destination alone does not publish anything. The AI includes the selected `postType` in `set-publication`;
+the API's legacy default is not permission to skip this conversation. No separate
+DEFT allowlist is needed. Pages/custom types require native create/edit/publish capabilities as
+well as DEFT publication access. Unsupported or unavailable destinations fail without
+falling back. Selection belongs to the publication request, not the draft snapshot.
+Use `list-taxonomies` and `list-terms` to select existing categories, tags or public
+custom taxonomy terms for that destination. The AI proposes a small relevant
+selection and confirms it with the destination and timing. Native assignment
+rights are required; DEFT publisher alone does not grant them. No terms are created.
+Omitted taxonomies follow WordPress defaults, including the default category for
+normal posts. Term IDs, names, slugs and parents are pinned; changes or permission
+loss block pending reservations. The result and Articles status show the selection.
+Published DEFT pages also output minimal BlogPosting/WebPage JSON-LD and a link to
+`/wp-json/structured-fields/v1/public-structure/{publicPostId}`. The semantic tree
+uses only public HTML, not private snapshots, defaults, CSS/JS or account details.
+Private/password-protected/withdrawn posts are excluded, even for owners.
+Membership/paywall sites must veto restricted posts using
+`atshift_deft_public_structure_enabled`; SEO integrations can disable just JSON-LD
+with `atshift_deft_json_ld_enabled`. CSS visibility is not a privacy boundary.
+See https://github.com/at-shift/atshift-deft/blob/main/docs/PUBLIC-STRUCTURE.md.
+Parent pages, templates and required custom metadata are not handled yet.
+Private previews do not reproduce a destination-specific template.
 Images/PDFs use frozen private copies served after publication, not media-library
 promotion. The plugin must remain active to serve these files and styles. A disabled
 plugin cannot process reservations. Retention/deletion UI is not implemented.

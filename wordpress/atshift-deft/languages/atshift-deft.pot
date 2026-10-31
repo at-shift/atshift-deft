@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.6.0\n"
+"Project-Id-Version: atshift DEFT 0.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: includes/catalog-page.php:9
 #: includes/catalog-page.php:28
-#: includes/plugin.php:227
+#: includes/plugin.php:238
 msgid "Components"
 msgstr ""
 
@@ -57,7 +57,7 @@ msgid "New example"
 msgstr ""
 
 #: includes/catalog-page.php:16
-#: includes/plugin.php:281
+#: includes/plugin.php:292
 msgid "Refresh components"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgid "All available"
 msgstr ""
 
 #: includes/catalog-page.php:21
-#: admin.js:313
+#: admin.js:322
 msgid "Used by me"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgid "Component catalog"
 msgstr ""
 
 #: includes/catalog-page.php:27
-#: admin.js:338
+#: admin.js:347
 msgid "Behaviors"
 msgstr ""
 
@@ -153,8 +153,8 @@ msgid "This connection cannot update shared structures."
 msgstr ""
 
 #: includes/class-ai-workflow.php:45
-#: includes/class-mcp.php:75
-#: includes/plugin.php:158
+#: includes/class-mcp.php:82
+#: includes/plugin.php:169
 msgid "Article not found."
 msgstr ""
 
@@ -539,7 +539,7 @@ msgid "Secure MCP connection unavailable."
 msgstr ""
 
 #: includes/class-connections.php:110
-#: includes/plugin.php:142
+#: includes/plugin.php:153
 msgid "Payload exceeds 4 MB."
 msgstr ""
 
@@ -575,7 +575,7 @@ msgstr ""
 msgid "The update ZIP failed its SHA-256 integrity check."
 msgstr ""
 
-#: includes/class-mcp.php:102
+#: includes/class-mcp.php:111
 msgid "Unsupported operation."
 msgstr ""
 
@@ -882,6 +882,10 @@ msgstr ""
 msgid "The AI guide could not be prepared. Please try again."
 msgstr ""
 
+#: includes/class-public-structure.php:18
+msgid "Public structure not found."
+msgstr ""
+
 #: includes/class-publication-media.php:8
 msgid "Invalid publication."
 msgstr ""
@@ -946,32 +950,32 @@ msgstr ""
 msgid "Unavailable media."
 msgstr ""
 
-#: includes/class-publications.php:69
+#: includes/class-publications.php:73
 msgid "Use empty publishAt/timeZone for immediate publication."
 msgstr ""
 
-#: includes/class-publications.php:73
+#: includes/class-publications.php:77
 msgid "Use an exact ISO timestamp with seconds and UTC offset."
 msgstr ""
 
-#: includes/class-publications.php:76
+#: includes/class-publications.php:80
 msgid "Use an IANA time zone or fixed UTC offset."
 msgstr ""
 
-#: includes/class-publications.php:80
+#: includes/class-publications.php:84
 msgid "Date, offset and time zone disagree (including daylight saving time)."
 msgstr ""
 
-#: includes/class-publications.php:83
+#: includes/class-publications.php:87
 msgid "Schedule between one minute and one year in the future."
 msgstr ""
 
-#: includes/class-publications.php:115
-msgid "Use JSON within 2 KiB."
+#: includes/class-publications.php:122
+msgid "Use JSON within 8 KiB."
 msgstr ""
 
-#: includes/class-publications.php:121
-#: includes/class-publications.php:171
+#: includes/class-publications.php:128
+#: includes/class-publications.php:181
 #: includes/class-review.php:95
 #: includes/class-review.php:121
 #: includes/class-transfer.php:58
@@ -981,101 +985,121 @@ msgstr ""
 msgid "Retry later."
 msgstr ""
 
-#: includes/class-publications.php:126
+#: includes/class-publications.php:133
 msgid "A request ID cannot describe a different publication."
 msgstr ""
 
-#: includes/class-publications.php:129
+#: includes/class-publications.php:136
 msgid "This article has already entered publication. Updating a published post is not supported yet."
 msgstr ""
 
-#: includes/class-publications.php:130
+#: includes/class-publications.php:137
 msgid "Reload publication status before changing it."
 msgstr ""
 
-#: includes/class-publications.php:132
+#: includes/class-publications.php:139
 msgid "The draft changed. Read it before publishing."
 msgstr ""
 
-#: includes/class-publications.php:134
+#: includes/class-publications.php:141
+msgid "This publication destination is unavailable or not permitted for this account."
+msgstr ""
+
+#: includes/class-publications.php:143
 msgid "Publication history limit reached."
 msgstr ""
 
-#: includes/class-publications.php:137
+#: includes/class-publications.php:146
 msgid "Connection is busy. Retry publication."
 msgstr ""
 
-#: includes/class-publications.php:140
+#: includes/class-publications.php:149
 msgid "Publication authority changed. Nothing was scheduled."
 msgstr ""
 
-#: includes/class-publications.php:147
+#: includes/class-publications.php:157
 msgid "Publication request could not be stored."
 msgstr ""
 
-#: includes/class-publications.php:148
+#: includes/class-publications.php:158
 msgid "Publication changed during validation. Reload its status."
 msgstr ""
 
-#: includes/class-publications.php:153
+#: includes/class-publications.php:163
 msgid "Scheduling failed. Nothing was published."
 msgstr ""
 
-#: includes/class-publications.php:174
+#: includes/class-publications.php:184
 msgid "Publication is no longer cancellable at this version."
 msgstr ""
 
-#: includes/class-publications.php:175
+#: includes/class-publications.php:185
 msgid "Cancellation failed."
 msgstr ""
 
-#: includes/class-publications.php:193
+#: includes/class-publications.php:203
 msgid "The owner no longer has publication access."
 msgstr ""
 
-#: includes/class-publications.php:195
+#: includes/class-publications.php:205
+#: includes/class-publications.php:258
+msgid "The publication destination is no longer available or permitted. Nothing was published."
+msgstr ""
+
+#: includes/class-publications.php:207
+#: includes/class-publications.php:248
+msgid "The publication post no longer matches its destination or owner."
+msgstr ""
+
+#: includes/class-publications.php:209
 msgid "Legacy publication authority is unverified. Set publication again."
 msgstr ""
 
-#: includes/class-publications.php:197
 #: includes/class-publications.php:211
+#: includes/class-publications.php:228
 msgid "The publishing connection was revoked."
 msgstr ""
 
-#: includes/class-publications.php:201
-msgid "The draft, media or behavior policy changed. Set publication again."
+#: includes/class-publications.php:218
+msgid "The draft, media, categories, tags or behavior policy changed. Set publication again."
 msgstr ""
 
-#: includes/class-publications.php:203
+#: includes/class-publications.php:220
 msgid "The saved rendering changed."
 msgstr ""
 
-#: includes/class-publications.php:206
+#: includes/class-publications.php:223
 msgid "Connection is busy. Set publication again."
 msgstr ""
 
-#: includes/class-publications.php:213
+#: includes/class-publications.php:230
 msgid "Publication state changed before admission."
 msgstr ""
 
-#: includes/class-publications.php:219
+#: includes/class-publications.php:236
+#: includes/class-publications.php:252
 msgid "InnoDB is required."
 msgstr ""
 
-#: includes/class-publications.php:221
+#: includes/class-publications.php:238
+#: includes/class-publications.php:254
 msgid "Could not start publication transaction."
 msgstr ""
 
-#: includes/class-publications.php:225
+#: includes/class-publications.php:242
 msgid "Could not create publication post."
 msgstr ""
 
-#: includes/class-publications.php:227
+#: includes/class-publications.php:244
 msgid "Could not attach publication post."
 msgstr ""
 
-#: includes/class-publications.php:233
+#: includes/class-publications.php:263
 msgid "WordPress did not publish the post."
+msgstr ""
+
+#: includes/class-publications.php:267
+msgid "Could not commit the publication categories or tags."
 msgstr ""
 
 #: includes/class-review.php:32
@@ -1132,8 +1156,8 @@ msgstr ""
 
 #: includes/class-review.php:136
 #: includes/class-review.php:150
-#: includes/plugin.php:229
-#: includes/plugin.php:272
+#: includes/plugin.php:240
+#: includes/plugin.php:283
 msgid "Review"
 msgstr ""
 
@@ -1166,8 +1190,8 @@ msgid "Expired"
 msgstr ""
 
 #: includes/class-review.php:160
-#: includes/plugin.php:226
-#: includes/plugin.php:259
+#: includes/plugin.php:237
+#: includes/plugin.php:270
 msgid "Articles"
 msgstr ""
 
@@ -1398,6 +1422,31 @@ msgstr ""
 msgid "The snapshot was not saved."
 msgstr ""
 
+#: includes/class-taxonomies.php:96
+msgid "A selected taxonomy is duplicated, unavailable or not permitted for this destination."
+msgstr ""
+
+#: includes/class-taxonomies.php:100
+msgid "This taxonomy requires a term. Choose an existing term or omit it to use WordPress defaults."
+msgstr ""
+
+#: includes/class-taxonomies.php:105
+msgid "A selected term is missing, duplicated, not permitted or over the selection limit."
+msgstr ""
+
+#: includes/class-taxonomies.php:130
+#: includes/class-taxonomies.php:142
+msgid "The selected categories or tags changed. Set publication again."
+msgstr ""
+
+#: includes/class-taxonomies.php:134
+msgid "WordPress could not assign the selected categories or tags. Nothing was published."
+msgstr ""
+
+#: includes/class-taxonomies.php:147
+msgid "WordPress did not retain the selected categories or tags. Nothing was published."
+msgstr ""
+
 #: includes/class-transfer.php:42
 msgid "Transfer credentials require HTTPS."
 msgstr ""
@@ -1447,7 +1496,7 @@ msgid "Could not revoke transfer."
 msgstr ""
 
 #: includes/connections-page.php:9
-#: includes/plugin.php:228
+#: includes/plugin.php:239
 msgid "AI connections"
 msgstr ""
 
@@ -1633,176 +1682,176 @@ msgstr ""
 msgid "Deactivate Structured Fields Prototype before activating atshift DEFT. Saved data will be retained. You do not need to delete the old plugin."
 msgstr ""
 
-#: includes/plugin.php:42
+#: includes/plugin.php:45
 msgid "Structured drafts"
 msgstr ""
 
-#: includes/plugin.php:52
+#: includes/plugin.php:55
 msgid "atshift DEFT author"
 msgstr ""
 
-#: includes/plugin.php:53
+#: includes/plugin.php:56
 msgid "atshift DEFT designer"
 msgstr ""
 
-#: includes/plugin.php:54
+#: includes/plugin.php:57
 msgid "atshift DEFT publisher"
 msgstr ""
 
-#: includes/plugin.php:124
+#: includes/plugin.php:135
 msgid "Review not found."
 msgstr ""
 
-#: includes/plugin.php:131
+#: includes/plugin.php:142
 msgid "This local media file is missing, unsupported or inaccessible."
 msgstr ""
 
-#: includes/plugin.php:143
+#: includes/plugin.php:154
 msgid "Use application/json."
 msgstr ""
 
-#: includes/plugin.php:146
+#: includes/plugin.php:157
 msgid "Supply snapshot and integer expectedVersion only."
 msgstr ""
 
-#: includes/plugin.php:156
+#: includes/plugin.php:167
 msgid "Invalid version."
 msgstr ""
 
-#: includes/plugin.php:202
+#: includes/plugin.php:213
 msgid "This preview requires its authorized WordPress session and exact saved version."
 msgstr ""
 
-#: includes/plugin.php:202
-#: includes/plugin.php:209
+#: includes/plugin.php:213
+#: includes/plugin.php:220
 msgid "Private preview"
 msgstr ""
 
-#: includes/plugin.php:209
+#: includes/plugin.php:220
 msgid "A referenced media file is unavailable, changed or no longer permitted."
 msgstr ""
 
-#: includes/plugin.php:229
-#: includes/plugin.php:230
+#: includes/plugin.php:240
+#: includes/plugin.php:241
 msgid "Review structured article"
 msgstr ""
 
-#: includes/plugin.php:242
+#: includes/plugin.php:253
 msgid "Close"
 msgstr ""
 
-#: includes/plugin.php:251
+#: includes/plugin.php:262
 msgid "New article"
 msgstr ""
 
-#: includes/plugin.php:252
+#: includes/plugin.php:263
 msgid "Download article handoff"
 msgstr ""
 
-#: includes/plugin.php:252
+#: includes/plugin.php:263
 msgid "Article handoff"
 msgstr ""
 
-#: includes/plugin.php:253
+#: includes/plugin.php:264
 msgid "Import snapshot"
 msgstr ""
 
-#: includes/plugin.php:254
+#: includes/plugin.php:265
 msgid "Load sample"
 msgstr ""
 
-#: includes/plugin.php:255
+#: includes/plugin.php:266
 msgid "Media sample"
 msgstr ""
 
-#: includes/plugin.php:256
+#: includes/plugin.php:267
 msgid "Refresh articles"
 msgstr ""
 
-#: includes/plugin.php:258
+#: includes/plugin.php:269
 msgid "Private drafts"
 msgstr ""
 
-#: includes/plugin.php:260
-#: admin.js:84
+#: includes/plugin.php:271
+#: admin.js:93
 msgid "No article selected"
 msgstr ""
 
-#: includes/plugin.php:265
+#: includes/plugin.php:276
 msgid "View published post"
 msgstr ""
 
-#: includes/plugin.php:266
+#: includes/plugin.php:277
 msgid "Cancel reservation"
 msgstr ""
 
-#: includes/plugin.php:269
+#: includes/plugin.php:280
 msgid "Save draft"
 msgstr ""
 
-#: includes/plugin.php:270
+#: includes/plugin.php:281
 msgid "Export snapshot"
 msgstr ""
 
-#: includes/plugin.php:271
+#: includes/plugin.php:282
 msgid "Open theme preview"
 msgstr ""
 
-#: includes/plugin.php:276
+#: includes/plugin.php:287
 msgid "Edit article"
 msgstr ""
 
-#: includes/plugin.php:277
+#: includes/plugin.php:288
 msgid "Title"
 msgstr ""
 
-#: includes/plugin.php:279
+#: includes/plugin.php:290
 msgid "Component"
 msgstr ""
 
-#: includes/plugin.php:280
+#: includes/plugin.php:291
 msgid "Add component"
 msgstr ""
 
-#: includes/plugin.php:286
+#: includes/plugin.php:297
 msgid "Private files"
 msgstr ""
 
-#: includes/plugin.php:289
+#: includes/plugin.php:300
 msgid "Use"
 msgstr ""
 
-#: includes/plugin.php:290
-#: admin.js:164
+#: includes/plugin.php:301
+#: admin.js:173
 msgid "Reference only"
 msgstr ""
 
-#: includes/plugin.php:290
-#: admin.js:165
+#: includes/plugin.php:301
+#: admin.js:174
 msgid "Publication candidate"
 msgstr ""
 
-#: includes/plugin.php:291
+#: includes/plugin.php:302
 msgid "Add files"
 msgstr ""
 
-#: includes/plugin.php:297
+#: includes/plugin.php:308
 msgid "Article media"
 msgstr ""
 
-#: includes/plugin.php:299
+#: includes/plugin.php:310
 msgid "Existing WordPress media"
 msgstr ""
 
-#: includes/plugin.php:301
+#: includes/plugin.php:312
 msgid "Search media"
 msgstr ""
 
-#: includes/plugin.php:302
+#: includes/plugin.php:313
 msgid "More results"
 msgstr ""
 
-#: includes/plugin.php:306
+#: includes/plugin.php:317
 msgid "WordPress theme preview"
 msgstr ""
 
@@ -1823,219 +1872,235 @@ msgstr ""
 msgid "Publication: %1$s%2$s%3$s"
 msgstr ""
 
+#. translators: 1: destination label; 2: WordPress post type identifier.
+#: admin.js:79
+#, js-format
+msgid "Destination: %1$s (%2$s)"
+msgstr ""
+
+#: admin.js:82
+msgid "No terms"
+msgstr ""
+
+#. translators: %s: selected category, tag or custom taxonomy names.
+#: admin.js:84
+#, js-format
+msgid "Classification: %s"
+msgstr ""
+
 #. translators: 1: candidate.article.revision; 2: saved ? `WordPress v${saved.version}` : "Not saved".
-#: admin.js:86
+#: admin.js:95
 #, js-format
 msgid "Article r%1$s · %2$s"
 msgstr ""
 
 #. translators: 1: saved.version.
-#: admin.js:86
+#: admin.js:95
 #, js-format
 msgid "WordPress v%1$s"
 msgstr ""
 
-#: admin.js:86
+#: admin.js:95
 msgid "Not saved"
 msgstr ""
 
 #. translators: 1: file count, 2: per-file size limit in MiB.
-#: admin.js:144
+#: admin.js:153
 #, js-format
 msgid "%1$d private file · %2$d MiB max/file"
 msgid_plural "%1$d private files · %2$d MiB max/file"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.js:145
+#: admin.js:154
 msgid "Private storage unavailable"
 msgstr ""
 
 #. translators: 1: purpose; 2: Math.ceil(item.bytes / 1024).
-#: admin.js:166
+#: admin.js:175
 #, js-format
 msgid "%1$s · Private · %2$s KiB"
 msgstr ""
 
-#: admin.js:195
+#: admin.js:204
 msgid "Article changes not saved."
 msgstr ""
 
 #. translators: 1: a.filename.
-#: admin.js:205
+#: admin.js:214
 #, js-format
 msgid "Private: %1$s"
 msgstr ""
 
 #. translators: 1: a.filename.
-#: admin.js:208
+#: admin.js:217
 #, js-format
 msgid "WordPress: %1$s"
 msgstr ""
 
-#: admin.js:219
+#: admin.js:228
 msgid "URL / no file"
 msgstr ""
 
 #. translators: 1: value.assetRef.kind; 2: value.assetRef.id.
-#: admin.js:235
+#: admin.js:244
 #, js-format
 msgid "Saved source: %1$s %2$s"
 msgstr ""
 
 #. translators: 1: field.label.
-#: admin.js:245
+#: admin.js:254
 #, js-format
 msgid "%1$s URL"
 msgstr ""
 
-#: admin.js:250
+#: admin.js:259
 msgid "Alternative text"
 msgstr ""
 
-#: admin.js:250
+#: admin.js:259
 msgid "Link text"
 msgstr ""
 
 #. translators: %d: number of existing media files.
-#: admin.js:304
+#: admin.js:313
 #, js-format
 msgid "%d existing WordPress file found."
 msgid_plural "%d existing WordPress files found."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.js:310
+#: admin.js:319
 msgid "Select component"
 msgstr ""
 
-#: admin.js:314
+#: admin.js:323
 msgid "All other available components"
 msgstr ""
 
-#: admin.js:346
+#: admin.js:355
 msgid " · Stopped"
 msgstr ""
 
-#: admin.js:360
+#: admin.js:369
 msgid "Enabled"
 msgstr ""
 
-#: admin.js:361
+#: admin.js:370
 msgid "Duration (ms)"
 msgstr ""
 
-#: admin.js:362
+#: admin.js:371
 msgid "Show caption"
 msgstr ""
 
 #. translators: 1: block.id.
-#: admin.js:405
+#: admin.js:414
 #, js-format
 msgid "%1$s variant"
 msgstr ""
 
-#: admin.js:415
+#: admin.js:424
 msgid "Move up"
 msgstr ""
 
-#: admin.js:416
+#: admin.js:425
 msgid "Move down"
 msgstr ""
 
-#: admin.js:417
+#: admin.js:426
 msgid "Remove component"
 msgstr ""
 
-#: admin.js:506
+#: admin.js:515
 msgid "Saved draft loaded."
 msgstr ""
 
 #. translators: 1: item.title; 2: item.version.
-#: admin.js:514
+#: admin.js:523
 #, js-format
 msgid "%1$s · v%2$s"
 msgstr ""
 
-#: admin.js:517
-#: admin.js:527
+#: admin.js:526
+#: admin.js:536
 msgid "Discard the unsaved import?"
 msgstr ""
 
-#: admin.js:526
+#: admin.js:535
 msgid "Choose a WordPress snapshot JSON file."
 msgstr ""
 
-#: admin.js:551
+#: admin.js:560
 msgid "Import ready. Not yet saved."
 msgstr ""
 
-#: admin.js:557
+#: admin.js:566
 msgid "Discard the unsaved article?"
 msgstr ""
 
-#: admin.js:564
+#: admin.js:573
 msgid "Untitled article"
 msgstr ""
 
-#: admin.js:579
+#: admin.js:588
 msgid "New article. Not saved."
 msgstr ""
 
-#: admin.js:593
+#: admin.js:602
 msgid "Component is no longer active. Refresh the catalog."
 msgstr ""
 
-#: admin.js:639
+#: admin.js:648
 msgid "Maximum file size is 4 MB."
 msgstr ""
 
-#: admin.js:650
+#: admin.js:659
 msgid "Use at most 50 article blocks."
 msgstr ""
 
-#: admin.js:656
+#: admin.js:665
 msgid "Unknown composition property."
 msgstr ""
 
-#: admin.js:666
+#: admin.js:675
 msgid "Article changed. Export a fresh AI handoff."
 msgstr ""
 
-#: admin.js:709
+#: admin.js:718
 msgid "Sample could not be loaded."
 msgstr ""
 
-#: admin.js:715
+#: admin.js:724
 msgid "Media sample could not be loaded."
 msgstr ""
 
-#: admin.js:720
+#: admin.js:729
 msgid "Cancel this publication reservation?"
 msgstr ""
 
-#: admin.js:722
+#: admin.js:731
 msgid "Publication reservation cancelled."
 msgstr ""
 
-#: admin.js:752
+#: admin.js:761
 msgid "Draft saved. Not published."
 msgstr ""
 
 #. translators: 1: file.name.
-#: admin.js:775
+#: admin.js:784
 #, js-format
 msgid "%1$s: file exceeds the upload limit."
 msgstr ""
 
 #. translators: 1: received + 1; 2: files.length; 3: file.name.
-#: admin.js:779
+#: admin.js:788
 #, js-format
 msgid "Receiving %1$s/%2$s: %3$s"
 msgstr ""
 
 #. translators: %d: number of received private files.
-#: admin.js:787
+#: admin.js:796
 #, js-format
 msgid "%d file received privately. Not published."
 msgid_plural "%d files received privately. Not published."
@@ -2043,7 +2108,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 1: received; 2: files.length; 3: e.message.
-#: admin.js:789
+#: admin.js:798
 #, js-format
 msgid "%1$s/%2$s received. %3$s"
 msgstr ""

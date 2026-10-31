@@ -94,7 +94,7 @@ final class PublicationMedia {
         $job = Publications::by_publication( $id );
         $post = $job && $job['post_id'] ? get_post( (int) $job['post_id'] ) : null;
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
-        if ( ! $job || 'published' !== $job['state'] || ! $post || 'publish' !== $post->post_status || 'post' !== $post->post_type || $post->post_password ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );
+        if ( ! $job || 'published' !== $job['state'] || ! Publications::matches_post( $job, $post, true ) ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );
         $files = json_decode( $job['files'], true ); $meta = $files[$key] ?? null;
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
         if ( ! $meta || ! preg_match( '/^[a-f0-9]{64}$/D', $meta['sha256'] ) ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );

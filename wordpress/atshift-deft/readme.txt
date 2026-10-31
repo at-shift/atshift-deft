@@ -4,22 +4,46 @@ Tags: ai, mcp, publishing, structured-content
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.6.0
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Structured drafts, scoped AI connections, and owner-authorized immediate or scheduled publication.
+Create and publish WordPress articles with your usual AI. Focus on your content, not the editor.
 
 == Description ==
+
+Start with one thing in DEFT: download the guide for your AI.
+
+Give it to the AI you already use, then follow its instructions to connect to
+WordPress. Once a compatible AI client is connected and authorized, you can create
+and publish new articles through that conversation, without opening DEFT for
+everyday authoring.
+
+Work with your AI on the article, ask it to create the page design and column
+layout, and tell it where the article should appear. Review the result, then
+simply ask, "Publish it." Ask your AI to select existing categories and tags, too.
+Published DEFT articles also output JSON-LD and a public, content-only structure
+that other AI tools can read.
+
+Focus on creating content. Let your AI handle the assembly and publication.
+
+Initial setup, permission changes, reconnection and private theme-based previews
+can still require WordPress sign-in. Site maintenance remains a separate responsibility.
 
 This is an early release. Evaluate it on an isolated test site before production use.
 It does not replace atshift Fields or migrate existing posts.
 DEFT stands for Delegate Execution. Focus on Thinking.
 
-Use the AI guide from the Articles screen with your preferred AI. Drafts retain
+The AI guide is available from the Articles screen. Drafts retain
 typed content, pinned component versions, private media references and an
 authenticated preview. Publishing requires a separate publishing connection and
 the appropriate WordPress role.
+
+Ask the AI for page composition and column layouts as well as text: headings,
+images, stacked sections, responsive two-column sections and supported Q&A.
+Describe the design in conversation or provide an optional reference image.
+Reuse your theme's look or assemble an article layout from DEFT components;
+supported component styling does not require changes to theme Additional CSS.
 
 See README.md for architecture and deployment constraints, GETTING-STARTED.ja.md
 for installation and usage, and AI-GUIDE.md for the external-AI authoring contract.
@@ -61,6 +85,33 @@ typed color, spacing, border, typography, column and link-button options. DEFT
 generates component-scoped CSS. Saved articles retain their component revisions.
 Arbitrary CSS and JavaScript are not accepted by the AI structure-creation tool.
 
+= Can I choose where each article is published? =
+
+Version 0.7.0 supports normal posts, pages and eligible existing
+public custom post types. If you have not chosen a destination for the article,
+the AI guide instructs it to ask where to publish, show available destinations and
+wait for your answer. An existing choice is validated and stated without asking
+again. Choosing a destination alone does not publish. Native WordPress permissions
+and separate DEFT publication access still apply.
+
+= Can the AI select categories and tags? =
+
+Version 0.7.0 can select existing categories, tags and public
+custom taxonomy terms attached to the selected destination. The AI confirms a
+relevant selection with you; native assignment permissions are required. It does
+not create terms. Without a selection, WordPress defaults apply. Changes to selected
+terms or lost permissions stop pending reservations.
+
+= Is machine-readable public content available? =
+
+Published DEFT pages include minimal BlogPosting/WebPage JSON-LD and a discoverable
+public structure JSON endpoint. It describes public HTML headings, lists, images,
+links and built-in layout hints, not private snapshots, component definitions,
+CSS/JS or account data. Drafts and password-protected or withdrawn posts return 404.
+Membership/paywall sites must veto restricted posts with
+atshift_deft_public_structure_enabled. SEO integrations can disable only JSON-LD
+with atshift_deft_json_ld_enabled. See the Public Structure documentation in GitHub.
+
 == External Services ==
 
 DEFT does not call an AI provider on its own. You connect your chosen external AI
@@ -79,6 +130,13 @@ GitHub privacy: https://docs.github.com/en/site-policy/privacy-policies/github-g
 The GitHub updater is excluded from WordPress.org packages.
 
 == Changelog ==
+
+= 0.7.0 =
+* Choose a post, page or eligible existing custom post type separately for each article.
+* Guide the AI to ask where to publish and confirm existing categories or tags with the timing.
+* Preserve native destination/taxonomy permissions and recheck pinned choices before publication.
+* Add public-content-only structure JSON and minimal JSON-LD; exclude drafts and private configuration.
+* Refresh Japanese catalogs and user guides. Download a fresh AI guide after upgrading.
 
 = 0.6.0 =
 * Add reusable shared component appearance with bounded settings and component-scoped CSS.

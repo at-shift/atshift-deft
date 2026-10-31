@@ -51,8 +51,8 @@ test("publishing is explicit; old keys and other roles cannot gain it",async()=>
   assert.equal(pubKey.publishing,true); assert.notEqual(pubKey.endpoint,draftKey.endpoint);
   assert.equal((await fetch(pubKey.endpoint,{headers:{Authorization:`Bearer ${draftKey.token}`}})).status,401);
   assert.equal((await fetch(draftKey.endpoint,{headers:{Authorization:`Bearer ${pubKey.token}`}})).status,401);
-  draftClient=await connect(draftKey);assert.equal((await draftClient.listTools()).tools.length,8);
-  client=await connect(pubKey);assert.equal((await client.listTools()).tools.length,11);
+  draftClient=await connect(draftKey);assert.equal((await draftClient.listTools()).tools.length,11);
+  client=await connect(pubKey);assert.equal((await client.listTools()).tools.length,14);
   const context=await good("context",{conversationLanguage:"ja"});assert.equal(context.capabilities.publish,true);assert.equal(context.language.replyLanguage,"ja");
   assert.match(context.publication.instructions,/user chooses; the AI sets/);
   assert.equal((await call(client,"get-publication",{articleId:data.users[1].id})).raw.isError,true);

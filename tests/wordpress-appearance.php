@@ -1,6 +1,6 @@
 <?php
 // Run with WP-CLI eval-file in a disposable local database, never on a user site.
-if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! str_starts_with( DB_NAME, 'sf_deft_appearance_' ) ) {
+if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:appearance|post_types)_[a-f0-9]+$/D', DB_NAME ) ) {
     throw new RuntimeException( 'Use a disposable local appearance-test database.' );
 }
 

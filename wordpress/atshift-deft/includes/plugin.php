@@ -23,7 +23,10 @@ require_once __DIR__ . '/class-oauth-consent.php';
 require_once __DIR__ . '/class-mcp.php';
 require_once __DIR__ . '/class-ai-workflow.php';
 require_once __DIR__ . '/class-publications.php';
+require_once __DIR__ . '/class-post-types.php';
+require_once __DIR__ . '/class-taxonomies.php';
 require_once __DIR__ . '/class-publication-media.php';
+require_once __DIR__ . '/class-public-structure.php';
 require_once __DIR__ . '/connections-page.php';
 require_once __DIR__ . '/catalog-page.php';
 
@@ -32,7 +35,7 @@ register_activation_hook( PLUGIN_FILE, static function() { Store::install(); Ass
 add_action( 'init', static function() {
     if ( 4 !== (int) get_option( 'sf_connections_schema_version' ) ) Connections::install();
     if ( 1 !== (int) get_option( 'sf_oauth_schema_version' ) ) OAuthStore::install();
-    if ( 2 !== (int) get_option( 'sf_publications_schema_version' ) ) Publications::install();
+    if ( 3 !== (int) get_option( 'sf_publications_schema_version' ) ) Publications::install();
     if ( 3 !== (int) get_option( 'sf_access_schema_version' ) ) Access::install();
     if ( 1 !== (int) get_option( 'sf_brand_version' ) ) Access::update_brand_labels();
     if ( 1 !== (int) get_option( 'sf_assets_schema_version' ) ) Assets::install();
@@ -76,6 +79,8 @@ add_filter( 'rest_post_dispatch', array( Connections::class, 'finish' ), 99, 3 )
 add_action( Publications::HOOK, array( Publications::class, 'run' ), 10, 2 );
 add_action( 'template_redirect', array( PublicationMedia::class, 'serve' ), -10 );
 add_action( 'wp_enqueue_scripts', array( Publications::class, 'assets' ), 20 );
+add_action( 'rest_api_init', array( PublicStructure::class, 'routes' ) );
+add_action( 'wp_head', array( PublicStructure::class, 'head' ), 20 );
 
 add_filter( 'wp_insert_post_data', static function( $data ) {
     if ( 'sf_article' === $data['post_type'] ) $data['post_status'] = 'draft';
@@ -87,6 +92,12 @@ function permission() {
 }
 
 add_action( 'rest_api_init', static function() {
+    register_rest_route( 'structured-fields/v1', '/post-types', array( 'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission', 'callback' => array( PostTypes::class, 'listing' ) ) );
+    register_rest_route( 'structured-fields/v1', '/post-types/(?P<postType>[a-z0-9_-]{1,20})/taxonomies', array( 'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission',
+        'callback' => static function( $r ) { return Taxonomies::listing( array( 'postType' => $r['postType'] ) ); } ) );
+    register_rest_route( 'structured-fields/v1', '/post-types/(?P<postType>[a-z0-9_-]{1,20})/taxonomies/(?P<taxonomy>[a-z0-9_-]{1,32})/terms', array( 'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission',
+        'args' => array( 'search' => array( 'type' => 'string', 'maxLength' => 200, 'default' => '' ), 'page' => array( 'type' => 'integer', 'minimum' => 1, 'maximum' => 10000, 'default' => 1 ) ),
+        'callback' => static function( $r ) { return Taxonomies::terms( array( 'postType' => $r['postType'], 'taxonomy' => $r['taxonomy'], 'search' => $r['search'], 'page' => $r['page'] ) ); } ) );
     register_rest_route( 'structured-fields/v1', '/publications', array( 'methods' => 'POST', 'permission_callback' => array( Publications::class, 'permission' ), 'callback' => array( Publications::class, 'set' ) ) );
     register_rest_route( 'structured-fields/v1', '/publications/cancel', array( 'methods' => 'POST', 'permission_callback' => array( Publications::class, 'permission' ), 'callback' => array( Publications::class, 'cancel' ) ) );
     register_rest_route( 'structured-fields/v1', '/publications/(?P<id>[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})', array( 'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission', 'callback' => static function( $r ) { return Publications::state( $r['id'] ); } ) );

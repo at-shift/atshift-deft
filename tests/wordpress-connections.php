@@ -12,7 +12,7 @@ try {
     sfc_check( is_wp_error( Connections::permission( $request ) ), 'Issuing keys requires a browser session and nonce, not just current user' );
     sfc_check( is_wp_error( Connections::create( $request ) ), 'Direct key creation without the session is denied' );
     sfc_check( is_wp_error( Connections::revoke( $request ) ), 'Direct key revocation without the session is denied' );
-    foreach ( array( 'context', 'list-drafts', 'get-draft', 'save-draft' ) as $key ) {
+    foreach ( array( 'context', 'list-post-types', 'list-taxonomies', 'list-terms', 'list-drafts', 'get-draft', 'save-draft' ) as $key ) {
         sfc_check( is_wp_error( Mcp::execute( $key, array() ) ), 'Direct ability invocation is denied without scoped context: ' . $key );
         $ability = wp_get_ability( 'structured-fields/' . $key );
         $meta = $ability->get_meta();

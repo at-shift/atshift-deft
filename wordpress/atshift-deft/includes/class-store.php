@@ -13,10 +13,10 @@ final class Store {
             $row = $wpdb->get_row( $wpdb->prepare( 'SELECT payload FROM %i WHERE post_id=%d', $table, $post_id ), ARRAY_A );
             return Snapshot::post_title( json_decode( $row['payload'] ?? '{}' )->article->title ?? $post->post_title );
         }
-        $publication = 'post' === $post->post_type ? get_post_meta( $post_id, '_sf_publication', true ) : '';
+        $publication = get_post_meta( $post_id, '_sf_publication', true );
         if ( ! $publication ) return $title;
         $job = Publications::by_publication( $publication );
-        $row = $job && (int) $job['post_id'] === (int) $post_id ? self::read( $job['article_id'], (int) $job['article_version'] ) : null;
+        $row = $job && Publications::matches_post( $job, $post ) ? self::read( $job['article_id'], (int) $job['article_version'] ) : null;
         $canonical = json_decode( $row['payload'] ?? '{}' )->article->title ?? null;
         // Old raw titles and new encoded titles share the same canonical display.
         if ( is_string( $canonical ) && in_array( $post->post_title, array( $canonical, trim( $canonical ), Snapshot::post_title( $canonical ), trim( Snapshot::post_title( $canonical ) ) ), true ) ) return Snapshot::post_title( $canonical );

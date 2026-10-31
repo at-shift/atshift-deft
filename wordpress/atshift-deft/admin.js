@@ -74,6 +74,15 @@
     const currentPublication = publication?.articleId === base?.articleId ? publication : null;
     $("publication").hidden = !currentPublication;
     $("publication-status").textContent = currentPublication ? /* translators: 1: currentPublication.state; 2: currentPublication.publishAt ? ` · ${new Date(currentPublication.publishAt).toLocaleString(config.locale, {tim; 3: currentPublication.error ? ` · ${currentPublication.error}` : "". */ sprintf(__("Publication: %1$s%2$s%3$s", "atshift-deft"), currentPublication.state, currentPublication.publishAt ? ` · ${new Date(currentPublication.publishAt).toLocaleString(config.locale, {timeZone: /^[+-]/.test(currentPublication.timeZone) ? "UTC" : currentPublication.timeZone})} (${/^[+-]/.test(currentPublication.timeZone) ? "UTC" : currentPublication.timeZone})` : "", currentPublication.error ? ` · ${currentPublication.error}` : "") : "";
+    if (currentPublication?.postType) {
+      // translators: 1: destination label; 2: WordPress post type identifier.
+      $("publication-status").textContent += ` · ${sprintf(__("Destination: %1$s (%2$s)", "atshift-deft"), currentPublication.postTypeLabel, currentPublication.postType)}`;
+    }
+    if (currentPublication?.taxonomyDetails?.length) {
+      const classification = currentPublication.taxonomyDetails.map(item => `${item.label}: ${item.terms.length ? item.terms.map(term => term.name).join(", ") : __("No terms", "atshift-deft")}`).join("; ");
+      // translators: %s: selected category, tag or custom taxonomy names.
+      $("publication-status").textContent += ` · ${sprintf(__("Classification: %s", "atshift-deft"), classification)}`;
+    }
     $("publication-link").hidden = !currentPublication?.url;
     if (currentPublication?.url) $("publication-link").href = currentPublication.url;
     else $("publication-link").removeAttribute("href");
