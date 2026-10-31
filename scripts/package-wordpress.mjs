@@ -65,13 +65,18 @@ assert.equal(manifest.minimumPhp, "8.2.0");
 assert.equal(manifest.namespacePrefix, "StructuredFields\\Vendor\\");
 assert.equal(manifest.composerLockSha256, createHash("sha256").update(await readFile(new URL("composer.lock", root))).digest("hex"));
 assert.equal(manifest.scoperConfigSha256, createHash("sha256").update(await readFile(new URL("scoper.inc.php", root))).digest("hex"));
+// Upstream PHAR build tooling is not runtime code and is rejected by the directory uploader.
+const excludedVendorFiles = new Set(["paragonie/random_compat/build-phar.sh"]);
+const packagedManifest = { ...manifest, files: {} };
 for (const [name, hash] of Object.entries(manifest.files)) {
   assert.ok(!name.startsWith("/") && !name.split("/").includes("..") && !name.includes("\\"));
   const bytes = await readFile(new URL(`vendor/${name}`, source));
   assert.equal(createHash("sha256").update(bytes).digest("hex"), hash, `Rebuild PHP dependencies: ${name}`);
+  if (excludedVendorFiles.has(name)) continue;
+  packagedManifest.files[name] = hash;
   files[`atshift-deft/vendor/${name}`] = new Uint8Array(bytes);
 }
-files["atshift-deft/vendor/dependency-manifest.json"] = new Uint8Array(manifestBytes);
+files["atshift-deft/vendor/dependency-manifest.json"] = new TextEncoder().encode(JSON.stringify(packagedManifest, null, 2) + "\n");
 const archive = zipSync(Object.fromEntries(Object.entries(files).map(([name, bytes]) => [
   name, [bytes, { mtime: new Date(1980, 0, 1, 0, 0, 0) }],
 ])), { level: 6 });

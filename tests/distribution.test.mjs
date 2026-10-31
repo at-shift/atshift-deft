@@ -54,3 +54,19 @@ test('both channels carry identical matching translation catalogs and no backups
   }
   assert.ok(!Object.keys(org).some(name => /\.po~$|\.env$|node_modules|\.git\//.test(name)));
 });
+
+test('distributions omit upstream shell build tools and retain an exact dependency manifest', () => {
+  for (const archive of [github, org]) {
+    assert.ok(!Object.keys(archive).some(name => /\.sh$/i.test(name)));
+    const base = 'atshift-deft/vendor/';
+    const manifest = JSON.parse(text(archive[base + 'dependency-manifest.json']));
+    assert.deepEqual(Object.keys(manifest.files).sort(), Object.keys(archive)
+      .filter(name => name.startsWith(base) && name !== base + 'dependency-manifest.json')
+      .map(name => name.slice(base.length)).sort());
+    for (const [name, hash] of Object.entries(manifest.files)) {
+      assert.equal(createHash('sha256').update(archive[base + name]).digest('hex'), hash, name);
+    }
+    assert.ok(archive[base + 'paragonie/random_compat/LICENSE']);
+    assert.ok(archive[base + 'paragonie/random_compat/lib/random.php']);
+  }
+});

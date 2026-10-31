@@ -7,6 +7,14 @@
 - Both ZIPs install as `atshift-deft/atshift-deft.php`, report version 0.7.0 and include the same POT, Japanese PO/MO and JS catalogs. Japanese remains a partial UI translation.
 - Core PHP, JavaScript, CSS, component definitions and saved-data identifiers are identical. Only the GitHub ZIP adds `Update URI`, updater bootstrap and `includes/class-github-updater.php`.
 
+The initial 0.7.0 WordPress.org upload rejected the upstream non-runtime file
+`vendor/paragonie/random_compat/build-phar.sh`. The corrected submission package
+in `.local/v070-submission/` omits that file and updates its dependency manifest;
+all other files match the originally checked submission package. The already
+published GitHub 0.7.0 ZIP is immutable and was not replaced. Subsequent builds of
+both channels omit this build script. See `WORDPRESS-ORG-REVIEW-0.7.0.md` for the
+submitted artifact checksum and the explanation of retained checker findings.
+
 `main` defaults to GitHub packaging. If separately approved, a submission branch
 `wordpress-org/0.7.0` can pin the release source commit plus `distribution.json` set
 to `wordpress-org`. Do not update a submission branch or submit without approval.
