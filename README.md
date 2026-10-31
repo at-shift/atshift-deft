@@ -1,119 +1,120 @@
 # atshift DEFT
 
-**伝えることに専念する。あとの作業は、いつものAIに。**
+**Focus on your message. Let the AI you already use handle the rest.**
 
-普段使うAIとの会話から、段組を含む記事の構成、下書き保存、プレビュー、WordPressへの公開・予約投稿までをつなぐプラグインです。
-DEFT は **Delegate Execution. Focus on Thinking.** の略です。
+Turn a conversation with your preferred AI into a structured WordPress article: layout, draft, preview, and immediate or scheduled publication.
+DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-現在は **0.5.0 の開発版**です。まずバックアップを取得したテストサイトでお試しください。
+The current version, **0.5.0**, is a development release. Start on an isolated test site with a backup.
 
-## はじめ方
+## Getting Started
 
-### STEP 1. インストールする
+### STEP 1. Install the Plugin
 
-[WordPress用ZIPをダウンロード](https://github.com/at-shift/atshift-deft/releases/download/v0.5.0/atshift-deft-0.5.0.zip)し、「プラグイン → 新規追加 → アップロード」からインストール・有効化します。
-WordPress **6.9以上**、PHP **8.2以上**が必要です。[ReleaseとSHA-256](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.0)も確認できます。GitHubの「Download ZIP」はソース一式で、そのままインストールする配布ZIPではありません。
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.5.0/atshift-deft-0.5.0.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.5.0). GitHub's **Download ZIP** contains source code, not the installable plugin package.
 
-### STEP 2. 手順書を、いつものAIへ渡す
+### STEP 2. Give the Guide to Your AI
 
-WordPressの **atshift DEFT** を開き、最初の案内から **AI用手順書をダウンロード**。そのファイルを普段使うAIへ添付するか、チャットのプロジェクトに追加します。
+Open **atshift DEFT** in WordPress and choose **Download AI guide** in the welcome dialog. Attach the file to your usual AI conversation or add it to your chat project's files.
 
-> この手順書を読んで、接続から案内してください。
+> Read this guide and walk me through connecting to my site.
 
-### STEP 3. AIの案内に沿って接続する
+### STEP 3. Follow the Connection Instructions
 
-利用するAIアプリの設定を行い、自分のWordPressアカウントで必要な範囲だけ許可します。AIが実際に接続を確認したら準備完了です。
-サイト管理者による公式 **WordPress MCP Adapter 0.7.1以上**の有効化が必要です。接続方式・利用条件はAIアプリにより異なります。パスワードや接続キーはチャットに貼りません。
+Configure your AI client as guided, then use your own WordPress account to grant only the access you need. Continue once the AI has verified a real connection.
+Your site administrator must activate the official **WordPress MCP Adapter 0.7.1+**. Available connection methods depend on the AI client. Never paste passwords or connection keys into chat.
 
-### STEP 4. サンプルで試す、または記事を頼む
+### STEP 4. Try the Sample or Start Your Article
 
-初めてなら、手順書に入っているサンプルで下書きとプレビューを試せます。スキップして自分の記事から始めても構いません。
-伝えたい相手・内容を話し、資料や希望する段組の画像があればAIへ渡します。
+The guide includes an optional sample for trying draft saving and previews without preparing any materials. You can skip it.
+Tell the AI who your article is for and what you want to communicate. Add supporting documents or a layout reference image when useful.
 
-> 初めて参加する人向けの案内を作って。資料の内容を整理して、日時と申込方法が分かる構成にしてください。
+> Create an announcement for first-time visitors. Organize these materials so the date and registration instructions are easy to find.
 
-### STEP 5. 確認して、公開時刻を伝える
+### STEP 5. Review and Choose When to Publish
 
-プレビューを確認し、会話で修正します。公開を任せる場合は、公開権限のある担当者が接続に公開権限を別途許可したうえで、**「今すぐ公開」** または **「11月5日午前9時、日本時間で公開」** のように伝えます。
-公開を依頼しなければ下書きのままです。サンプル体験では公開・予約をしない手順になっています。
+Check the preview and request changes in the conversation. To delegate publication, an authorized publisher must separately enable publication access for the connection. Then say **"Publish now"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."**
+The guided workflow keeps articles as drafts unless you ask to publish. The sample walkthrough does not publish or schedule anything.
 
-詳しい画面操作は [導入・利用手順](wordpress/atshift-deft/GETTING-STARTED.ja.md)、接続の違いは [AIサービス別の接続手順](wordpress/atshift-deft/docs/CONNECTIONS.md) を参照してください。
+See the [Installation and User Guide](docs/GETTING-STARTED.md) for detailed steps and [AI Client Connection Routes](wordpress/atshift-deft/docs/CONNECTIONS.md) for client-specific setup.
+A [Japanese user guide](wordpress/atshift-deft/GETTING-STARTED.ja.md) is also available.
 
-## できること
+## Features
 
-- **会話から記事を構成**: AIが利用可能な部品・入力項目・ルールを読み、見出し、本文、画像、リンクなどを組み立てます。
-- **既存部品を優先して再利用**: 共有カタログから探し、足りない場合だけ許可された範囲で構造を追加します。Q&Aの一覧・開閉表示なども選べます。
-- **下書きの保存と再開**: 担当者本人の記事をWordPressに保存し、版番号を照合して古い内容での上書きを防ぎます。
-- **画像・PDFの取り込み**: 必要なファイルだけを非公開で預かり、記事の保存版と紐付けます。既存WordPressメディアの再利用にも対応します。
-- **プレビュー中心の確認**: AI側へ持ち出すHTMLプレビューと、WordPressの実テーマによる本人用プレビューを使い分けられます。必要な部分だけ手動修正もできます。
-- **即時公開・予約投稿**: 公開専用の権限を明示的に許可した接続で、AIが希望日時を設定します。
-- **担当者ごとの分離**: 記事・素材・接続は本人単位。入力内容を含まない共有構造は再利用できます。
+- **Build articles through conversation.** The AI reads available components, fields, and rules to assemble headings, text, images, and links.
+- **Reuse before creating.** Search the shared component catalog first; add a permitted structure only when existing components are insufficient. Choose presentation variants such as visible or expandable Q&A answers.
+- **Save and resume drafts.** Store articles under their WordPress owner and check version numbers to prevent stale updates.
+- **Use images and PDFs.** Store selected files privately and bind them to a saved article version. Supported existing WordPress media can also be reused.
+- **Review previews, not editing controls.** Use a portable HTML preview or an owner-only preview with the site's actual theme. Make small manual edits when needed.
+- **Publish immediately or schedule.** Let the AI set your requested time through a connection explicitly authorized for publication.
+- **Keep staff work separate.** Articles, files, and connections belong to individual owners. Shared structures can be reused without sharing article content.
 
-プラグイン内にAIモデルは搭載しません。AI事業者のAPIキーをWordPressへ登録する方式ではなく、利用者が選んだ外部AIからMCPで接続します。AI側のアカウント・契約・対応機能は別途必要です。
+DEFT does not include an AI model or require an AI provider's API key in WordPress. Your chosen external AI connects through MCP. The AI service's account, subscription, and supported capabilities are separate requirements.
 
-## 接続の仕組み
+## Connection Options
 
-| 経路 | 設定 |
+| Route | Setup |
 | --- | --- |
-| OAuth対応のリモートMCPクライアント | 管理者が正確なcallback URLでアプリを事前登録し、本人がWordPressで許可。PKCE S256対応のpublic clientが必要です。 |
-| 認証ヘッダー対応のMCPクライアント・CLI | 個人用の接続キーを安全な認証設定へ登録。秘密を含まないCLI設定テンプレートを利用できます。 |
-| MCP接続を利用できないAI | 記事JSONを受け渡し、WordPress画面で取り込む手動経路を利用します。自動接続とは別です。 |
+| OAuth-capable remote MCP client | An administrator pre-registers the application with its exact callback URL. Each user grants access in WordPress. A public client supporting PKCE S256 is required. |
+| MCP client or CLI with authentication-header support | Store an individual connection key in the client's secure credential settings. Secret-free CLI configuration templates are available. |
+| AI without a usable MCP connection | Exchange article JSON and import it manually in WordPress. This is a separate fallback, not an automatic connection. |
 
-ChatGPT、Claude、Geminiおよび各CLI向けの案内を用意していますが、すべてのアプリ・契約・地域での接続を保証するものではありません。実アカウントでの接続、添付の読み出し、プレビュー表示はそれぞれ確認が必要です。
-クラウド上のAIから接続するサイトには、外部から到達できるHTTPSが必要です。`localhost` はクラウドAIから到達できません。
+Guidance is provided for ChatGPT, Claude, Gemini, and their relevant CLI routes. This does not guarantee support for every application, subscription, or region. Real-account connection, attachment access, and preview rendering each need verification.
+Cloud-hosted AI clients need an externally reachable HTTPS site; they cannot reach your computer's `localhost`.
 
-## 動作環境
+## Requirements
 
-| 項目 | 条件 |
+| Item | Requirement |
 | --- | --- |
-| WordPress | 6.9以上 |
-| PHP | 8.2以上。DOM・mbstring・OpenSSL・Sodiumが必要 |
-| データベース | InnoDB・名前付きロック対応のMySQL / MariaDB |
-| AI接続 | 公式WordPress MCP Adapter 0.7.1以上と対応するMCPクライアント |
-| 非公開素材 | 公開領域外の保存先。詳細は導入手順を参照 |
-| 予約投稿 | WP-Cron。時刻重視の場合はサーバーの定期実行を設定 |
+| WordPress | 6.9 or later |
+| PHP | 8.2 or later, with DOM, mbstring, OpenSSL, and Sodium |
+| Database | MySQL / MariaDB with InnoDB and named-lock support |
+| AI connection | Official WordPress MCP Adapter 0.7.1+ and a compatible MCP client |
+| Private files | Storage outside the public document root; see the user guide |
+| Scheduled publication | WP-Cron; use a server cron job when timing matters |
 
-ホスティング先にNode.jsや専用AIサーバーを追加する必要はありません。
-検証環境はWordPress 7.1、PHP 8.3.36、MySQL 8.4、Twenty Twenty-Fiveです。宣言した最低バージョン・マルチサイト・すべてのテーマでの動作確認は未完了です。
+Node.js and a dedicated AI server are not required on your WordPress host.
+The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twenty-Five. Verification of the declared minimum versions, multisite, and all themes is not complete.
 
-## 権限とデータ
+## Permissions and Data
 
-- 接続は担当者ごとに作成し、必要最小限を許可します。個人の接続キーを組織で共有しません。
-- 下書き権限と公開権限は別です。公開を許可した接続は、追加のWordPress確認画面なしで公開できます。会話の承認はAIへの運用指示であり、サーバーが人の発言を証明するものではありません。
-- 接続の取り消しは未実行の予約も取り消します。トークン・キーの期限切れだけでは、すでに受け付けた予約は取り消しません。
-- AIへ渡す資料やプレビューは、そのAIサービスにも渡ります。機密情報・個人情報の扱いは利用するサービスの条件を確認してください。
-- HTML・値を検証し、任意JavaScriptの登録は許可しません。ただし、管理者・designerが登録するCSSはページ全体の表示へ影響し得るため、信頼する担当者に限って許可してください。
+- Create a connection for each staff member and grant the minimum required access. Do not share a personal connection key across an organization.
+- Draft access and publication access are separate. An authorized publishing connection can publish without another WordPress approval screen. Approval in chat is an instruction to the AI; the server does not prove that a person actually gave that instruction.
+- Revoking a connection cancels pending reservations. Token or key expiry alone does not cancel a reservation already accepted.
+- Materials and previews you give to an AI are also shared with that service. Check its terms before sending confidential or personal information.
+- HTML and field values are validated, and arbitrary JavaScript registration is not allowed. However, CSS registered by an administrator or designer can affect the whole page. Grant that role only to trusted people.
 
-脆弱性の詳細や認証情報は公開Issueへ投稿せず、下記の非公開フォームから報告してください。
+Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## 0.5.0の範囲
+## Scope of 0.5.0
 
-既存の **atshift Fields / CFSとは別製品**です。既存投稿の自動変換・移行は行いません。
-チャットに添付したファイルが自動でWordPressへ送られるわけではなく、AI側にファイルの読み出し・HTTP転送能力が必要です。
-持ち出しHTMLプレビューにはテーマ・JavaScriptを含みません。最終的な見た目は本人用の実テーマプレビューで確認してください。
+DEFT is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
+Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.
+Portable HTML previews do not include your theme or JavaScript. Use the owner-only theme preview to check the final presentation.
 
-公開済み投稿の更新、担当者間の所有権移管、素材の保管期限・削除UI、通常メディアへの自動登録は未対応です。
-プラグインを無効化すると、予約処理とDEFTが配信する素材・スタイルも停止します。
-対応範囲・既知の課題は [FOLLOW-UP.md](docs/FOLLOW-UP.md)、変更履歴は [CHANGELOG.md](CHANGELOG.md) に記録しています。
+Updating already-published posts, transferring ownership between staff, file retention/deletion controls, and automatic registration in the standard Media Library are not implemented.
+Deactivating the plugin stops its scheduled publication, managed media delivery, and styles.
+See [FOLLOW-UP.md](docs/FOLLOW-UP.md) for known limitations and [CHANGELOG.md](CHANGELOG.md) for version history.
 
-## フィードバック
+## Feedback
 
-**機能要望・改善提案を歓迎します。** 「何をしたいか」「今どこで困るか」「期待する結果」を教えてください。技術的な実装案は不要です。
+**Feature requests and improvement suggestions are welcome.** Tell us what you want to achieve, what gets in the way, and the result you expect. No technical implementation proposal is needed.
 
-- [GitHub Issues](https://github.com/at-shift/atshift-deft/issues): 不具合報告、機能要望、改善提案。
-- [日本語のお問い合わせフォーム](https://plugins.at-shift.net/support/?product=deft&category=idea): GitHubアカウントがなくても送れます。
-- [English support form](https://plugins.at-shift.net/en/support/?product=deft&category=idea): Feature requests and improvement suggestions are welcome.
-- セキュリティの報告は [非公開フォーム](https://plugins.at-shift.net/support/?product=deft&category=security) / [private security report](https://plugins.at-shift.net/en/support/?product=deft&category=security) へお願いします。パスワード・接続キーは送らないでください。
+- [GitHub Issues](https://github.com/at-shift/atshift-deft/issues): bug reports, feature requests, and improvement suggestions.
+- [English support form](https://plugins.at-shift.net/en/support/?product=deft&category=idea): send feedback without a GitHub account.
+- [Japanese support form](https://plugins.at-shift.net/support/?product=deft&category=idea): the same feedback channel in Japanese.
+- Security reports: use the [private English form](https://plugins.at-shift.net/en/support/?product=deft&category=security) or [private Japanese form](https://plugins.at-shift.net/support/?product=deft&category=security). Do not include passwords or connection keys.
 
-## 翻訳
+## Translations
 
-WordPressのgettextに対応し、POT、PO/MO、JavaScript用JSONを追加できます。
-現在の日本語カタログは一部の既存案内のみで、全画面の翻訳はまだ行っていません。
-[翻訳ファイルの追加手順](wordpress/atshift-deft/languages/README.md) を参照してください。
+The WordPress UI uses gettext and supports additional POT, PO/MO, and JavaScript JSON catalogs.
+The bundled Japanese catalog currently covers only some existing guidance, not the entire interface.
+See [Adding Translation Files](wordpress/atshift-deft/languages/README.md).
 
-## 開発・ビルド
+## Development and Build
 
-ローカルの開発環境にはNode.js 24以上、PHP 8.2以上を用意します。
+Use Node.js 24+ and PHP 8.2+ in your local development environment.
 
 ```sh
 npm ci
@@ -121,19 +122,19 @@ npm run build:php-deps
 npm run pack:wordpress
 ```
 
-依存関係はlockファイルで固定し、名前空間を分離して同梱します。ZIPとSHA-256は `.local/releases/` に出力されます。
-ソース一式のZIPや、依存ライブラリを含まない `wordpress/atshift-deft/` を、そのまま配布ZIPとしてインストールしないでください。
+Dependencies are locked and bundled under an isolated namespace. The installable ZIP and its SHA-256 file are written to `.local/releases/`.
+Do not install the repository's source archive or an unbuilt `wordpress/atshift-deft/` directory as the release package.
 
-| 資料 | 内容 |
+| Documentation | Contents |
 | --- | --- |
-| [WordPress開発ガイド](wordpress/README.md) | 保存・API・ローカル検証 |
-| [構造カタログ](docs/WORDPRESS-CATALOG.md) | 部品・入力項目の契約 |
-| [担当者別運用](docs/MULTI-USER.md) | 所有者・権限の境界 |
-| [ブラウザー試作](docs/BROWSER-PROTOTYPE.md) | WordPress版とは独立したUI・構造設計の実験環境 |
-| [0.5.0変更ノート](docs/V0.5.0.md) | 旧試作からの移行と検証記録 |
+| [WordPress Development Guide](wordpress/README.md) | Storage, APIs, and local verification |
+| [Component Catalog](docs/WORDPRESS-CATALOG.md) | Component and field contracts |
+| [Staff Isolation](docs/MULTI-USER.md) | Ownership and permission boundaries |
+| [Browser Prototype (Japanese)](docs/BROWSER-PROTOTYPE.md) | An independent UI and structure-design experiment, separate from the WordPress plugin |
+| [0.5.0 Notes](docs/V0.5.0.md) | Migration from the earlier prototype and verification records |
 
-WordPressテストは専用のローカル環境で実行します。本番のデータベースを指定しないでください。
+Run WordPress tests only in a dedicated local environment. Never point them at a production database.
 
-## ライセンス
+## License
 
-GPL-2.0-or-later。依存ライブラリの著作権・ライセンスはそれぞれの配布物に従います。
+[GPL-2.0-or-later](LICENSE). Dependencies retain their respective copyright and license notices.

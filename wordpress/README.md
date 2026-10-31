@@ -1,11 +1,13 @@
 # atshift DEFT for WordPress 0.5.0
 
-0.5.0 is a local, uncommitted and unpushed name/slug change.
+0.5.0 is the first public atshift DEFT development release.
+For installation and everyday use, see the [Installation and User Guide](../docs/GETTING-STARTED.md).
 See [V0.5.0.md](../docs/V0.5.0.md) for identity and legacy activation steps.
 
 Alpha.14 was the preceding private GitHub code checkpoint. Its OAuth and runtime changes remain:
 [ALPHA14.md](../docs/ALPHA14.md). Existing keys and separately delegated publication
-remain unchanged. No tag, Release, WordPress.org update or production deployment.
+remain unchanged. The public GitHub repository and v0.5.0 release are available;
+this does not imply a WordPress.org release or a production installation.
 
 Development candidate, not for production use. Earlier `0.2.0` labels were local-only
 prototype labels and were never released. The browser package and WordPress
