@@ -1,0 +1,52 @@
+{
+  "format": "structured-fields-prototype",
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "name": "アトリエの紹介・リンク付き",
+      "key": "atelier_feature",
+      "purpose": "施設の紹介文と写真を並べ、詳細へのリンクを添える",
+      "html": "<section class=\"sf-atelier\">\n  <div class=\"sf-atelier__inner\">\n    <div class=\"sf-atelier__body\">\n      <h2 data-field=\"heading\">日常に、少しの余白を。</h2>\n      <p data-field=\"body\">陽の光が差し込む、静かなシェアアトリエ。\n仕事に、趣味に、気持ちのよい時間を過ごせる場所です。</p>\n      <a data-field=\"details_link\" href=\"/atelier/\">アトリエの詳細</a>\n    </div>\n    <figure class=\"sf-atelier__image\">\n      <img data-field=\"image\" src=\"/assets/atelier.png\" alt=\"自然光が差し込むアトリエの内観\">\n    </figure>\n  </div>\n</section>",
+      "css": ".sf-atelier { padding: 24px 0; }\n.sf-atelier__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; }\n.sf-atelier h2 { font-size: 20px; line-height: 1.55; }\n.sf-atelier p { line-height: 1.9; color: #4b555d; }\n.sf-atelier__image { margin: 0; }\n.sf-atelier__image img { width: 100%; height: auto; }\n.sf-atelier--image-left .sf-atelier__image { grid-column: 1; grid-row: 1; }\n.sf-atelier--image-left .sf-atelier__body { grid-column: 2; }\n.sf-atelier--stacked .sf-atelier__inner { grid-template-columns: minmax(0, 1fr); }\n@media (max-width: 430px) {\n  .sf-atelier__inner { grid-template-columns: minmax(0, 1fr); }\n  .sf-atelier--image-left .sf-atelier__body { grid-column: auto; }\n  .sf-atelier--image-left .sf-atelier__image { grid-column: auto; grid-row: auto; }\n}",
+      "fields": [
+        {
+          "key": "heading",
+          "label": "見出し",
+          "type": "text",
+          "required": true,
+          "value": "日常に、少しの余白を。",
+          "alt": ""
+        },
+        {
+          "key": "body",
+          "label": "本文",
+          "type": "textarea",
+          "required": true,
+          "value": "陽の光が差し込む、静かなシェアアトリエ。\n仕事に、趣味に、気持ちのよい時間を過ごせる場所です。",
+          "alt": ""
+        },
+        {
+          "key": "details_link",
+          "label": "詳細リンク",
+          "type": "link",
+          "required": false,
+          "value": "/atelier/",
+          "alt": "アトリエの詳細"
+        },
+        {
+          "key": "image",
+          "label": "画像",
+          "type": "image",
+          "required": false,
+          "value": "/assets/atelier.png",
+          "alt": "自然光が差し込むアトリエの内観"
+        }
+      ],
+      "variants": [
+        { "name": "画像を右", "classes": "" },
+        { "name": "画像を左", "classes": "sf-atelier--image-left" },
+        { "name": "縦に並べる", "classes": "sf-atelier--stacked" }
+      ]
+    }
+  ]
+}

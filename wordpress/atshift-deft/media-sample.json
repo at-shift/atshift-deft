@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "article": {
+    "id": "wordpress-media-sample",
+    "revision": 1,
+    "title": "Article with private media",
+    "blocks": [
+      {
+        "id": "resources-one",
+        "componentId": "media",
+        "componentRevision": "e4abf86cfde2da748ce236dee16d5018b522c5c20e5dc203b222d91053f1af89",
+        "variantId": "default",
+        "values": {
+          "image": {
+            "value": "",
+            "alt": ""
+          },
+          "document": {
+            "value": "",
+            "alt": ""
+          }
+        }
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "media",
+      "key": "media",
+      "name": "Article resources",
+      "purpose": "An image and a PDF download",
+      "html": "<section class=\"sf-resources\"><h2>Resources</h2><img data-field=\"image\" src=\"\" alt=\"\"><p><a data-field=\"document\" href=\"\"></a></p></section>",
+      "css": ".sf-resources{padding:16px 0}.sf-resources img{display:block;max-width:100%;height:auto}.sf-resources img[hidden]{display:none}.sf-resources a{font-weight:600}",
+      "fields": [
+        {
+          "id": "image",
+          "key": "image",
+          "label": "Article image",
+          "type": "image",
+          "required": false,
+          "value": "",
+          "alt": ""
+        },
+        {
+          "id": "document",
+          "key": "document",
+          "label": "Download PDF",
+          "type": "link",
+          "required": false,
+          "value": "",
+          "alt": ""
+        }
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "name": "Default",
+          "classes": ""
+        }
+      ],
+      "revision": "e4abf86cfde2da748ce236dee16d5018b522c5c20e5dc203b222d91053f1af89"
+    }
+  ]
+}

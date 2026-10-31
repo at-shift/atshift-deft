@@ -1,0 +1,27 @@
+{
+    "name": "atshift/structured-fields-php-deps",
+    "description": "Isolated OAuth dependencies for atshift DEFT",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "league/oauth2-server": "^9.4.1",
+        "nyholm/psr7": "^1.8.2"
+    },
+    "require-dev": {
+        "humbug/php-scoper": "0.18.20"
+    },
+    "config": {
+        "allow-plugins": false,
+        "platform": {
+            "php": "8.2.0"
+        },
+        "platform-check": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

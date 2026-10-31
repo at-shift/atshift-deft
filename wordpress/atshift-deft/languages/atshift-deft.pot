@@ -1,0 +1,2422 @@
+# Copyright (C) 2026 at-shift
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: atshift DEFT 0.5.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: atshift-deft\n"
+
+#. Plugin Name of the plugin
+#: atshift-deft.php
+msgid "atshift DEFT"
+msgstr ""
+
+#. Description of the plugin
+#: atshift-deft.php
+msgid "Delegate execution. Focus on thinking. Create structured articles with your preferred AI."
+msgstr ""
+
+#: includes/catalog-page.php:9
+#: includes/catalog-page.php:28
+#: includes/plugin.php:226
+msgid "Components"
+msgstr ""
+
+#: includes/catalog-page.php:11
+msgid "New structure"
+msgstr ""
+
+#: includes/catalog-page.php:12
+msgid "New personal component"
+msgstr ""
+
+#: includes/catalog-page.php:13
+msgid "Import component"
+msgstr ""
+
+#: includes/catalog-page.php:15
+msgid "New example"
+msgstr ""
+
+#: includes/catalog-page.php:16
+#: includes/plugin.php:279
+msgid "Refresh components"
+msgstr ""
+
+#: includes/catalog-page.php:17
+msgid "Download API schemas"
+msgstr ""
+
+#: includes/catalog-page.php:18
+msgid "AI handoff"
+msgstr ""
+
+#: includes/catalog-page.php:21
+#: connections.js:60
+msgid "Scope"
+msgstr ""
+
+#: includes/catalog-page.php:21
+msgid "All available"
+msgstr ""
+
+#: includes/catalog-page.php:21
+#: admin.js:313
+msgid "Used by me"
+msgstr ""
+
+#: includes/catalog-page.php:21
+msgid "Shared catalog"
+msgstr ""
+
+#: includes/catalog-page.php:21
+msgid "My private components"
+msgstr ""
+
+#: includes/catalog-page.php:22
+msgid "Find existing"
+msgstr ""
+
+#: includes/catalog-page.php:23
+msgid "Check existing components"
+msgstr ""
+
+#: includes/catalog-page.php:24
+msgid "Reply language"
+msgstr ""
+
+#: includes/catalog-page.php:26
+msgid "Component catalog"
+msgstr ""
+
+#: includes/catalog-page.php:27
+#: admin.js:338
+msgid "Behaviors"
+msgstr ""
+
+#: includes/catalog-page.php:29
+msgid "No component selected"
+msgstr ""
+
+#: includes/catalog-page.php:32
+msgid "Register version"
+msgstr ""
+
+#: includes/catalog-page.php:33
+msgid "Available for new articles"
+msgstr ""
+
+#: includes/catalog-page.php:34
+msgid "Register shared copy"
+msgstr ""
+
+#: includes/catalog-page.php:35
+msgid "Export component"
+msgstr ""
+
+#: includes/catalog-page.php:38
+msgid "Components considered"
+msgstr ""
+
+#: includes/catalog-page.php:39
+msgid "Missing capability"
+msgstr ""
+
+#: includes/catalog-page.php:41
+msgid "Component JSON"
+msgstr ""
+
+#: includes/class-access.php:67
+msgid "This article is not available to this WordPress account."
+msgstr ""
+
+#: includes/class-ai-workflow.php:40
+msgid "This connection cannot update shared structures."
+msgstr ""
+
+#: includes/class-ai-workflow.php:45
+#: includes/class-mcp.php:75
+#: includes/plugin.php:157
+msgid "Article not found."
+msgstr ""
+
+#: includes/class-ai-workflow.php:66
+msgid "The authoring request or a referenced file could not be validated. Reload the draft and context."
+msgstr ""
+
+#: includes/class-ai-workflow.php:72
+msgid "Read the current draft before requesting its preview."
+msgstr ""
+
+#: includes/class-ai-workflow.php:108
+msgid "Portable preview exceeds 4 MiB. Use the owner theme preview."
+msgstr ""
+
+#: includes/class-assets.php:53
+msgid "Configure an existing canonical private directory."
+msgstr ""
+
+#: includes/class-assets.php:59
+msgid "Cannot verify the public document root."
+msgstr ""
+
+#: includes/class-assets.php:63
+msgid "Private storage must be separate from public directories."
+msgstr ""
+
+#: includes/class-assets.php:72
+msgid "Private asset storage is not configured."
+msgstr ""
+
+#: includes/class-assets.php:77
+msgid "Invalid public document root."
+msgstr ""
+
+#: includes/class-assets.php:84
+msgid "Private storage is unavailable."
+msgstr ""
+
+#: includes/class-assets.php:87
+msgid "Private storage requires an unshared directory (0700)."
+msgstr ""
+
+#: includes/class-assets.php:99
+msgid "File must be between 1 byte and 10 MiB."
+msgstr ""
+
+#: includes/class-assets.php:101
+msgid "Invalid filename."
+msgstr ""
+
+#: includes/class-assets.php:105
+msgid "Only JPEG, PNG, WebP and PDF are accepted; fileinfo is required."
+msgstr ""
+
+#: includes/class-assets.php:110
+msgid "The file contents do not match its extension."
+msgstr ""
+
+#: includes/class-assets.php:114
+msgid "Invalid PDF header."
+msgstr ""
+
+#: includes/class-assets.php:119
+msgid "Invalid image or image exceeds 40 megapixels."
+msgstr ""
+
+#: includes/class-assets.php:142
+#: includes/class-assets.php:166
+msgid "Save the article before adding files."
+msgstr ""
+
+#: includes/class-assets.php:164
+msgid "Send one multipart file and optional purpose (reference or publication)."
+msgstr ""
+
+#: includes/class-assets.php:170
+msgid "The file was not received. Check the server upload limit."
+msgstr ""
+
+#: includes/class-assets.php:173
+msgid "Private storage is unavailable. No file was retained."
+msgstr ""
+
+#: includes/class-assets.php:179
+msgid "The file exceeds the WordPress upload limit."
+msgstr ""
+
+#: includes/class-assets.php:184
+msgid "File does not match the authorized transfer."
+msgstr ""
+
+#: includes/class-assets.php:189
+msgid "Another upload is in progress. Retry the same file."
+msgstr ""
+
+#: includes/class-assets.php:198
+msgid "Storage metadata unavailable."
+msgstr ""
+
+#: includes/class-assets.php:201
+msgid "Your private media capacity is reached. Reuse existing files or ask the site administrator to adjust the limit."
+msgstr ""
+
+#: includes/class-assets.php:204
+msgid "Private asset quota reached (50 files / 100 MiB per article; 500 MiB per site)."
+msgstr ""
+
+#: includes/class-assets.php:210
+msgid "Could not reserve file."
+msgstr ""
+
+#: includes/class-assets.php:214
+msgid "Could not protect file."
+msgstr ""
+
+#: includes/class-assets.php:217
+msgid "Incomplete transfer."
+msgstr ""
+
+#: includes/class-assets.php:227
+msgid "Could not save metadata."
+msgstr ""
+
+#: includes/class-assets.php:231
+msgid "The private file could not be saved or verified."
+msgstr ""
+
+#: includes/class-assets.php:240
+msgid "Invalid asset identity."
+msgstr ""
+
+#: includes/class-assets.php:245
+msgid "Private file integrity check failed."
+msgstr ""
+
+#: includes/class-assets.php:260
+#: includes/class-assets.php:264
+msgid "Private file access denied."
+msgstr ""
+
+#: includes/class-assets.php:260
+#: includes/class-assets.php:264
+#: includes/class-assets.php:271
+msgid "Private asset"
+msgstr ""
+
+#: includes/class-assets.php:269
+msgid "Private file changed during transfer."
+msgstr ""
+
+#: includes/class-assets.php:271
+msgid "Private file is unavailable."
+msgstr ""
+
+#: includes/class-behaviors.php:61
+msgid "Behavior settings are busy."
+msgstr ""
+
+#: includes/class-behaviors.php:63
+msgid "Use JSON within 1 KiB."
+msgstr ""
+
+#: includes/class-behaviors.php:69
+msgid "Unknown behavior revision."
+msgstr ""
+
+#: includes/class-behaviors.php:73
+msgid "Behavior availability changed. Reload before editing."
+msgstr ""
+
+#: includes/class-behaviors.php:80
+msgid "Behavior availability was not saved."
+msgstr ""
+
+#: includes/class-behaviors.php:96
+msgid "Unknown behavior revision. Use the exact registry reference."
+msgstr ""
+
+#: includes/class-behaviors.php:98
+msgid "Duplicate behavior key or target."
+msgstr ""
+
+#: includes/class-behaviors.php:103
+msgid "This behavior targets the component root."
+msgstr ""
+
+#: includes/class-behaviors.php:107
+msgid "Image enlargement requires an image field target."
+msgstr ""
+
+#: includes/class-behaviors.php:110
+msgid "A linked image cannot also be an enlargement button."
+msgstr ""
+
+#: includes/class-behaviors.php:118
+msgid "This behavior revision is stopped. Do not introduce it in a new component revision."
+msgstr ""
+
+#: includes/class-behaviors.php:129
+msgid "Settings reference a behavior not bound to this component."
+msgstr ""
+
+#: includes/class-behaviors.php:170
+msgid "Enlarge image"
+msgstr ""
+
+#: includes/class-behaviors.php:170
+msgid "Close image"
+msgstr ""
+
+#: includes/class-catalog-context.php:23
+msgid "Read the current catalog context before creating or revising a component."
+msgstr ""
+
+#: includes/class-catalog-context.php:24
+msgid "Consider existing components and explain the missing capability."
+msgstr ""
+
+#: includes/class-catalog-context.php:29
+msgid "Use distinct, current, visible catalog references."
+msgstr ""
+
+#: includes/class-catalog-context.php:38
+msgid "Use a language tag such as ja, en-US or pt-BR."
+msgstr ""
+
+#: includes/class-catalog-context.php:48
+msgid "Query must be at most 200 characters."
+msgstr ""
+
+#: includes/class-catalog.php:33
+msgid "Shared component usage is unavailable."
+msgstr ""
+
+#: includes/class-catalog.php:130
+msgid "Invalid catalog query."
+msgstr ""
+
+#: includes/class-catalog.php:131
+msgid "Invalid catalog scope."
+msgstr ""
+
+#: includes/class-catalog.php:144
+msgid "Invalid revision."
+msgstr ""
+
+#: includes/class-catalog.php:146
+#: includes/class-catalog.php:208
+msgid "Component not found."
+msgstr ""
+
+#: includes/class-catalog.php:167
+msgid "Use JSON within the request size limit."
+msgstr ""
+
+#: includes/class-catalog.php:180
+msgid "Use the content-free structure recipe to update this definition."
+msgstr ""
+
+#: includes/class-catalog.php:199
+msgid "Catalog is busy. Retry later."
+msgstr ""
+
+#: includes/class-catalog.php:204
+msgid "Personal component changed before sharing."
+msgstr ""
+
+#: includes/class-catalog.php:207
+msgid "Catalog changed. Reload before editing."
+msgstr ""
+
+#: includes/class-catalog.php:209
+msgid "Keep the registered machine key when updating a component."
+msgstr ""
+
+#: includes/class-catalog.php:210
+msgid "This machine key is already registered in this scope."
+msgstr ""
+
+#: includes/class-catalog.php:215
+msgid "Existing definitions are not converted automatically."
+msgstr ""
+
+#: includes/class-catalog.php:226
+msgid "An equivalent shared component is inactive. Ask a component manager to review it."
+msgstr ""
+
+#: includes/class-catalog.php:232
+msgid "Reuse the existing definition instead of creating a copy."
+msgstr ""
+
+#: includes/class-catalog.php:234
+msgid "Personal component limit reached (20). Reuse or revise existing definitions."
+msgstr ""
+
+#: includes/class-catalog.php:238
+msgid "Your shared component creation limit is reached. Reuse existing definitions or ask the site administrator to adjust the limit."
+msgstr ""
+
+#: includes/class-catalog.php:241
+msgid "Component exceeds 512 KiB."
+msgstr ""
+
+#: includes/class-catalog.php:245
+msgid "Catalog storage limit reached."
+msgstr ""
+
+#: includes/class-catalog.php:247
+#: includes/class-store.php:103
+msgid "InnoDB tables are required."
+msgstr ""
+
+#: includes/class-catalog.php:249
+#: includes/class-store.php:105
+msgid "Could not start transaction."
+msgstr ""
+
+#: includes/class-catalog.php:251
+msgid "Could not save component."
+msgstr ""
+
+#: includes/class-catalog.php:255
+msgid "Could not save catalog."
+msgstr ""
+
+#: includes/class-catalog.php:293
+msgid "Reload the personal component before sharing."
+msgstr ""
+
+#: includes/class-catalog.php:314
+msgid "Choose an active catalog revision or a component pinned in your saved article."
+msgstr ""
+
+#: includes/class-component-builder.php:30
+msgid "Q&A requires question (text) and answer (textarea), in that order."
+msgstr ""
+
+#: includes/class-component-usage.php:35
+msgid "Could not remember component use."
+msgstr ""
+
+#: includes/class-connections.php:61
+msgid "Activate MCP Adapter 0.7.1 or newer and use HTTPS (local loopback is allowed)."
+msgstr ""
+
+#: includes/class-connections.php:71
+msgid "Supply a connection name of 1 to 80 characters."
+msgstr ""
+
+#: includes/class-connections.php:74
+msgid "Try again."
+msgstr ""
+
+#: includes/class-connections.php:79
+#: includes/class-oauth-consent.php:71
+msgid "Revoke an existing connection first (maximum 10 active)."
+msgstr ""
+
+#: includes/class-connections.php:85
+msgid "Connection could not be created."
+msgstr ""
+
+#: includes/class-connections.php:92
+msgid "Connection is busy. Retry revocation."
+msgstr ""
+
+#: includes/class-connections.php:96
+msgid "Connection not found."
+msgstr ""
+
+#: includes/class-connections.php:107
+msgid "This key is only valid at the atshift DEFT MCP endpoint."
+msgstr ""
+
+#: includes/class-connections.php:109
+msgid "Secure MCP connection unavailable."
+msgstr ""
+
+#: includes/class-connections.php:110
+#: includes/plugin.php:141
+msgid "Payload exceeds 4 MB."
+msgstr ""
+
+#: includes/class-connections.php:129
+msgid "A valid, unexpired connection credential is required."
+msgstr ""
+
+#: includes/class-connections.php:155
+msgid "The publishing connection is no longer authorized."
+msgstr ""
+
+#: includes/class-mcp.php:102
+msgid "Unsupported operation."
+msgstr ""
+
+#: includes/class-media.php:17
+msgid "Media is missing or not accessible."
+msgstr ""
+
+#: includes/class-media.php:27
+msgid "Only local media inside the uploads directory is supported."
+msgstr ""
+
+#: includes/class-media.php:31
+msgid "Media type does not match the file."
+msgstr ""
+
+#: includes/class-media.php:46
+msgid "Invalid media search or page."
+msgstr ""
+
+#: includes/class-media.php:64
+msgid "Invalid media reference or permission."
+msgstr ""
+
+#: includes/class-media.php:67
+msgid "Invalid private asset ID."
+msgstr ""
+
+#: includes/class-media.php:71
+msgid "Use a publication candidate belonging to this article, with its exact hash."
+msgstr ""
+
+#: includes/class-media.php:77
+msgid "The existing media file has changed."
+msgstr ""
+
+#: includes/class-media.php:80
+msgid "Unknown media source."
+msgstr ""
+
+#: includes/class-media.php:85
+msgid "Use an image for an image field, or a PDF for a download link."
+msgstr ""
+
+#: includes/class-media.php:105
+msgid "At most 50 media bindings are supported per article."
+msgstr ""
+
+#: includes/class-media.php:114
+msgid "Article media exceeds 100 MiB."
+msgstr ""
+
+#: includes/class-media.php:133
+msgid "Article access denied."
+msgstr ""
+
+#: includes/class-media.php:147
+msgid "Invalid media binding."
+msgstr ""
+
+#: includes/class-media.php:151
+msgid "Invalid media element."
+msgstr ""
+
+#: includes/class-media.php:161
+msgid "Missing media binding."
+msgstr ""
+
+#: includes/class-media.php:181
+#: includes/class-media.php:185
+msgid "Private media access denied."
+msgstr ""
+
+#: includes/class-media.php:181
+#: includes/class-media.php:185
+#: includes/class-media.php:197
+msgid "Private preview media"
+msgstr ""
+
+#: includes/class-media.php:189
+msgid "Unknown media field."
+msgstr ""
+
+#: includes/class-media.php:194
+msgid "Media changed during transfer."
+msgstr ""
+
+#: includes/class-media.php:197
+msgid "The referenced media is unavailable or has changed."
+msgstr ""
+
+#: includes/class-oauth-consent.php:29
+msgid "Secure OAuth setup is unavailable."
+msgstr ""
+
+#: includes/class-oauth-consent.php:46
+msgid "Too many pending requests. Wait ten minutes and retry."
+msgstr ""
+
+#: includes/class-oauth-consent.php:91
+msgid "This authorization request is unavailable or invalid. Return to the AI connection settings and start again. No access was granted."
+msgstr ""
+
+#: includes/class-oauth-consent.php:91
+msgid "atshift DEFT authorization"
+msgstr ""
+
+#: includes/class-oauth-consent.php:105
+msgid "Read components and read/write my private drafts"
+msgstr ""
+
+#: includes/class-oauth-consent.php:106
+msgid "Create bounded structures, transfer my files and export private previews"
+msgstr ""
+
+#: includes/class-oauth-consent.php:107
+msgid "Publish or schedule my articles without another WordPress approval"
+msgstr ""
+
+#: includes/class-oauth-consent.php:111
+#: includes/class-oauth-consent.php:113
+msgid "Authorize AI connection"
+msgstr ""
+
+#. translators: %s: WordPress account display name.
+#: includes/class-oauth-consent.php:115
+#, php-format
+msgid "WordPress account: %s"
+msgstr ""
+
+#: includes/class-oauth-consent.php:117
+msgid "Consent lasts 30 days and can be revoked in AI connections. Other staff members' private data is not included."
+msgstr ""
+
+#: includes/class-oauth-consent.php:118
+msgid "Revoking this connection cancels pending reservations. Access-token expiry alone does not cancel them."
+msgstr ""
+
+#: includes/class-oauth-consent.php:119
+msgid "Connection details"
+msgstr ""
+
+#: includes/class-oauth-consent.php:123
+msgid "Allow this access"
+msgstr ""
+
+#: includes/class-oauth-consent.php:124
+msgid "Deny"
+msgstr ""
+
+#: includes/class-oauth-store.php:96
+msgid "Invalid authorization record."
+msgstr ""
+
+#: includes/class-oauth-store.php:98
+msgid "Reconnect to renew the token quota."
+msgstr ""
+
+#: includes/class-oauth-store.php:101
+msgid "Authorization record could not be stored."
+msgstr ""
+
+#: includes/class-oauth-store.php:107
+msgid "Credential could not be bound."
+msgstr ""
+
+#: includes/class-oauth-store.php:113
+#: includes/class-oauth.php:249
+msgid "Token revocation failed."
+msgstr ""
+
+#: includes/class-oauth-store.php:120
+msgid "OAuth requires transactional storage."
+msgstr ""
+
+#: includes/class-oauth-store.php:123
+msgid "Authorization transaction unavailable."
+msgstr ""
+
+#: includes/class-oauth-store.php:127
+msgid "Authorization transaction failed."
+msgstr ""
+
+#: includes/class-oauth-store.php:133
+msgid "Authorization is busy. Try again."
+msgstr ""
+
+#: includes/class-oauth.php:92
+msgid "OAuth dependencies are unavailable."
+msgstr ""
+
+#: includes/class-oauth.php:96
+msgid "Signing key creation failed."
+msgstr ""
+
+#: includes/class-oauth.php:101
+msgid "Signing keys could not be stored."
+msgstr ""
+
+#: includes/class-oauth.php:107
+msgid "OAuth is not configured."
+msgstr ""
+
+#: includes/class-oauth.php:185
+msgid "Invalid scope."
+msgstr ""
+
+#: includes/class-oauth.php:191
+msgid "Scope is not available."
+msgstr ""
+
+#: includes/class-oauth.php:234
+msgid "Consent was revoked."
+msgstr ""
+
+#: includes/class-oauth.php:247
+msgid "Revocation failed."
+msgstr ""
+
+#: includes/class-onboarding.php:17
+#: includes/connections-page.php:11
+msgid "Download AI guide"
+msgstr ""
+
+#: includes/class-onboarding.php:17
+msgid "Connect your AI"
+msgstr ""
+
+#: includes/class-onboarding.php:17
+msgid "Give this guide to your usual AI"
+msgstr ""
+
+#: includes/class-onboarding.php:18
+msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article."
+msgstr ""
+
+#: includes/class-onboarding.php:28
+#: includes/class-onboarding.php:94
+msgid "Workspace access is required."
+msgstr ""
+
+#: includes/class-onboarding.php:31
+msgid "The current catalog could not be read."
+msgstr ""
+
+#: includes/class-onboarding.php:94
+#: includes/class-onboarding.php:97
+msgid "AI guide"
+msgstr ""
+
+#: includes/class-onboarding.php:97
+msgid "The AI guide could not be prepared. Please try again."
+msgstr ""
+
+#: includes/class-publication-media.php:8
+msgid "Invalid publication."
+msgstr ""
+
+#: includes/class-publication-media.php:11
+msgid "Publication storage unavailable."
+msgstr ""
+
+#: includes/class-publication-media.php:13
+msgid "Private publication storage required."
+msgstr ""
+
+#: includes/class-publication-media.php:21
+msgid "Publication storage is busy."
+msgstr ""
+
+#: includes/class-publication-media.php:30
+msgid "At most 50 media bindings can be published."
+msgstr ""
+
+#: includes/class-publication-media.php:39
+msgid "Publication media changed."
+msgstr ""
+
+#: includes/class-publication-media.php:42
+msgid "Publication media exceeds 100 MiB."
+msgstr ""
+
+#: includes/class-publication-media.php:48
+msgid "Publication media quota reached."
+msgstr ""
+
+#: includes/class-publication-media.php:52
+msgid "Publication file could not be reserved."
+msgstr ""
+
+#: includes/class-publication-media.php:55
+msgid "Publication file could not be frozen."
+msgstr ""
+
+#: includes/class-publication-media.php:60
+msgid "Publication copy mismatch."
+msgstr ""
+
+#: includes/class-publication-media.php:76
+msgid "Invalid publication media binding."
+msgstr ""
+
+#: includes/class-publication-media.php:79
+msgid "Invalid publication element."
+msgstr ""
+
+#: includes/class-publication-media.php:85
+msgid "Missing publication media binding."
+msgstr ""
+
+#: includes/class-publication-media.php:93
+#: includes/class-publication-media.php:97
+#: includes/class-publication-media.php:100
+#: includes/class-publication-media.php:103
+#: includes/class-publication-media.php:106
+msgid "Unavailable media."
+msgstr ""
+
+#: includes/class-publications.php:69
+msgid "Use empty publishAt/timeZone for immediate publication."
+msgstr ""
+
+#: includes/class-publications.php:73
+msgid "Use an exact ISO timestamp with seconds and UTC offset."
+msgstr ""
+
+#: includes/class-publications.php:76
+msgid "Use an IANA time zone or fixed UTC offset."
+msgstr ""
+
+#: includes/class-publications.php:80
+msgid "Date, offset and time zone disagree (including daylight saving time)."
+msgstr ""
+
+#: includes/class-publications.php:83
+msgid "Schedule between one minute and one year in the future."
+msgstr ""
+
+#: includes/class-publications.php:115
+msgid "Use JSON within 2 KiB."
+msgstr ""
+
+#: includes/class-publications.php:121
+#: includes/class-publications.php:171
+#: includes/class-review.php:95
+#: includes/class-review.php:121
+#: includes/class-transfer.php:58
+#: includes/class-transfer.php:94
+#: includes/class-transfer.php:99
+#: includes/class-transfer.php:121
+msgid "Retry later."
+msgstr ""
+
+#: includes/class-publications.php:126
+msgid "A request ID cannot describe a different publication."
+msgstr ""
+
+#: includes/class-publications.php:129
+msgid "This article has already entered publication. Updating a published post is not supported yet."
+msgstr ""
+
+#: includes/class-publications.php:130
+msgid "Reload publication status before changing it."
+msgstr ""
+
+#: includes/class-publications.php:132
+msgid "The draft changed. Read it before publishing."
+msgstr ""
+
+#: includes/class-publications.php:134
+msgid "Publication history limit reached."
+msgstr ""
+
+#: includes/class-publications.php:137
+msgid "Connection is busy. Retry publication."
+msgstr ""
+
+#: includes/class-publications.php:140
+msgid "Publication authority changed. Nothing was scheduled."
+msgstr ""
+
+#: includes/class-publications.php:147
+msgid "Publication request could not be stored."
+msgstr ""
+
+#: includes/class-publications.php:148
+msgid "Publication changed during validation. Reload its status."
+msgstr ""
+
+#: includes/class-publications.php:153
+msgid "Scheduling failed. Nothing was published."
+msgstr ""
+
+#: includes/class-publications.php:174
+msgid "Publication is no longer cancellable at this version."
+msgstr ""
+
+#: includes/class-publications.php:175
+msgid "Cancellation failed."
+msgstr ""
+
+#: includes/class-publications.php:193
+msgid "The owner no longer has publication access."
+msgstr ""
+
+#: includes/class-publications.php:195
+msgid "Legacy publication authority is unverified. Set publication again."
+msgstr ""
+
+#: includes/class-publications.php:197
+#: includes/class-publications.php:211
+msgid "The publishing connection was revoked."
+msgstr ""
+
+#: includes/class-publications.php:201
+msgid "The draft, media or behavior policy changed. Set publication again."
+msgstr ""
+
+#: includes/class-publications.php:203
+msgid "The saved rendering changed."
+msgstr ""
+
+#: includes/class-publications.php:206
+msgid "Connection is busy. Set publication again."
+msgstr ""
+
+#: includes/class-publications.php:213
+msgid "Publication state changed before admission."
+msgstr ""
+
+#: includes/class-publications.php:219
+msgid "InnoDB is required."
+msgstr ""
+
+#: includes/class-publications.php:221
+msgid "Could not start publication transaction."
+msgstr ""
+
+#: includes/class-publications.php:225
+msgid "Could not create publication post."
+msgstr ""
+
+#: includes/class-publications.php:227
+msgid "Could not attach publication post."
+msgstr ""
+
+#: includes/class-publications.php:233
+msgid "WordPress did not publish the post."
+msgstr ""
+
+#: includes/class-review.php:32
+msgid "Secure transport and draft review access are required."
+msgstr ""
+
+#: includes/class-review.php:39
+msgid "Use a v2 or v3 snapshot for review."
+msgstr ""
+
+#: includes/class-review.php:41
+msgid "Move CSS image resources into pinned image fields before review."
+msgstr ""
+
+#: includes/class-review.php:47
+msgid "Use pinned references for every article image before review."
+msgstr ""
+
+#: includes/class-review.php:91
+msgid "Use JSON expectedVersion."
+msgstr ""
+
+#: includes/class-review.php:93
+msgid "Use integer expectedVersion only."
+msgstr ""
+
+#: includes/class-review.php:99
+msgid "The article changed."
+msgstr ""
+
+#: includes/class-review.php:103
+msgid "Review history limit reached."
+msgstr ""
+
+#: includes/class-review.php:106
+msgid "Could not store review request."
+msgstr ""
+
+#: includes/class-review.php:119
+msgid "Use the authenticated review screen."
+msgstr ""
+
+#: includes/class-review.php:127
+msgid "Review is no longer available for this exact content."
+msgstr ""
+
+#: includes/class-review.php:130
+msgid "Could not record decision."
+msgstr ""
+
+#: includes/class-review.php:136
+msgid "POST required."
+msgstr ""
+
+#: includes/class-review.php:136
+#: includes/class-review.php:150
+#: includes/plugin.php:228
+#: includes/plugin.php:271
+msgid "Review"
+msgstr ""
+
+#: includes/class-review.php:150
+msgid "Review unavailable."
+msgstr ""
+
+#: includes/class-review.php:157
+msgid "Pending"
+msgstr ""
+
+#: includes/class-review.php:157
+msgid "Approved"
+msgstr ""
+
+#: includes/class-review.php:158
+msgid "Rejected"
+msgstr ""
+
+#: includes/class-review.php:158
+msgid "Revoked"
+msgstr ""
+
+#: includes/class-review.php:159
+msgid "Invalidated"
+msgstr ""
+
+#: includes/class-review.php:159
+msgid "Expired"
+msgstr ""
+
+#: includes/class-review.php:160
+#: includes/plugin.php:225
+#: includes/plugin.php:258
+msgid "Articles"
+msgstr ""
+
+#: includes/class-review.php:160
+msgid "Not published"
+msgstr ""
+
+#. translators: 1: saved version number, 2: article revision number.
+#: includes/class-review.php:162
+#, php-format
+msgid "Version %1$s · Revision %2$s"
+msgstr ""
+
+#. translators: 1: filename, 2: file size in bytes, 3: media source type.
+#: includes/class-review.php:165
+#, php-format
+msgid "%1$s · %2$s bytes · %3$s"
+msgstr ""
+
+#: includes/class-review.php:169
+msgid "Exact version preview"
+msgstr ""
+
+#: includes/class-review.php:174
+msgid "Approve this version"
+msgstr ""
+
+#: includes/class-review.php:174
+msgid "Request changes"
+msgstr ""
+
+#: includes/class-review.php:175
+msgid "Withdraw approval"
+msgstr ""
+
+#. translators: %s: JSON type.
+#: includes/class-snapshot.php:31
+#, php-format
+msgid "Invalid JSON type: %s"
+msgstr ""
+
+#. translators: %s: property name.
+#: includes/class-snapshot.php:35
+#, php-format
+msgid "Unknown property: %s"
+msgstr ""
+
+#. translators: %s: property name.
+#: includes/class-snapshot.php:36
+msgid "Invalid field name."
+msgstr ""
+
+#: includes/class-snapshot.php:58
+msgid "Use a single component root without document declarations."
+msgstr ""
+
+#: includes/class-snapshot.php:68
+msgid "Text must be inside the component root."
+msgstr ""
+
+#: includes/class-snapshot.php:70
+msgid "Use exactly one component root."
+msgstr ""
+
+#. translators: %s: HTML element name.
+#: includes/class-snapshot.php:73
+#, php-format
+msgid "Unsupported HTML element: %s"
+msgstr ""
+
+#. translators: %s: HTML attribute name.
+#: includes/class-snapshot.php:75
+#, php-format
+msgid "Unsupported HTML attribute: %s"
+msgstr ""
+
+#. translators: %s: HTML attribute name.
+#: includes/class-snapshot.php:76
+msgid "Invalid component URL."
+msgstr ""
+
+#: includes/class-snapshot.php:78
+msgid "Unsupported layout marker."
+msgstr ""
+
+#: includes/class-snapshot.php:81
+msgid "Invalid, repeated or non-leaf binding."
+msgstr ""
+
+#: includes/class-snapshot.php:89
+msgid "Invalid Q&A layout."
+msgstr ""
+
+#. translators: %s: field key.
+#: includes/class-snapshot.php:95
+#, php-format
+msgid "Required field is empty: %s"
+msgstr ""
+
+#. translators: %s: field key.
+#: includes/class-snapshot.php:97
+#, php-format
+msgid "Invalid field URL: %s"
+msgstr ""
+
+#. translators: %s: field key.
+#: includes/class-snapshot.php:98
+msgid "Image alternative text or link text is required."
+msgstr ""
+
+#: includes/class-snapshot.php:99
+msgid "Plain text fields cannot have alt text."
+msgstr ""
+
+#: includes/class-snapshot.php:130
+msgid "Component must be an object."
+msgstr ""
+
+#: includes/class-snapshot.php:149
+msgid "PHP DOM extension is required."
+msgstr ""
+
+#: includes/class-snapshot.php:150
+msgid "Snapshot exceeds 4 MB."
+msgstr ""
+
+#: includes/class-snapshot.php:155
+msgid "Article ID must use letters, digits, underscores or hyphens."
+msgstr ""
+
+#: includes/class-snapshot.php:159
+msgid "Duplicate component."
+msgstr ""
+
+#: includes/class-snapshot.php:162
+msgid "Component revision mismatch."
+msgstr ""
+
+#: includes/class-snapshot.php:163
+msgid "Invalid component name."
+msgstr ""
+
+#: includes/class-snapshot.php:165
+msgid "External CSS imports are not supported."
+msgstr ""
+
+#: includes/class-snapshot.php:169
+msgid "Invalid or duplicate field."
+msgstr ""
+
+#: includes/class-snapshot.php:173
+msgid "Field type does not match its HTML element."
+msgstr ""
+
+#: includes/class-snapshot.php:176
+msgid "Component example does not match HTML."
+msgstr ""
+
+#: includes/class-snapshot.php:179
+msgid "Missing field definitions."
+msgstr ""
+
+#: includes/class-snapshot.php:183
+msgid "Invalid variant."
+msgstr ""
+
+#: includes/class-snapshot.php:186
+msgid "At least one variant is required."
+msgstr ""
+
+#: includes/class-snapshot.php:189
+msgid "Invalid Q&A fields or presentations."
+msgstr ""
+
+#: includes/class-snapshot.php:199
+msgid "Duplicate block or unknown component."
+msgstr ""
+
+#: includes/class-snapshot.php:202
+msgid "Unknown variant or incorrect field set."
+msgstr ""
+
+#: includes/class-snapshot.php:205
+msgid "Missing field value."
+msgstr ""
+
+#: includes/class-snapshot.php:208
+msgid "Media references require schema v2, an empty URL and contextual text."
+msgstr ""
+
+#: includes/class-snapshot.php:262
+msgid "Only components used by the article may be imported."
+msgstr ""
+
+#: includes/class-store.php:89
+msgid "Another save is in progress."
+msgstr ""
+
+#: includes/class-store.php:94
+msgid "Use active catalog components or this article's saved component revisions. New designs require an administrator."
+msgstr ""
+
+#: includes/class-store.php:96
+msgid "The saved version changed. Reload it before saving."
+msgstr ""
+
+#: includes/class-store.php:98
+msgid "Changed content must have a newer article revision."
+msgstr ""
+
+#: includes/class-store.php:99
+msgid "This prototype allows 100 saved versions per article."
+msgstr ""
+
+#: includes/class-store.php:110
+msgid "Could not create preview draft."
+msgstr ""
+
+#: includes/class-store.php:114
+msgid "Could not save snapshot."
+msgstr ""
+
+#: includes/class-store.php:116
+msgid "Could not commit snapshot."
+msgstr ""
+
+#: includes/class-store.php:121
+msgid "The snapshot was not saved."
+msgstr ""
+
+#: includes/class-transfer.php:42
+msgid "Transfer credentials require HTTPS."
+msgstr ""
+
+#: includes/class-transfer.php:44
+msgid "Use a small JSON transfer manifest."
+msgstr ""
+
+#: includes/class-transfer.php:52
+msgid "Invalid transfer manifest."
+msgstr ""
+
+#: includes/class-transfer.php:53
+msgid "Private storage unavailable."
+msgstr ""
+
+#: includes/class-transfer.php:55
+msgid "Reload the current article version."
+msgstr ""
+
+#: includes/class-transfer.php:62
+msgid "Too many active transfers for this account. Finish existing transfers or wait for expiry."
+msgstr ""
+
+#: includes/class-transfer.php:63
+msgid "Too many active transfers."
+msgstr ""
+
+#: includes/class-transfer.php:68
+msgid "Could not save transfer."
+msgstr ""
+
+#: includes/class-transfer.php:85
+msgid "Transfer is invalid, revoked or expired."
+msgstr ""
+
+#: includes/class-transfer.php:103
+msgid "The article changed; request a new transfer."
+msgstr ""
+
+#: includes/class-transfer.php:118
+msgid "Transfer not found."
+msgstr ""
+
+#: includes/class-transfer.php:123
+msgid "Could not revoke transfer."
+msgstr ""
+
+#: includes/connections-page.php:9
+#: includes/plugin.php:227
+msgid "AI connections"
+msgstr ""
+
+#: includes/connections-page.php:10
+msgid "Give the guide to your usual AI first, then follow its connection guidance here. Connections last up to 30 days."
+msgstr ""
+
+#: includes/connections-page.php:13
+msgid "Your AI / client"
+msgstr ""
+
+#: includes/connections-page.php:14
+msgid "Choose a client"
+msgstr ""
+
+#: includes/connections-page.php:16
+msgid "This client supports an Authorization header stored privately for my account, not shared with other staff."
+msgstr ""
+
+#: includes/connections-page.php:18
+msgid "Connection instructions"
+msgstr ""
+
+#: includes/connections-page.php:20
+msgid "Official connection instructions"
+msgstr ""
+
+#: includes/connections-page.php:23
+msgid "OAuth connection"
+msgstr ""
+
+#: includes/connections-page.php:25
+msgid "Registered application"
+msgstr ""
+
+#: includes/connections-page.php:26
+msgid "Use the publishing endpoint"
+msgstr ""
+
+#: includes/connections-page.php:27
+#: includes/connections-page.php:59
+msgid "MCP endpoint"
+msgstr ""
+
+#: includes/connections-page.php:28
+msgid "OAuth client ID"
+msgstr ""
+
+#: includes/connections-page.php:29
+msgid "In your AI's MCP settings, choose OAuth and enter this endpoint and client ID. Leave the client secret empty. Continue to WordPress, sign in with your own account and review the requested access."
+msgstr ""
+
+#: includes/connections-page.php:30
+msgid "Protocol details"
+msgstr ""
+
+#: includes/connections-page.php:32
+msgid "Register an application (administrator)"
+msgstr ""
+
+#: includes/connections-page.php:33
+msgid "Use the exact callback URL shown by the AI service. Registration is shared; each staff member authorizes their own WordPress account. This version supports pre-registered public clients with PKCE S256, not automatic client registration."
+msgstr ""
+
+#: includes/connections-page.php:35
+msgid "Application name"
+msgstr ""
+
+#: includes/connections-page.php:36
+msgid "Service"
+msgstr ""
+
+#: includes/connections-page.php:36
+msgid "ChatGPT"
+msgstr ""
+
+#: includes/connections-page.php:36
+msgid "Claude"
+msgstr ""
+
+#: includes/connections-page.php:36
+msgid "Gemini"
+msgstr ""
+
+#: includes/connections-page.php:36
+msgid "Other"
+msgstr ""
+
+#: includes/connections-page.php:37
+msgid "Exact callback URL"
+msgstr ""
+
+#: includes/connections-page.php:38
+msgid "Permit requesting layouts, files and previews"
+msgstr ""
+
+#: includes/connections-page.php:39
+msgid "Permit requesting publication access"
+msgstr ""
+
+#: includes/connections-page.php:40
+msgid "Register application"
+msgstr ""
+
+#: includes/connections-page.php:47
+msgid "1. Create a connection"
+msgstr ""
+
+#: includes/connections-page.php:49
+msgid "Connection name"
+msgstr ""
+
+#: includes/connections-page.php:50
+msgid "My AI app"
+msgstr ""
+
+#: includes/connections-page.php:51
+msgid "Allow reusable layouts, private file transfers and portable previews"
+msgstr ""
+
+#: includes/connections-page.php:53
+msgid "Allow immediate and scheduled public publication of my drafts"
+msgstr ""
+
+#: includes/connections-page.php:55
+msgid "Create connection"
+msgstr ""
+
+#: includes/connections-page.php:57
+msgid "Publishing access lets this AI publish without another WordPress approval. Revoking the key cancels pending reservations; key expiry does not. Existing draft-only keys stay draft-only."
+msgstr ""
+
+#: includes/connections-page.php:58
+msgid "2. Add it to your AI's connection settings"
+msgstr ""
+
+#: includes/connections-page.php:61
+msgid "Copy MCP endpoint"
+msgstr ""
+
+#: includes/connections-page.php:62
+msgid "This route uses Streamable HTTP with an Authorization: Bearer header. OAuth clients use the separate OAuth setup."
+msgstr ""
+
+#: includes/connections-page.php:65
+#: includes/connections-page.php:66
+msgid "Configuration template (no secret)"
+msgstr ""
+
+#: includes/connections-page.php:68
+msgid "Download configuration template"
+msgstr ""
+
+#: includes/connections-page.php:71
+msgid "Shown once. Put this key in your AI app's secure connection settings, not in a chat or the AI guide."
+msgstr ""
+
+#: includes/connections-page.php:72
+msgid "Connection key"
+msgstr ""
+
+#: includes/connections-page.php:75
+msgid "Copy connection key"
+msgstr ""
+
+#: includes/connections-page.php:76
+msgid "Done"
+msgstr ""
+
+#: includes/connections-page.php:80
+msgid "Return to the same AI conversation"
+msgstr ""
+
+#: includes/connections-page.php:81
+msgid "Ask your AI to check the connection and continue your article. It will confirm a successful live context response before proceeding. Never paste the key in chat."
+msgstr ""
+
+#: includes/connections-page.php:82
+msgid "Your connections"
+msgstr ""
+
+#: includes/connections-page.php:82
+msgid "Check connection"
+msgstr ""
+
+#: includes/legacy-guard.php:14
+msgid "Deactivate Structured Fields Prototype before activating atshift DEFT. Saved data will be retained. You do not need to delete the old plugin."
+msgstr ""
+
+#: includes/plugin.php:41
+msgid "Structured drafts"
+msgstr ""
+
+#: includes/plugin.php:51
+msgid "atshift DEFT author"
+msgstr ""
+
+#: includes/plugin.php:52
+msgid "atshift DEFT designer"
+msgstr ""
+
+#: includes/plugin.php:53
+msgid "atshift DEFT publisher"
+msgstr ""
+
+#: includes/plugin.php:123
+msgid "Review not found."
+msgstr ""
+
+#: includes/plugin.php:130
+msgid "This local media file is missing, unsupported or inaccessible."
+msgstr ""
+
+#: includes/plugin.php:142
+msgid "Use application/json."
+msgstr ""
+
+#: includes/plugin.php:145
+msgid "Supply snapshot and integer expectedVersion only."
+msgstr ""
+
+#: includes/plugin.php:155
+msgid "Invalid version."
+msgstr ""
+
+#: includes/plugin.php:201
+msgid "This preview requires its authorized WordPress session and exact saved version."
+msgstr ""
+
+#: includes/plugin.php:201
+#: includes/plugin.php:208
+msgid "Private preview"
+msgstr ""
+
+#: includes/plugin.php:208
+msgid "A referenced media file is unavailable, changed or no longer permitted."
+msgstr ""
+
+#: includes/plugin.php:228
+#: includes/plugin.php:229
+msgid "Review structured article"
+msgstr ""
+
+#: includes/plugin.php:241
+msgid "Close"
+msgstr ""
+
+#: includes/plugin.php:250
+msgid "New article"
+msgstr ""
+
+#: includes/plugin.php:251
+msgid "Download article handoff"
+msgstr ""
+
+#: includes/plugin.php:251
+msgid "Article handoff"
+msgstr ""
+
+#: includes/plugin.php:252
+msgid "Import snapshot"
+msgstr ""
+
+#: includes/plugin.php:253
+msgid "Load sample"
+msgstr ""
+
+#: includes/plugin.php:254
+msgid "Media sample"
+msgstr ""
+
+#: includes/plugin.php:255
+msgid "Refresh articles"
+msgstr ""
+
+#: includes/plugin.php:257
+msgid "Private drafts"
+msgstr ""
+
+#: includes/plugin.php:259
+#: admin.js:84
+msgid "No article selected"
+msgstr ""
+
+#: includes/plugin.php:264
+msgid "View published post"
+msgstr ""
+
+#: includes/plugin.php:265
+msgid "Cancel reservation"
+msgstr ""
+
+#: includes/plugin.php:268
+msgid "Save draft"
+msgstr ""
+
+#: includes/plugin.php:269
+msgid "Export snapshot"
+msgstr ""
+
+#: includes/plugin.php:270
+msgid "Open theme preview"
+msgstr ""
+
+#: includes/plugin.php:274
+msgid "Edit article"
+msgstr ""
+
+#: includes/plugin.php:275
+msgid "Title"
+msgstr ""
+
+#: includes/plugin.php:277
+msgid "Component"
+msgstr ""
+
+#: includes/plugin.php:278
+msgid "Add component"
+msgstr ""
+
+#: includes/plugin.php:284
+msgid "Private files"
+msgstr ""
+
+#: includes/plugin.php:287
+msgid "Use"
+msgstr ""
+
+#: includes/plugin.php:288
+#: admin.js:164
+msgid "Reference only"
+msgstr ""
+
+#: includes/plugin.php:288
+#: admin.js:165
+msgid "Publication candidate"
+msgstr ""
+
+#: includes/plugin.php:289
+msgid "Add files"
+msgstr ""
+
+#: includes/plugin.php:295
+msgid "Article media"
+msgstr ""
+
+#: includes/plugin.php:297
+msgid "Existing WordPress media"
+msgstr ""
+
+#: includes/plugin.php:299
+msgid "Search media"
+msgstr ""
+
+#: includes/plugin.php:300
+msgid "More results"
+msgstr ""
+
+#: includes/plugin.php:304
+msgid "WordPress theme preview"
+msgstr ""
+
+#. translators: %s: current PHP version.
+#: includes/runtime.php:13
+#, php-format
+msgid "atshift DEFT requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged."
+msgstr ""
+
+#: admin.js:68
+#: catalog.js:38
+msgid "Request failed."
+msgstr ""
+
+#. translators: 1: currentPublication.state; 2: currentPublication.publishAt ? ` · ${new Date(currentPublication.publishAt).toLocaleString(config.locale, {tim; 3: currentPublication.error ? ` · ${currentPublication.error}` : "".
+#: admin.js:76
+#, js-format
+msgid "Publication: %1$s%2$s%3$s"
+msgstr ""
+
+#. translators: 1: candidate.article.revision; 2: saved ? `WordPress v${saved.version}` : "Not saved".
+#: admin.js:86
+#, js-format
+msgid "Article r%1$s · %2$s"
+msgstr ""
+
+#. translators: 1: saved.version.
+#: admin.js:86
+#, js-format
+msgid "WordPress v%1$s"
+msgstr ""
+
+#: admin.js:86
+msgid "Not saved"
+msgstr ""
+
+#. translators: 1: file count, 2: per-file size limit in MiB.
+#: admin.js:144
+#, js-format
+msgid "%1$d private file · %2$d MiB max/file"
+msgid_plural "%1$d private files · %2$d MiB max/file"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin.js:145
+msgid "Private storage unavailable"
+msgstr ""
+
+#. translators: 1: purpose; 2: Math.ceil(item.bytes / 1024).
+#: admin.js:166
+#, js-format
+msgid "%1$s · Private · %2$s KiB"
+msgstr ""
+
+#: admin.js:195
+msgid "Article changes not saved."
+msgstr ""
+
+#. translators: 1: a.filename.
+#: admin.js:205
+#, js-format
+msgid "Private: %1$s"
+msgstr ""
+
+#. translators: 1: a.filename.
+#: admin.js:208
+#, js-format
+msgid "WordPress: %1$s"
+msgstr ""
+
+#: admin.js:219
+msgid "URL / no file"
+msgstr ""
+
+#. translators: 1: value.assetRef.kind; 2: value.assetRef.id.
+#: admin.js:235
+#, js-format
+msgid "Saved source: %1$s %2$s"
+msgstr ""
+
+#. translators: 1: field.label.
+#: admin.js:245
+#, js-format
+msgid "%1$s URL"
+msgstr ""
+
+#: admin.js:250
+msgid "Alternative text"
+msgstr ""
+
+#: admin.js:250
+msgid "Link text"
+msgstr ""
+
+#. translators: %d: number of existing media files.
+#: admin.js:304
+#, js-format
+msgid "%d existing WordPress file found."
+msgid_plural "%d existing WordPress files found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin.js:310
+msgid "Select component"
+msgstr ""
+
+#: admin.js:314
+msgid "All other available components"
+msgstr ""
+
+#: admin.js:346
+msgid " · Stopped"
+msgstr ""
+
+#: admin.js:360
+msgid "Enabled"
+msgstr ""
+
+#: admin.js:361
+msgid "Duration (ms)"
+msgstr ""
+
+#: admin.js:362
+msgid "Show caption"
+msgstr ""
+
+#. translators: 1: block.id.
+#: admin.js:405
+#, js-format
+msgid "%1$s variant"
+msgstr ""
+
+#: admin.js:415
+msgid "Move up"
+msgstr ""
+
+#: admin.js:416
+msgid "Move down"
+msgstr ""
+
+#: admin.js:417
+msgid "Remove component"
+msgstr ""
+
+#: admin.js:506
+msgid "Saved draft loaded."
+msgstr ""
+
+#. translators: 1: item.title; 2: item.version.
+#: admin.js:514
+#, js-format
+msgid "%1$s · v%2$s"
+msgstr ""
+
+#: admin.js:517
+#: admin.js:527
+msgid "Discard the unsaved import?"
+msgstr ""
+
+#: admin.js:526
+msgid "Choose a WordPress snapshot JSON file."
+msgstr ""
+
+#: admin.js:551
+msgid "Import ready. Not yet saved."
+msgstr ""
+
+#: admin.js:557
+msgid "Discard the unsaved article?"
+msgstr ""
+
+#: admin.js:564
+msgid "Untitled article"
+msgstr ""
+
+#: admin.js:579
+msgid "New article. Not saved."
+msgstr ""
+
+#: admin.js:593
+msgid "Component is no longer active. Refresh the catalog."
+msgstr ""
+
+#: admin.js:639
+msgid "Maximum file size is 4 MB."
+msgstr ""
+
+#: admin.js:650
+msgid "Use at most 50 article blocks."
+msgstr ""
+
+#: admin.js:656
+msgid "Unknown composition property."
+msgstr ""
+
+#: admin.js:666
+msgid "Article changed. Export a fresh AI handoff."
+msgstr ""
+
+#: admin.js:709
+msgid "Sample could not be loaded."
+msgstr ""
+
+#: admin.js:715
+msgid "Media sample could not be loaded."
+msgstr ""
+
+#: admin.js:720
+msgid "Cancel this publication reservation?"
+msgstr ""
+
+#: admin.js:722
+msgid "Publication reservation cancelled."
+msgstr ""
+
+#: admin.js:752
+msgid "Draft saved. Not published."
+msgstr ""
+
+#. translators: 1: file.name.
+#: admin.js:775
+#, js-format
+msgid "%1$s: file exceeds the upload limit."
+msgstr ""
+
+#. translators: 1: received + 1; 2: files.length; 3: file.name.
+#: admin.js:779
+#, js-format
+msgid "Receiving %1$s/%2$s: %3$s"
+msgstr ""
+
+#. translators: %d: number of received private files.
+#: admin.js:787
+#, js-format
+msgid "%d file received privately. Not published."
+msgid_plural "%d files received privately. Not published."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: received; 2: files.length; 3: e.message.
+#: admin.js:789
+#, js-format
+msgid "%1$s/%2$s received. %3$s"
+msgstr ""
+
+#: catalog.js:105
+msgid "Active"
+msgstr ""
+
+#: catalog.js:105
+msgid "Inactive"
+msgstr ""
+
+#: catalog.js:112
+msgid "Not registered"
+msgstr ""
+
+#: catalog.js:119
+msgid " · Required"
+msgstr ""
+
+#: catalog.js:143
+msgid " · Inactive"
+msgstr ""
+
+#: catalog.js:146
+#: catalog.js:242
+#: catalog.js:250
+#: catalog.js:266
+#: catalog.js:313
+msgid "Discard unsaved component changes?"
+msgstr ""
+
+#: catalog.js:150
+msgid "Component loaded."
+msgstr ""
+
+#: catalog.js:154
+msgid "No components registered."
+msgstr ""
+
+#. translators: 1: item.name.
+#: catalog.js:168
+#, js-format
+msgid "Enable %1$s"
+msgstr ""
+
+#: catalog.js:182
+msgid "Behavior availability saved. Reload previews to apply."
+msgstr ""
+
+#. translators: 1: number of matching components, 2: number available.
+#: catalog.js:209
+#, js-format
+msgid "Matching components: %1$d. Available: %2$d."
+msgstr ""
+
+#: catalog.js:246
+msgid "Personal recipe ready. Not registered."
+msgstr ""
+
+#: catalog.js:254
+msgid "Shared structure ready. Not registered."
+msgstr ""
+
+#: catalog.js:258
+msgid "Component changes not registered."
+msgstr ""
+
+#: catalog.js:269
+msgid "Maximum component size is 512 KiB."
+msgstr ""
+
+#: catalog.js:276
+msgid "Import one component or personal recipe."
+msgstr ""
+
+#: catalog.js:288
+msgid "Component changed. Download a new handoff before importing."
+msgstr ""
+
+#: catalog.js:307
+msgid "Component ready. Not registered."
+msgstr ""
+
+#: catalog.js:315
+msgid "Example unavailable."
+msgstr ""
+
+#: catalog.js:320
+msgid "New component"
+msgstr ""
+
+#: catalog.js:323
+msgid "Example ready. Not registered."
+msgstr ""
+
+#: catalog.js:330
+msgid "Keep the selected component ID. Import a new component separately."
+msgstr ""
+
+#: catalog.js:362
+msgid "Existing shared structure reused. No duplicate created."
+msgstr ""
+
+#: catalog.js:363
+msgid "Component version registered."
+msgstr ""
+
+#: catalog.js:377
+msgid "Component available."
+msgstr ""
+
+#: catalog.js:378
+msgid "Component unavailable for new articles."
+msgstr ""
+
+#: catalog.js:387
+msgid "Register this definition and its example content for all workspace users?"
+msgstr ""
+
+#: catalog.js:402
+msgid "Shared copy registered. Personal definition retained."
+msgstr ""
+
+#: connection-profiles.js:6
+msgid "Use OAuth with a pre-registered client ID and PKCE S256. A fixed connection key is not used. Actual availability depends on your ChatGPT account and its custom MCP settings."
+msgstr ""
+
+#: connection-profiles.js:7
+msgid "Ask the site administrator to register the callback URL from your AI's OAuth settings."
+msgstr ""
+
+#: connection-profiles.js:7
+msgid "Enter the MCP endpoint and client ID in the AI's custom MCP connection. Sign in to WordPress and approve only the access you need."
+msgstr ""
+
+#: connection-profiles.js:9
+msgid "Claude (OAuth)"
+msgstr ""
+
+#: connection-profiles.js:10
+msgid "Use a pre-registered OAuth client and your own WordPress login. Confirm that your connector accepts a public client with PKCE S256 and no client secret."
+msgstr ""
+
+#: connection-profiles.js:11
+msgid "Register the callback URL shown by Claude's custom connector settings."
+msgstr ""
+
+#: connection-profiles.js:11
+msgid "Enter the endpoint and client ID, then sign in to WordPress and review access."
+msgstr ""
+
+#: connection-profiles.js:13
+msgid "Claude (private header, limited beta)"
+msgstr ""
+
+#: connection-profiles.js:14
+msgid "Conditional: Request headers is a limited beta. Use only a connector private to your own account. A Team/Enterprise shared key acts as one WordPress owner for everyone; do not use that route for separate staff accounts."
+msgstr ""
+
+#: connection-profiles.js:15
+msgid "Open Customize > Connectors > Add custom connector. Confirm Request headers is available before creating a key."
+msgstr ""
+
+#: connection-profiles.js:15
+msgid "Enter the endpoint below. Select No sign-in for this fixed-key route, then add a required Authorization header with the full value Bearer <connection-key>. WordPress authentication remains required."
+msgstr ""
+
+#: connection-profiles.js:15
+msgid "Enable the connector in the conversation. Desktop remote connectors also run from Anthropic's cloud, not your computer."
+msgstr ""
+
+#: connection-profiles.js:18
+msgid "Direct HTTP route. The template references an environment variable, never your actual key. This is not the Claude Desktop local-server configuration."
+msgstr ""
+
+#: connection-profiles.js:19
+msgid "Merge the template's mcpServers entry into .mcp.json without replacing other servers."
+msgstr ""
+
+#: connection-profiles.js:19
+msgid "Set the named environment variable securely in the process that launches Claude Code. Do not put the key in chat, source control or shell history."
+msgstr ""
+
+#: connection-profiles.js:19
+msgid "Restart the session and check /mcp. Keep tool confirmations enabled."
+msgstr ""
+
+#: connection-profiles.js:21
+msgid "Gemini Apps (web / mobile)"
+msgstr ""
+
+#: connection-profiles.js:22
+msgid "OAuth route for eligible accounts. Google's documented custom-app rollout is US-only, English, age 18+, personal accounts with Keep Activity on; check current availability. Gemini CLI is separate."
+msgstr ""
+
+#: connection-profiles.js:23
+msgid "Check eligibility and support for a pre-registered public OAuth client using PKCE S256."
+msgstr ""
+
+#: connection-profiles.js:23
+msgid "Register the exact callback URL, then enter the endpoint and client ID in the custom app settings and authorize your WordPress account."
+msgstr ""
+
+#: connection-profiles.js:26
+msgid "Direct Streamable HTTP route via Gemini CLI, not the Gemini chat website. Templates keep tool confirmation on."
+msgstr ""
+
+#: connection-profiles.js:27
+msgid "Merge the template's mcpServers entry into your private ~/.gemini/settings.json without replacing other settings."
+msgstr ""
+
+#: connection-profiles.js:27
+msgid "Set the named environment variable securely before launching Gemini CLI. The settings loader expands it in Authorization; never substitute a literal key into a shared file."
+msgstr ""
+
+#: connection-profiles.js:27
+msgid "Restart Gemini CLI and check /mcp. Do not enable trust or automatic approval just to connect."
+msgstr ""
+
+#: connection-profiles.js:29
+msgid "Codex (local CLI / IDE)"
+msgstr ""
+
+#: connection-profiles.js:30
+msgid "Direct HTTP route using bearer_token_env_var. This does not enable the ChatGPT web connector or prove hosted Codex can reach this site."
+msgstr ""
+
+#: connection-profiles.js:31
+msgid "Merge the template into ~/.codex/config.toml, retaining existing servers and policies."
+msgstr ""
+
+#: connection-profiles.js:31
+msgid "Make the named environment variable available to the local Codex process through your secure launch environment."
+msgstr ""
+
+#: connection-profiles.js:31
+msgid "Start a new session and check codex mcp list. Confirm context before editing an article."
+msgstr ""
+
+#: connection-profiles.js:33
+msgid "Other AI / custom MCP client"
+msgstr ""
+
+#: connection-profiles.js:34
+msgid "Requires Streamable HTTP and a secure custom Authorization header. OAuth-only or chat-only clients cannot use this key. A cloud client also needs a reachable HTTPS site."
+msgstr ""
+
+#: connection-profiles.js:35
+msgid "Select HTTP / Streamable HTTP in the client's MCP settings, not legacy SSE or stdio."
+msgstr ""
+
+#: connection-profiles.js:35
+msgid "Enter the endpoint and store Authorization: Bearer <connection-key> in its secure settings. Do not put the key in a URL."
+msgstr ""
+
+#: connection-profiles.js:35
+msgid "Keep the credential private to one WordPress owner and confirm an authenticated request below. Client file transfer and preview display need separate verification."
+msgstr ""
+
+#: connection-profiles.js:37
+msgid "Other OAuth MCP client"
+msgstr ""
+
+#: connection-profiles.js:38
+msgid "Pre-registered public OAuth client, authorization code with PKCE S256, exact resource indicator and rotating refresh tokens. No client secret or dynamic registration."
+msgstr ""
+
+#: connection-profiles.js:39
+msgid "Register this client's exact callback URL with the site administrator."
+msgstr ""
+
+#: connection-profiles.js:39
+msgid "Configure the client ID and endpoint, then authorize your own WordPress account."
+msgstr ""
+
+#: connection-profiles.js:40
+msgid "AI without MCP (JSON proposal)"
+msgstr ""
+
+#: connection-profiles.js:41
+msgid "No connection key needed. Give the AI the guide, receive an article JSON proposal, then import and save it in WordPress. This fallback does not automatically save or publish."
+msgstr ""
+
+#: connection-profiles.js:42
+msgid "Download the AI guide and ask the AI to read it before preparing an article."
+msgstr ""
+
+#: connection-profiles.js:42
+msgid "Import its article JSON with Import snapshot, then save and review the private preview. Use a fresh article handoff for later edits."
+msgstr ""
+
+#: connection-profiles.js:61
+msgid "Choose your AI and client first."
+msgstr ""
+
+#: connection-profiles.js:64
+msgid "A valid credential-free HTTP(S) MCP endpoint is required."
+msgstr ""
+
+#: connection-profiles.js:65
+msgid "HTTPS is required outside local development."
+msgstr ""
+
+#: connection-profiles.js:66
+msgid "This cloud connector cannot reach a local/private address. Use an approved public HTTPS test site; no tunnel is opened automatically."
+msgstr ""
+
+#: connection-profiles.js:67
+msgid "Confirm that this client supports private, per-owner header credentials."
+msgstr ""
+
+#: connection-profiles.js:68
+msgid "Client settings available. A successful request confirms authentication, not the complete article/file/preview workflow."
+msgstr ""
+
+#. translators: 1: template.env.
+#: connections.js:34
+#, js-format
+msgid "Store this connection's key in %1$s for this client process. Keep other staff accounts in separate environments. Merge the template; do not replace existing settings."
+msgstr ""
+
+#: connections.js:52
+msgid "OAuth dependencies are unavailable. Install the complete plugin ZIP and enable OpenSSL, Sodium and mbstring."
+msgstr ""
+
+#: connections.js:53
+msgid "HTTPS is required."
+msgstr ""
+
+#: connections.js:54
+msgid "An administrator must register an application first."
+msgstr ""
+
+#: connections.js:55
+msgid "No application is registered for this service. Ask the site administrator to add its exact callback URL."
+msgstr ""
+
+#: connections.js:56
+msgid "OAuth discovery could not be verified. The server must route the metadata URL below to WordPress before a client can connect."
+msgstr ""
+
+#: connections.js:57
+msgid "This cloud service cannot reach the local site. Use an approved public HTTPS site for a real account test."
+msgstr ""
+
+#: connections.js:58
+msgid "OAuth is configured. Complete sign-in from your AI's connection settings. A provider account connection has not been verified by this screen."
+msgstr ""
+
+#: connections.js:60
+msgid "Metadata"
+msgstr ""
+
+#: connections.js:60
+msgid "Authorization"
+msgstr ""
+
+#: connections.js:60
+msgid "Token"
+msgstr ""
+
+#: connections.js:60
+msgid "Client authentication"
+msgstr ""
+
+#: connections.js:60
+msgid "none; PKCE S256 required"
+msgstr ""
+
+#: connections.js:81
+msgid "Disable application"
+msgstr ""
+
+#. translators: 1: client.name.
+#: connections.js:83
+#, js-format
+msgid "Disable %1$s for all staff and cancel its pending reservations?"
+msgstr ""
+
+#: connections.js:98
+msgid "Connection request failed."
+msgstr ""
+
+#: connections.js:110
+msgid "Activate the official MCP Adapter plugin (0.7.1 or newer) to enable connections."
+msgstr ""
+
+#: connections.js:111
+msgid "HTTPS is required to create and use connections."
+msgstr ""
+
+#: connections.js:112
+msgid "Local site: connect from this computer. Cloud-hosted AI services cannot reach this address."
+msgstr ""
+
+#: connections.js:113
+msgid "Ready."
+msgstr ""
+
+#. translators: 1: item.name; 2: Number(item.authoring) ? "Layouts, files and previews" : "Draft editing"; 3: Number(item.publishing) ? "Publishing allowed" : "No publishing"; 4: new Date(Number(item.expires) * 1000).toLocaleString(); 5: Number(item.last_used) ? `Last connected ${new Date(Number(item.last_used) * 1000).toLocaleString()}` : "Not c.
+#: connections.js:117
+#, js-format
+msgid "%1$s · %2$s · %3$s · Expires %4$s · %5$s"
+msgstr ""
+
+#: connections.js:117
+msgid "Layouts, files and previews"
+msgstr ""
+
+#: connections.js:117
+msgid "Draft editing"
+msgstr ""
+
+#: connections.js:117
+msgid "Publishing allowed"
+msgstr ""
+
+#: connections.js:117
+msgid "No publishing"
+msgstr ""
+
+#. translators: 1: new Date(Number(item.last_used) * 1000).toLocaleString().
+#: connections.js:117
+#, js-format
+msgid "Last connected %1$s"
+msgstr ""
+
+#: connections.js:117
+msgid "Not connected yet"
+msgstr ""
+
+#: connections.js:118
+msgid "Authenticated request received. Return to the same AI conversation: it should confirm live context, then continue your article. This timestamp alone does not verify the AI's tools, file transfer or preview rendering."
+msgstr ""
+
+#: connections.js:119
+msgid "Revoke"
+msgstr ""
+
+#: connections.js:120
+msgid "Connection revoked. Pending reservations cancelled. Published posts and saved drafts are unchanged."
+msgstr ""
+
+#: connections.js:123
+msgid "No connections."
+msgstr ""
+
+#: connections.js:133
+msgid "Waiting for your AI to connect. Add the endpoint and key in its connection settings."
+msgstr ""
+
+#: connections.js:147
+msgid "Application registered. Each staff member must authorize their own account from the AI service."
+msgstr ""
+
+#: connections.js:158
+msgid "Key copied. Keep it in your AI app's secure connection settings."
+msgstr ""
+
+#: connections.js:159
+msgid "Endpoint copied."
+msgstr ""

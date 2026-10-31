@@ -1,0 +1,269 @@
+# Changelog
+
+## 0.5.0 - 2026-10-31
+
+- Name the product atshift DEFT: Delegate Execution. Focus on Thinking.
+- Rename the WordPress folder, main file, text domain and ZIP to `atshift-deft`.
+- Update display labels, guides and the browser prototype without changing saved
+  data, role capabilities, schema IDs, MCP/REST routes or OAuth identities.
+- Block coexistence with the active legacy plugin before loading shared classes;
+  document backup, legacy deactivation and new-plugin activation.
+- Start a separate public repository at `at-shift/atshift-deft` with the current
+  source snapshot, not private development history. Keep the original repository private.
+- Put five getting-started steps first in the README, followed by detailed
+  capabilities, requirements and limitations. Link to bilingual support forms
+  for feature requests and improvement suggestions.
+- Include the GPL license text in the installable ZIP alongside dependency licenses.
+- Start onboarding with the guide download. The AI guides connection, checks live
+  read-only context, offers an optional fictional draft/preview sample, then
+  continues the existing article brief. Keep manual JSON import an explicit fallback.
+- Prepare the WordPress UI for added gettext translations, including JavaScript
+  catalogs, consent, notices and human-readable errors. Preserve existing Japanese
+  copy in a partial catalog; ship a POT and document extraction/compilation.
+  Keep content, component hashes, schemas and AI instruction contracts unchanged.
+
+## 0.1.0-alpha.14 - 2026-10-31 (private code checkpoint)
+
+- Add per-owner OAuth authorization-code flow with mandatory PKCE S256, exact
+  client/redirect/resource binding, discovery, ten-minute access tokens and rotating
+  refresh tokens within a 30-day grant. Refresh reuse revokes the grant.
+- Administrators pre-register public clients; each staff member signs into
+  WordPress and grants draft, authoring and optional publication scopes separately.
+  Existing fixed keys and previously authorized reservation-expiry policy remain.
+- Bundle privately namespaced League OAuth2 Server dependencies with a locked,
+  reproducible build and package hash verification.
+- Raise the entire plugin minimum to PHP 8.2. Unsupported runtimes stop before
+  implementation/dependency loading and show administrators a version warning.
+- Private GitHub code checkpoint only; no tag, Release, WordPress.org publication
+  or production deployment. Automatic client registration and provider-account
+  end-to-end verification are not included.
+
+## 0.1.0-alpha.13 - 2026-10-31 (private code checkpoint)
+
+- Add an explicit authoring grant for new MCP connections. Existing keys retain
+  their previous authority; publication remains separately opt-in.
+- Expose bounded create-only structures, own media discovery, exact-file transfer
+  preparation and version-bound private HTML previews through the MCP Adapter.
+- Preserve reuse checks, component/storage quotas, owner isolation and exact bytes.
+  MCP-issued uploads stop when their issuing key expires or is revoked. Bound each
+  account to 20 active transfer grants without changing legacy grant validity.
+- Add a three-step connection screen, first-use connection link, endpoint copying
+  and last authenticated activity. Guide downloads never contain credentials.
+- Distinguish ChatGPT, Claude remote/Code, Gemini Apps/CLI, local Codex, other
+  HTTP clients and JSON handoffs. Generate secret-free CLI settings, block
+  misleading key setup and document cloud reachability and per-owner credentials.
+- Update AI and Japanese getting-started instructions for conversation, optional
+  design references, selective file transfer, preview and explicit publication intent.
+- Portable previews omit the site theme, JavaScript and PDF bytes; they have a
+  2 MiB inline-image budget and do not fetch external assets or create public links.
+- OAuth is not implemented. Service-specific configuration paths are documented;
+  real provider conversations, attachment transfer and artifact rendering remain
+  unverified. MCP SDK integration is not proof of actual AI service compatibility.
+- Private GitHub code checkpoint only; no tag, Release, WordPress.org publication
+  or production deployment.
+
+## Unreleased - Plugin Check follow-up
+
+- Declare GPLv2 or later in the plugin header and packaged WordPress readme.
+- Prepare catalog/publication table identifiers and enqueue private-preview CSS
+  through WordPress without changing the existing CSS policy.
+- Identify internal articles as non-publicly-viewable while preserving authorized,
+  revision-bound theme previews and ordinary WordPress publication posts.
+- Verify and serve the same bounded private-file buffer; retain owner-only local
+  file permissions and document narrowly scoped scanner exceptions for binary
+  responses, Markdown downloads and required exclusive filesystem operations.
+- Add preview/viewability and private-download HEAD regression checks. Version
+  remains alpha.12; private code checkpoint only, with no tag or Release.
+- Review all Plugin Check warnings, prepare runtime SQL table identifiers with
+  `%i`, and validate/unslash browser tokens without coercing malformed identifiers.
+- Reject array-shaped REST versions without PHP warnings and correctly validate
+  slashed document-root paths. Add malformed-request and path regression coverage.
+- Retain uncached authoritative database reads, required schema migration, public
+  media access and existing hook names; these are deliberate compatibility/security
+  choices rather than reasons to weaken checks or suppress all warnings.
+- Validate the installed ZIP with Plugin Check 2.1.0: all 34 standard checks finish,
+  with no errors and 254 reviewed warnings. All 443 regression checks pass.
+
+## 0.1.0-alpha.12 - 2026-10-30 (private code checkpoint)
+
+- Limit new shared component IDs to 20 per creator, including raw registration and
+  explicit sharing. Reuse and revisions remain available without consuming new IDs.
+- Preserve original creator attribution through manager edits; account for legacy
+  definitions using earliest revision authors, conservatively handling ambiguity.
+- Limit private staged media to 100 MiB per uploader across articles and purposes,
+  including delegated transfers. Verified identical retries do not consume capacity.
+- Expose configurable per-user limits through trusted WordPress filters and AI context.
+- Share the HTTPS/local-loopback HTTP policy across AI connections, transfer issuance,
+  transfer consumption and review. Require an explicit local environment for HTTP.
+- Add quota, concurrent-admission, upgrade and transport regression tests. No CSS,
+  publication approval or scheduled-key-expiry policy changes; no tag or Release.
+
+## 0.1.0-alpha.11 - 2026-10-30 (private code checkpoint)
+
+- Add an opt-in publisher role and separately scoped MCP publishing connection.
+  Existing draft keys never gain publication permission.
+- Let AI set immediate publication or the user's requested date/time with explicit
+  time zone, version checks, idempotent request IDs and cancellable reservations.
+- Revalidate owner rights, connection revocation, draft, media and behavior policy
+  before creating an ordinary WordPress post. Freeze files privately and serve
+  only from a currently public, non-password-protected publication.
+- Show publication status/cancellation in Articles and document delegated authority,
+  WP-Cron timing limits and first-publication-only behavior.
+- Keep titles literal at WordPress output boundaries, including old previews and
+  public posts. Preserve canonical snapshot values and digests.
+- Serialize reservation admission with connection revocation, retaining the exact
+  issuer and rejecting lost grants instead of treating them as browser sessions.
+- Limit articles to 50 media bindings / 100 MiB and verify repeated references once
+  per bounded operation, without carrying authorization or file caches across operations.
+
+
+## 0.1.0-alpha.10 - 2026-10-30 (private code checkpoint)
+
+- Replace the first-use notice with a short, keyboard-accessible guide-download modal.
+- Add owner-issued, endpoint-scoped MCP keys with expiry, revocation and hash-only storage.
+- Use the official MCP Adapter plugin for four owner-only context/draft tools.
+- Save and resume through the existing typed composition and immutable version store;
+  reject stale saves and other owners' articles. Add authenticated workspace links.
+- Document client setup and the JSON fallback. No OAuth, publishing, component
+  registration or media upload through MCP. Private code checkpoint including
+  alpha.9; no tag, Release, production deployment or WordPress.org publication.
+
+## 0.1.0-alpha.9 - 2026-10-30 (included in alpha.10 checkpoint)
+
+- Add an always-available AI starter guide download to Articles and a first-visit
+  introduction per account/site. Include shared composition contracts and schemas,
+  without private drafts, personal definitions, usage records or credentials.
+
+- Prefer native HTML, then CSS animation, then JS for necessary interaction.
+- Add a fixed shipped behavior registry with CSS fade-in and JS image enlargement,
+  semantic field bindings, strict settings, exact revisions and asset integrity checks.
+- Preserve v1/v2 canonical snapshots; use v3 for optional component behavior bindings
+  and independent per-block settings. Do not rewrite prior articles.
+- Load only needed assets once, honor reduced motion and retain readable static
+  content when JS is unavailable or behavior is stopped.
+- Add administrator-only stop/restore with CAS, invalidate v3 reviews on policy
+  changes, and expose registry contracts in AI handoffs and minimal manual controls.
+- No arbitrary code registration, form submission, MCP, publishing or external deployment.
+
+## 0.1.0-alpha.8 - 2026-10-30 (private code checkpoint)
+
+- Add site-wide content-free structure registration for workspace authors. Reuse
+  an existing shared ID/version when an equivalent structure exists, under one lock.
+- Separate private article values and media from shared definitions; preserve all
+  old private definitions and immutable article versions without automatic sharing.
+- Record per-user component usage transactionally on changed draft saves. Expose
+  own usage and the full shared catalog to AI, without per-component approval.
+- Keep shared editing/retirement manager-only and preserve active-version rules.
+- Update AI instructions, manual UI and Japanese setup/use documentation. JavaScript
+  behavior references are a future design direction, not an implemented capability.
+- Private GitHub code checkpoint including alpha.6 and alpha.7. No tag, Release,
+  production deployment or WordPress.org publication.
+
+## 0.1.0-alpha.7 - 2026-10-30 (included in alpha.8 checkpoint)
+
+- Add owner-private, bounded component recipes with server-generated stack,
+  columns and native Q&A list/accordion presentations; retain immutable articles.
+- Require fresh visible-catalog review, considered candidates and a gap reason;
+  prevent normalized duplicate definitions and cap personal inventory at 20.
+- Separate shared registration and management capabilities, add an opt-in designer
+  role and explicit shared-copy operation without transferring personal ownership.
+- Export AI handoffs with reuse-first/reader-oriented guidance, language preferences,
+  field contracts and composition templates; import ID/value-only article proposals.
+- Package a Japanese installation/use guide and runtime AI instructions. No AI
+  connection, MCP, publishing, tag, Release or production deployment.
+
+## 0.1.0-alpha.6 - 2026-10-30 (included in alpha.8 checkpoint)
+
+- Add a shared WordPress component catalog with administrator-only registration,
+  immutable content hashes, stable unique machine keys and CAS update checks.
+- Let authors compose private articles using active component IDs, revisions and
+  field values, without importing HTML/CSS. Expose strict registration/compose schemas.
+- Preserve each article's pinned component revisions across catalog updates or
+  availability changes; maintain owner-only drafts, media, transfers and reviews.
+- Add Components administration and a minimal collapsible article editor with
+  creation, component selection, variants, values, ordering and removal.
+- Add catalog permission, validation, concurrency, media and preservation tests.
+  Verify registration and article editing in desktop/mobile Chrome.
+- Included in the private alpha.8 code checkpoint. No tag, Release or production deployment.
+
+## 0.1.0-alpha.5 - 2026-10-30
+
+- Bind articles to the first WordPress creator, including existing snapshots.
+  Isolate listing, history, saves, previews, private files, transfers and reviews;
+  no administrator bypass through plugin UI/API, and no automatic reassignment.
+- Add an opt-in Structured Fields author role without site administration or
+  publishing. New HTML/CSS remains administrator-only; authors use bundled or
+  their own article's saved, hash-verified component revisions.
+- Limit WordPress media reuse to the current uploader and keep native draft
+  editing disabled; grant only exact-session, exact-version preview access.
+- Generate unique sample article IDs; retain per-article locking and stale-write
+  rejection. Add two-user/admin HTTP regressions and browser checks.
+- Include the alpha.4 transfer/review work in this private code checkpoint.
+  No tag, GitHub Release, WordPress.org publication or production deployment.
+
+## 0.1.0-alpha.4 - 2026-10-30 (included in alpha.5 checkpoint)
+
+- Add 15-minute, revocable, exact-file transfer grants without sharing an admin
+  password. Scope upload credentials to an article version, file hash and purpose.
+- Add a destination-checked Node transfer client, retry deduplication and private
+  receipts. Transfer tokens cannot browse, edit articles, approve or publish.
+- Add exact-version review requests and a separate cookie-authenticated approval,
+  changes-request and withdrawal screen. Record account intent, not human presence.
+- Invalidate approval on changed article/media identity or lost approver authority.
+  Keep publication disabled and reject unpinned article images/CSS image resources.
+- Add HTTP regressions and desktop/mobile review interaction checks.
+- Developed locally, included with the alpha.5 code push. No automatic publishing.
+
+## 0.1.0-alpha.3 - 2026-10-30
+
+- Bind article image/PDF fields to private publication candidates or existing
+  local WordPress attachments using stable IDs and pinned SHA-256 hashes.
+- Reject reference-only, cross-article, mismatched-type and changed-file bindings;
+  resolve access URLs only for an authenticated, exact-version theme preview.
+- Preserve existing snapshots and attachment metadata without duplicating media.
+- Add an optional media-binding panel, existing-media search and a media sample.
+- Add WordPress snapshot schema v2; retain v1 without migrating saved data.
+  Earlier browser/local-server v1 clients reject v2 rather than discarding references.
+- Add schema, PHP, HTTP and desktop/mobile interaction regression coverage.
+- Private GitHub code checkpoint only: no tag, Release, WordPress.org or production deployment.
+
+## 0.1.0-alpha.2 - 2026-10-30
+
+- Add authenticated, article-bound private image/PDF intake, stable asset IDs,
+  content hashes, safe-default reference purpose and retry deduplication.
+- Keep reference files and publication candidates outside public uploads; require
+  verified private storage and authenticated file access. No publishing authority.
+- Add the optional private-file panel, storage/type/size/quota checks and regression tests.
+- Record the one-final-approval workflow and remaining mapping/approval/MCP work.
+- Fix WordPress toolbar icons inheriting a line-height larger than their 18px
+  frame. Scope the correction to Structured Fields; preserve core admin styling.
+- Synchronize package, lockfile and plugin versions. Code push only, with no Git
+  tag, GitHub Release, WordPress.org publication or production deployment.
+
+## 0.1.0-alpha.1 - 2026-10-30
+
+First private GitHub code snapshot of the separate Structured Fields prototype.
+The earlier WordPress `0.2.0` label was local-only; there was no previous tagged
+release. The browser package and WordPress plugin used `0.1.0-alpha.1`.
+
+### Included
+
+- Preview-first structured articles with stable block IDs and pinned component revisions.
+- AI handoff/proposal JSON, validation, diff preview, local editing and revision history.
+- Opt-in browser WebMCP read/propose/preview tools, without save/approval/publish authority.
+- Local review-server snapshots with conflict detection and revision-bound review records.
+- Separate WordPress plugin for administrator-only snapshot import, immutable draft
+  storage, read/export and authenticated active-theme previews.
+- WordPress export from the browser prototype, strict PHP validation and access checks.
+- Regression tests and a reproducible, installable WordPress plugin ZIP.
+
+### Known Limitations
+
+- Icon alignment was deferred at the user's request; corrected in alpha.2.
+- Mobile viewport verification, the minimum-version matrix and other themes remain unverified.
+- WordPress transfer is explicit JSON import/export, not automatic synchronization.
+- Media files are not embedded or uploaded by the snapshot transfer.
+- No server MCP connection, human publication approval, or publishing workflow.
+- Not production-ready; use a separate test site. No WordPress.org release.
+
+See `docs/FOLLOW-UP.md` and `wordpress/README.md` for boundaries and next steps.

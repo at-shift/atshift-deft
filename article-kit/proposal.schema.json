@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:structured-fields:article-proposal:v1",
+  "title": "atshift DEFT article proposal (local prototype)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "schemaVersion",
+    "articleId",
+    "baseRevision",
+    "title",
+    "blocks",
+    "questions"
+  ],
+  "properties": {
+    "format": { "const": "structured-fields-article-proposal" },
+    "schemaVersion": { "const": 1 },
+    "articleId": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "baseRevision": { "type": "integer", "minimum": 1 },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "\\S"
+    },
+    "blocks": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "componentId",
+          "componentRevision",
+          "variantId",
+          "values"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$"
+          },
+          "componentId": { "type": "string", "minLength": 1, "maxLength": 80 },
+          "componentRevision": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "variantId": { "type": "string", "minLength": 1, "maxLength": 80 },
+          "values": {
+            "type": "object",
+            "maxProperties": 100,
+            "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["value", "alt"],
+              "properties": {
+                "value": { "type": "string", "maxLength": 50000 },
+                "alt": { "type": "string", "maxLength": 50000 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000,
+        "pattern": "\\S"
+      }
+    }
+  }
+}

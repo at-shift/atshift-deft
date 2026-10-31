@@ -1,0 +1,13 @@
+.sf-oauth-consent {
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+.sf-oauth-consent button {
+  margin: 4px 8px 4px 0;
+  white-space: normal;
+  height: auto;
+  min-height: 36px;
+}
+@media (max-width: 600px) {
+  body.sf-oauth-consent { margin: 12px; padding: 20px; }
+}

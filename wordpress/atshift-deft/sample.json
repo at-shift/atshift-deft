@@ -1,0 +1,63 @@
+{
+  "article": {
+    "id": "wordpress-sample",
+    "revision": 1,
+    "title": "atshift DEFT on WordPress",
+    "blocks": [
+      {
+        "id": "intro-one",
+        "componentId": "intro",
+        "componentRevision": "348c83af506c4bed53eee458b154e36dd9e67071b772f3e765d47dde23813fa0",
+        "variantId": "default",
+        "values": {
+          "heading": {
+            "value": "A new way to compose",
+            "alt": ""
+          },
+          "body": {
+            "value": "Build an article from reusable, meaningful components.",
+            "alt": ""
+          }
+        }
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "intro",
+      "key": "intro",
+      "name": "Introduction",
+      "purpose": "Article introduction",
+      "html": "<section class=\"sf-intro\"><h2 data-field=\"heading\">A new way to compose</h2><p data-field=\"body\">Build an article from reusable, meaningful components.</p></section>",
+      "css": ".sf-intro{border-left:4px solid #087f79;padding:12px 24px}.sf-intro h2{margin-top:0}",
+      "fields": [
+        {
+          "id": "heading",
+          "key": "heading",
+          "label": "Heading",
+          "type": "text",
+          "required": true,
+          "value": "A new way to compose",
+          "alt": ""
+        },
+        {
+          "id": "body",
+          "key": "body",
+          "label": "Body",
+          "type": "textarea",
+          "required": true,
+          "value": "Build an article from reusable, meaningful components.",
+          "alt": ""
+        }
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "name": "Default",
+          "classes": ""
+        }
+      ],
+      "revision": "348c83af506c4bed53eee458b154e36dd9e67071b772f3e765d47dde23813fa0"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+.sf-article .sf-zoom-trigger {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: zoom-in;
+  max-width: 100%;
+}
+.sf-article .sf-zoom-trigger img {
+  display: block;
+}
+.sf-article .sf-zoom-trigger:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
+}
+.sf-zoom-dialog {
+  box-sizing: border-box;
+  max-width: min(94vw, 1200px);
+  max-height: 94dvh;
+  padding: 48px 16px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+}
+.sf-zoom-dialog::backdrop {
+  background: rgb(0 0 0 / 0.75);
+}
+.sf-zoom-dialog img {
+  display: block;
+  max-width: 100%;
+  max-height: 72dvh;
+  object-fit: contain;
+  margin: auto;
+}
+.sf-zoom-dialog figcaption {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.sf-zoom-dialog figure {
+  margin: 0;
+}
+.sf-zoom-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+  font: 28px/1 sans-serif;
+  cursor: pointer;
+}
+.sf-zoom-close:focus-visible {
+  outline: 3px solid #087f79;
+  outline-offset: 1px;
+}

@@ -1,0 +1,26 @@
+/* Content stays visible without CSS, and motion is opt-in to the user's preference. */
+@media (prefers-reduced-motion: no-preference) {
+  .sf-article [data-sf-fade] {
+    animation: sf-fade-v1 250ms ease-out both;
+  }
+  .sf-article [data-sf-fade="100"] {
+    animation-duration: 100ms;
+  }
+  .sf-article [data-sf-fade="200"] {
+    animation-duration: 200ms;
+  }
+  .sf-article [data-sf-fade="400"] {
+    animation-duration: 400ms;
+  }
+  .sf-article [data-sf-fade="600"] {
+    animation-duration: 600ms;
+  }
+  @keyframes sf-fade-v1 {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

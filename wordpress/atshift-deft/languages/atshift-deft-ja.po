@@ -1,0 +1,59 @@
+# Existing Japanese interface copy, migrated without expanding translation coverage.
+msgid ""
+msgstr ""
+"Project-Id-Version: atshift DEFT 0.5.0\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Download AI guide"
+msgstr "AI用手順書をダウンロード"
+
+msgid "Connect your AI"
+msgstr "AIと接続する"
+
+msgid "Give this guide to your usual AI"
+msgstr "手順書を、いつものAIへ"
+
+msgid "Download this guide and ask your usual AI to read it. Your AI will guide you through connecting, confirm the connection, then continue with your article."
+msgstr "手順書をダウンロードして、いつものAIに読ませてください。AIが接続を案内し、接続を確認できたら、そのまま記事作成の相談へ進みます。"
+
+#, php-format
+msgid "atshift DEFT requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged."
+msgstr "atshift DEFT は PHP 8.2 以上が必要です。現在は PHP %s です。サイトの PHP を更新するまで、このプラグインの処理を停止しています。保存済みデータは変更されません。"
+
+msgid "Deactivate Structured Fields Prototype before activating atshift DEFT. Saved data will be retained. You do not need to delete the old plugin."
+msgstr "atshift DEFT を有効化する前に、旧 Structured Fields Prototype を停止してください。保存済みデータはそのまま引き継ぎます。旧版を削除する必要はありません。"
+
+msgid "Read components and read/write my private drafts"
+msgstr "本人の部品参照・下書きの読み書き"
+
+msgid "Create bounded structures, transfer my files and export private previews"
+msgstr "限定構造の作成・本人のファイル転送・非公開プレビュー"
+
+msgid "Publish or schedule my articles without another WordPress approval"
+msgstr "本人の記事の即時公開・予約投稿（追加のWordPress承認なし）"
+
+msgid "Authorize AI connection"
+msgstr "AIとの接続を許可"
+
+#, php-format
+msgid "WordPress account: %s"
+msgstr "WordPressの担当者: %s"
+
+msgid "Consent lasts 30 days and can be revoked in AI connections. Other staff members' private data is not included."
+msgstr "許可は30日間有効です。「AI connections」でいつでも取り消せます。他の担当者の非公開データは許可されません。"
+
+msgid "Revoking this connection cancels pending reservations. Access-token expiry alone does not cancel them."
+msgstr "接続を取り消すと予約投稿も取り消されます。アクセストークンの期限切れだけでは、予約投稿は取り消されません。"
+
+msgid "Connection details"
+msgstr "接続先の詳細"
+
+msgid "Allow this access"
+msgstr "この範囲で接続を許可"
+
+msgid "Deny"
+msgstr "許可しない"

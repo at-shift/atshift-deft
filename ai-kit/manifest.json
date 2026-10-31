@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "schemaVersion": 1,
+  "archive": "structured-fields-ai-kit-v1.zip",
+  "files": [
+    { "name": "GUIDE.md", "label": "AI構築ガイド" },
+    { "name": "REQUEST.md", "label": "依頼文テンプレート" },
+    { "name": "schema.json", "label": "JSON Schema" },
+    { "name": "example.json", "label": "取り込み用の完成例" }
+  ]
+}

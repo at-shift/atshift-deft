@@ -1,0 +1,11 @@
+node_modules/
+dist/
+/public/ai-kit/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+.local/
+/vendor/
+/wordpress/atshift-deft/vendor/

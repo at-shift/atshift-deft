@@ -1,0 +1,230 @@
+{
+  "type": "object",
+  "properties": {
+    "article": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "\\S"
+        },
+        "blocks": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "componentId",
+              "componentRevision",
+              "variantId",
+              "values"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$"
+              },
+              "componentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "componentRevision": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "variantId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "values": {
+                "type": "object",
+                "maxProperties": 100,
+                "propertyNames": {
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "value",
+                    "alt"
+                  ],
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "maxLength": 50000
+                    },
+                    "alt": {
+                      "type": "string",
+                      "maxLength": 50000
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "title",
+        "blocks"
+      ],
+      "additionalProperties": false
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 50000
+          },
+          "purpose": {
+            "type": "string",
+            "maxLength": 50000
+          },
+          "html": {
+            "type": "string",
+            "maxLength": 50000
+          },
+          "css": {
+            "type": "string",
+            "maxLength": 50000
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                "label": {
+                  "type": "string",
+                  "maxLength": 50000
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "textarea",
+                    "image",
+                    "link"
+                  ]
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "value": {
+                  "type": "string",
+                  "maxLength": 50000
+                },
+                "alt": {
+                  "type": "string",
+                  "maxLength": 50000
+                }
+              },
+              "required": [
+                "id",
+                "key",
+                "label",
+                "type",
+                "required",
+                "value",
+                "alt"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 50000
+                },
+                "classes": {
+                  "type": "string",
+                  "maxLength": 50000
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "classes"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "name",
+          "purpose",
+          "html",
+          "css",
+          "revision",
+          "fields",
+          "variants"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "article",
+    "components"
+  ],
+  "additionalProperties": false
+}
