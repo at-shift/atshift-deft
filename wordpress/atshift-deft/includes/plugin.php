@@ -6,6 +6,7 @@ require_once __DIR__ . '/class-access.php';
 require_once __DIR__ . '/class-snapshot.php';
 require_once __DIR__ . '/class-behaviors.php';
 require_once __DIR__ . '/class-store.php';
+require_once __DIR__ . '/class-drafts.php';
 require_once __DIR__ . '/class-assets.php';
 require_once __DIR__ . '/class-media.php';
 require_once __DIR__ . '/class-transfer.php';
@@ -23,6 +24,7 @@ require_once __DIR__ . '/class-oauth-consent.php';
 require_once __DIR__ . '/class-mcp.php';
 require_once __DIR__ . '/class-ai-workflow.php';
 require_once __DIR__ . '/class-publications.php';
+require_once __DIR__ . '/class-reservations.php';
 require_once __DIR__ . '/class-post-types.php';
 require_once __DIR__ . '/class-taxonomies.php';
 require_once __DIR__ . '/class-publication-media.php';
@@ -30,12 +32,14 @@ require_once __DIR__ . '/class-public-structure.php';
 require_once __DIR__ . '/connections-page.php';
 require_once __DIR__ . '/catalog-page.php';
 
-register_activation_hook( PLUGIN_FILE, static function() { Store::install(); Assets::install(); Transfer::install(); Review::install(); Access::install(); Catalog::install(); } );
+register_activation_hook( PLUGIN_FILE, static function() { Store::install(); Drafts::install(); Assets::install(); Transfer::install(); Review::install(); Access::install(); Catalog::install(); } );
 
 add_action( 'init', static function() {
+    Reservations::register();
     if ( 4 !== (int) get_option( 'sf_connections_schema_version' ) ) Connections::install();
     if ( 1 !== (int) get_option( 'sf_oauth_schema_version' ) ) OAuthStore::install();
     if ( 3 !== (int) get_option( 'sf_publications_schema_version' ) ) Publications::install();
+    if ( 1 !== (int) get_option( 'sf_drafts_schema_version' ) ) Drafts::install();
     if ( 3 !== (int) get_option( 'sf_access_schema_version' ) ) Access::install();
     if ( 1 !== (int) get_option( 'sf_brand_version' ) ) Access::update_brand_labels();
     if ( 1 !== (int) get_option( 'sf_assets_schema_version' ) ) Assets::install();
@@ -49,6 +53,12 @@ add_action( 'init', static function() {
 } );
 
 add_filter( 'map_meta_cap', array( Access::class, 'preview_caps' ), 10, 4 );
+add_filter( 'map_meta_cap', array( Reservations::class, 'capabilities' ), 20, 4 );
+add_filter( 'wp_insert_post_empty_content', array( Reservations::class, 'block_edit' ), 10, 2 );
+add_filter( 'display_post_states', array( Reservations::class, 'post_states' ), 10, 2 );
+add_filter( 'post_date_column_status', array( Reservations::class, 'date_status' ), 10, 2 );
+add_filter( 'post_row_actions', array( Reservations::class, 'actions' ), 10, 2 );
+add_filter( 'page_row_actions', array( Reservations::class, 'actions' ), 10, 2 );
 add_filter( 'gettext_with_context', static function( $translation, $text, $context, $domain ) {
     if ( 'default' !== $domain || 'User role' !== $context ) return $translation;
     switch ( $text ) {
@@ -148,7 +158,8 @@ add_action( 'rest_api_init', static function() {
         array( 'methods' => 'POST', 'permission_callback' => array( Assets::class, 'permission' ), 'callback' => array( Assets::class, 'receive' ) ),
     ) );
     register_rest_route( 'structured-fields/v1', '/articles', array(
-        array( 'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission', 'callback' => static function() { return Store::listing(); } ),
+        array( 'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission', 'args' => array( 'state' => array( 'type' => 'string', 'enum' => array( 'draft', 'trash' ), 'default' => 'draft' ) ),
+            'callback' => static function( $request ) { return Store::listing( $request['state'] ); } ),
         array( 'methods' => 'POST', 'permission_callback' => __NAMESPACE__ . '\\permission', 'callback' => static function( $request ) {
             if ( strlen( $request->get_body() ) > 4 * 1024 * 1024 ) return new \WP_Error( 'sf_size', __( 'Payload exceeds 4 MB.', 'atshift-deft' ), array( 'status' => 413 ) );
             if ( ! $request->is_json_content_type() ) return new \WP_Error( 'sf_json', __( 'Use application/json.', 'atshift-deft' ), array( 'status' => 415 ) );
@@ -161,6 +172,12 @@ add_action( 'rest_api_init', static function() {
             }
         } ),
     ) );
+    foreach ( array( 'trash' => 'trash', 'restore' => 'draft' ) as $action => $state ) {
+        register_rest_route( 'structured-fields/v1', '/articles/(?P<id>[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})/' . $action, array(
+            'methods' => 'POST', 'permission_callback' => __NAMESPACE__ . '\\permission',
+            'callback' => static function( $request ) use ( $state ) { return Drafts::request( $request, $state ); },
+        ) );
+    }
     register_rest_route( 'structured-fields/v1', '/articles/(?P<id>[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})', array(
         'methods' => 'GET', 'permission_callback' => __NAMESPACE__ . '\\permission', 'callback' => static function( $request ) {
             $version = $request->get_param( 'version' );
@@ -233,7 +250,7 @@ add_action( 'template_redirect', static function() {
 
 add_action( 'admin_menu', static function() {
     $cap = current_user_can( 'manage_options' ) ? 'manage_options' : 'sf_edit_drafts';
-    add_menu_page( 'atshift DEFT', 'atshift DEFT', $cap, 'structured-fields', __NAMESPACE__ . '\\admin_page', 'dashicons-layout', 25 );
+    add_menu_page( 'atshift DEFT', 'atshift DEFT', $cap, 'structured-fields', __NAMESPACE__ . '\\admin_page', 'dashicons-layout', 81 );
     add_submenu_page( 'structured-fields', __( 'Articles', 'atshift-deft' ), __( 'Articles', 'atshift-deft' ), $cap, 'structured-fields', __NAMESPACE__ . '\\admin_page' );
     add_submenu_page( 'structured-fields', __( 'Components', 'atshift-deft' ), __( 'Components', 'atshift-deft' ), $cap, 'structured-fields-catalog', __NAMESPACE__ . '\\catalog_page' );
     add_submenu_page( 'structured-fields', __( 'AI connections', 'atshift-deft' ), __( 'AI connections', 'atshift-deft' ), $cap, 'structured-fields-connections', __NAMESPACE__ . '\\connections_page' );
@@ -245,6 +262,12 @@ function admin_page() {
     if ( ! Access::workspace() ) return;
     $guide_copy = Onboarding::copy();
     $first_visit = Onboarding::first_visit();
+    $owner = wp_get_current_user();
+    $role_names = array();
+    foreach ( $owner->roles as $role ) {
+        $name = wp_roles()->roles[ $role ]['name'] ?? $role;
+        $role_names[] = translate_user_role( $name );
+    }
     ?>
     <div class="wrap" id="sf-workspace">
         <h1>atshift DEFT <small><?php echo esc_html( VERSION ); ?></small></h1>
@@ -266,8 +289,25 @@ function admin_page() {
             <button class="button" id="sf-media-sample"><?php esc_html_e( 'Media sample', 'atshift-deft' ); ?></button>
             <button class="button" id="sf-refresh" title="<?php esc_attr_e( 'Refresh articles', 'atshift-deft' ); ?>" aria-label="<?php esc_attr_e( 'Refresh articles', 'atshift-deft' ); ?>"><span class="dashicons dashicons-update" aria-hidden="true"></span></button>
         </div>
+        <p id="sf-drafts-help"><?php esc_html_e( 'This is a private workspace for preparing articles. Choose Posts, Pages or an available custom post type as the destination. Once published or scheduled, an article leaves this draft list and appears in its destination list. Cancelled, invalidated or failed reservations return here. Saved content and files are retained.', 'atshift-deft' ); ?></p>
         <p id="sf-status" role="status"><?php esc_html_e( 'Private drafts', 'atshift-deft' ); ?></p>
-        <div class="sf-layout"><nav id="sf-articles" aria-label="<?php esc_attr_e( 'Articles', 'atshift-deft' ); ?>"></nav><main>
+        <div class="sf-layout"><nav id="sf-draft-sidebar" aria-label="<?php esc_attr_e( 'Articles', 'atshift-deft' ); ?>">
+            <div id="sf-draft-owner">
+                <p><?php
+                    /* translators: %s: current WordPress user's display name. */
+                    echo esc_html( sprintf( __( 'Draft owner: %s', 'atshift-deft' ), $owner->display_name ) );
+                ?></p>
+                <p><?php
+                    /* translators: %s: translated WordPress role names. */
+                    echo esc_html( sprintf( __( 'WordPress role: %s', 'atshift-deft' ), implode( ', ', $role_names ) ) );
+                ?></p>
+            </div>
+            <div class="sf-draft-filters" role="group" aria-label="<?php esc_attr_e( 'Draft status', 'atshift-deft' ); ?>">
+                <button type="button" class="button" id="sf-drafts-tab" aria-pressed="true"><?php esc_html_e( 'Drafts', 'atshift-deft' ); ?></button>
+                <button type="button" class="button" id="sf-trash-tab" aria-pressed="false"><span class="dashicons dashicons-trash" aria-hidden="true"></span><?php esc_html_e( 'Trash', 'atshift-deft' ); ?></button>
+            </div>
+            <div id="sf-articles"></div>
+        </nav><main>
             <h2 id="sf-title"><?php esc_html_e( 'No article selected', 'atshift-deft' ); ?></h2>
             <p id="sf-version"></p>
             <p id="sf-behavior-status" role="status"></p>

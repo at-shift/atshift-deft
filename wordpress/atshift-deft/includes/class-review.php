@@ -121,6 +121,7 @@ final class Review {
         if ( '1' !== (string) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s,3)', $lock ) ) ) return new \WP_Error( 'sf_busy', __( 'Retry later.', 'atshift-deft' ), array( 'status' => 409 ) );
         try {
             $review = self::read( $id ); $state = self::state( $review );
+            if ( is_wp_error( $state ) ) return $state;
             $actor = 'revoked' === $decision ? $review['revoked_by'] : $review['approver'];
             if ( $state['state'] === $decision && (int) $actor === get_current_user_id() ) return $state;
             $from = 'revoked' === $decision ? 'approved' : 'pending';

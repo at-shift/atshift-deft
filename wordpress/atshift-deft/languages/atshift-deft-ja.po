@@ -260,3 +260,126 @@ msgstr "WordPressが選択したカテゴリーまたはタグを保持しませ
 #: includes/class-public-structure.php
 msgid "Public structure not found."
 msgstr "公開構造が見つかりません。"
+
+#: includes/plugin.php
+msgid "Draft status"
+msgstr "下書きの状態"
+
+#: includes/plugin.php
+msgid "Drafts"
+msgstr "下書き"
+
+#: includes/plugin.php
+msgid "Trash"
+msgstr "ゴミ箱"
+
+#: includes/class-drafts.php
+msgid "Use JSON within 2 KiB."
+msgstr "2 KiB以内のJSONを使用してください。"
+
+#: includes/class-drafts.php
+msgid "Supply the saved version and state version only."
+msgstr "保存版と状態のバージョンだけを指定してください。"
+
+#: includes/class-drafts.php
+msgid "Supply an article ID and integer saved/state versions."
+msgstr "記事IDと、保存版・状態の整数バージョンを指定してください。"
+
+#: includes/class-drafts.php
+msgid "The draft or trash state changed. Refresh the list before trying again."
+msgstr "下書きまたはゴミ箱の状態が変わりました。一覧を更新してから操作してください。"
+
+#: includes/class-drafts.php
+msgid "Cancel the publication reservation before moving this draft to Trash."
+msgstr "この下書きをゴミ箱に移動する前に、公開予約を取り消してください。"
+
+#: includes/class-drafts.php
+msgid "The draft state could not be saved."
+msgstr "下書きの状態を保存できませんでした。"
+
+#: includes/class-store.php
+msgid "Choose drafts or Trash."
+msgstr "下書きまたはゴミ箱を選択してください。"
+
+#: admin.js
+msgid "Trash is empty."
+msgstr "ゴミ箱は空です。"
+
+#: admin.js
+msgid "No saved drafts."
+msgstr "保存された下書きはありません。"
+
+#. translators: %s: draft title.
+#: admin.js
+#, javascript-format
+msgid "Restore %s"
+msgstr "「%s」を復元"
+
+#. translators: %s: draft title.
+#: admin.js
+#, javascript-format
+msgid "Move %s to Trash"
+msgstr "「%s」をゴミ箱に移動"
+
+#: admin.js
+msgid "Discard the unsaved changes?"
+msgstr "未保存の変更を破棄しますか？"
+
+#. translators: %s: draft title.
+#: admin.js
+#, javascript-format
+msgid "Move \"%s\" to Trash? You can restore it later. Published posts and shared components will not be deleted."
+msgstr "「%s」をゴミ箱に移動しますか？ 後から復元できます。公開済みの記事や共通部品は削除されません。"
+
+#: admin.js
+msgid "Draft restored. Not published."
+msgstr "下書きを復元しました。公開はしていません。"
+
+#: admin.js
+msgid "Draft moved to Trash."
+msgstr "下書きをゴミ箱に移動しました。"
+
+#. translators: %s: current WordPress user's display name.
+#: includes/plugin.php
+#, php-format
+msgid "Draft owner: %s"
+msgstr "下書きの所有者：%s"
+
+#. translators: %s: translated WordPress role names.
+#: includes/plugin.php
+#, php-format
+msgid "WordPress role: %s"
+msgstr "WordPressの権限グループ：%s"
+
+#: includes/plugin.php
+msgid "This is a private workspace for preparing articles. Choose Posts, Pages or an available custom post type as the destination. Once published or scheduled, an article leaves this draft list and appears in its destination list. Cancelled, invalidated or failed reservations return here. Saved content and files are retained."
+msgstr "ここは公開前の記事を準備するための非公開の下書き置き場です。公開先には、投稿・固定ページ・利用可能なカスタム投稿を選べます。公開または予約が確定すると、この下書き一覧から外れ、選択した投稿先の一覧に表示されます。予約を取り消した場合、内容変更で予約が無効になった場合、公開に失敗した場合は、この一覧に戻ります。保存した本文やファイルは削除されません。"
+
+#: includes/class-reservations.php
+msgid "Scheduled (DEFT)"
+msgstr "予約済み（DEFT）"
+
+#: includes/class-reservations.php
+msgid "Scheduled (DEFT) <span class=\"count\">(%s)</span>"
+msgid_plural "Scheduled (DEFT) <span class=\"count\">(%s)</span>"
+msgstr[0] "予約済み（DEFT）<span class=\"count\">(%s)</span>"
+
+#: includes/class-reservations.php
+msgid "Inactive DEFT reservation"
+msgstr "無効なDEFT予約"
+
+#: includes/class-reservations.php
+msgid "Manage reservation in DEFT"
+msgstr "DEFTで予約を管理"
+
+#: includes/class-reservations.php
+msgid "Could not create reservation post."
+msgstr "予約記事を作成できませんでした。"
+
+#: includes/class-reservations.php
+msgid "The reservation post could not be verified."
+msgstr "予約記事の状態を確認できませんでした。"
+
+#: includes/class-reservations.php
+msgid "Could not attach reservation post."
+msgstr "予約記事を関連付けられませんでした。"

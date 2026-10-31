@@ -50,6 +50,24 @@ final class Publications {
         return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE publication_id=%s', $table, $id ), ARRAY_A );
     }
 
+    public static function listing() {
+        if ( ! Access::workspace() ) return Access::denied();
+        global $wpdb;
+        $ids = $wpdb->get_col( $wpdb->prepare( 'SELECT article_id FROM %i WHERE owner_id=%d ORDER BY updated DESC,article_id ASC LIMIT 100', self::table(), get_current_user_id() ) );
+        $items = array();
+        foreach ( $ids as $id ) {
+            if ( ! Access::article( $id ) ) continue;
+            $state = self::state( $id );
+            $row = Store::read( $id );
+            if ( is_wp_error( $state ) || ! $row ) continue;
+            unset( $state['manifest'] );
+            $state['title'] = json_decode( $row['payload'] )->article->title;
+            $state['workspaceUrl'] = add_query_arg( array( 'page' => 'structured-fields', 'sf_article' => $id ), admin_url( 'admin.php' ) );
+            $items[] = $state;
+        }
+        return array( 'items' => $items, 'limit' => 100 );
+    }
+
     public static function schema() {
         return array( 'type' => 'object', 'additionalProperties' => false,
             'required' => array( 'articleId', 'expectedVersion', 'expectedPublicationVersion', 'requestId', 'timing', 'publishAt', 'timeZone' ),
@@ -128,6 +146,7 @@ final class Publications {
         if ( '1' !== (string) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s,3)', $lock ) ) ) return new \WP_Error( 'sf_busy', __( 'Retry later.', 'atshift-deft' ), array( 'status' => 409 ) );
         $run = false; $grant_lock = null;
         try {
+            if ( ! Access::article( $body->articleId ) ) return Access::denied();
             $old = self::read( $body->articleId );
             if ( $old && hash_equals( $old['request_id'], $body->requestId ) ) {
                 if ( ! hash_equals( $old['request_hash'], $hash ) ) return new \WP_Error( 'sf_request_reuse', __( 'A request ID cannot describe a different publication.', 'atshift-deft' ), array( 'status' => 409 ) );
@@ -157,13 +176,21 @@ final class Publications {
             if ( false === $ok ) throw new \RuntimeException( __( 'Publication request could not be stored.', 'atshift-deft' ) );
             if ( 1 !== $ok ) return new \WP_Error( 'sf_conflict', __( 'Publication changed during validation. Reload its status.', 'atshift-deft' ), array( 'status' => 409 ) );
             if ( $old ) wp_clear_scheduled_hook( self::HOOK, array( $old['article_id'], (int) $old['version'] ) );
+            if ( 'scheduled' === $body->timing ) $job = Reservations::reserve( $job, $row, $old );
+            elseif ( $old ) Reservations::hold( $old );
             $event = wp_schedule_single_event( $at, self::HOOK, array( $body->articleId, $job['version'] ), true );
             if ( is_wp_error( $event ) || ! $event ) {
                 $wpdb->update( self::table(), array( 'state' => 'blocked', 'error' => 'Scheduling failed. Nothing was published.' ), array( 'article_id' => $body->articleId, 'version' => $job['version'] ) );
                 throw new \RuntimeException( __( 'Scheduling failed. Nothing was published.', 'atshift-deft' ) );
             }
             $run = 'now' === $body->timing;
-        } catch ( \Throwable $e ) { return new \WP_Error( 'sf_publication', $e->getMessage(), array( 'status' => 400 ) ); }
+        } catch ( \Throwable $e ) {
+            if ( isset( $job ) ) {
+                self::mark( $job['article_id'], $job['version'], 'blocked', $e->getMessage() );
+                if ( ! $job['post_id'] && $old ) Reservations::hold( $old );
+            }
+            return new \WP_Error( 'sf_publication', $e->getMessage(), array( 'status' => 400 ) );
+        }
         finally {
             if ( $grant_lock ) $wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $grant_lock ) );
             $wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $lock ) );
@@ -184,6 +211,7 @@ final class Publications {
             if ( ! $job || (int) $job['version'] !== $body['expectedPublicationVersion'] || in_array( $job['state'], array( 'published', 'processing' ), true ) ) return new \WP_Error( 'sf_conflict', __( 'Publication is no longer cancellable at this version.', 'atshift-deft' ), array( 'status' => 409 ) );
             if ( false === $wpdb->update( self::table(), array( 'state' => 'cancelled', 'version' => (int) $job['version'] + 1, 'updated' => time() ), array( 'article_id' => $body['articleId'] ) ) ) return new \WP_Error( 'sf_storage', __( 'Cancellation failed.', 'atshift-deft' ), array( 'status' => 503 ) );
             wp_clear_scheduled_hook( self::HOOK, array( $job['article_id'], (int) $job['version'] ) );
+            Reservations::hold( self::read( $body['articleId'] ) );
             return self::state( $body['articleId'] );
         } finally { $wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $lock ) ); }
     }
@@ -245,7 +273,8 @@ final class Publications {
             }
             // Recheck object-specific capability filters after WordPress creates the draft.
             // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception, JSON-encoded or escaped by callers.
-            if ( ! self::matches_post( $job, get_post( (int) $job['post_id'] ) ) || ! PostTypes::can_publish_post( get_post( (int) $job['post_id'] ) ) ) throw new \RuntimeException( __( 'The publication post no longer matches its destination or owner.', 'atshift-deft' ) );
+            if ( ! self::matches_post( $job, get_post( (int) $job['post_id'] ) ) || ! Reservations::write( static fn() => PostTypes::can_publish_post( get_post( (int) $job['post_id'] ) ) ) ) throw new \RuntimeException( __( 'The publication post no longer matches its destination or owner.', 'atshift-deft' ) );
+            if ( false === $wpdb->update( self::table(), array( 'files' => wp_json_encode( $files ) ), array( 'article_id' => $id, 'version' => $version ) ) ) throw new \RuntimeException( __( 'Could not attach publication post.', 'atshift-deft' ) );
             if ( $pinned_terms ) {
                 // Assign terms while private, and roll back publication if WordPress changes the selection.
                 foreach ( array( self::table(), $wpdb->posts, $wpdb->postmeta, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships ) as $table ) {
@@ -255,11 +284,12 @@ final class Publications {
                 Taxonomies::apply( (int) $job['post_id'], $job['post_type'], $pinned_terms );
             }
             // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text error, JSON-encoded or escaped by callers.
-            if ( ! PostTypes::can_publish_post( get_post( (int) $job['post_id'] ) ) ) throw new \RuntimeException( __( 'The publication destination is no longer available or permitted. Nothing was published.', 'atshift-deft' ) );
-            $post = wp_update_post( array( 'ID' => (int) $job['post_id'], 'post_status' => 'publish',
+            if ( ! Reservations::write( static fn() => PostTypes::can_publish_post( get_post( (int) $job['post_id'] ) ) ) ) throw new \RuntimeException( __( 'The publication destination is no longer available or permitted. Nothing was published.', 'atshift-deft' ) );
+            $post = Reservations::write( static fn() => wp_update_post( array( 'ID' => (int) $job['post_id'], 'post_status' => 'publish',
+                'post_content' => wp_slash( $html ),
                 'post_title' => wp_slash( Snapshot::post_title( $validated['snapshot']->article->title ) ),
                 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', (int) $job['publish_at'] ),
-                'post_date' => wp_date( 'Y-m-d H:i:s', (int) $job['publish_at'], wp_timezone() ) ), true );
+                'post_date' => wp_date( 'Y-m-d H:i:s', (int) $job['publish_at'], wp_timezone() ) ), true ) );
             if ( is_wp_error( $post ) || ! self::matches_post( $job, get_post( (int) $job['post_id'] ), true ) ) throw new \RuntimeException( __( 'WordPress did not publish the post.', 'atshift-deft' ) );
             if ( $pinned_terms ) Taxonomies::verify( (int) $job['post_id'], $pinned_terms );
             self::mark( $id, $version, 'published' );
@@ -281,7 +311,10 @@ final class Publications {
     }
 
     private static function mark( $id, $version, $state, $error = '' ) {
-        global $wpdb; return $wpdb->update( self::table(), array( 'state' => $state, 'error' => substr( $error, 0, 255 ), 'updated' => time() ), array( 'article_id' => $id, 'version' => $version ) );
+        global $wpdb;
+        $result = $wpdb->update( self::table(), array( 'state' => $state, 'error' => substr( $error, 0, 255 ), 'updated' => time() ), array( 'article_id' => $id, 'version' => $version ) );
+        if ( false !== $result && in_array( $state, array( 'blocked', 'cancelled' ), true ) ) Reservations::hold( self::read( $id ) );
+        return $result;
     }
 
     private static function manifest( $row, $post_type, $include_destination = true, $selection = null ) {
@@ -303,7 +336,11 @@ final class Publications {
         global $wpdb; $table = self::table();
         $rows = $wpdb->get_results( $wpdb->prepare( "SELECT article_id,version FROM %i WHERE connection_id=%s AND state='scheduled'", $table, $id ), ARRAY_A );
         $wpdb->query( $wpdb->prepare( "UPDATE %i SET state='cancelled',version=version+1,updated=%d WHERE connection_id=%s AND state='scheduled'", $table, time(), $id ) );
-        foreach ( $rows as $row ) wp_clear_scheduled_hook( self::HOOK, array( $row['article_id'], (int) $row['version'] ) );
+        foreach ( $rows as $row ) {
+            wp_clear_scheduled_hook( self::HOOK, array( $row['article_id'], (int) $row['version'] ) );
+            $current = self::read( $row['article_id'] );
+            if ( $current && 'cancelled' === $current['state'] ) Reservations::hold( $current );
+        }
     }
 
     public static function assets() {

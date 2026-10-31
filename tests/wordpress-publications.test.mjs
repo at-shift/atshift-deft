@@ -51,8 +51,8 @@ test("publishing is explicit; old keys and other roles cannot gain it",async()=>
   assert.equal(pubKey.publishing,true); assert.notEqual(pubKey.endpoint,draftKey.endpoint);
   assert.equal((await fetch(pubKey.endpoint,{headers:{Authorization:`Bearer ${draftKey.token}`}})).status,401);
   assert.equal((await fetch(draftKey.endpoint,{headers:{Authorization:`Bearer ${pubKey.token}`}})).status,401);
-  draftClient=await connect(draftKey);assert.equal((await draftClient.listTools()).tools.length,11);
-  client=await connect(pubKey);assert.equal((await client.listTools()).tools.length,14);
+  draftClient=await connect(draftKey);assert.ok(!(await draftClient.listTools()).tools.some(t=>t.name==='structured-fields-set-publication'));
+  client=await connect(pubKey);assert.ok((await client.listTools()).tools.some(t=>t.name==='structured-fields-list-publications'));
   const context=await good("context",{conversationLanguage:"ja"});assert.equal(context.capabilities.publish,true);assert.equal(context.language.replyLanguage,"ja");
   assert.match(context.publication.instructions,/user chooses; the AI sets/);
   assert.equal((await call(client,"get-publication",{articleId:data.users[1].id})).raw.isError,true);
@@ -65,11 +65,11 @@ test("schedule remains private, exact retries are idempotent, version conflicts 
   await good("save-draft",proposal);
   const body=intent(data.race,1,0);schedule=await json(await a.api("publications",body));
   assert.equal(schedule.authorizationMethod,"wordpress-session");
-  assert.equal(schedule.state,"scheduled");assert.equal(schedule.postId,0);assert.equal(schedule.humanPresenceVerified,false);
+  assert.equal(schedule.state,"scheduled");assert.ok(schedule.postId>0);assert.equal(schedule.url,null);assert.equal(schedule.humanPresenceVerified,false);
   assert.deepEqual(await good("set-publication",body),schedule);
   assert.equal((await call(client,"set-publication",{...body,publishAt:time().replace(/T\d\d:/,"T00:")})).raw.isError,true);
   assert.equal((await call(client,"set-publication",intent(data.race,1,0))).raw.isError,true);
-  fixture("publication-run",data.race);assert.equal((await good("get-publication",{articleId:data.race})).postId,0);
+  fixture("publication-run",data.race);assert.equal((await good("get-publication",{articleId:data.race})).state,"scheduled");
   const cancelled=await good("cancel-publication",{articleId:data.race,expectedPublicationVersion:1});assert.equal(cancelled.state,"cancelled");assert.equal(cancelled.version,2);
   fixture("publication-run",data.race,1);assert.equal((await good("get-publication",{articleId:data.race})).state,"cancelled");
   assert.equal((await call(client,"cancel-publication",{articleId:data.race,expectedPublicationVersion:1})).raw.isError,true);
@@ -83,7 +83,7 @@ test("saved changes invalidate reservations; stale workers cannot publish a repl
   schedule=await json(await a.api("publications",intent(data.race,2,3)));assert.equal(schedule.version,4);
   assert.equal(schedule.authorizationMethod,"wordpress-session");
   fixture("publication-due",data.race);fixture("publication-run",data.race,3);
-  assert.equal((await good("get-publication",{articleId:data.race})).postId,0);
+  assert.equal((await good("get-publication",{articleId:data.race})).state,"overdue");
   fixture("publication-run",data.race,4);
   const published=await good("get-publication",{articleId:data.race});assert.equal(published.state,"published");assert.ok(published.postId);
   fixture("publication-run",data.race,4);assert.equal((await good("get-publication",{articleId:data.race})).postId,published.postId);
@@ -159,7 +159,7 @@ test("capability loss blocks due jobs and revoked connections cancel pending res
   await json(await a.api(`connections/${pubKey.id}/revoke`,{}));
   assert.equal((await json(await a.api(`publications/${data.dbRace}`))).state,"cancelled");
   fixture("publication-due",data.dbRace);fixture("publication-run",data.dbRace);
-  assert.equal((await json(await a.api(`publications/${data.dbRace}`))).postId,0);
+  assert.equal((await json(await a.api(`publications/${data.dbRace}`))).state,"cancelled");
 });
 test("expiry prevents new calls but does not silently cancel an authorized reservation",async()=>{
   pubKey=await json(await a.api("connections",{name:"Expiry reservation",publishing:true}));client=await connect(pubKey);

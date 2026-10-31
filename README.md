@@ -69,6 +69,8 @@ that support them; the AI confirms the selection with you and does not create te
 Grant publication access only to a trusted connection: it can publish **without another WordPress approval**. Keep keys in secure client settings, never chat. Initial publication only is supported; later draft saves do not update a published post.
 The sample walkthrough remains draft-only. For role requirements, OAuth setup and troubleshooting, see [Publish Now or Schedule](docs/GETTING-STARTED.md#7-publish-now-or-schedule).
 
+DEFT appears below **Settings** in the WordPress menu. Its draft workspace shows the current owner and WordPress role. Once an article is published or scheduled, it leaves the DEFT draft list and appears in the selected destination's list. Scheduled entries are marked **Scheduled (DEFT)** and stay private until DEFT rechecks authorization at the requested time. Use **Manage reservation in DEFT** or ask your AI to change or cancel the reservation; cancelled, invalidated and failed reservations return to drafts. Saved versions and files are retained.
+
 See the [Installation and User Guide](docs/GETTING-STARTED.md) for detailed steps and [AI Client Connection Routes](wordpress/atshift-deft/docs/CONNECTIONS.md) for client-specific setup.
 A [Japanese user guide](wordpress/atshift-deft/GETTING-STARTED.ja.md) is also available.
 
@@ -80,6 +82,7 @@ Choose the destination separately for every article. See [Publication Destinatio
 - **Compose pages and columns.** Ask for section order, image-and-text columns, stacked content and Q&A layouts, with an optional design reference image. Supported columns stack on narrow screens; styling stays in DEFT rather than theme Additional CSS.
 - **Reuse before creating.** Search the shared component catalog first; add a permitted structure only when existing components are insufficient. Choose presentation variants such as visible or expandable Q&A answers.
 - **Save and resume drafts.** Store articles under their WordPress owner and check version numbers to prevent stale updates.
+- **Trash and restore drafts.** Ask your AI to move an unwanted draft to Trash, or use the trash icon beside it in DEFT. Switch to Trash and use Restore to recover it. Only the owner can do this. Cancel any publication reservation first. Trashing preserves saved versions and files; it does not delete published posts or shared components, and does not reclaim storage.
 - **Use images and PDFs.** Store selected files privately and bind them to a saved article version. Supported existing WordPress media can also be reused.
 - **Review previews, not editing controls.** Use a portable HTML preview or an owner-only preview with the site's actual theme. Make small manual edits when needed.
 - **Publish immediately or schedule.** Let the AI set your requested time through a connection explicitly authorized for publication.

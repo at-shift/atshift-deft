@@ -16,13 +16,16 @@ function sf_guidance_render( $callback ) {
 }
 
 $original_user = get_current_user_id();
-$author = wp_insert_user( array( 'user_login' => 'guidance-' . wp_generate_uuid4(), 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author' ) );
+$author = wp_insert_user( array( 'user_login' => 'guidance-' . wp_generate_uuid4(), 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author', 'display_name' => 'Owner & QA' ) );
 if ( is_wp_error( $author ) ) throw new RuntimeException( 'Could not create guidance fixture.' );
 try {
     wp_set_current_user( $author );
     $before = get_userdata( $author )->allcaps;
     $html = sf_guidance_render( 'StructuredFields\\admin_page' );
     $dom = new DOMDocument(); @$dom->loadHTML( $html ); $xpath = new DOMXPath( $dom );
+    sf_guidance_check( 1 === $xpath->query( '//div[@id="sf-draft-owner"]' )->length && str_contains( $html, 'Draft owner: Owner &amp; QA' ), 'The current draft owner is visible and escaped.' );
+    sf_guidance_check( str_contains( $html, 'WordPress role: atshift DEFT author' ), 'The current owner role is shown without changing capabilities.' );
+    sf_guidance_check( 1 === $xpath->query( '//p[@id="sf-drafts-help"]' )->length && str_contains( $html, 'Once published or scheduled' ) && str_contains( $html, 'Saved content and files are retained.' ), 'Persistent guidance explains destinations and data retention.' );
     sf_guidance_check( 1 === $xpath->query( '//details[@id="sf-publication-help"]/summary' )->length, 'Articles exposes a collapsed publication guide.' );
     sf_guidance_check( 4 === $xpath->query( '//details[@id="sf-publication-help"]/ol/li' )->length, 'The guide gives four ordered steps.' );
     sf_guidance_check( 1 === $xpath->query( '//details[@id="sf-publication-help"]//a[contains(@href,"page=structured-fields-connections")]' )->length, 'Articles links directly to connection setup.' );
@@ -46,6 +49,9 @@ try {
     $japanese = sf_guidance_render( array( Onboarding::class, 'publication_help' ) );
     sf_guidance_check( str_contains( $japanese, '公開・予約の手順' ) && str_contains( $japanese, '自分の下書きの即時公開・予約公開を許可' ), 'Japanese guide and option label match.' );
     sf_guidance_check( str_contains( $japanese, '公開後の下書き編集は公開記事に反映されません' ), 'Japanese copy includes the publication limit.' );
+    $japanese_workspace = sf_guidance_render( 'StructuredFields\\admin_page' );
+    sf_guidance_check( str_contains( $japanese_workspace, '下書きの所有者：Owner &amp; QA' ) && str_contains( $japanese_workspace, 'WordPressの権限グループ：' ), 'Japanese owner and role labels are translated and escaped.' );
+    sf_guidance_check( str_contains( $japanese_workspace, '公開または予約が確定すると' ) && str_contains( $japanese_workspace, '保存した本文やファイルは削除されません。' ), 'Japanese lifecycle guidance explains reservations and retention.' );
     echo wp_json_encode( array( 'guidance_checks' => $GLOBALS['sf_guidance_checks'] ) );
 } finally {
     unload_textdomain( 'atshift-deft', true );

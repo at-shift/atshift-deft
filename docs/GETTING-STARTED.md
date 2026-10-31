@@ -164,6 +164,12 @@ Open **Articles > Edit article** to edit values, reorder/remove components, or c
 
 To try saving without AI, choose **New article**, enter a **Title**, add **Introduction** using the **+** button, fill **Heading** and **Body**, and save. Reload and select the article to verify that it was retained. DEFT drafts are separate from the standard WordPress **Posts** list and are not public.
 
+### Trash and Restore
+
+Ask your AI to move a specific draft to Trash, or use the trash icon beside its title in **Articles > Drafts** and confirm. Use **Articles > Trash > Restore** (the undo icon), or ask your AI to restore it. Other accounts, including administrators, cannot trash or restore your drafts. Cancel any active or blocked publication reservation first using an authorized publishing connection or the reservation control.
+
+Trashing hides all private saved versions, previews and file access. It preserves the data for recovery and does not remove published posts, shared components or media from the WordPress library. Restore returns the same draft, not a new article, and never publishes or reschedules it. There is no automatic purge or permanent deletion; Trash does not reclaim storage. Refresh and review the latest state if another tab or AI has changed the draft.
+
 ## 7. Publish Now or Schedule
 
 **Save draft** and **Review** do not publish. You publish by asking your AI, not by
@@ -215,7 +221,9 @@ terms appear in **Articles > Publication**. Renaming, deleting or moving a selec
 term in its hierarchy, detaching a taxonomy or losing permissions stops a pending
 reservation. Reconfirm the latest selection before rescheduling.
 
-Reservations wait inside DEFT and create a WordPress entry in the selected destination when executed. Older API requests without a destination retain the ordinary-post default for compatibility; the AI guide must not use that default to skip asking. WP-Cron may run late on low-traffic sites; use a server cron job when timing matters. Updating an already-published post is not implemented: a later **Save draft** does not update its public content.
+Scheduling creates a private **Scheduled (DEFT)** entry in the selected destination's WordPress list immediately. The article leaves the DEFT draft list, while its saved versions and private files remain intact. The destination entry holds the title, date and classification; its body and media become public only after DEFT's checks at the requested time. It does not use WordPress's independent future-post publisher. Use **Manage reservation in DEFT** in the destination list, or ask your AI to use `list-publications` and then the appropriate publication tools. WordPress list visibility still requires the native capabilities for that destination; DEFT does not grant them automatically. Cancelled, invalidated and failed reservations return to DEFT drafts. Successfully published articles stay in the destination list. Legacy reservations without destination entries remain visible in DEFT until rescheduled or executed.
+
+Older API requests without a destination retain the ordinary-post default for compatibility; the AI guide must not use that default to skip asking. WP-Cron may run late on low-traffic sites; use a server cron job when timing matters. Updating an already-published post is not implemented: a later **Save draft** does not update its public content.
 Published managed files are served from pinned private copies, not automatically added to the normal Media Library. Deactivation stops reservations, managed-file delivery, and styles.
 
 ### Public Machine-Readable Content

@@ -119,7 +119,7 @@ sft_check( 'published' === $limit_result['state'] && 100 === array_sum( array_ma
 for ( $i = 0; $i < 6; ++$i ) unregister_taxonomy( 'sf_limit_' . $i );
 $d = sft_draft(); $reserved = sft_call( 'set-publication', sft_intent( $d, sft_select( 'sf_event_topic', array( $event ) ), 'sf_test_event', false ) );
 $replaced = sft_call( 'set-publication', sft_intent( $d, sft_select( 'sf_event_topic', array( $other ) ), 'sf_test_event', false, 1 ) );
-Publications::run( $d['articleId'], 1 ); sft_check( 0 === Publications::state( $d['articleId'] )['postId'], 'Old reservation worker cannot publish replaced terms.' );
+Publications::run( $d['articleId'], 1 ); sft_check( in_array( Publications::state( $d['articleId'] )['state'], array( 'scheduled', 'overdue' ), true ) && 'sf_reserved' === get_post_status( Publications::state( $d['articleId'] )['postId'] ), 'Old reservation worker cannot publish replaced terms.' );
 $replaced = sft_due( $d['articleId'] );
 sft_check( 'published' === $replaced['state'] && array( $other ) === sft_ids( $replaced['postId'], 'sf_event_topic' ), 'Rescheduling uses only the new selected terms.' );
 foreach ( array( 'delete', 'rename', 'slug', 'parent', 'detached', 'unregistered', 'private', 'capability' ) as $case ) {
@@ -134,7 +134,7 @@ foreach ( array( 'delete', 'rename', 'slug', 'parent', 'detached', 'unregistered
     elseif ( 'private' === $case ) get_taxonomy( 'sf_event_topic' )->public = false;
     else { $actor->remove_cap( 'assign_sf_event_terms' ); wp_set_current_user( 0 ); sft_connect( $keys['publish'] ); }
     $state = sft_due( $d['articleId'] );
-    sft_check( 'blocked' === $state['state'] && 0 === $state['postId'], 'Changed taxonomy blocks due job without silently dropping selection: ' . $case );
+    sft_check( 'blocked' === $state['state'] && 'publish' !== get_post_status( $state['postId'] ), 'Changed taxonomy blocks due job without silently dropping selection: ' . $case );
     sf_test_register_taxonomies(); $actor->add_cap( 'assign_sf_event_terms' ); wp_set_current_user( 0 ); sft_connect( $keys['publish'] );
 }
 $d = sft_draft(); sft_call( 'set-publication', sft_intent( $d, sft_select( 'post_tag', array( $tag ) ), 'post', false ) );

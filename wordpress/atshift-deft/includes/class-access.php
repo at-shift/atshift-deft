@@ -59,6 +59,10 @@ final class Access {
     }
 
     public static function article( $id, $user_id = null ) {
+        return self::owns_article( $id, $user_id ) && 'draft' === Drafts::state( $id )['draftState'];
+    }
+
+    public static function owns_article( $id, $user_id = null ) {
         $user_id = $user_id ?? get_current_user_id();
         return self::workspace( $user_id ) && self::owner( $id ) === (int) $user_id;
     }

@@ -30,7 +30,8 @@
     busy = false,
     composeMode = false,
     behaviors = [],
-    publication = null;
+    publication = null,
+    listState = new URLSearchParams(location.search).get("sf_state") === "trash" ? "trash" : "draft";
   let mediaItems = [],
     mediaPage = 0,
     mediaPages = 0,
@@ -71,6 +72,9 @@
     return data;
   }
   function paint() {
+    for (const button of $("draft-sidebar").querySelectorAll("button")) button.disabled = busy;
+    $("drafts-tab").setAttribute("aria-pressed", String(listState === "draft"));
+    $("trash-tab").setAttribute("aria-pressed", String(listState === "trash"));
     const currentPublication = publication?.articleId === base?.articleId ? publication : null;
     $("publication").hidden = !currentPublication;
     $("publication-status").textContent = currentPublication ? /* translators: 1: currentPublication.state; 2: currentPublication.publishAt ? ` · ${new Date(currentPublication.publishAt).toLocaleString(config.locale, {tim; 3: currentPublication.error ? ` · ${currentPublication.error}` : "". */ sprintf(__("Publication: %1$s%2$s%3$s", "atshift-deft"), currentPublication.state, currentPublication.publishAt ? ` · ${new Date(currentPublication.publishAt).toLocaleString(config.locale, {timeZone: /^[+-]/.test(currentPublication.timeZone) ? "UTC" : currentPublication.timeZone})} (${/^[+-]/.test(currentPublication.timeZone) ? "UTC" : currentPublication.timeZone})` : "", currentPublication.error ? ` · ${currentPublication.error}` : "") : "";
@@ -515,19 +519,59 @@
     status(__("Saved draft loaded.", "atshift-deft"));
   }
   async function list() {
-    const articles = await request("articles");
+    const articles = await request("articles", null, {state: listState});
     $("articles").replaceChildren();
+    if (!articles.length) {
+      const empty = document.createElement("p");
+      empty.textContent = listState === "trash" ? __("Trash is empty.", "atshift-deft") : __("No saved drafts.", "atshift-deft");
+      $("articles").append(empty);
+    }
     for (const item of articles) {
-      const button = document.createElement("button");
-      button.type = "button";
+      const row = document.createElement("div");
+      row.className = "sf-draft-row";
+      const inTrash = item.draftState === "trash";
+      const button = document.createElement(inTrash ? "span" : "button");
+      if (!inTrash) button.type = "button";
+      button.className = "sf-draft-title";
       button.textContent = /* translators: 1: item.title; 2: item.version. */ sprintf(__("%1$s · v%2$s", "atshift-deft"), item.title, item.version);
-      button.onclick = () =>
+      if (!inTrash) button.onclick = () =>
         action(async () => {
           if (candidate && !saved && !confirm(__("Discard the unsaved import?", "atshift-deft")))
             return;
           await openArticle(item.articleId);
         });
-      $("articles").append(button);
+      const control = document.createElement("button");
+      control.type = "button";
+      control.className = "button sf-draft-action";
+      // translators: %s: draft title.
+      const restoreLabel = sprintf(__("Restore %s", "atshift-deft"), item.title);
+      // translators: %s: draft title.
+      const trashLabel = sprintf(__("Move %s to Trash", "atshift-deft"), item.title);
+      control.title = inTrash ? restoreLabel : trashLabel;
+      control.setAttribute("aria-label", control.title);
+      const icon = document.createElement("span");
+      icon.className = `dashicons dashicons-${inTrash ? "undo" : "trash"}`;
+      icon.setAttribute("aria-hidden", "true");
+      control.append(icon);
+      control.onclick = () => action(async () => {
+        const selected = base?.articleId === item.articleId;
+        if (selected && candidate && !saved && !confirm(__("Discard the unsaved changes?", "atshift-deft"))) return;
+        // translators: %s: draft title.
+        if (!inTrash && !confirm(sprintf(__("Move \"%s\" to Trash? You can restore it later. Published posts and shared components will not be deleted.", "atshift-deft"), item.title))) return;
+        await request(`articles/${encodeURIComponent(item.articleId)}/${inTrash ? "restore" : "trash"}`, {
+          expectedVersion: item.version, expectedStateVersion: item.stateVersion,
+        });
+        if (selected) {
+          candidate = saved = base = assets = publication = null;
+          expected = 0;
+          $("asset-list").replaceChildren();
+        }
+        await list();
+        status(inTrash ? __("Draft restored. Not published.", "atshift-deft") : __("Draft moved to Trash.", "atshift-deft"));
+        requestAnimationFrame(() => (inTrash ? $("trash-tab") : $("drafts-tab")).focus());
+      });
+      row.append(button, control);
+      $("articles").append(row);
     }
   }
   async function stage(value, fresh = false) {
@@ -759,6 +803,7 @@
       candidate = saved.snapshot;
       expected = saved.version;
       status(__("Draft saved. Not published.", "atshift-deft"));
+      listState = "draft";
       await list();
       await catalog();
       await loadAssets();
@@ -769,6 +814,9 @@
       await list();
       await loadAssets();
     });
+  for (const [id, state] of [["drafts-tab", "draft"], ["trash-tab", "trash"]]) {
+    $(id).onclick = () => action(async () => { listState = state; await list(); });
+  }
   $("upload-button").onclick = () => $("upload").click();
   $("upload").onchange = (event) => {
     const files = [...event.target.files];

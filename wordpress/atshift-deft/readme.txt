@@ -78,6 +78,22 @@ Back up before upgrading and review the documented permission boundaries.
 No. Existing drafts remain private. Immediate or scheduled publication requires
 the owning user's publishing authorization through the supported connection.
 
+= Can I delete a saved draft? =
+
+Published and scheduled articles leave the DEFT draft list and appear in their
+selected destination. Scheduled entries are marked Scheduled (DEFT) and remain
+private until DEFT's authorization checks pass at the requested time. Cancelled,
+invalidated and failed reservations return to drafts. Saved versions and files
+are retained. Ask your AI to find reservations with list-publications or use
+Manage reservation in DEFT from the destination list.
+
+Ask your AI to move the draft to Trash, or select the trash icon in DEFT's
+draft list. Restore it from the Trash view using the undo icon or your AI.
+Only the owner can trash or restore it. Cancel any publication reservation first.
+Saved versions and files are retained; published posts and shared components
+are not deleted. Restore does not publish or reschedule. There is no permanent
+deletion or automatic purge, and Trash does not reclaim storage.
+
 = Can my AI decorate components without editing my theme? =
 
 Yes. An authorized authoring connection can reuse or create shared structures with

@@ -131,10 +131,10 @@ foreach ( array( 'post', 'page', 'sf_test_event' ) as $type ) {
 }
 
 $d = sfpt_draft(); $body = sfpt_intent( $d, 'page' ); $state = sfpt_call( 'set-publication', $body );
-sfpt_check( 'scheduled' === $state['state'] && 0 === $state['postId'], 'Selecting a future destination creates no public post.' );
+sfpt_check( 'scheduled' === $state['state'] && $state['postId'] > 0 && 'sf_reserved' === get_post_status( $state['postId'] ) && ! is_post_publicly_viewable( $state['postId'] ), 'Selecting a future destination creates a private reservation.' );
 $replacement = sfpt_call( 'set-publication', sfpt_intent( $d, 'sf_test_event', 1 ) );
 sfpt_check( 'sf_test_event' === $replacement['postType'] && 2 === $replacement['version'], 'A fresh request can change destination before publication.' );
-sfpt_check( 0 === sfpt_due( $d['articleId'], 1 )['postId'], 'Old scheduled worker cannot publish replaced destination.' );
+sfpt_check( 'overdue' === sfpt_due( $d['articleId'], 1 )['state'] && 'sf_reserved' === get_post_status( $replacement['postId'] ), 'Old scheduled worker cannot publish replaced destination.' );
 sfpt_check( 'sf_test_event' === get_post_type( sfpt_due( $d['articleId'], 2 )['postId'] ), 'Current scheduled worker publishes only the selected destination.' );
 
 foreach ( array( 'unregistered', 'nonpublic', 'noeditor', 'permission' ) as $case ) {
@@ -144,7 +144,7 @@ foreach ( array( 'unregistered', 'nonpublic', 'noeditor', 'permission' ) as $cas
     elseif ( 'noeditor' === $case ) remove_post_type_support( 'sf_test_event', 'editor' );
     else { $actor->remove_cap( 'publish_sf_test_events' ); wp_set_current_user( 0 ); sfpt_connect( $pub_key ); }
     $state = sfpt_due( $d['articleId'] );
-    sfpt_check( 'blocked' === $state['state'] && 0 === $state['postId'] && 'sf_test_event' === $state['postType'], 'Due jobs block without fallback after destination change: ' . $case );
+    sfpt_check( 'blocked' === $state['state'] && 'publish' !== get_post_status( $state['postId'] ) && 'sf_test_event' === $state['postType'], 'Due jobs block without fallback after destination change: ' . $case );
     sf_test_register_post_types(); $actor->add_cap( 'publish_sf_test_events' ); wp_set_current_user( 0 ); sfpt_connect( $pub_key );
 }
 $d = sfpt_draft(); $old = sfpt_intent( $d ); unset( $old['postType'] ); $scheduled = sfpt_call( 'set-publication', $old );
