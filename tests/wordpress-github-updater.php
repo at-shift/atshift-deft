@@ -1,5 +1,5 @@
 <?php
-// WP-CLI eval-file, after installing a disposable 0.5.9 fixture or released 0.6.0/0.7.0 GitHub package.
+// WP-CLI eval-file, after installing a disposable 0.5.9 fixture or released 0.6.0/0.7.0/0.7.1 GitHub package.
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:appearance|post_types)_[a-f0-9]+$/D', DB_NAME ) ) {
     throw new RuntimeException( 'Use a disposable local release-test database.' );
 }
@@ -11,7 +11,7 @@ $zip = file_get_contents( $artifact . '/atshift-deft-' . $manifest['version'] . 
 $file = 'atshift-deft/atshift-deft.php';
 $entry = WP_PLUGIN_DIR . '/' . $file;
 $header = get_plugin_data( $entry, false, false );
-if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0', '0.7.0' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
+if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0', '0.7.0', '0.7.1' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
 $GLOBALS['deft_update_checks'] = 0;
 function deft_update_check( $ok, $message ) {
     if ( ! $ok ) throw new RuntimeException( $message );

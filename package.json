@@ -1,6 +1,6 @@
 {
   "name": "atshift-deft",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -28,7 +28,7 @@
     "test:wordpress-behaviors": "php tests/wordpress-behaviors.php",
     "test:wordpress-onboarding": "php tests/wordpress-onboarding.php",
     "test:wordpress-mcp": "php tests/wordpress-connections.php && node --test tests/wordpress-mcp.test.mjs",
-    "test:connection-profiles": "node --test tests/connection-profiles.test.mjs",
+    "test:connection-profiles": "node --test tests/connection-profiles.test.mjs tests/mcp-adapter-guidance.test.mjs",
     "test:wordpress-publications": "php tests/wordpress-publications.php && node --test tests/wordpress-publications.test.mjs",
     "test:wordpress-security": "php tests/wordpress-security.php",
     "test:wordpress-quotas": "php tests/wordpress-quotas.php && php tests/wordpress-catalog-upgrade.php && node --test tests/wordpress-quotas-http.test.mjs",

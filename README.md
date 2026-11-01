@@ -14,14 +14,14 @@ Work with your AI on the article, ask it to create the page design and column la
 
 DEFT stands for **Delegate Execution. Focus on Thinking.**
 
-Version **0.7.1** adds recoverable drafts, owner information and private reservations in destination lists, alongside per-article destinations, categories/tags and public structure JSON with JSON-LD. Start on an isolated test site with a backup.
+Version **0.7.2** adds the missing installation and activation steps for the official MCP Adapter before AI connection setup. MCP Adapter 0.7.1+ must be installed and active for AI connections. Start on an isolated test site with a backup.
 
 ## Getting Started
 
 ### STEP 1. Install the Plugin
 
-[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.1/atshift-deft-0.7.1.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
-You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.1). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.2/atshift-deft-0.7.2.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.2). GitHub's **Download ZIP** contains source code, not the installable plugin package.
 Upgrading from 0.5.x requires this ZIP replacement once. GitHub packages from 0.6.0 onward receive later official releases through the normal WordPress plugin update screen. Automatic updates remain your choice.
 
 ### STEP 2. Give the Guide to Your AI
@@ -31,12 +31,17 @@ After upgrading, download a fresh guide using the same button in **Articles** an
 
 > Read this guide and walk me through connecting to my site.
 
-### STEP 3. Follow the Connection Instructions
+### STEP 3. Install MCP Adapter Before Connecting
+
+AI connections require the official [MCP Adapter plugin](https://wordpress.org/plugins/mcp-adapter/), **version 0.7.1 or newer**. In WordPress, an administrator opens **Plugins > Add New Plugin**, searches for **MCP Adapter** by **WordPress.org**, then chooses **Install Now > Activate**.
+If it is already installed, update it if needed and make sure it is active. Ask your site administrator to do this if you cannot install or activate plugins. This is not required for the separate manual JSON import workflow.
+
+### STEP 4. Follow the Connection Instructions
 
 Configure your AI client as guided, then use your own WordPress account to grant only the access you need. Continue once the AI has verified a real connection.
-Your site administrator must activate the official **WordPress MCP Adapter 0.7.1+**. Available connection methods depend on the AI client. Never paste passwords or connection keys into chat.
+With MCP Adapter active, open **atshift DEFT > AI connections**. Available connection methods depend on the AI client. Never paste passwords or connection keys into chat.
 
-### STEP 4. Try the Sample or Start Your Article
+### STEP 5. Try the Sample or Start Your Article
 
 The guide includes an optional sample for trying draft saving and previews without preparing any materials. You can skip it.
 Tell the AI who your article is for and what you want to communicate. Add supporting documents or a layout reference image when useful.
@@ -48,7 +53,7 @@ DEFT supports **reusable component appearance**: an authorized AI can register b
 
 For example, add "Keep the look of my current theme" or "Use a two-column layout inspired by this image." Check the theme-based result in the owner-only WordPress preview; portable previews omit theme styles. This does not automatically change your theme or promise an exact design copy.
 
-### STEP 5. Review and Choose Where and When to Publish
+### STEP 6. Review and Choose Where and When to Publish
 
 **Saving a draft or approving Review does not publish it.** Check the preview, then:
 
@@ -111,7 +116,7 @@ Cloud-hosted AI clients need an externally reachable HTTPS site; they cannot rea
 | WordPress | 6.9 or later |
 | PHP | 8.2 or later, with DOM, mbstring, OpenSSL, and Sodium |
 | Database | MySQL / MariaDB with InnoDB and named-lock support |
-| AI connection | Official WordPress MCP Adapter 0.7.1+ and a compatible MCP client |
+| AI connection (required for MCP) | Official [WordPress MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) 0.7.1+ installed and active, and a compatible MCP client |
 | Private files | Storage outside the public document root; see the user guide |
 | Scheduled publication | WP-Cron; use a server cron job when timing matters |
 
@@ -128,7 +133,7 @@ The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twent
 
 Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## Scope of 0.7.1
+## Scope of 0.7.2
 
 DEFT is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
 Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.
@@ -155,7 +160,7 @@ Both distribution channels include the same versioned POT, Japanese PO/MO and Ja
 
 ## Distribution Channels
 
-The GitHub ZIP includes a GitHub-only updater; the separate WordPress.org submission ZIP does not. Their core features, plugin slug, data identifiers and translation files are identical. The 0.7.1 WordPress.org application is awaiting review; submission is not approval or directory publication.
+The GitHub ZIP includes a GitHub-only updater; the separate WordPress.org submission ZIP does not. Packages built for the same version have identical core features, plugin slug, data identifiers and translation files. The WordPress.org application is awaiting review; submission is not approval or directory publication.
 See [Release and Update Channels](docs/RELEASING.md) for packaging, verification, first-upgrade and channel-switching steps.
 See [Adding Translation Files](wordpress/atshift-deft/languages/README.md).
 

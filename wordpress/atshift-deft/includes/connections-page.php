@@ -9,6 +9,20 @@ function connections_page() {
         <h1><?php esc_html_e( 'AI connections', 'atshift-deft' ); ?></h1>
         <p><?php esc_html_e( 'Give the guide to your usual AI first, then follow its connection guidance here. Connections last up to 30 days.', 'atshift-deft' ); ?></p>
         <p><a class="button" href="<?php echo esc_url( Onboarding::url() ); ?>"><span class="dashicons dashicons-download" aria-hidden="true"></span> <?php esc_html_e( 'Download AI guide', 'atshift-deft' ); ?></a></p>
+        <section id="sf-mcp-prerequisite" aria-labelledby="sf-mcp-prerequisite-title">
+            <h2 id="sf-mcp-prerequisite-title"><?php esc_html_e( 'Before connecting: install MCP Adapter', 'atshift-deft' ); ?></h2>
+            <p><?php esc_html_e( 'MCP Adapter 0.7.1 or newer is required for AI connections. Manual JSON import does not require it.', 'atshift-deft' ); ?></p>
+            <ol>
+                <li><?php esc_html_e( 'Open Plugins > Add New Plugin and search for MCP Adapter by WordPress.org.', 'atshift-deft' ); ?></li>
+                <li><?php esc_html_e( 'Install and activate it. If already installed, update it to 0.7.1 or newer if needed, then make sure it is active.', 'atshift-deft' ); ?></li>
+                <li><?php esc_html_e( 'Return here and continue with your AI\'s connection settings below.', 'atshift-deft' ); ?></li>
+            </ol>
+            <p><a href="<?php echo esc_url( 'https://wordpress.org/plugins/mcp-adapter/' ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Official MCP Adapter page', 'atshift-deft' ); ?></a>
+            <?php if ( current_user_can( 'install_plugins' ) ) : ?>
+                &middot; <a href="<?php echo esc_url( self_admin_url( 'plugin-install.php?tab=search&s=MCP%20Adapter&type=term' ) ); ?>"><?php esc_html_e( 'Find MCP Adapter in WordPress', 'atshift-deft' ); ?></a>
+            <?php endif; ?></p>
+            <p><?php esc_html_e( 'If you cannot install or activate plugins, ask your site administrator to complete this step.', 'atshift-deft' ); ?></p>
+        </section>
         <?php Onboarding::publication_help( true ); ?>
         <p id="sf-connection-status" role="status"></p>
         <p><label for="sf-connection-client"><?php esc_html_e( 'Your AI / client', 'atshift-deft' ); ?></label><br>

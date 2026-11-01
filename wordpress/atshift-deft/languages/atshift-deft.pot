@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.7.1\n"
+"Project-Id-Version: atshift DEFT 0.7.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -872,7 +872,7 @@ msgid "For a connection key, select the following option and choose Create conne
 msgstr ""
 
 #: includes/class-onboarding.php:37
-#: includes/connections-page.php:54
+#: includes/connections-page.php:68
 msgid "Allow immediate and scheduled public publication of my drafts"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgid "Only grant this access to a trusted AI connection: it can publish without
 msgstr ""
 
 #: includes/class-onboarding.php:54
-#: includes/class-onboarding.php:124
+#: includes/class-onboarding.php:130
 msgid "Workspace access is required."
 msgstr ""
 
@@ -909,12 +909,12 @@ msgstr ""
 msgid "The current catalog could not be read."
 msgstr ""
 
-#: includes/class-onboarding.php:124
-#: includes/class-onboarding.php:127
+#: includes/class-onboarding.php:130
+#: includes/class-onboarding.php:133
 msgid "AI guide"
 msgstr ""
 
-#: includes/class-onboarding.php:127
+#: includes/class-onboarding.php:133
 msgid "The AI guide could not be prepared. Please try again."
 msgstr ""
 
@@ -1570,177 +1570,209 @@ msgstr ""
 msgid "Give the guide to your usual AI first, then follow its connection guidance here. Connections last up to 30 days."
 msgstr ""
 
-#: includes/connections-page.php:14
-msgid "Your AI / client"
+#: includes/connections-page.php:13
+msgid "Before connecting: install MCP Adapter"
 msgstr ""
 
-#: includes/connections-page.php:15
-msgid "Choose a client"
+#: includes/connections-page.php:14
+msgid "MCP Adapter 0.7.1 or newer is required for AI connections. Manual JSON import does not require it."
+msgstr ""
+
+#: includes/connections-page.php:16
+msgid "Open Plugins > Add New Plugin and search for MCP Adapter by WordPress.org."
 msgstr ""
 
 #: includes/connections-page.php:17
-msgid "This client supports an Authorization header stored privately for my account, not shared with other staff."
+msgid "Install and activate it. If already installed, update it to 0.7.1 or newer if needed, then make sure it is active."
 msgstr ""
 
-#: includes/connections-page.php:19
-msgid "Connection instructions"
+#: includes/connections-page.php:18
+msgid "Return here and continue with your AI's connection settings below."
 msgstr ""
 
-#: includes/connections-page.php:21
-msgid "Official connection instructions"
+#: includes/connections-page.php:20
+msgid "Official MCP Adapter page"
+msgstr ""
+
+#: includes/connections-page.php:22
+msgid "Find MCP Adapter in WordPress"
 msgstr ""
 
 #: includes/connections-page.php:24
-msgid "OAuth connection"
-msgstr ""
-
-#: includes/connections-page.php:26
-msgid "Registered application"
-msgstr ""
-
-#: includes/connections-page.php:27
-msgid "Use the publishing endpoint"
+msgid "If you cannot install or activate plugins, ask your site administrator to complete this step."
 msgstr ""
 
 #: includes/connections-page.php:28
-#: includes/connections-page.php:60
-msgid "MCP endpoint"
+msgid "Your AI / client"
 msgstr ""
 
 #: includes/connections-page.php:29
-msgid "OAuth client ID"
-msgstr ""
-
-#: includes/connections-page.php:30
-msgid "In your AI's MCP settings, choose OAuth and enter this endpoint and client ID. Leave the client secret empty. Continue to WordPress, sign in with your own account and review the requested access."
+msgid "Choose a client"
 msgstr ""
 
 #: includes/connections-page.php:31
-msgid "Protocol details"
+msgid "This client supports an Authorization header stored privately for my account, not shared with other staff."
 msgstr ""
 
 #: includes/connections-page.php:33
-msgid "Register an application (administrator)"
+msgid "Connection instructions"
 msgstr ""
 
-#: includes/connections-page.php:34
-msgid "Use the exact callback URL shown by the AI service. Registration is shared; each staff member authorizes their own WordPress account. This version supports pre-registered public clients with PKCE S256, not automatic client registration."
-msgstr ""
-
-#: includes/connections-page.php:36
-msgid "Application name"
-msgstr ""
-
-#: includes/connections-page.php:37
-msgid "Service"
-msgstr ""
-
-#: includes/connections-page.php:37
-msgid "ChatGPT"
-msgstr ""
-
-#: includes/connections-page.php:37
-msgid "Claude"
-msgstr ""
-
-#: includes/connections-page.php:37
-msgid "Gemini"
-msgstr ""
-
-#: includes/connections-page.php:37
-msgid "Other"
+#: includes/connections-page.php:35
+msgid "Official connection instructions"
 msgstr ""
 
 #: includes/connections-page.php:38
-msgid "Exact callback URL"
-msgstr ""
-
-#: includes/connections-page.php:39
-msgid "Permit requesting layouts, files and previews"
+msgid "OAuth connection"
 msgstr ""
 
 #: includes/connections-page.php:40
-msgid "Permit requesting publication access"
+msgid "Registered application"
 msgstr ""
 
 #: includes/connections-page.php:41
-msgid "Register application"
+msgid "Use the publishing endpoint"
+msgstr ""
+
+#: includes/connections-page.php:42
+#: includes/connections-page.php:74
+msgid "MCP endpoint"
+msgstr ""
+
+#: includes/connections-page.php:43
+msgid "OAuth client ID"
+msgstr ""
+
+#: includes/connections-page.php:44
+msgid "In your AI's MCP settings, choose OAuth and enter this endpoint and client ID. Leave the client secret empty. Continue to WordPress, sign in with your own account and review the requested access."
+msgstr ""
+
+#: includes/connections-page.php:45
+msgid "Protocol details"
+msgstr ""
+
+#: includes/connections-page.php:47
+msgid "Register an application (administrator)"
 msgstr ""
 
 #: includes/connections-page.php:48
-msgid "1. Create a connection"
+msgid "Use the exact callback URL shown by the AI service. Registration is shared; each staff member authorizes their own WordPress account. This version supports pre-registered public clients with PKCE S256, not automatic client registration."
 msgstr ""
 
 #: includes/connections-page.php:50
-msgid "Connection name"
+msgid "Application name"
 msgstr ""
 
 #: includes/connections-page.php:51
-msgid "My AI app"
+msgid "Service"
+msgstr ""
+
+#: includes/connections-page.php:51
+msgid "ChatGPT"
+msgstr ""
+
+#: includes/connections-page.php:51
+msgid "Claude"
+msgstr ""
+
+#: includes/connections-page.php:51
+msgid "Gemini"
+msgstr ""
+
+#: includes/connections-page.php:51
+msgid "Other"
 msgstr ""
 
 #: includes/connections-page.php:52
-msgid "Allow reusable layouts, private file transfers and portable previews"
+msgid "Exact callback URL"
 msgstr ""
 
-#: includes/connections-page.php:56
-msgid "Create connection"
+#: includes/connections-page.php:53
+msgid "Permit requesting layouts, files and previews"
 msgstr ""
 
-#: includes/connections-page.php:58
-msgid "Publishing access lets this AI publish without another WordPress approval. Revoking the key cancels pending reservations; key expiry does not. Existing draft-only keys stay draft-only."
+#: includes/connections-page.php:54
+msgid "Permit requesting publication access"
 msgstr ""
 
-#: includes/connections-page.php:59
-msgid "2. Add it to your AI's connection settings"
+#: includes/connections-page.php:55
+msgid "Register application"
 msgstr ""
 
 #: includes/connections-page.php:62
-msgid "Copy MCP endpoint"
+msgid "1. Create a connection"
 msgstr ""
 
-#: includes/connections-page.php:63
-msgid "This route uses Streamable HTTP with an Authorization: Bearer header. OAuth clients use the separate OAuth setup."
+#: includes/connections-page.php:64
+msgid "Connection name"
+msgstr ""
+
+#: includes/connections-page.php:65
+msgid "My AI app"
 msgstr ""
 
 #: includes/connections-page.php:66
-#: includes/connections-page.php:67
-msgid "Configuration template (no secret)"
+msgid "Allow reusable layouts, private file transfers and portable previews"
 msgstr ""
 
-#: includes/connections-page.php:69
-msgid "Download configuration template"
+#: includes/connections-page.php:70
+msgid "Create connection"
 msgstr ""
 
 #: includes/connections-page.php:72
-msgid "Shown once. Put this key in your AI app's secure connection settings, not in a chat or the AI guide."
+msgid "Publishing access lets this AI publish without another WordPress approval. Revoking the key cancels pending reservations; key expiry does not. Existing draft-only keys stay draft-only."
 msgstr ""
 
 #: includes/connections-page.php:73
-msgid "Connection key"
+msgid "2. Add it to your AI's connection settings"
 msgstr ""
 
 #: includes/connections-page.php:76
-msgid "Copy connection key"
+msgid "Copy MCP endpoint"
 msgstr ""
 
 #: includes/connections-page.php:77
+msgid "This route uses Streamable HTTP with an Authorization: Bearer header. OAuth clients use the separate OAuth setup."
+msgstr ""
+
+#: includes/connections-page.php:80
+#: includes/connections-page.php:81
+msgid "Configuration template (no secret)"
+msgstr ""
+
+#: includes/connections-page.php:83
+msgid "Download configuration template"
+msgstr ""
+
+#: includes/connections-page.php:86
+msgid "Shown once. Put this key in your AI app's secure connection settings, not in a chat or the AI guide."
+msgstr ""
+
+#: includes/connections-page.php:87
+msgid "Connection key"
+msgstr ""
+
+#: includes/connections-page.php:90
+msgid "Copy connection key"
+msgstr ""
+
+#: includes/connections-page.php:91
 msgid "Done"
 msgstr ""
 
-#: includes/connections-page.php:81
+#: includes/connections-page.php:95
 msgid "Return to the same AI conversation"
 msgstr ""
 
-#: includes/connections-page.php:82
+#: includes/connections-page.php:96
 msgid "Ask your AI to check the connection and continue your article. It will confirm a successful live context response before proceeding. Never paste the key in chat."
 msgstr ""
 
-#: includes/connections-page.php:83
+#: includes/connections-page.php:97
 msgid "Your connections"
 msgstr ""
 
-#: includes/connections-page.php:83
+#: includes/connections-page.php:97
 msgid "Check connection"
 msgstr ""
 

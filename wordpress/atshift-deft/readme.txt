@@ -4,7 +4,7 @@ Tags: ai, mcp, publishing, structured-content
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.7.1
+Stable tag: 0.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,7 +57,7 @@ These Markdown files are required documentation shipped with the plugin.
 2. Upload the plugin ZIP using Plugins > Add New > Upload Plugin and activate it.
 3. Open atshift DEFT and download the AI guide.
 4. Provision private local storage outside all public document roots before uploading files.
-5. For MCP access, install the official WordPress MCP Adapter 0.7.1 or newer separately.
+5. Before AI connection setup, an administrator must install and activate the official [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) 0.7.1 or newer. Open Plugins > Add New Plugin, search for MCP Adapter by WordPress.org, then choose Install Now > Activate. If already installed, update if needed and ensure it is active. Ask your site administrator if you cannot install or activate plugins. Manual JSON import does not require it.
 6. Give the downloaded guide to your AI, follow connection setup, then try the optional private sample.
 7. Describe the article and its layout, review the saved preview, and explicitly request publication only after granting publishing access.
 
@@ -146,6 +146,10 @@ GitHub privacy: https://docs.github.com/en/site-policy/privacy-policies/github-g
 The GitHub updater is excluded from WordPress.org packages.
 
 == Changelog ==
+
+= 0.7.2 =
+* Add the previously missing installation and activation steps for the official MCP Adapter to the AI guide. MCP Adapter 0.7.1 or newer must be installed and active for AI connections; manual JSON import does not require it.
+* Link the official plugin in requirements and show prerequisite instructions before AI connection setup, including administrator assistance and Japanese guidance.
 
 = 0.7.1 =
 * Add owner-only draft trash and restoration through the workspace, REST and MCP, preserving saved versions and files.

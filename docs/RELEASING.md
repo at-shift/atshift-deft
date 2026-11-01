@@ -1,6 +1,18 @@
 # Release and Update Channels
 
-## 0.7.1 Artifacts
+## 0.7.2 Artifacts
+
+- GitHub: `atshift-deft-0.7.2.zip`, its `.sha256`, and `atshift-deft-update.json`.
+- WordPress.org: `atshift-deft-0.7.2-wordpress-org.zip`, without the GitHub updater; accepted as an update to the pending application on 2026-11-01.
+- Both report 0.7.2 and include matching core files and translation catalogs, apart from the GitHub-only updater/bootstrap/header.
+- Use `RELEASE-0.7.2.md` for release notes, beginning with the required MCP Adapter installation and activation correction.
+- Preparing these artifacts does not update the pending WordPress.org application or publish a GitHub Release. Record each actual upload/publication separately after verification and approval.
+
+`WORDPRESS-ORG-REVIEW-0.7.2.md` records the confirmed upload and the explanation
+sent to reviewers. The application remains awaiting review; existing sites and
+earlier releases have not been changed.
+
+## 0.7.1 Artifacts (Previous)
 
 - GitHub: `atshift-deft-0.7.1.zip`, its `.sha256`, and `atshift-deft-update.json`.
 - WordPress.org: `atshift-deft-0.7.1-wordpress-org.zip`, already accepted as an update to the pending application.
@@ -39,7 +51,7 @@ translation extraction without copying feature code between branches.
 5. Confirm the submission ZIP has no updater, `Update URI` or GitHub runtime HTTP requests. Compare both archives and every language file byte-for-byte outside the allowed adapter differences.
 6. Obtain explicit approval immediately before pushing branches, publishing a release or submitting the plugin ZIP. Submission is not approval; record the actual WordPress.org result separately.
 
-Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.1`, targeting the
+Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.2`, targeting the
 verified `main` commit. Upload the three GitHub files above before publishing.
 Do not rebuild or replace the ZIP after its manifest/checksum are published.
 Download the public assets independently and verify their bytes and SHA-256.
@@ -63,7 +75,7 @@ and plugin-version User-Agent. WordPress handles update permissions, filesystem
 credentials and automatic-update preferences. No user preference is enabled or
 disabled by the adapter.
 
-0.5.x has no GitHub updater. Back up, upload the 0.7.1 GitHub ZIP via **Plugins >
+0.5.x has no GitHub updater. Back up, upload the current GitHub ZIP via **Plugins >
 Add New > Upload Plugin**, and choose **Replace current with uploaded** once.
 Subsequent newer releases appear through normal plugin updates. Inactive plugins
 cannot run this adapter; activate DEFT to check GitHub updates.

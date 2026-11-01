@@ -2,7 +2,7 @@
 /**
  * Plugin Name: atshift DEFT
  * Description: Delegate execution. Focus on thinking. Create structured articles with your preferred AI.
- * Version: 0.7.1
+ * Version: 0.7.2
  * Author: at-shift
  * Author URI: https://plugins.at-shift.net/
  * Requires at least: 6.9
@@ -24,6 +24,6 @@ if ( ! \AtshiftDeft\legacy_guard( __FILE__ ) ) return;
 require_once __DIR__ . '/includes/runtime.php';
 if ( ! runtime_guard( PHP_VERSION_ID ) ) return;
 
-const VERSION = '0.7.1';
+const VERSION = '0.7.2';
 const PLUGIN_FILE = __FILE__;
 require_once __DIR__ . '/includes/plugin.php';

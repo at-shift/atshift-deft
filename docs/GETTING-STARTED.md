@@ -1,8 +1,8 @@
 # Installation and User Guide
 
-**atshift DEFT 0.7.1** / November 1, 2026
+**atshift DEFT 0.7.2** / November 1, 2026
 
-Version 0.7.1 adds recoverable drafts and private reservations in destination lists. After upgrading,
+Version 0.7.2 adds the missing MCP Adapter installation and activation steps before AI connection setup. After upgrading,
 download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
 
 DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
@@ -11,11 +11,12 @@ This is a development release. Start on an isolated test site with a backup, not
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.1/atshift-deft-0.7.1.zip) and activate **atshift DEFT**.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.2/atshift-deft-0.7.2.zip) and activate **atshift DEFT**.
 2. Open DEFT, choose **Download AI guide**, and give that file to your usual AI.
-3. Say, **"Read this guide and walk me through connecting to my site."** Follow the client-specific setup and authorize only the required access.
-4. After the AI verifies the connection, try the optional sample or start your own article. Ask for page composition and responsive columns as well as text; a layout reference image is optional.
-5. Review the preview and request changes. With a separately authorized publishing connection, tell the AI to publish now or specify a date, time, and time zone.
+3. Say, **"Read this guide and walk me through connecting to my site."** Before configuring the AI client, have an administrator install and activate the official [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) **0.7.1+** through **Plugins > Add New Plugin** (author: **WordPress.org**). Update it if needed when already installed.
+4. Follow the client-specific setup and authorize only the required access.
+5. After the AI verifies the connection, try the optional sample or start your own article. Ask for page composition and responsive columns as well as text; a layout reference image is optional.
+6. Review the preview and request changes. With a separately authorized publishing connection, tell the AI to publish now or specify a date, time, and time zone.
 
 The plugin does not configure the AI application automatically. Initial setup is required, and client capabilities vary. Never paste passwords or connection keys into chat.
 
@@ -31,7 +32,7 @@ If you have not chosen, the AI asks where to publish and waits for your answer.
 | PHP | 8.2 or later, with DOM, mbstring, OpenSSL, and Sodium |
 | Database | MySQL / MariaDB with InnoDB and named-lock support |
 | Remote AI access | An externally reachable HTTPS site |
-| MCP connection | Official WordPress MCP Adapter 0.7.1+ and a compatible MCP client |
+| MCP connection | Official [WordPress MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) 0.7.1+ installed and active, and a compatible MCP client |
 | Private file uploads | PHP fileinfo, Unix permissions, and a directory outside the public document root |
 
 Node.js, a separate AI server, and an AI provider's API key are not required on your WordPress host. You still need the appropriate AI account and client capabilities. A browser extension is not required for the normal user workflow.
@@ -44,7 +45,7 @@ The HTTP exception is for an explicitly configured loopback development environm
 ## 2. Install DEFT
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.7.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.1). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.7.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.2). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
 4. Upload the ZIP, install it, and activate **atshift DEFT**.
 5. Open **atshift DEFT** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.
@@ -93,6 +94,18 @@ Try a small revision such as "Make this shorter," then continue with your own br
 If the AI cannot display a portable preview or lacks permission to retrieve one, use the owner-only WordPress preview. These are instructions for the AI, not a guarantee that every AI application will follow them. Connection or sample consent is not publication consent.
 
 ## 5. Connect Your AI
+
+### First: Install and Activate MCP Adapter
+
+All MCP connection routes require the official [MCP Adapter plugin](https://wordpress.org/plugins/mcp-adapter/) **0.7.1 or newer**.
+
+1. As an administrator, open **Plugins > Add New Plugin** and search for **MCP Adapter** by **WordPress.org**.
+2. Choose **Install Now > Activate**. If already installed, update it if needed and make sure it is active.
+3. Return to **atshift DEFT > AI connections** and continue below. If you cannot install or activate plugins, ask your site administrator to complete this step.
+
+Manual JSON import does not require MCP Adapter. A working connection does not need this setup repeated.
+
+### Choose Your Client
 
 Use the exact client route shown under **AI connections**. The [AI Client Connection Routes](../wordpress/atshift-deft/docs/CONNECTIONS.md) document distinguishes ChatGPT, Claude, Gemini, their CLI clients, and other MCP clients. Availability can vary by account, region, and application; a configuration route is not a certification of end-to-end compatibility.
 

@@ -54,7 +54,19 @@ intended site's MCP connection is already available.
    existing article brief, files and design preferences. If the actual AI client
    and web/desktop/CLI mode are unclear, ask only for that missing information.
 2. If DEFT tools are already available, try read-only context before asking for
-   setup. Otherwise guide the route from Connection Details / docs/CONNECTIONS.md one
+   setup. Before a new MCP connection, confirm that the official
+   [MCP Adapter by WordPress.org](https://wordpress.org/plugins/mcp-adapter/)
+   version 0.7.1 or newer is installed and active. Guide the administrator to
+   **Plugins > Add New Plugin**, search for **MCP Adapter** by **WordPress.org**,
+   then **Install Now > Activate**. If already installed, update if needed and
+   make sure it is active. Users without installation/activation permissions
+   should ask their site administrator. Do not request administrator credentials
+   or install, update or activate plugins without explicit approval. If you cannot
+   inspect live plugin state with an authorized read-only tool, ask for confirmation;
+   an offline guide does not prove the current state. Skip this prerequisite when
+   a successful current-session live context response confirms the connection.
+   Manual JSON import does not require MCP Adapter.
+   Then guide the route from Connection Details / docs/CONNECTIONS.md one
    step at a time. Let the user complete necessary sign-in and individual consent
    in the actual client/WordPress UI. Never request credentials in chat or enable
    publication access just to connect. Do not ask for this guide a second time.

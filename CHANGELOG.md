@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.2 - 2026-11-01
+
+- Correct the onboarding omission: the AI guide mentioned MCP Adapter but did not include its installation and activation steps. The official MCP Adapter 0.7.1+ must be installed and active for AI connections; manual JSON import does not require it.
+- Add official plugin links and a prerequisite step before client configuration in the README, WordPress connection page and AI/user guides. Direct users without plugin permissions to their site administrator and avoid repeating setup for verified connections.
+- Include Japanese translations and regression tests for prerequisite order, permission-aware links and guidance consistency. Preserve the existing GitHub update mechanism and saved-data formats.
+
 ## 0.7.1 - 2026-11-01
 
 - Add recoverable, owner-only draft trash and restoration to the workspace, REST and MCP. Keep immutable versions, files and shared components; reject stale operations and other owners' drafts.

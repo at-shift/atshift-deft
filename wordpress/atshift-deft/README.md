@@ -1,4 +1,4 @@
-# atshift DEFT 0.7.1
+# atshift DEFT 0.7.2
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
@@ -32,7 +32,7 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Download `atshift-deft-0.7.1.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.1), which also includes its SHA-256 checksum. Upload it through Plugins >
+Download `atshift-deft-0.7.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.2), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
@@ -40,6 +40,7 @@ archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
+Version 0.7.2 adds the missing installation and activation steps for the official MCP Adapter. MCP Adapter 0.7.1+ must be installed and active for AI connections.
 Version 0.7.0 adds per-article destinations, existing category/tag selection and public structure JSON with JSON-LD. Saved-data identities and connection permissions are preserved.
 Version 0.7.1 adds owner-only draft trash/restoration, owner information and private
 reservation entries in destination lists. Cancelled or blocked reservations return
@@ -72,8 +73,14 @@ freely; existing-draft continuations do not repeat setup or the sample offer.
 Keep the original article brief in the same conversation. Connection/sample consent
 is not publication consent. The plugin does not automatically configure AI clients.
 
-Activate the official WordPress **MCP Adapter** plugin, version 0.7.1 or newer,
-separately. Open **AI connections**, create a named key, and register the displayed
+Before configuring the AI connection, install and activate the official
+[MCP Adapter plugin](https://wordpress.org/plugins/mcp-adapter/), version **0.7.1 or newer**.
+An administrator opens **Plugins > Add New Plugin**, searches for **MCP Adapter**
+by **WordPress.org**, then chooses **Install Now > Activate**. If already installed,
+update if needed and make sure it is active. Ask your site administrator if you
+cannot install or activate plugins. Manual JSON import does not require it.
+
+Then open **AI connections**, create a named key, and register the displayed
 endpoint in a client supporting Streamable HTTP with `Authorization: Bearer <key>`.
 Keep the key in secure connection settings, never chat text. It is shown once,
 expires after 30 days, and can be revoked without deleting drafts. HTTPS is required

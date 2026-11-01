@@ -1,7 +1,7 @@
 # Japanese interface copy for onboarding and client connection guidance.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.7.1\n"
+"Project-Id-Version: atshift DEFT 0.7.2\n"
 "PO-Revision-Date: 2026-10-31 20:31+0900\n"
 "Last-Translator: at-shift (AI-assisted)\n"
 "Language-Team: Japanese\n"
@@ -383,3 +383,35 @@ msgstr "予約記事の状態を確認できませんでした。"
 #: includes/class-reservations.php
 msgid "Could not attach reservation post."
 msgstr "予約記事を関連付けられませんでした。"
+
+#: includes/connections-page.php
+msgid "Before connecting: install MCP Adapter"
+msgstr "AI接続の前に：MCP Adapterをインストール"
+
+#: includes/connections-page.php
+msgid "MCP Adapter 0.7.1 or newer is required for AI connections. Manual JSON import does not require it."
+msgstr "AIとの接続にはMCP Adapter 0.7.1以上が必要です。手動でJSONを取り込むだけの場合は不要です。"
+
+#: includes/connections-page.php
+msgid "Open Plugins > Add New Plugin and search for MCP Adapter by WordPress.org."
+msgstr "「プラグイン」→「新規追加」を開き、MCP Adapter（作者：WordPress.org）を検索してください。"
+
+#: includes/connections-page.php
+msgid "Install and activate it. If already installed, update it to 0.7.1 or newer if needed, then make sure it is active."
+msgstr "インストールして有効化してください。導入済みの場合は、必要に応じて0.7.1以上へ更新し、有効になっていることを確認してください。"
+
+#: includes/connections-page.php
+msgid "Return here and continue with your AI's connection settings below."
+msgstr "この画面に戻り、下にあるAIとの接続設定へ進んでください。"
+
+#: includes/connections-page.php
+msgid "Official MCP Adapter page"
+msgstr "MCP Adapterの公式ページ"
+
+#: includes/connections-page.php
+msgid "Find MCP Adapter in WordPress"
+msgstr "WordPressでMCP Adapterを検索"
+
+#: includes/connections-page.php
+msgid "If you cannot install or activate plugins, ask your site administrator to complete this step."
+msgstr "プラグインをインストール・有効化する権限がない場合は、サイト管理者へこの操作を依頼してください。"

@@ -1,13 +1,13 @@
-# atshift DEFT for WordPress 0.7.1
+# atshift DEFT for WordPress 0.7.2
 
-0.7.1 adds recoverable drafts, owner information and private reservation entries in destination lists.
-Installable 0.7.1 ZIPs and checksums are distributed through GitHub Releases. The older 0.7.0 assets are unchanged.
+0.7.2 adds the missing official MCP Adapter installation and activation instructions before AI connection setup.
+Installable ZIPs and checksums are distributed through GitHub Releases. Earlier release assets are unchanged.
 For installation and everyday use, see the [Installation and User Guide](../docs/GETTING-STARTED.md).
 See [V0.5.0.md](../docs/V0.5.0.md) for identity and legacy activation steps.
 
 Alpha.14 was the preceding private GitHub code checkpoint. Its OAuth and runtime changes remain:
 [ALPHA14.md](../docs/ALPHA14.md). Existing keys and separately delegated publication
-remain unchanged. GitHub and WordPress.org submission packages share version 0.7.1;
+remain unchanged. GitHub and WordPress.org submission packages built from this source share version 0.7.2;
 this does not imply a WordPress.org release or a production installation.
 
 Development candidate, not for production use. Earlier `0.2.0` labels were local-only
