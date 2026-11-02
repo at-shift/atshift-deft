@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DEFT 0.7.2\n"
+"Project-Id-Version: atshift DeFt 0.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: atshift-deft.php
-msgid "atshift DEFT"
+msgid "atshift DeFt"
 msgstr ""
 
 #. Description of the plugin
@@ -34,9 +34,13 @@ msgstr ""
 msgid "https://plugins.at-shift.net/"
 msgstr ""
 
+#: atshift-deft.php:34
+msgid "atshift DeFt could not migrate its legacy data. Its tools are disabled to avoid mixing data. Keep your database backup and check for conflicting legacy/new DeFt tables or insufficient database permissions, then reload."
+msgstr ""
+
 #: includes/catalog-page.php:9
 #: includes/catalog-page.php:28
-#: includes/plugin.php:255
+#: includes/plugin.php:266
 msgid "Components"
 msgstr ""
 
@@ -57,7 +61,7 @@ msgid "New example"
 msgstr ""
 
 #: includes/catalog-page.php:16
-#: includes/plugin.php:332
+#: includes/plugin.php:350
 msgid "Refresh components"
 msgstr ""
 
@@ -144,7 +148,7 @@ msgstr ""
 msgid "Component JSON"
 msgstr ""
 
-#: includes/class-access.php:71
+#: includes/class-access.php:79
 msgid "This article is not available to this WordPress account."
 msgstr ""
 
@@ -154,7 +158,7 @@ msgstr ""
 
 #: includes/class-ai-workflow.php:45
 #: includes/class-mcp.php:92
-#: includes/plugin.php:186
+#: includes/plugin.php:195
 msgid "Article not found."
 msgstr ""
 
@@ -170,143 +174,128 @@ msgstr ""
 msgid "Portable preview exceeds 4 MiB. Use the owner theme preview."
 msgstr ""
 
-#: includes/class-assets.php:53
+#: includes/class-assets.php:54
 msgid "Configure an existing canonical private directory."
 msgstr ""
 
-#: includes/class-assets.php:59
+#: includes/class-assets.php:60
 msgid "Cannot verify the public document root."
 msgstr ""
 
-#: includes/class-assets.php:63
+#: includes/class-assets.php:64
 msgid "Private storage must be separate from public directories."
 msgstr ""
 
-#: includes/class-assets.php:72
+#: includes/class-assets.php:74
 msgid "Private asset storage is not configured."
 msgstr ""
 
-#: includes/class-assets.php:77
+#: includes/class-assets.php:79
 msgid "Invalid public document root."
 msgstr ""
 
-#: includes/class-assets.php:84
-msgid "Private storage is unavailable."
-msgstr ""
-
-#: includes/class-assets.php:87
+#: includes/class-assets.php:88
 msgid "Private storage requires an unshared directory (0700)."
 msgstr ""
 
-#: includes/class-assets.php:99
+#: includes/class-assets.php:100
 msgid "File must be between 1 byte and 10 MiB."
 msgstr ""
 
-#: includes/class-assets.php:101
+#: includes/class-assets.php:102
 msgid "Invalid filename."
 msgstr ""
 
-#: includes/class-assets.php:105
+#: includes/class-assets.php:106
 msgid "Only JPEG, PNG, WebP and PDF are accepted; fileinfo is required."
 msgstr ""
 
-#: includes/class-assets.php:110
+#: includes/class-assets.php:111
 msgid "The file contents do not match its extension."
 msgstr ""
 
-#: includes/class-assets.php:114
+#: includes/class-assets.php:115
 msgid "Invalid PDF header."
 msgstr ""
 
-#: includes/class-assets.php:119
+#: includes/class-assets.php:120
 msgid "Invalid image or image exceeds 40 megapixels."
 msgstr ""
 
-#: includes/class-assets.php:142
-#: includes/class-assets.php:166
+#: includes/class-assets.php:143
+#: includes/class-assets.php:167
 msgid "Save the article before adding files."
 msgstr ""
 
-#: includes/class-assets.php:164
+#: includes/class-assets.php:165
 msgid "Send one multipart file and optional purpose (reference or publication)."
 msgstr ""
 
-#: includes/class-assets.php:170
+#: includes/class-assets.php:171
 msgid "The file was not received. Check the server upload limit."
 msgstr ""
 
-#: includes/class-assets.php:173
+#: includes/class-assets.php:174
 msgid "Private storage is unavailable. No file was retained."
 msgstr ""
 
-#: includes/class-assets.php:179
+#: includes/class-assets.php:180
 msgid "The file exceeds the WordPress upload limit."
 msgstr ""
 
-#: includes/class-assets.php:184
+#: includes/class-assets.php:185
 msgid "File does not match the authorized transfer."
 msgstr ""
 
-#: includes/class-assets.php:189
+#: includes/class-assets.php:190
 msgid "Another upload is in progress. Retry the same file."
 msgstr ""
 
-#: includes/class-assets.php:198
+#: includes/class-assets.php:199
 msgid "Storage metadata unavailable."
 msgstr ""
 
-#: includes/class-assets.php:201
+#: includes/class-assets.php:202
 msgid "Your private media capacity is reached. Reuse existing files or ask the site administrator to adjust the limit."
 msgstr ""
 
-#: includes/class-assets.php:204
+#: includes/class-assets.php:205
 msgid "Private asset quota reached (50 files / 100 MiB per article; 500 MiB per site)."
 msgstr ""
 
-#: includes/class-assets.php:210
-msgid "Could not reserve file."
-msgstr ""
-
 #: includes/class-assets.php:214
-msgid "Could not protect file."
-msgstr ""
-
-#: includes/class-assets.php:217
-msgid "Incomplete transfer."
-msgstr ""
-
-#: includes/class-assets.php:227
 msgid "Could not save metadata."
 msgstr ""
 
-#: includes/class-assets.php:231
+#: includes/class-assets.php:218
 msgid "The private file could not be saved or verified."
 msgstr ""
 
-#: includes/class-assets.php:240
+#: includes/class-assets.php:227
 msgid "Invalid asset identity."
 msgstr ""
 
-#: includes/class-assets.php:245
+#: includes/class-assets.php:232
+#: includes/class-assets.php:242
 msgid "Private file integrity check failed."
 msgstr ""
 
-#: includes/class-assets.php:260
-#: includes/class-assets.php:264
+#: includes/class-assets.php:259
+#: includes/class-assets.php:263
 msgid "Private file access denied."
 msgstr ""
 
-#: includes/class-assets.php:260
-#: includes/class-assets.php:264
-#: includes/class-assets.php:271
+#: includes/class-assets.php:259
+#: includes/class-assets.php:263
+#: includes/class-assets.php:269
 msgid "Private asset"
 msgstr ""
 
-#: includes/class-assets.php:269
+#: includes/class-assets.php:267
 msgid "Private file changed during transfer."
 msgstr ""
 
-#: includes/class-assets.php:271
+#: includes/class-assets.php:269
 msgid "Private file is unavailable."
 msgstr ""
 
@@ -464,12 +453,12 @@ msgid "Catalog storage limit reached."
 msgstr ""
 
 #: includes/class-catalog.php:251
-#: includes/class-store.php:107
+#: includes/class-store.php:109
 msgid "InnoDB tables are required."
 msgstr ""
 
 #: includes/class-catalog.php:253
-#: includes/class-store.php:109
+#: includes/class-store.php:111
 msgid "Could not start transaction."
 msgstr ""
 
@@ -501,53 +490,57 @@ msgstr ""
 msgid "Could not remember component use."
 msgstr ""
 
-#: includes/class-connections.php:61
+#: includes/class-connections.php:62
 msgid "Activate MCP Adapter 0.7.1 or newer and use HTTPS (local loopback is allowed)."
 msgstr ""
 
-#: includes/class-connections.php:71
+#: includes/class-connections.php:72
 msgid "Supply a connection name of 1 to 80 characters."
 msgstr ""
 
-#: includes/class-connections.php:74
+#: includes/class-connections.php:75
 msgid "Try again."
 msgstr ""
 
-#: includes/class-connections.php:79
-#: includes/class-oauth-consent.php:71
+#: includes/class-connections.php:80
+#: includes/class-oauth-consent.php:73
 msgid "Revoke an existing connection first (maximum 10 active)."
 msgstr ""
 
-#: includes/class-connections.php:85
+#: includes/class-connections.php:86
 msgid "Connection could not be created."
 msgstr ""
 
-#: includes/class-connections.php:92
+#: includes/class-connections.php:93
 msgid "Connection is busy. Retry revocation."
 msgstr ""
 
-#: includes/class-connections.php:96
+#: includes/class-connections.php:97
 msgid "Connection not found."
 msgstr ""
 
-#: includes/class-connections.php:107
-msgid "This key is only valid at the atshift DEFT MCP endpoint."
-msgstr ""
-
-#: includes/class-connections.php:109
-msgid "Secure MCP connection unavailable."
+#: includes/class-connections.php:105
+msgid "Nested requests are not permitted in this AI connection."
 msgstr ""
 
 #: includes/class-connections.php:110
-#: includes/plugin.php:164
+msgid "This key is only valid at the atshift DeFt MCP endpoint."
+msgstr ""
+
+#: includes/class-connections.php:112
+msgid "Secure MCP connection unavailable."
+msgstr ""
+
+#: includes/class-connections.php:113
+#: includes/plugin.php:173
 msgid "Payload exceeds 4 MB."
 msgstr ""
 
-#: includes/class-connections.php:129
+#: includes/class-connections.php:133
 msgid "A valid, unexpired connection credential is required."
 msgstr ""
 
-#: includes/class-connections.php:155
+#: includes/class-connections.php:159
 msgid "The publishing connection is no longer authorized."
 msgstr ""
 
@@ -643,121 +636,122 @@ msgstr ""
 msgid "Use a publication candidate belonging to this article, with its exact hash."
 msgstr ""
 
-#: includes/class-media.php:77
+#: includes/class-media.php:78
 msgid "The existing media file has changed."
 msgstr ""
 
-#: includes/class-media.php:80
+#: includes/class-media.php:81
 msgid "Unknown media source."
 msgstr ""
 
-#: includes/class-media.php:85
+#: includes/class-media.php:86
 msgid "Use an image for an image field, or a PDF for a download link."
 msgstr ""
 
-#: includes/class-media.php:105
+#: includes/class-media.php:106
 msgid "At most 50 media bindings are supported per article."
 msgstr ""
 
-#: includes/class-media.php:114
+#: includes/class-media.php:116
 msgid "Article media exceeds 100 MiB."
 msgstr ""
 
-#: includes/class-media.php:133
-msgid "Article access denied."
-msgstr ""
-
-#: includes/class-media.php:147
-msgid "Invalid media binding."
-msgstr ""
-
-#: includes/class-media.php:151
-msgid "Invalid media element."
-msgstr ""
-
-#: includes/class-media.php:161
-msgid "Missing media binding."
-msgstr ""
-
-#: includes/class-media.php:181
-#: includes/class-media.php:185
-msgid "Private media access denied."
-msgstr ""
-
-#: includes/class-media.php:181
-#: includes/class-media.php:185
-#: includes/class-media.php:197
-msgid "Private preview media"
-msgstr ""
-
-#: includes/class-media.php:189
-msgid "Unknown media field."
-msgstr ""
-
-#: includes/class-media.php:194
+#: includes/class-media.php:132
+#: includes/class-media.php:207
 msgid "Media changed during transfer."
 msgstr ""
 
-#: includes/class-media.php:197
+#: includes/class-media.php:142
+msgid "Article access denied."
+msgstr ""
+
+#: includes/class-media.php:156
+msgid "Invalid media binding."
+msgstr ""
+
+#: includes/class-media.php:160
+msgid "Invalid media element."
+msgstr ""
+
+#: includes/class-media.php:170
+msgid "Missing media binding."
+msgstr ""
+
+#: includes/class-media.php:194
+#: includes/class-media.php:198
+msgid "Private media access denied."
+msgstr ""
+
+#: includes/class-media.php:194
+#: includes/class-media.php:198
+#: includes/class-media.php:210
+msgid "Private preview media"
+msgstr ""
+
+#: includes/class-media.php:202
+msgid "Unknown media field."
+msgstr ""
+
+#: includes/class-media.php:210
 msgid "The referenced media is unavailable or has changed."
 msgstr ""
 
-#: includes/class-oauth-consent.php:29
+#: includes/class-oauth-consent.php:30
 msgid "Secure OAuth setup is unavailable."
 msgstr ""
 
-#: includes/class-oauth-consent.php:46
+#: includes/class-oauth-consent.php:45
 msgid "Too many pending requests. Wait ten minutes and retry."
 msgstr ""
 
-#: includes/class-oauth-consent.php:91
+#: includes/class-oauth-consent.php:95
 msgid "This authorization request is unavailable or invalid. Return to the AI connection settings and start again. No access was granted."
 msgstr ""
 
-#: includes/class-oauth-consent.php:91
-msgid "atshift DEFT authorization"
+#: includes/class-oauth-consent.php:95
+msgid "atshift DeFt authorization"
 msgstr ""
 
-#: includes/class-oauth-consent.php:105
+#: includes/class-oauth-consent.php:109
 msgid "Read components and read/write my private drafts"
 msgstr ""
 
-#: includes/class-oauth-consent.php:106
+#: includes/class-oauth-consent.php:110
 msgid "Create bounded structures, transfer my files and export private previews"
 msgstr ""
 
-#: includes/class-oauth-consent.php:107
+#: includes/class-oauth-consent.php:111
 msgid "Publish or schedule my articles without another WordPress approval"
 msgstr ""
 
-#: includes/class-oauth-consent.php:111
-#: includes/class-oauth-consent.php:113
+#: includes/class-oauth-consent.php:115
+#: includes/class-oauth-consent.php:117
 msgid "Authorize AI connection"
 msgstr ""
 
 #. translators: %s: WordPress account display name.
-#: includes/class-oauth-consent.php:115
+#: includes/class-oauth-consent.php:119
 #, php-format
 msgid "WordPress account: %s"
 msgstr ""
 
-#: includes/class-oauth-consent.php:117
+#: includes/class-oauth-consent.php:121
 msgid "Consent lasts 30 days and can be revoked in AI connections. Other staff members' private data is not included."
 msgstr ""
 
-#: includes/class-oauth-consent.php:118
+#: includes/class-oauth-consent.php:122
 msgid "Revoking this connection cancels pending reservations. Access-token expiry alone does not cancel them."
 msgstr ""
 
-#: includes/class-oauth-consent.php:119
+#: includes/class-oauth-consent.php:123
 msgid "Connection details"
 msgstr ""
 
-#: includes/class-oauth-consent.php:123
+#: includes/class-oauth-consent.php:127
 msgid "Allow this access"
 msgstr ""
 
-#: includes/class-oauth-consent.php:124
+#: includes/class-oauth-consent.php:128
 msgid "Deny"
 msgstr ""
 
@@ -778,7 +772,7 @@ msgid "Credential could not be bound."
 msgstr ""
 
 #: includes/class-oauth-store.php:113
-#: includes/class-oauth.php:249
+#: includes/class-oauth.php:257
 msgid "Token revocation failed."
 msgstr ""
 
@@ -822,11 +816,11 @@ msgstr ""
 msgid "Scope is not available."
 msgstr ""
 
-#: includes/class-oauth.php:234
+#: includes/class-oauth.php:242
 msgid "Consent was revoked."
 msgstr ""
 
-#: includes/class-oauth.php:247
+#: includes/class-oauth.php:255
 msgid "Revocation failed."
 msgstr ""
 
@@ -893,7 +887,7 @@ msgid "Check the AI result and Publication status in Articles. Published posts h
 msgstr ""
 
 #: includes/class-onboarding.php:45
-msgid "Your account cannot grant publication access. Ask your administrator about the atshift DEFT publisher role for this same account; do not switch to another owner to publish this draft."
+msgid "Your account cannot grant publication access. Ask your administrator about the atshift DeFt publisher role for this same account; do not switch to another owner to publish this draft."
 msgstr ""
 
 #: includes/class-onboarding.php:47
@@ -918,6 +912,40 @@ msgstr ""
 msgid "The AI guide could not be prepared. Please try again."
 msgstr ""
 
+#: includes/class-private-blobs.php:33
+msgid "Invalid private storage identity."
+msgstr ""
+
+#: includes/class-private-blobs.php:42
+msgid "Invalid private media metadata."
+msgstr ""
+
+#: includes/class-private-blobs.php:45
+msgid "Private media storage unavailable."
+msgstr ""
+
+#: includes/class-private-blobs.php:48
+#: includes/class-private-blobs.php:52
+msgid "Incomplete private media."
+msgstr ""
+
+#: includes/class-private-blobs.php:56
+#: includes/class-private-blobs.php:64
+msgid "Private media integrity check failed."
+msgstr ""
+
+#: includes/class-private-blobs.php:67
+msgid "Private media storage is busy."
+msgstr ""
+
+#: includes/class-private-blobs.php:73
+msgid "Private media capacity reached."
+msgstr ""
+
+#: includes/class-private-blobs.php:79
+msgid "Private media could not be saved."
+msgstr ""
+
 #: includes/class-public-structure.php:18
 msgid "Public structure not found."
 msgstr ""
@@ -927,62 +955,46 @@ msgid "Invalid publication."
 msgstr ""
 
 #: includes/class-publication-media.php:11
-msgid "Publication storage unavailable."
-msgstr ""
-
-#: includes/class-publication-media.php:13
 msgid "Private publication storage required."
 msgstr ""
 
-#: includes/class-publication-media.php:21
+#: includes/class-publication-media.php:19
 msgid "Publication storage is busy."
 msgstr ""
 
-#: includes/class-publication-media.php:30
+#: includes/class-publication-media.php:28
 msgid "At most 50 media bindings can be published."
 msgstr ""
 
-#: includes/class-publication-media.php:39
+#: includes/class-publication-media.php:37
 msgid "Publication media changed."
 msgstr ""
 
-#: includes/class-publication-media.php:42
+#: includes/class-publication-media.php:40
 msgid "Publication media exceeds 100 MiB."
 msgstr ""
 
-#: includes/class-publication-media.php:48
-msgid "Publication media quota reached."
+#: includes/class-publication-media.php:56
+msgid "Publication storage unavailable."
 msgstr ""
 
-#: includes/class-publication-media.php:52
-msgid "Publication file could not be reserved."
-msgstr ""
-
-#: includes/class-publication-media.php:55
-msgid "Publication file could not be frozen."
-msgstr ""
-
-#: includes/class-publication-media.php:60
-msgid "Publication copy mismatch."
-msgstr ""
-
-#: includes/class-publication-media.php:76
+#: includes/class-publication-media.php:71
 msgid "Invalid publication media binding."
 msgstr ""
 
-#: includes/class-publication-media.php:79
+#: includes/class-publication-media.php:74
 msgid "Invalid publication element."
 msgstr ""
 
-#: includes/class-publication-media.php:85
+#: includes/class-publication-media.php:80
 msgid "Missing publication media binding."
 msgstr ""
 
-#: includes/class-publication-media.php:93
-#: includes/class-publication-media.php:97
+#: includes/class-publication-media.php:88
+#: includes/class-publication-media.php:92
+#: includes/class-publication-media.php:95
 #: includes/class-publication-media.php:100
-#: includes/class-publication-media.php:103
-#: includes/class-publication-media.php:106
+#: includes/class-publication-media.php:104
 msgid "Unavailable media."
 msgstr ""
 
@@ -1133,23 +1145,23 @@ msgstr ""
 #: includes/class-reservations.php:12
 #: includes/class-reservations.php:43
 #: includes/class-reservations.php:48
-msgid "Scheduled (DEFT)"
+msgid "Scheduled (DeFt)"
 msgstr ""
 
 #. translators: %s: number of scheduled destination entries.
 #: includes/class-reservations.php:16
 #, php-format
-msgid "Scheduled (DEFT) <span class=\"count\">(%s)</span>"
-msgid_plural "Scheduled (DEFT) <span class=\"count\">(%s)</span>"
+msgid "Scheduled (DeFt) <span class=\"count\">(%s)</span>"
+msgid_plural "Scheduled (DeFt) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/class-reservations.php:17
-msgid "Inactive DEFT reservation"
+msgid "Inactive DeFt reservation"
 msgstr ""
 
 #: includes/class-reservations.php:57
-msgid "Manage reservation in DEFT"
+msgid "Manage reservation in DeFt"
 msgstr ""
 
 #: includes/class-reservations.php:83
@@ -1218,8 +1230,8 @@ msgstr ""
 
 #: includes/class-review.php:137
 #: includes/class-review.php:151
-#: includes/plugin.php:257
-#: includes/plugin.php:323
+#: includes/plugin.php:268
+#: includes/plugin.php:341
 msgid "Review"
 msgstr ""
 
@@ -1252,8 +1264,8 @@ msgid "Expired"
 msgstr ""
 
 #: includes/class-review.php:161
-#: includes/plugin.php:254
-#: includes/plugin.php:294
+#: includes/plugin.php:265
+#: includes/plugin.php:312
 msgid "Articles"
 msgstr ""
 
@@ -1448,43 +1460,43 @@ msgstr ""
 msgid "Only components used by the article may be imported."
 msgstr ""
 
-#: includes/class-store.php:77
+#: includes/class-store.php:79
 msgid "Choose drafts or Trash."
 msgstr ""
 
-#: includes/class-store.php:93
+#: includes/class-store.php:95
 msgid "Another save is in progress."
 msgstr ""
 
-#: includes/class-store.php:98
+#: includes/class-store.php:100
 msgid "Use active catalog components or this article's saved component revisions. New designs require an administrator."
 msgstr ""
 
-#: includes/class-store.php:100
+#: includes/class-store.php:102
 msgid "The saved version changed. Reload it before saving."
 msgstr ""
 
-#: includes/class-store.php:102
+#: includes/class-store.php:104
 msgid "Changed content must have a newer article revision."
 msgstr ""
 
-#: includes/class-store.php:103
+#: includes/class-store.php:105
 msgid "This prototype allows 100 saved versions per article."
 msgstr ""
 
-#: includes/class-store.php:114
+#: includes/class-store.php:116
 msgid "Could not create preview draft."
 msgstr ""
 
-#: includes/class-store.php:118
+#: includes/class-store.php:120
 msgid "Could not save snapshot."
 msgstr ""
 
-#: includes/class-store.php:120
+#: includes/class-store.php:122
 msgid "Could not commit snapshot."
 msgstr ""
 
-#: includes/class-store.php:126
+#: includes/class-store.php:128
 msgid "The snapshot was not saved."
 msgstr ""
 
@@ -1562,7 +1574,7 @@ msgid "Could not revoke transfer."
 msgstr ""
 
 #: includes/connections-page.php:9
-#: includes/plugin.php:256
+#: includes/plugin.php:267
 msgid "AI connections"
 msgstr ""
 
@@ -1777,214 +1789,214 @@ msgid "Check connection"
 msgstr ""
 
 #: includes/legacy-guard.php:14
-msgid "Deactivate Structured Fields Prototype before activating atshift DEFT. Saved data will be retained. You do not need to delete the old plugin."
+msgid "Deactivate Structured Fields Prototype before activating atshift DeFt. Saved data will be retained. You do not need to delete the old plugin."
 msgstr ""
 
-#: includes/plugin.php:49
+#: includes/plugin.php:51
 msgid "Structured drafts"
 msgstr ""
 
-#: includes/plugin.php:65
-msgid "atshift DEFT author"
-msgstr ""
-
-#: includes/plugin.php:66
-msgid "atshift DEFT designer"
-msgstr ""
-
 #: includes/plugin.php:67
-msgid "atshift DEFT publisher"
+msgid "atshift DeFt author"
 msgstr ""
 
-#: includes/plugin.php:145
+#: includes/plugin.php:68
+msgid "atshift DeFt designer"
+msgstr ""
+
+#: includes/plugin.php:69
+msgid "atshift DeFt publisher"
+msgstr ""
+
+#: includes/plugin.php:154
 msgid "Review not found."
 msgstr ""
 
-#: includes/plugin.php:152
+#: includes/plugin.php:161
 msgid "This local media file is missing, unsupported or inaccessible."
 msgstr ""
 
-#: includes/plugin.php:165
+#: includes/plugin.php:174
 msgid "Use application/json."
 msgstr ""
 
-#: includes/plugin.php:168
+#: includes/plugin.php:177
 msgid "Supply snapshot and integer expectedVersion only."
 msgstr ""
 
-#: includes/plugin.php:184
+#: includes/plugin.php:193
 msgid "Invalid version."
 msgstr ""
 
-#: includes/plugin.php:230
+#: includes/plugin.php:241
 msgid "This preview requires its authorized WordPress session and exact saved version."
 msgstr ""
 
-#: includes/plugin.php:230
-#: includes/plugin.php:237
+#: includes/plugin.php:241
+#: includes/plugin.php:248
 msgid "Private preview"
 msgstr ""
 
-#: includes/plugin.php:237
+#: includes/plugin.php:248
 msgid "A referenced media file is unavailable, changed or no longer permitted."
 msgstr ""
 
-#: includes/plugin.php:257
-#: includes/plugin.php:258
+#: includes/plugin.php:268
+#: includes/plugin.php:275
 msgid "Review structured article"
 msgstr ""
 
-#: includes/plugin.php:276
+#: includes/plugin.php:294
 msgid "Close"
 msgstr ""
 
-#: includes/plugin.php:285
+#: includes/plugin.php:303
 msgid "New article"
 msgstr ""
 
-#: includes/plugin.php:286
+#: includes/plugin.php:304
 msgid "Download article handoff"
 msgstr ""
 
-#: includes/plugin.php:286
+#: includes/plugin.php:304
 msgid "Article handoff"
 msgstr ""
 
-#: includes/plugin.php:287
+#: includes/plugin.php:305
 msgid "Import snapshot"
 msgstr ""
 
-#: includes/plugin.php:288
+#: includes/plugin.php:306
 msgid "Load sample"
 msgstr ""
 
-#: includes/plugin.php:289
+#: includes/plugin.php:307
 msgid "Media sample"
 msgstr ""
 
-#: includes/plugin.php:290
+#: includes/plugin.php:308
 msgid "Refresh articles"
 msgstr ""
 
-#: includes/plugin.php:292
+#: includes/plugin.php:310
 msgid "This is a private workspace for preparing articles. Choose Posts, Pages or an available custom post type as the destination. Once published or scheduled, an article leaves this draft list and appears in its destination list. Cancelled, invalidated or failed reservations return here. Saved content and files are retained."
 msgstr ""
 
-#: includes/plugin.php:293
+#: includes/plugin.php:311
 msgid "Private drafts"
 msgstr ""
 
 #. translators: %s: current WordPress user's display name.
-#: includes/plugin.php:298
+#: includes/plugin.php:316
 #, php-format
 msgid "Draft owner: %s"
 msgstr ""
 
 #. translators: %s: translated WordPress role names.
-#: includes/plugin.php:302
+#: includes/plugin.php:320
 #, php-format
 msgid "WordPress role: %s"
 msgstr ""
 
-#: includes/plugin.php:305
+#: includes/plugin.php:323
 msgid "Draft status"
 msgstr ""
 
-#: includes/plugin.php:306
+#: includes/plugin.php:324
 msgid "Drafts"
 msgstr ""
 
-#: includes/plugin.php:307
+#: includes/plugin.php:325
 msgid "Trash"
 msgstr ""
 
-#: includes/plugin.php:311
+#: includes/plugin.php:329
 #: admin.js:97
 msgid "No article selected"
 msgstr ""
 
-#: includes/plugin.php:316
+#: includes/plugin.php:334
 msgid "View published post"
 msgstr ""
 
-#: includes/plugin.php:317
+#: includes/plugin.php:335
 msgid "Cancel reservation"
 msgstr ""
 
-#: includes/plugin.php:320
+#: includes/plugin.php:338
 msgid "Save draft"
 msgstr ""
 
-#: includes/plugin.php:321
+#: includes/plugin.php:339
 msgid "Export snapshot"
 msgstr ""
 
-#: includes/plugin.php:322
+#: includes/plugin.php:340
 msgid "Open theme preview"
 msgstr ""
 
-#: includes/plugin.php:327
+#: includes/plugin.php:345
 msgid "Edit article"
 msgstr ""
 
-#: includes/plugin.php:328
+#: includes/plugin.php:346
 msgid "Title"
 msgstr ""
 
-#: includes/plugin.php:330
+#: includes/plugin.php:348
 msgid "Component"
 msgstr ""
 
-#: includes/plugin.php:331
+#: includes/plugin.php:349
 msgid "Add component"
 msgstr ""
 
-#: includes/plugin.php:337
+#: includes/plugin.php:355
 msgid "Private files"
 msgstr ""
 
-#: includes/plugin.php:340
+#: includes/plugin.php:358
 msgid "Use"
 msgstr ""
 
-#: includes/plugin.php:341
+#: includes/plugin.php:359
 #: admin.js:177
 msgid "Reference only"
 msgstr ""
 
-#: includes/plugin.php:341
+#: includes/plugin.php:359
 #: admin.js:178
 msgid "Publication candidate"
 msgstr ""
 
-#: includes/plugin.php:342
+#: includes/plugin.php:360
 msgid "Add files"
 msgstr ""
 
-#: includes/plugin.php:348
+#: includes/plugin.php:366
 msgid "Article media"
 msgstr ""
 
-#: includes/plugin.php:350
+#: includes/plugin.php:368
 msgid "Existing WordPress media"
 msgstr ""
 
-#: includes/plugin.php:352
+#: includes/plugin.php:370
 msgid "Search media"
 msgstr ""
 
-#: includes/plugin.php:353
+#: includes/plugin.php:371
 msgid "More results"
 msgstr ""
 
-#: includes/plugin.php:357
+#: includes/plugin.php:375
 msgid "WordPress theme preview"
 msgstr ""
 
 #. translators: %s: current PHP version.
 #: includes/runtime.php:13
 #, php-format
-msgid "atshift DEFT requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged."
+msgid "atshift DeFt requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged."
 msgstr ""
 
 #: admin.js:69
@@ -2418,7 +2430,7 @@ msgid "Enter the MCP endpoint and client ID in the AI's custom MCP connection. S
 msgstr ""
 
 #: connection-profiles.js:7
-msgid "Install the created plugin, select it in the intended Chat or Work conversation, and ask the AI to confirm live context. A visible add menu does not prove that DEFT OAuth works with this account."
+msgid "Install the created plugin, select it in the intended Chat or Work conversation, and ask the AI to confirm live context. A visible add menu does not prove that DeFt OAuth works with this account."
 msgstr ""
 
 #: connection-profiles.js:9

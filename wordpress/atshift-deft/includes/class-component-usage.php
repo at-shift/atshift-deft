@@ -1,10 +1,10 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class ComponentUsage {
-    public static function table() { global $wpdb; return $wpdb->prefix . 'sf_component_usage'; }
+    public static function table() { global $wpdb; return $wpdb->prefix . 'atshde_component_usage'; }
 
     public static function install() {
         global $wpdb;

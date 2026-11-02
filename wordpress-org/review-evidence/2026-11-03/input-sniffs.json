@@ -1,0 +1,781 @@
+{
+  "totals": {
+    "errors": 33,
+    "warnings": 31,
+    "fixable": 0
+  },
+  "files": {
+    "wordpress/atshift-deft/includes/class-public-structure.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/runtime.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-oauth-store.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-ai-workflow.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-catalog.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-component-usage.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-publications.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/catalog-page.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-behaviors.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-assets.php": {
+      "errors": 5,
+      "warnings": 4,
+      "messages": [
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_SERVER['DOCUMENT_ROOT']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 81,
+          "column": 36
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 252,
+          "column": 26
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 252,
+          "column": 65
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['asset']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 252,
+          "column": 65
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 253,
+          "column": 29
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 253,
+          "column": 72
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['_sf_nonce']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 253,
+          "column": 72
+        },
+        {
+          "message": "$_SERVER['REQUEST_METHOD'] not unslashed before sanitization. Use wp_unslash() or similar",
+          "source": "WordPress.Security.ValidatedSanitizedInput.MissingUnslash",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 273,
+          "column": 27
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_SERVER['REQUEST_METHOD']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 273,
+          "column": 27
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/class-component-appearance.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-reservations.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-connections.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-media.php": {
+      "errors": 6,
+      "warnings": 8,
+      "messages": [
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 182,
+          "column": 26
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 182,
+          "column": 67
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['article']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 182,
+          "column": 67
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 183,
+          "column": 31
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 183,
+          "column": 72
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['version']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 183,
+          "column": 72
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 184,
+          "column": 27
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 184,
+          "column": 64
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['key']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 184,
+          "column": 64
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 185,
+          "column": 29
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 185,
+          "column": 72
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['_sf_nonce']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 185,
+          "column": 72
+        },
+        {
+          "message": "$_SERVER['REQUEST_METHOD'] not unslashed before sanitization. Use wp_unslash() or similar",
+          "source": "WordPress.Security.ValidatedSanitizedInput.MissingUnslash",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 213,
+          "column": 27
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_SERVER['REQUEST_METHOD']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 213,
+          "column": 27
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/class-oauth-consent.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-prefix-migration.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/plugin.php": {
+      "errors": 2,
+      "warnings": 4,
+      "messages": [
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 234,
+          "column": 27
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 234,
+          "column": 71
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['sf_version']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 234,
+          "column": 71
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 235,
+          "column": 25
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 235,
+          "column": 68
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['_sf_nonce']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 235,
+          "column": 68
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/class-catalog-context.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-snapshot.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-review.php": {
+      "errors": 12,
+      "warnings": 2,
+      "messages": [
+        {
+          "message": "$_SERVER['REQUEST_METHOD'] not unslashed before sanitization. Use wp_unslash() or similar",
+          "source": "WordPress.Security.ValidatedSanitizedInput.MissingUnslash",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 137,
+          "column": 27
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_SERVER['REQUEST_METHOD']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 137,
+          "column": 27
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 138,
+          "column": 26
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_POST['review']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 138,
+          "column": 67
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 138,
+          "column": 67
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 139,
+          "column": 32
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_POST['decision']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 139,
+          "column": 75
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 139,
+          "column": 75
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 140,
+          "column": 29
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_POST['_wpnonce']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 140,
+          "column": 72
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 140,
+          "column": 72
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 148,
+          "column": 26
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 148,
+          "column": 66
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['review']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 148,
+          "column": 66
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/legacy-guard.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/connections-page.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-oauth.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/oauth-entities.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-onboarding.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/i18n.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-transfer.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-mcp.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-taxonomies.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-drafts.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-component-builder.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/oauth-repositories.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-store.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-access.php": {
+      "errors": 4,
+      "warnings": 8,
+      "messages": [
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 97,
+          "column": 31
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 97,
+          "column": 66
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['p']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 97,
+          "column": 66
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 98,
+          "column": 31
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 98,
+          "column": 72
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['preview']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 98,
+          "column": 72
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 99,
+          "column": 31
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 99,
+          "column": 75
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['sf_version']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 99,
+          "column": 75
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 100,
+          "column": 29
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 100,
+          "column": 72
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['_sf_nonce']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 100,
+          "column": 72
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/class-private-blobs.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-post-types.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-publication-media.php": {
+      "errors": 4,
+      "warnings": 5,
+      "messages": [
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 110,
+          "column": 23
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 115,
+          "column": 30
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 115,
+          "column": 79
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['sf_public_media']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 115,
+          "column": 79
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 116,
+          "column": 31
+        },
+        {
+          "message": "Processing form data without nonce verification.",
+          "source": "WordPress.Security.NonceVerification.Recommended",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 116,
+          "column": 77
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_GET['sf_media_key']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 116,
+          "column": 77
+        },
+        {
+          "message": "$_SERVER['REQUEST_METHOD'] not unslashed before sanitization. Use wp_unslash() or similar",
+          "source": "WordPress.Security.ValidatedSanitizedInput.MissingUnslash",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 122,
+          "column": 27
+        },
+        {
+          "message": "Detected usage of a non-sanitized input variable: $_SERVER['REQUEST_METHOD']",
+          "source": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 122,
+          "column": 27
+        }
+      ]
+    },
+    "wordpress/atshift-deft/atshift-deft.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    }
+  }
+}

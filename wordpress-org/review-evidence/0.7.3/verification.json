@@ -1,0 +1,949 @@
+{
+  "date": "2026-11-03",
+  "version": "0.7.3",
+  "state": "local-unreleased-review-candidate",
+  "published": false,
+  "submitted": false,
+  "wordpress": "7.1",
+  "php": "8.3.36",
+  "pluginCheck": {
+    "errors": 0,
+    "warnings": 404,
+    "byCode": {
+      "unexpected_markdown_file": 1,
+      "WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound": 38,
+      "WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound": 4,
+      "WordPress.DB.DirectDatabaseQuery.DirectQuery": 181,
+      "WordPress.DB.DirectDatabaseQuery.NoCaching": 158,
+      "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized": 7,
+      "WordPress.Security.NonceVerification.Missing": 6,
+      "WordPress.Security.NonceVerification.Recommended": 7,
+      "PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound": 1,
+      "WordPress.DB.DirectDatabaseQuery.SchemaChange": 1
+    }
+  },
+  "artifacts": [
+    {
+      "file": "atshift-deft-0.7.3-wordpress-org.zip",
+      "sha256": "f4bbef35082c9529eea38e685a302a6bbdc12b429d8e82c5a7865623fc8e30fc",
+      "bytes": 756216
+    },
+    {
+      "file": "atshift-deft-0.7.3-wordpress-org.zip.sha256",
+      "sha256": "74a424f63a7d6184ecfc05a047c787b66571708391ae5e35939b00d295d1e0c6",
+      "bytes": 103
+    },
+    {
+      "file": "atshift-deft-0.7.3.zip",
+      "sha256": "52676f567bf01b84423465f57d7101a990705cd2fddd92d1d009eba74bfec92a",
+      "bytes": 798273
+    },
+    {
+      "file": "atshift-deft-0.7.3.zip.sha256",
+      "sha256": "ebab049a50461cf32d9454a6a063422d6187d55064fe72fedda3062761697480",
+      "bytes": 89
+    },
+    {
+      "file": "atshift-deft-update.json",
+      "sha256": "a5a060c6cf4d9defb915191ae33ac72b3c0842cfa84d4a9d45d8b5ac3ae22270",
+      "bytes": 457
+    }
+  ],
+  "runs": [
+    {
+      "mode": "upgrade-and-regression",
+      "evidence": "deft-prefixes-47sK5F",
+      "checks": [
+        {
+          "name": "copy-checkout",
+          "status": 0
+        },
+        {
+          "name": "copy-core",
+          "status": 0
+        },
+        {
+          "name": "config",
+          "status": 0
+        },
+        {
+          "name": "db-create",
+          "status": 0
+        },
+        {
+          "name": "core-install",
+          "status": 0
+        },
+        {
+          "name": "activate-adapter",
+          "status": 0
+        },
+        {
+          "name": "install-before",
+          "status": 0
+        },
+        {
+          "name": "seed",
+          "status": 0
+        },
+        {
+          "name": "package-github",
+          "status": 0
+        },
+        {
+          "name": "package-wordpress-org",
+          "status": 0
+        },
+        {
+          "name": "install-after",
+          "status": 0
+        },
+        {
+          "name": "verify",
+          "status": 0
+        },
+        {
+          "name": "node-static",
+          "status": 0
+        },
+        {
+          "name": "runtime-guard",
+          "status": 0
+        },
+        {
+          "name": "legacy-guard",
+          "status": 0
+        },
+        {
+          "name": "php-prefix-recovery",
+          "status": 0
+        },
+        {
+          "name": "php-integration",
+          "status": 0
+        },
+        {
+          "name": "php-branding",
+          "status": 0
+        },
+        {
+          "name": "php-i18n",
+          "status": 0
+        },
+        {
+          "name": "php-connections",
+          "status": 0
+        },
+        {
+          "name": "php-remote-scope",
+          "status": 0
+        },
+        {
+          "name": "php-oauth-inputs",
+          "status": 0
+        },
+        {
+          "name": "php-nonces",
+          "status": 0
+        },
+        {
+          "name": "php-onboarding",
+          "status": 0
+        },
+        {
+          "name": "php-notices",
+          "status": 0
+        },
+        {
+          "name": "php-security",
+          "status": 0
+        },
+        {
+          "name": "php-titles",
+          "status": 0
+        },
+        {
+          "name": "php-publications",
+          "status": 0
+        },
+        {
+          "name": "php-assets",
+          "status": 0
+        },
+        {
+          "name": "php-private-blobs",
+          "status": 0
+        },
+        {
+          "name": "php-media",
+          "status": 0
+        },
+        {
+          "name": "php-personal",
+          "status": 0
+        },
+        {
+          "name": "php-structures",
+          "status": 0
+        },
+        {
+          "name": "php-behaviors",
+          "status": 0
+        },
+        {
+          "name": "php-quotas",
+          "status": 0
+        },
+        {
+          "name": "php-catalog-upgrade",
+          "status": 0
+        },
+        {
+          "name": "php-transport",
+          "status": 0
+        },
+        {
+          "name": "php-publication-guidance",
+          "status": 0
+        },
+        {
+          "name": "php-draft-trash",
+          "status": 0
+        },
+        {
+          "name": "php-post-types",
+          "status": 0
+        },
+        {
+          "name": "php-taxonomies",
+          "status": 0
+        },
+        {
+          "name": "php-public-structure",
+          "status": 0
+        },
+        {
+          "name": "php-reservations",
+          "status": 0
+        },
+        {
+          "name": "php-appearance",
+          "status": 0
+        },
+        {
+          "name": "http",
+          "status": 0
+        },
+        {
+          "name": "browser-three-admin-pages",
+          "status": 0
+        },
+        {
+          "name": "confirm-db",
+          "status": 0
+        },
+        {
+          "name": "db-drop",
+          "status": 0
+        }
+      ],
+      "offlineCoreWarnings": 6,
+      "databaseDeleted": true,
+      "results": {
+        "http": {
+          "lastLines": [
+            "ℹ suites 0",
+            "ℹ pass 130",
+            "ℹ fail 0",
+            "ℹ cancelled 0",
+            "ℹ skipped 0",
+            "ℹ todo 0",
+            "ℹ duration_ms 134065.659791"
+          ],
+          "passLines": 0
+        },
+        "legacy-guard": {
+          "lastLines": [
+            "Legacy activation guard: 13 passed."
+          ],
+          "passLines": 0
+        },
+        "node-static": {
+          "lastLines": [
+            "ℹ suites 0",
+            "ℹ pass 52",
+            "ℹ fail 0",
+            "ℹ cancelled 0",
+            "ℹ skipped 0",
+            "ℹ todo 0",
+            "ℹ duration_ms 5353.513625"
+          ],
+          "passLines": 0
+        },
+        "php-appearance": {
+          "lastLines": [
+            "{\"appearance_checks\":53,\"publicUrl\":\"http://127.0.0.1:8128/?p=196\"}"
+          ],
+          "passLines": 0
+        },
+        "php-assets": {
+          "lastLines": [
+            "PASS 14: Reject extension spoofing",
+            "PASS 15: PDF receives content identity, not publication authority",
+            "PASS 16: Existing image validates without being modified",
+            "PASS 17: Anonymous asset permission denied",
+            "PASS 18: Upload capability alone does not grant private asset access",
+            "PASS 19: REST rejects editor before reading asset metadata",
+            "Private asset checks: 19 passed."
+          ],
+          "passLines": 19
+        },
+        "php-behaviors": {
+          "lastLines": [
+            "PASS 35: Stopped behavior is reported explicitly to the article client",
+            "PASS 36: Behavior availability changes invalidate existing review decisions",
+            "PASS 37: Stopping execution does not prevent the owner editing existing content",
+            "PASS 38: Administrator can explicitly restore a stopped bundled revision",
+            "PASS 39: Restoring behavior never silently restores an old review approval",
+            "PASS 40: Legacy saved article payload and HTML were never migrated or rewritten",
+            "WordPress behaviors: 40 passed."
+          ],
+          "passLines": 40
+        },
+        "php-branding": {
+          "lastLines": [
+            "PASS 5: In-memory role label: atshde_designer",
+            "PASS 6: In-memory role label: atshde_publisher",
+            "PASS 7: Only display names change; all role keys and allow/deny capabilities remain exact.",
+            "PASS 8: Stored and in-memory role registries agree.",
+            "PASS 9: Display-name migration advances once.",
+            "PASS 10: Repeating the migration is idempotent.",
+            "WordPress branding: 10 passed."
+          ],
+          "passLines": 10
+        },
+        "php-catalog-upgrade": {
+          "lastLines": [
+            "PASS 3: An incomplete upgrade leaves legacy records unchanged",
+            "PASS 4: Retry adds the creator column and advances the schema gate",
+            "PASS 5: Upgrade preserves all old metadata, current payload and historical payload",
+            "PASS 6: Migrated records count the original creator rather than the later manager",
+            "PASS 7: Repeated installation remains idempotent",
+            "PASS 8: Disposable tables are removed without changing site schema state",
+            "Catalog upgrade checks: 8 passed."
+          ],
+          "passLines": 8
+        },
+        "php-connections": {
+          "lastLines": [
+            "PASS 23: Direct ability invocation is denied without scoped context: save-draft",
+            "PASS 24: Ability is not exposed via core REST/global discovery: save-draft",
+            "PASS 25: Tool input schema rejects extra authority flags: save-draft",
+            "PASS 26: Explicit local environment and loopback request permit development HTTP",
+            "PASS 27: Empty request body is denied without a PHP diagnostic",
+            "PASS 28: Non-loopback requests cannot use local HTTP credentials",
+            "Connection boundary checks: 28 passed."
+          ],
+          "passLines": 28
+        },
+        "php-draft-trash": {
+          "lastLines": [
+            "{\"checks\":69,\"passed\":true}"
+          ],
+          "passLines": 0
+        },
+        "php-i18n": {
+          "lastLines": [
+            "PASS 15: catalog.js enqueues WordPress i18n and its domain",
+            "PASS 16: catalog.js resolves the standard path-hashed JSON catalog",
+            "PASS 17: connections.js enqueues WordPress i18n and its domain",
+            "PASS 18: connections.js resolves the standard path-hashed JSON catalog",
+            "PASS 19: Connection profile script has its own catalog",
+            "PASS 20: Switching back restores the English fallback",
+            "WordPress i18n: 20 passed."
+          ],
+          "passLines": 20
+        },
+        "php-integration": {
+          "lastLines": [
+            "PASS 30: No publication endpoint exists",
+            "PASS 31: Preview type cannot be published through wp_update_post",
+            "PASS 32: Anonymous cannot list drafts",
+            "PASS 33: Anonymous cannot read a known article ID",
+            "PASS 34: Anonymous cannot save drafts",
+            "PASS 35: Editor cannot import administrator-owned markup and CSS",
+            "WordPress integration: 35 passed."
+          ],
+          "passLines": 35
+        },
+        "php-media": {
+          "lastLines": [
+            "PASS 21: Changed existing media blocks preview instead of switching bytes",
+            "PASS 22: Original pinned bytes restore the preview",
+            "PASS 23: Reject attachment paths outside uploads",
+            "PASS 24: Editor cannot resolve private preview media",
+            "PASS 25: Deleted media blocks preview without changing saved content",
+            "PASS 26: Saved reference remains unchanged after deletion",
+            "Media binding checks: 26 passed."
+          ],
+          "passLines": 26
+        },
+        "php-nonces": {
+          "lastLines": [
+            "PASS 243: Preview rejects altered _sf_nonce without repairing it",
+            "PASS 244: Rejected preview input never reaches the pluggable verifier",
+            "PASS 245: HEAD retains the read-only core preview capability",
+            "PASS 246: Valid preview never grants deletion",
+            "PASS 247: Valid preview never grants a POST mutation",
+            "PASS 248: Only the shared verifier and canonical HTTP boundaries call the WordPress verifier",
+            "Nonce boundary checks: 248 passed."
+          ],
+          "passLines": 248
+        },
+        "php-notices": {
+          "lastLines": [
+            "PASS 28: Revisit omits the dialog, preserves download and does not rewrite state: atshde_publisher",
+            "PASS 29: Atshift\\Deft\\runtime_notice is restricted to a role able to resolve it: subscriber",
+            "PASS 30: Atshift\\Deft\\legacy_notice is restricted to a role able to resolve it: subscriber",
+            "PASS 31: Subscriber cannot receive the introductory dialog.",
+            "PASS 32: Anonymous visitors see neither operational notice.",
+            "PASS 33: Supported PHP without the legacy plugin registers neither site-wide notice.",
+            "WordPress notices: 33 passed."
+          ],
+          "passLines": 33
+        },
+        "php-oauth-inputs": {
+          "lastLines": [
+            "PASS 62: Malformed encoding, controls, oversized work or nonstring input is rejected",
+            "PASS 63: Malformed encoding, controls, oversized work or nonstring input is rejected",
+            "PASS 64: Malformed encoding, controls, oversized work or nonstring input is rejected",
+            "PASS 65: Malformed encoding, controls, oversized work or nonstring input is rejected",
+            "PASS 66: The 32768-byte boundary is accepted",
+            "PASS 67: At most 32 pairs are admitted to the library parser",
+            "OAuth input checks: 67 passed."
+          ],
+          "passLines": 67
+        },
+        "php-onboarding": {
+          "lastLines": [
+            "PASS 29: Guide contains no account name or actual WordPress nonces",
+            "PASS 30: Shared contract omits source and usage: intro",
+            "PASS 31: Shared contract omits source and usage: media",
+            "PASS 32: New-article proposal and block templates use current catalog identity",
+            "PASS 33: Guide preserves edit handoff, connection limits and native/CSS-first behavior guidance",
+            "PASS 34: Download URL uses the product-prefixed action and existing nonce contract",
+            "WordPress onboarding: 34 passed."
+          ],
+          "passLines": 34
+        },
+        "php-personal": {
+          "lastLines": [
+            "PASS 38: Sharing never transfers or changes the personal source",
+            "PASS 39: Registration capability alone does not grant shared update rights",
+            "PASS 40: Separate management capability can update a shared definition",
+            "PASS 41: Management capability does not silently grant new shared registration",
+            "PASS 42: Competing creation requests cannot multiply the same structure",
+            "PASS 43: Personal quota counts inactive definitions and never deletes data",
+            "Personal components: 43 passed."
+          ],
+          "passLines": 43
+        },
+        "php-post-types": {
+          "lastLines": [
+            "{\"post_type_checks\":95,\"published\":{\"post\":\"http://127.0.0.1:8128/?p=77\",\"page\":\"http://127.0.0.1:8128/?page_id=81\",\"sf_test_event\":\"http://127.0.0.1:8128/?sf_test_event=destination-bliteral-b-test\"}}"
+          ],
+          "passLines": 0
+        },
+        "php-prefix-recovery": {
+          "lastLines": [
+            "PASS 8: Encrypted legacy OAuth signing material exists",
+            "PASS 9: Interruption after table rename resumes the option migration",
+            "PASS 10: Resumed migration preserves encrypted bytes and autoload exactly",
+            "PASS 11: Conflicting signing keys roll back and remain blocked",
+            "PASS 12: Retry after conflict resolution succeeds without regenerating keys",
+            "PASS 13: All interrupted and repeated attempts leave saved snapshots byte-identical",
+            "Prefix recovery checks: 13 passed."
+          ],
+          "passLines": 13
+        },
+        "php-private-blobs": {
+          "lastLines": [
+            "PASS 18: Digest mismatch never exposes bytes",
+            "PASS 19: Existing frozen bytes cannot be replaced",
+            "PASS 20: Oversize writes fail before storage",
+            "PASS 21: Missing chunk fails closed",
+            "PASS 22: Extra chunks fail closed even with forged short metadata",
+            "PASS 23: Corrupt database record cannot fall back to a legacy file",
+            "Private blob checks: 23 passed."
+          ],
+          "passLines": 23
+        },
+        "php-public-structure": {
+          "lastLines": [
+            "Public structure: 74 checks passed."
+          ],
+          "passLines": 0
+        },
+        "php-publication-guidance": {
+          "lastLines": [
+            "{\"guidance_checks\":26}"
+          ],
+          "passLines": 0
+        },
+        "php-publications": {
+          "lastLines": [
+            "PASS 13: Invalid, ambiguous or out-of-range timing rejected: scheduled 2026-11-02T22:52:47+00:00 UTC",
+            "PASS 14: Invalid, ambiguous or out-of-range timing rejected: scheduled 2028-11-01T22:53:47+00:00 UTC",
+            "PASS 15: Invalid, ambiguous or out-of-range timing rejected: scheduled 2026-11-05 07:53 Asia/Tokyo",
+            "PASS 16: Invalid, ambiguous or out-of-range timing rejected: scheduled 2026-11-05T07:53:47+09:00 unknown",
+            "PASS 17: Public HTML cannot contain executable WP blocks or shortcodes",
+            "PASS 18: No implicit publisher connection",
+            "Publication unit checks: 18 passed."
+          ],
+          "passLines": 18
+        },
+        "php-quotas": {
+          "lastLines": [
+            "PASS 15: Explicit sharing cannot bypass the shared creator quota",
+            "PASS 16: Missing legacy attribution is not treated as exempt system ownership",
+            "PASS 17: Explicit system creator zero remains distinct from unknown legacy origin",
+            "PASS 18: Unavailable quota accounting fails closed without insertion",
+            "PASS 19: Invalid configured limits fall back to finite defaults",
+            "PASS 20: Capacity configuration receives the effective uploader identity",
+            "Shared quota checks: 20 passed."
+          ],
+          "passLines": 20
+        },
+        "php-remote-scope": {
+          "lastLines": [
+            "PASS 29: Only the outer response restores the original anonymous identity",
+            "PASS 30: Bearer key cannot authorize core administration: /wp/v2/users",
+            "PASS 31: Bearer key cannot authorize core administration: /wp/v2/settings",
+            "PASS 32: Bearer key cannot authorize core administration: /wp/v2/plugins",
+            "PASS 33: Bearer key cannot authorize core administration: /wp/v2/themes",
+            "PASS 34: Bearer key cannot authorize core administration: /batch/v1",
+            "Remote scope checks: 34 passed."
+          ],
+          "passLines": 34
+        },
+        "php-reservations": {
+          "lastLines": [
+            "{\"reservation_checks\":61,\"passed\":true}"
+          ],
+          "passLines": 0
+        },
+        "php-security": {
+          "lastLines": [
+            "PASS 15: A later batch detects same-size changed bytes; no stale request cache",
+            "PASS 16: revoke during manifest work cannot become a session-origin reservation",
+            "PASS 17: expire during manifest work cannot become a session-origin reservation",
+            "PASS 18: Revocation during worker validation keeps the destination reservation inactive and nonpublic",
+            "PASS 19: Another valid key cannot overwrite a cancellation using a stale version",
+            "PASS 20: Legacy reservations with lost issuer provenance remain inactive and require explicit rescheduling",
+            "Security regression checks: 20 checks, 0 failures."
+          ],
+          "passLines": 20
+        },
+        "php-structures": {
+          "lastLines": [
+            "PASS 37: Trusted design registration can provide an explicit active alternative",
+            "PASS 38: Active equivalent is preferred even when an earlier-sorting equivalent is retired",
+            "PASS 39: Concurrent requests from two owners create one global structure and reuse its ID",
+            "PASS 40: Required image and document structures register without example URLs or alternative text",
+            "PASS 41: Content-free structures bind owner-private image and PDF references in the article",
+            "PASS 42: Shared handoff reveals neither private asset IDs nor contextual alt text",
+            "Global structures: 42 passed."
+          ],
+          "passLines": 42
+        },
+        "php-taxonomies": {
+          "lastLines": [
+            "{\"taxonomy_checks\":63,\"postUrl\":\"http://127.0.0.1:8128/?p=117\",\"eventUrl\":\"http://127.0.0.1:8128/?sf_test_event=taxonomy-publication-qa\"}"
+          ],
+          "passLines": 0
+        },
+        "php-titles": {
+          "lastLines": [
+            "PASS 7: Owned title is escaped exactly once from canonical plain text",
+            "PASS 8: Rendered title is inert and preserves literal entities",
+            "PASS 9: Owned title is escaped exactly once from canonical plain text",
+            "PASS 10: Rendered title is inert and preserves literal entities",
+            "PASS 11: Owned title is escaped exactly once from canonical plain text",
+            "PASS 12: Rendered title is inert and preserves literal entities",
+            "Title boundary checks: 12 passed."
+          ],
+          "passLines": 12
+        },
+        "php-transport": {
+          "lastLines": [
+            "PASS 17: Atshift\\Deft\\Connections local http://example.test 127.0.0.1",
+            "PASS 18: Atshift\\Deft\\Transfer local http://example.test 127.0.0.1",
+            "PASS 19: Atshift\\Deft\\Connections local ftp://127.0.0.1 127.0.0.1",
+            "PASS 20: Atshift\\Deft\\Transfer local ftp://127.0.0.1 127.0.0.1",
+            "PASS 21: Atshift\\Deft\\Connections local http://127.0.0.1 ",
+            "PASS 22: Atshift\\Deft\\Transfer local http://127.0.0.1 ",
+            "Transport checks: 22 checks, 0 failures."
+          ],
+          "passLines": 22
+        },
+        "runtime-guard": {
+          "lastLines": [
+            "Runtime compatibility: 16 passed."
+          ],
+          "passLines": 0
+        },
+        "seed": {
+          "lastLines": [
+            "PASS 7: Old runtime saves the draft before attaching files",
+            "PASS 8: Legacy private media fixture saved",
+            "PASS 9: Legacy private media fixture saved",
+            "PASS 10: Old runtime saves a media-bound article",
+            "PASS 11: Old runtime freezes and publishes legacy image/PDF files",
+            "PASS 12: Old reservation and publication marker created",
+            "Prefix upgrade seed: 12 checks passed."
+          ],
+          "passLines": 12
+        },
+        "verify": {
+          "lastLines": [
+            "PASS 18: Other account still cannot read the old private draft",
+            "PASS 19: Pre-upgrade connection key authenticates with its original owner",
+            "PASS 20: Connection request restores the previous WordPress account",
+            "PASS 21: Old draft can be updated with optimistic concurrency",
+            "PASS 22: Updating the old draft keeps its historical version intact",
+            "PASS 23: No broad legacy PHP namespace is re-exported",
+            "Prefix upgrade verify: 23 checks passed."
+          ],
+          "passLines": 23
+        }
+      }
+    },
+    {
+      "mode": "fresh-relocated-multisite",
+      "evidence": "deft-prefixes-hdgjsQ",
+      "checks": [
+        {
+          "name": "copy-checkout",
+          "status": 0
+        },
+        {
+          "name": "copy-core",
+          "status": 0
+        },
+        {
+          "name": "config",
+          "status": 0
+        },
+        {
+          "name": "db-create",
+          "status": 0
+        },
+        {
+          "name": "core-install",
+          "status": 0
+        },
+        {
+          "name": "activate-adapter",
+          "status": 0
+        },
+        {
+          "name": "package-github",
+          "status": 0
+        },
+        {
+          "name": "package-wordpress-org",
+          "status": 0
+        },
+        {
+          "name": "install-after",
+          "status": 0
+        },
+        {
+          "name": "node-static",
+          "status": 0
+        },
+        {
+          "name": "runtime-guard",
+          "status": 0
+        },
+        {
+          "name": "legacy-guard",
+          "status": 0
+        },
+        {
+          "name": "org-mcp-active",
+          "status": 0
+        },
+        {
+          "name": "disable-adapter",
+          "status": 0
+        },
+        {
+          "name": "org-mcp-inactive",
+          "status": 0
+        },
+        {
+          "name": "restore-adapter",
+          "status": 0
+        },
+        {
+          "name": "remove-SF_PRIVATE_MEDIA_DIR",
+          "status": 0
+        },
+        {
+          "name": "remove-SF_PUBLIC_DOCUMENT_ROOT",
+          "status": 0
+        },
+        {
+          "name": "relocated-content-dir",
+          "status": 0
+        },
+        {
+          "name": "relocated-content-url",
+          "status": 0
+        },
+        {
+          "name": "php-storage-portability",
+          "status": 0
+        },
+        {
+          "name": "php-private-blobs",
+          "status": 0
+        },
+        {
+          "name": "http",
+          "status": 0
+        },
+        {
+          "name": "browser-three-admin-pages",
+          "status": 0
+        },
+        {
+          "name": "browser-save-preview-trash-restore-desktop-mobile",
+          "status": 0
+        },
+        {
+          "name": "network-convert",
+          "status": 0
+        },
+        {
+          "name": "network-adapter",
+          "status": 0
+        },
+        {
+          "name": "network-deft",
+          "status": 0
+        },
+        {
+          "name": "network-second-site",
+          "status": 0
+        },
+        {
+          "name": "network-seed",
+          "status": 0
+        },
+        {
+          "name": "network-verify",
+          "status": 0
+        },
+        {
+          "name": "confirm-db",
+          "status": 0
+        },
+        {
+          "name": "db-drop",
+          "status": 0
+        }
+      ],
+      "offlineCoreWarnings": 4,
+      "databaseDeleted": true,
+      "results": {
+        "http": {
+          "lastLines": [
+            "ℹ suites 0",
+            "ℹ pass 9",
+            "ℹ fail 0",
+            "ℹ cancelled 0",
+            "ℹ skipped 0",
+            "ℹ todo 0",
+            "ℹ duration_ms 3051.33225"
+          ],
+          "passLines": 0
+        },
+        "legacy-guard": {
+          "lastLines": [
+            "Legacy activation guard: 13 passed."
+          ],
+          "passLines": 0
+        },
+        "network-seed": {
+          "lastLines": [
+            "PASS 1: Current site initializes canonical schema independently",
+            "PASS 2: Current site has its own migrated roles",
+            "PASS 3: Only the main disposable site seeds state",
+            "PASS 4: Main-site scoped credential created",
+            "Multisite checks: 4 passed."
+          ],
+          "passLines": 4
+        },
+        "network-verify": {
+          "lastLines": [
+            "PASS 2: Current site has its own migrated roles",
+            "PASS 3: Second site resolves a different private table",
+            "PASS 4: Same asset identity cannot read another site's bytes",
+            "PASS 5: Second site can store its own independent bytes",
+            "PASS 6: Main-site credential cannot authenticate at the second site",
+            "PASS 7: Second-site writes leave main-site private bytes unchanged",
+            "Multisite checks: 7 passed."
+          ],
+          "passLines": 7
+        },
+        "node-static": {
+          "lastLines": [
+            "ℹ suites 0",
+            "ℹ pass 52",
+            "ℹ fail 0",
+            "ℹ cancelled 0",
+            "ℹ skipped 0",
+            "ℹ todo 0",
+            "ℹ duration_ms 4810.877875"
+          ],
+          "passLines": 0
+        },
+        "php-private-blobs": {
+          "lastLines": [
+            "PASS 18: Digest mismatch never exposes bytes",
+            "PASS 19: Existing frozen bytes cannot be replaced",
+            "PASS 20: Oversize writes fail before storage",
+            "PASS 21: Missing chunk fails closed",
+            "PASS 22: Extra chunks fail closed even with forged short metadata",
+            "PASS 23: Corrupt database record cannot fall back to a legacy file",
+            "Private blob checks: 23 passed."
+          ],
+          "passLines": 23
+        },
+        "php-storage-portability": {
+          "lastLines": [
+            "PASS 6: Private preview resolves database images/PDF without a legacy directory",
+            "PASS 7: Immediate publication succeeds with database-only private media",
+            "PASS 8: Public frozen bytes retain the pinned digest",
+            "PASS 9: Public frozen bytes retain the pinned digest",
+            "PASS 10: WordPress upload API resolves the relocated uploads directory",
+            "PASS 11: Existing media reuse follows core path APIs, not wp-content/uploads assumptions",
+            "Storage portability checks: 11 passed."
+          ],
+          "passLines": 11
+        },
+        "runtime-guard": {
+          "lastLines": [
+            "Runtime compatibility: 16 passed."
+          ],
+          "passLines": 0
+        }
+      }
+    }
+  ],
+  "baselines": {
+    "wordpressOrg": {
+      "version": "0.7.2",
+      "sha256": "348a26ce62c483b9cac8cf4e7a66197c558e1d8c9922bba6431aba93d2e2d301"
+    }
+  },
+  "githubUpdater": {
+    "evidence": "deft-updater-prefix-UWi41a",
+    "checks": [
+      {
+        "name": "copy-checkout",
+        "status": 0
+      },
+      {
+        "name": "copy-core",
+        "status": 0
+      },
+      {
+        "name": "config",
+        "status": 0
+      },
+      {
+        "name": "db-create",
+        "status": 0
+      },
+      {
+        "name": "install-core",
+        "status": 0
+      },
+      {
+        "name": "adapter",
+        "status": 0
+      },
+      {
+        "name": "install-released",
+        "status": 0
+      },
+      {
+        "name": "seed",
+        "status": 0
+      },
+      {
+        "name": "legacy-updater",
+        "status": 0
+      },
+      {
+        "name": "post-update-new-bootstrap",
+        "status": 0
+      },
+      {
+        "name": "current-updater-fixture",
+        "status": 0
+      },
+      {
+        "name": "post-update-final-bootstrap",
+        "status": 0
+      },
+      {
+        "name": "github-i18n",
+        "status": 0
+      },
+      {
+        "name": "github-onboarding",
+        "status": 0
+      },
+      {
+        "name": "github-publication-guidance",
+        "status": 0
+      },
+      {
+        "name": "github-mcp-active",
+        "status": 0
+      },
+      {
+        "name": "disable-adapter",
+        "status": 0
+      },
+      {
+        "name": "github-mcp-inactive",
+        "status": 0
+      },
+      {
+        "name": "confirm-db",
+        "status": 0
+      },
+      {
+        "name": "drop-db",
+        "status": 0
+      }
+    ],
+    "databaseDeleted": true,
+    "offlineCoreWarnings": 3,
+    "legacy": {
+      "updater_checks": 69,
+      "installed": "0.7.3"
+    },
+    "currentNamespaceFixture": {
+      "updater_checks": 69,
+      "installed": "0.7.3"
+    },
+    "network": "GitHub HTTP responses mocked; actual WordPress upgrader and verified local ZIP used",
+    "postUpdateFreshBootstrap": true
+  }
+}

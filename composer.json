@@ -1,6 +1,6 @@
 {
     "name": "atshift/structured-fields-php-deps",
-    "description": "Isolated OAuth dependencies for atshift DEFT",
+    "description": "Isolated OAuth dependencies for atshift DeFt",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "require": {

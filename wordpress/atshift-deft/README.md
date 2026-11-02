@@ -1,18 +1,18 @@
-# atshift DEFT 0.7.2
+# atshift DeFt 0.7.3
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
-**Start with one thing in DEFT: download the guide for your AI.**
+**Start with one thing in DeFt: download the guide for your AI.**
 
 Give it to the AI you already use, then follow its instructions to connect to
 WordPress. Once a compatible AI client is connected and authorized, you can create
-and publish new articles through that conversation, without opening DEFT for
+and publish new articles through that conversation, without opening DeFt for
 everyday authoring.
 
 Work with your AI on the article, ask it to create the page design and column
 layout, and tell it where the article should appear. Review the result, then
 simply ask, **"Publish it."** Ask your AI to select existing categories and tags,
-too. Published DEFT articles also output JSON-LD and a public, content-only
+too. Published DeFt articles also output JSON-LD and a public, content-only
 structure that other AI tools can read.
 
 **Focus on creating content. Let your AI handle the assembly and publication.**
@@ -32,15 +32,15 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Download `atshift-deft-0.7.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.2), which also includes its SHA-256 checksum. Upload it through Plugins >
-Add New > Upload Plugin, activate it, and open **atshift DEFT** as an administrator.
+Download `atshift-deft-0.7.3.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3), which also includes its SHA-256 checksum. Upload it through Plugins >
+Add New > Upload Plugin, activate it, and open **atshift DeFt** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
 archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
-DEFT means **Delegate Execution. Focus on Thinking.** (`D.E.F.T.` is the expanded-initialism styling.)
-Version 0.7.2 adds the missing installation and activation steps for the official MCP Adapter. MCP Adapter 0.7.1+ must be installed and active for AI connections.
+DeFt means **Delegate Execution. Focus on Thinking.**
+Version 0.7.3 adds review hardening, compatible identifier migration, database-backed private files and the DeFt icon. Back up the database and files before updating. Legacy-data migration requires InnoDB core tables; do not run old and new plugin workers together or downgrade only the plugin files. MCP Adapter 0.7.1+ must be installed and active for AI connections.
 Version 0.7.0 adds per-article destinations, existing category/tag selection and public structure JSON with JSON-LD. Saved-data identities and connection permissions are preserved.
 Version 0.7.1 adds owner-only draft trash/restoration, owner information and private
 reservation entries in destination lists. Cancelled or blocked reservations return
@@ -48,18 +48,18 @@ to drafts; saved rendering data is retained after publication.
 Existing 0.5.x installations need one manual ZIP replacement. Thereafter the GitHub
 package supports normal WordPress updates, preserving the site's automatic-update
 preference and verifying the exact release ZIP with SHA-256. The WordPress.org
-package excludes this adapter. Both packages include the same translation files.
+package excludes this adapter and bundled translations; it uses English source text and supports WordPress language packs. The GitHub ZIP includes the partial Japanese catalog and Japanese guide. Both retain translation support and the POT template.
 The WordPress.org application is awaiting review; the separate submission is not a directory release.
 After upgrading, download a fresh AI guide from Articles and ask your AI to read it.
 When upgrading from Structured Fields Prototype, back up the site, deactivate the
-old plugin, then install and activate atshift DEFT. Do not delete the old data.
+old plugin, then install and activate atshift DeFt. Do not delete the old data.
 The changed folder/main file is a different WordPress plugin identity, not an
 in-place update. The old and new versions cannot run together. Drafts, media,
 component IDs, roles/capabilities, connection grants and reservations are retained.
 The `structured-fields` API/MCP/admin route names and OAuth issuer are intentional
 compatibility identifiers; do not replace them with `atshift-deft` in client settings.
 No Node.js process, separate AI service, or SQLite database is required on the server.
-Japanese step-by-step installation and use: [GETTING-STARTED.ja.md](GETTING-STARTED.ja.md).
+Japanese step-by-step installation and use: [online Japanese guide](https://github.com/at-shift/atshift-deft/blob/main/wordpress/atshift-deft/GETTING-STARTED.ja.md) (also included in the GitHub ZIP).
 External-AI instructions: [AI-GUIDE.md](AI-GUIDE.md).
 
 ## AI Connection
@@ -134,7 +134,7 @@ schedule** for the in-plugin steps.
 
 1. Save and check **Open theme preview**.
 2. Open **AI connections** using the draft owner's WordPress account (administrator
-   or **atshift DEFT publisher**). For a key-based client, select **Allow immediate
+   or **atshift DeFt publisher**). For a key-based client, select **Allow immediate
    and scheduled public publication of my drafts**, then **Create connection**.
    Add its returned publishing URL and new key as a separate AI connection; keep
    the draft connection. For OAuth, choose **Use the publishing endpoint** and
@@ -149,7 +149,7 @@ Never paste a key into chat. Missing publication options require administrator
 help with the same account, not another person's connection. Setup alone does
 not request publication; the optional sample stays private.
 
-An opt-in **atshift DEFT publisher** can create a separate publishing key.
+An opt-in **atshift DeFt publisher** can create a separate publishing key.
 Its displayed endpoint additionally exposes get-publication, set-publication and
 cancel-publication. The user chooses now or a desired date/time; the AI sets it
 without a second WordPress approval. Existing keys remain draft-only. Reservations
@@ -165,17 +165,17 @@ offers available publishable destinations and waits for your answer. An existing
 choice is validated and stated with the timing without asking again. Choosing
 a destination alone does not publish anything. The AI includes the selected `postType` in `set-publication`;
 the API's legacy default is not permission to skip this conversation. No separate
-DEFT allowlist is needed. Pages/custom types require native create/edit/publish capabilities as
-well as DEFT publication access. Unsupported or unavailable destinations fail without
+DeFt allowlist is needed. Pages/custom types require native create/edit/publish capabilities as
+well as DeFt publication access. Unsupported or unavailable destinations fail without
 falling back. Selection belongs to the publication request, not the draft snapshot.
 Use `list-taxonomies` and `list-terms` to select existing categories, tags or public
 custom taxonomy terms for that destination. The AI proposes a small relevant
 selection and confirms it with the destination and timing. Native assignment
-rights are required; DEFT publisher alone does not grant them. No terms are created.
+rights are required; DeFt publisher alone does not grant them. No terms are created.
 Omitted taxonomies follow WordPress defaults, including the default category for
 normal posts. Term IDs, names, slugs and parents are pinned; changes or permission
 loss block pending reservations. The result and Articles status show the selection.
-Published DEFT pages also output minimal BlogPosting/WebPage JSON-LD and a link to
+Published DeFt pages also output minimal BlogPosting/WebPage JSON-LD and a link to
 `/wp-json/structured-fields/v1/public-structure/{publicPostId}`. The semantic tree
 uses only public HTML, not private snapshots, defaults, CSS/JS or account details.
 Private/password-protected/withdrawn posts are excluded, even for owners.
@@ -189,13 +189,13 @@ Images/PDFs use frozen private copies served after publication, not media-librar
 promotion. The plugin must remain active to serve these files and styles. A disabled
 plugin cannot process reservations. Retention/deletion UI is not implemented.
 
-For each contributor, use a separate WordPress account with the **atshift DEFT
+For each contributor, use a separate WordPress account with the **atshift DeFt
 author** role. No existing roles or accounts are changed automatically. Articles
 belong to their first creator; plugin APIs/UI have no administrator override.
 Authors may use active catalog or their article's saved component revisions, and
 create shared content-free structures from bounded recipes, not arbitrary HTML/CSS.
 Existing private definitions remain private; the legacy recipe path is still available.
-The opt-in **atshift DEFT designer** role grants shared registration and
+The opt-in **atshift DeFt designer** role grants shared registration and
 management without site administration or access to other owners' private work.
 Administrators can still import arbitrary validated designs into their own articles.
 Account handover is not implemented.
@@ -235,21 +235,22 @@ JSON, then choose **Import snapshot**. Required media must already exist on the
 WordPress site; the JSON transfer does not upload images.
 
 The **Private files** panel accepts JPEG/PNG/WebP/PDF for a saved draft.
-Both reference files and publication candidates stay private, outside normal
-WordPress uploads. In alpha.3, **Article media** can place publication candidates
+Both reference files and publication candidates stay private in the WordPress
+database. **Article media** can place publication candidates
 in image/PDF fields with contextual text. Reference-only files cannot be bound.
 Your own uploaded WordPress media can be searched and reused without copying files
 or changing their original metadata. New private files are not published.
-Provision a canonical directory outside all public roots/aliases and set
-`SF_PRIVATE_MEDIA_DIR` and `SF_PUBLIC_DOCUMENT_ROOT` in `wp-config.php` first.
-PHP fileinfo and Unix permissions (0700 directories, 0600 files) are required.
-Missing/unverifiable storage fails closed; there is no public-uploads fallback.
+PHP fileinfo and InnoDB are required. No extra storage directory or `wp-config.php`
+edit is needed for new files. Previously stored files remain read-only at their
+original location; retain the old configuration and backups until those files
+are no longer needed. There is no plaintext public-uploads fallback.
 Limits are 10 MiB per file (or lower host limit), 50 files and 50 media bindings / 100 MiB per article,
 100 MiB of staged files per uploader across articles, and 500 MiB per site.
 New shared component IDs default to 20 per creator; existing shared reuse does not
 consume a slot. Disabled IDs still count. Manager edits never transfer creator usage.
-Trusted site code may adjust per-user limits using `sf_shared_component_limit_per_user`
-and `sf_private_media_limit_per_user` (integer count/bytes, then the user ID).
+Trusted site code may adjust per-user limits using `atshde_shared_component_limit_per_user`
+and `atshde_private_media_limit_per_user` (integer count/bytes, then the user ID).
+The old `sf_` filter names remain compatibility aliases for existing policies.
 Existing data is retained even when over quota. Assets are retained on deactivation;
 cleanup is not implemented.
 

@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 

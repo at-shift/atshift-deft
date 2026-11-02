@@ -1,13 +1,13 @@
-# atshift DEFT for WordPress 0.7.2
+# atshift DeFt for WordPress 0.7.3
 
-0.7.2 adds the missing official MCP Adapter installation and activation instructions before AI connection setup.
+0.7.3 adds review hardening, compatible identifier migration, database-backed private files and the DeFt icon. See [release notes](../docs/RELEASE-0.7.3.md) for backup and migration requirements.
 Installable ZIPs and checksums are distributed through GitHub Releases. Earlier release assets are unchanged.
 For installation and everyday use, see the [Installation and User Guide](../docs/GETTING-STARTED.md).
 See [V0.5.0.md](../docs/V0.5.0.md) for identity and legacy activation steps.
 
 Alpha.14 was the preceding private GitHub code checkpoint. Its OAuth and runtime changes remain:
 [ALPHA14.md](../docs/ALPHA14.md). Existing keys and separately delegated publication
-remain unchanged. GitHub and WordPress.org submission packages built from this source share version 0.7.2;
+remain unchanged. GitHub and WordPress.org submission packages built from this source share version 0.7.3;
 this does not imply a WordPress.org release or a production installation.
 
 Development candidate, not for production use. Earlier `0.2.0` labels were local-only
@@ -15,7 +15,7 @@ prototype labels and were never released. The browser package and WordPress
 plugin use the same development version.
 Known issues and deferred work are tracked in `../docs/FOLLOW-UP.md`.
 Japanese installation and usage instructions are in
-[GETTING-STARTED.ja.md](atshift-deft/GETTING-STARTED.ja.md), also included in the ZIP.
+[GETTING-STARTED.ja.md](atshift-deft/GETTING-STARTED.ja.md), included only in the GitHub ZIP along with Japanese catalogs. The WordPress.org ZIP is English-only and excludes the GitHub updater; it retains WordPress language-pack support.
 Current MCP additions are in [ALPHA10.md](../docs/ALPHA10.md), extending [ALPHA9.md](../docs/ALPHA9.md).
 
 This is a separate plugin, not an update to atshift Fields. It runs on WordPress's
@@ -92,7 +92,7 @@ limits and the distinction between immutable hashes and CAS versions.
 ## Installation
 
 The installable folder is `wordpress/atshift-deft/`. Copy that folder to a
-test site's `wp-content/plugins/`, activate it, and open **atshift DEFT**.
+test site's `wp-content/plugins/`, activate it, and open **atshift DeFt**.
 The committed schema and sample are already included. Development regeneration:
 
 ```sh
@@ -123,7 +123,7 @@ media can also be searched and reused; originals and their metadata are not chan
 Choose **Media sample**, save it, then upload publication candidates or search
 the existing library, select the sources, enter contextual text, and save again.
 Both the saved references and the preview pin the exact bytes with SHA-256.
-See [private storage setup](../docs/MEDIA-WORKFLOW.md) and
+See [private storage and upgrade compatibility](../docs/PRIVATE-STORAGE.md) and
 [v2 references, API and limits](../docs/MEDIA-REFERENCES.md).
 
 Old URL-based v1 snapshots remain supported. Root-relative URLs resolve on the

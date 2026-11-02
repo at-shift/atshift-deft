@@ -448,7 +448,7 @@ export default function ArticleWorkspace({ profiles, onSetup }) {
       <header className="article-topbar">
         <div className="article-brand">
           <Layers size={21} />
-          <strong>atshift DEFT</strong>
+          <strong>atshift DeFt</strong>
         </div>
         <span className="article-environment">
           Local prototype · WordPress 未接続

@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,7 +24,7 @@ final class PublicStructure {
     public static function read( $id ) {
         $post = get_post( $id );
         if ( ! $post || 'publish' !== $post->post_status || $post->post_password || ! is_post_publicly_viewable( $post ) ) return null;
-        $publication = get_post_meta( $post->ID, '_sf_publication', true );
+        $publication = get_post_meta( $post->ID, '_atshde_publication', true );
         if ( ! is_string( $publication ) || ! preg_match( '/^[a-f0-9-]{36}$/D', $publication ) ) return null;
         $job = Publications::by_publication( $publication );
         if ( ! $job || 'published' !== $job['state'] || ! Publications::matches_post( $job, $post, true ) ) return null;
@@ -114,7 +114,7 @@ final class PublicStructure {
         if ( ! is_singular() || is_preview() || is_feed() ) return;
         $id = get_queried_object_id(); $data = self::read( $id );
         if ( ! $data ) return;
-        echo '<link rel="alternate" type="application/json" title="DEFT public structure" href="' . esc_url( rest_url( 'structured-fields/v1/public-structure/' . $id ) ) . '">' . "\n";
+        echo '<link rel="alternate" type="application/json" title="DeFt public structure" href="' . esc_url( rest_url( 'structured-fields/v1/public-structure/' . $id ) ) . '">' . "\n";
         // Sites with an SEO graph can disable only this small JSON-LD document, keeping structure discovery.
         if ( ! apply_filters( 'atshift_deft_json_ld_enabled', true, $id ) ) return;
         $json = wp_json_encode( self::linked_data( $data ), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE );

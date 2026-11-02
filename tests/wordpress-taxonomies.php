@@ -1,8 +1,9 @@
 <?php
+require_once __DIR__ . '/wordpress-connection-context.php';
 // WP-CLI eval-file, with both post-type and taxonomy fixtures installed as mu-plugins.
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() ||
     ! preg_match( '/^sf_deft_post_types_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable taxonomy test database.' );
-use StructuredFields\{Connections, Mcp, Publications, Snapshot, Store, Taxonomies};
+use Atshift\Deft\{Connections, Mcp, Publications, Snapshot, Store, Taxonomies};
 global $wpdb, $checks;
 $checks = 0; $run = wp_generate_uuid4();
 function sft_check( $ok, $message ) { global $checks; if ( ! $ok ) throw new RuntimeException( $message ); ++$checks; }
@@ -17,7 +18,7 @@ function sft_key( $user, $publish ) {
 function sft_connect( $key ) {
     $_SERVER['REMOTE_ADDR'] = '127.0.0.1'; $r = new WP_REST_Request( 'POST', $key['route'] );
     $r->set_body( '{}' ); $r->set_header( 'authorization', 'Bearer ' . $key['token'] );
-    sft_good( Connections::guard( null, rest_get_server(), $r ) );
+    sft_good( sf_test_begin_connection( $r ) );
 }
 function sft_draft() {
     return sft_call( 'save-draft', array( 'expectedVersion' => 0,
@@ -47,11 +48,11 @@ $tag = sft_term( 'Reading ' . $run, 'post_tag' );
 $event = sft_term( 'Community ' . $run, 'sf_event_topic' );
 $other = sft_term( 'Other ' . $run, 'sf_event_topic' );
 $password = wp_generate_password( 32 );
-$user = sft_good( wp_insert_user( array( 'user_login' => 'taxonomy-' . $run, 'user_pass' => $password, 'role' => 'sf_publisher' ) ) );
+$user = sft_good( wp_insert_user( array( 'user_login' => 'taxonomy-' . $run, 'user_pass' => $password, 'role' => 'atshde_publisher' ) ) );
 $keys = array( 'draft' => sft_key( $user, false ), 'publish' => sft_key( $user, true ) );
 sft_connect( $keys['draft'] );
 $tax = array_column( sft_call( 'list-taxonomies', array( 'postType' => 'post' ) )['items'], null, 'taxonomy' );
-sft_check( array( 'category', 'post_tag' ) === array_keys( $tax ) && ! $tax['category']['accountCanAssign'], 'Discovery reports native assignment rights without changing the DEFT publisher role.' );
+sft_check( array( 'category', 'post_tag' ) === array_keys( $tax ) && ! $tax['category']['accountCanAssign'], 'Discovery reports native assignment rights without changing the DeFt publisher role.' );
 sft_check( (int) get_option( 'default_category' ) === $tax['category']['defaultTerm']['id'], 'Discovery explains the ordinary-post default category.' );
 sft_check( is_wp_error( Mcp::execute( 'list-terms', array( 'postType' => 'post', 'taxonomy' => 'category' ) ) ), 'Term lookup requires native taxonomy permission.' );
 sft_check( is_wp_error( Mcp::execute( 'set-publication', array() ) ), 'Taxonomy discovery does not grant draft connections publication.' );
@@ -67,7 +68,7 @@ for ( $i = 0; $i < 52; ++$i ) sft_term( 'Pagination-' . $run . '-' . $i, 'post_t
 $page1 = sft_call( 'list-terms', array( 'postType' => 'post', 'taxonomy' => 'post_tag', 'search' => 'Pagination-' . $run ) );
 $page2 = sft_call( 'list-terms', array( 'postType' => 'post', 'taxonomy' => 'post_tag', 'search' => 'Pagination-' . $run, 'page' => 2 ) );
 sft_check( count( $page1['items'] ) === 50 && $page1['nextPage'] === 2 && count( $page2['items'] ) === 2 && ! $page2['hasMore'] && ! array_intersect( array_column( $page1['items'], 'id' ), array_column( $page2['items'], 'id' ) ), 'Term search is bounded and paginated without overlaps.' );
-foreach ( array( array( 'postType' => 'sf_article' ), array( 'postType' => '../post' ), array( 'postType' => 'post', 'extra' => true ) ) as $bad ) sft_check( is_wp_error( Mcp::execute( 'list-taxonomies', $bad ) ), 'Invalid taxonomy discovery inputs denied.' );
+foreach ( array( array( 'postType' => 'atshde_article' ), array( 'postType' => '../post' ), array( 'postType' => 'post', 'extra' => true ) ) as $bad ) sft_check( is_wp_error( Mcp::execute( 'list-taxonomies', $bad ) ), 'Invalid taxonomy discovery inputs denied.' );
 foreach ( array( array( 'taxonomy' => 'sf_event_topic' ), array( 'taxonomy' => 'post_tag', 'page' => 0 ), array( 'taxonomy' => 'post_tag', 'page' => '1' ), array( 'taxonomy' => 'post_tag', 'search' => str_repeat( 'a', 201 ) ) ) as $bad ) sft_check( is_wp_error( Mcp::execute( 'list-terms', $bad + array( 'postType' => 'post' ) ) ), 'Invalid term discovery inputs denied.' );
 wp_set_current_user( 0 ); sft_check( is_wp_error( Taxonomies::listing( array( 'postType' => 'post' ) ) ), 'Anonymous taxonomy discovery denied.' ); sft_connect( $keys['publish'] );
 $d = sft_draft(); $before = Store::read( $d['articleId'] );
@@ -119,7 +120,7 @@ sft_check( 'published' === $limit_result['state'] && 100 === array_sum( array_ma
 for ( $i = 0; $i < 6; ++$i ) unregister_taxonomy( 'sf_limit_' . $i );
 $d = sft_draft(); $reserved = sft_call( 'set-publication', sft_intent( $d, sft_select( 'sf_event_topic', array( $event ) ), 'sf_test_event', false ) );
 $replaced = sft_call( 'set-publication', sft_intent( $d, sft_select( 'sf_event_topic', array( $other ) ), 'sf_test_event', false, 1 ) );
-Publications::run( $d['articleId'], 1 ); sft_check( in_array( Publications::state( $d['articleId'] )['state'], array( 'scheduled', 'overdue' ), true ) && 'sf_reserved' === get_post_status( Publications::state( $d['articleId'] )['postId'] ), 'Old reservation worker cannot publish replaced terms.' );
+Publications::run( $d['articleId'], 1 ); sft_check( in_array( Publications::state( $d['articleId'] )['state'], array( 'scheduled', 'overdue' ), true ) && 'atshde_reserved' === get_post_status( Publications::state( $d['articleId'] )['postId'] ), 'Old reservation worker cannot publish replaced terms.' );
 $replaced = sft_due( $d['articleId'] );
 sft_check( 'published' === $replaced['state'] && array( $other ) === sft_ids( $replaced['postId'], 'sf_event_topic' ), 'Rescheduling uses only the new selected terms.' );
 foreach ( array( 'delete', 'rename', 'slug', 'parent', 'detached', 'unregistered', 'private', 'capability' ) as $case ) {

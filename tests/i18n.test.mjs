@@ -50,8 +50,8 @@ test("a translator PO compiles to MO and four path-hashed JS catalogs", () => {
       assert.equal(i18n.__(en, "atshift-deft"), fr);
     }
     runInNewContext(read("connection-profiles.js"), {window, URL});
-    assert.equal(window.sfConnectionProfiles.route("", "https://example.org/mcp").reason, "Choisissez votre IA.");
-    const template = window.sfConnectionProfiles.template("claude-code", "https://example.org/mcp");
+    assert.equal(window.atshiftDeftConnectionProfiles.route("", "https://example.org/mcp").reason, "Choisissez votre IA.");
+    const template = window.atshiftDeftConnectionProfiles.template("claude-code", "https://example.org/mcp");
     assert.ok(JSON.parse(template.text).mcpServers);
     assert.match(template.text, /Bearer/);
     assert.equal(i18n.sprintf(i18n._n('%d file received privately. Not published.', '%d files received privately. Not published.', 2, 'atshift-deft'), 2), '2 fichiers prives.');

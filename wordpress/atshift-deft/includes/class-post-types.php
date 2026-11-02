@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -8,13 +8,13 @@ final class PostTypes {
         if ( ! is_string( $name ) || ! preg_match( '/^[a-z0-9_-]{1,20}$/D', $name ) ) return null;
         $type = get_post_type_object( $name );
         if ( ! $type || ( $type->_builtin && ! in_array( $name, array( 'post', 'page' ), true ) ) ||
-            'sf_article' === $name || ! $type->public || ! is_post_type_viewable( $type ) ||
+            'atshde_article' === $name || ! $type->public || ! is_post_type_viewable( $type ) ||
             ! post_type_supports( $name, 'title' ) || ! post_type_supports( $name, 'editor' ) ) return null;
         return $type;
     }
 
     private static function legacy_post( $type ) {
-        // Preserve DEFT's existing, scoped post permission; never extend it to pages or custom types.
+        // Preserve DeFt's existing, scoped post permission; never extend it to pages or custom types.
         return 'post' === $type->name && 'edit_posts' === $type->cap->create_posts &&
             'edit_posts' === $type->cap->edit_posts && 'publish_posts' === $type->cap->publish_posts;
     }

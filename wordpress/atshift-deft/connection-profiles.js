@@ -4,7 +4,7 @@
   const profiles = [
     { id: "chatgpt", label: __("ChatGPT (web: Chat / Work)", "atshift-deft"), auth: "oauth", cloud: true,
       note: __("Use OAuth with a pre-registered client ID and PKCE S256. A fixed connection key is not used. Actual availability depends on your ChatGPT account and its custom MCP settings.", "atshift-deft"),
-      steps: [__("Open Settings > Plugins > View agents, then Add > Add custom MCP server. The installed-plugin settings list is not the creation screen. Labels may vary by version.", "atshift-deft"), __("Ask the site administrator to register the callback URL from your AI's OAuth settings.", "atshift-deft"), __("Enter the MCP endpoint and client ID in the AI's custom MCP connection. Sign in to WordPress and approve only the access you need.", "atshift-deft"), __("Install the created plugin, select it in the intended Chat or Work conversation, and ask the AI to confirm live context. A visible add menu does not prove that DEFT OAuth works with this account.", "atshift-deft")],
+      steps: [__("Open Settings > Plugins > View agents, then Add > Add custom MCP server. The installed-plugin settings list is not the creation screen. Labels may vary by version.", "atshift-deft"), __("Ask the site administrator to register the callback URL from your AI's OAuth settings.", "atshift-deft"), __("Enter the MCP endpoint and client ID in the AI's custom MCP connection. Sign in to WordPress and approve only the access you need.", "atshift-deft"), __("Install the created plugin, select it in the intended Chat or Work conversation, and ask the AI to confirm live context. A visible add menu does not prove that DeFt OAuth works with this account.", "atshift-deft")],
       source: "https://developers.openai.com/plugins/build/auth" },
     { id: "claude-oauth", label: __("Claude (OAuth)", "atshift-deft"), auth: "oauth", cloud: true, provider: "claude",
       note: __("Use a pre-registered OAuth client and your own WordPress login. Confirm that your connector accepts a public client with PKCE S256 and no client secret.", "atshift-deft"),
@@ -93,5 +93,5 @@
     return { env, filename: `${name}.${id}.json`, type: "application/json", text: JSON.stringify({ mcpServers: { [name]: server } }, null, 2) + "\n" };
   }
 
-  window.sfConnectionProfiles = Object.freeze({ profiles: Object.freeze(profiles.map(Object.freeze)), route, template, endpointInfo, checked: "2026-10-31" });
+  window.atshiftDeftConnectionProfiles = Object.freeze({ profiles: Object.freeze(profiles.map(Object.freeze)), route, template, endpointInfo, checked: "2026-10-31" });
 })();

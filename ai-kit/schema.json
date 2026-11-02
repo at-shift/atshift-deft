@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "atshift DEFT AI authoring kit v1",
+  "title": "atshift DeFt AI authoring kit v1",
   "description": "Strict minimal input for new draft profiles, not the application's full backup format. HTML/value correspondence and rendering require application validation.",
   "type": "object",
   "additionalProperties": false,

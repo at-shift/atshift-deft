@@ -20,7 +20,7 @@ const work = path.join(local, "php-deps");
 const tools = path.join(local, "tools");
 const target = path.join(root, "wordpress/atshift-deft/vendor");
 const php = values.php ?? process.env.PHP_BINARY ?? "php";
-const prefix = "StructuredFields\\Vendor\\";
+const prefix = "Atshift\\Deft\\Vendor\\";
 // Official release checksum: https://getcomposer.org/download/2.11.1/composer.phar.sha256sum
 const composerVersion = "2.11.1";
 const composerSha256 = "6f1b891e1d4927d62740276c540fb490e47689e19e102c49e8da849794882f8c";
@@ -169,7 +169,7 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($vendor)) 
     if ($file->isFile() && $file->getExtension() === 'php') token_get_all(file_get_contents($file->getPathname()), TOKEN_PARSE);
 }
 $loader = require $vendor . '/autoload.php';
-$prefix = 'StructuredFields\\Vendor\\';
+$prefix = 'Atshift\\Deft\\Vendor\\';
 foreach ($loader->getClassMap() as $class => $file) {
     if (!str_starts_with($class, $prefix)) throw new RuntimeException('Unprefixed class: ' . $class);
 }
@@ -179,20 +179,20 @@ foreach (['League\\OAuth2\\Server\\AuthorizationServer', 'League\\OAuth2\\Server
 foreach (['League\\OAuth2\\Server\\AuthorizationServer', 'Nyholm\\Psr7\\Response', 'Psr\\Http\\Message\\ResponseInterface', 'Composer\\Autoload\\ClassLoader'] as $class) {
     if (class_exists($class, false) || interface_exists($class, false)) throw new RuntimeException('Leaked symbol: ' . $class);
 }
-$factory = new StructuredFields\Vendor\Nyholm\Psr7\Factory\Psr17Factory();
+$factory = new Atshift\Deft\Vendor\Nyholm\Psr7\Factory\Psr17Factory();
 $request = $factory->createServerRequest('POST', 'https://example.test/token')->withParsedBody(['grant_type' => 'authorization_code']);
-if (!$request instanceof StructuredFields\Vendor\Psr\Http\Message\ServerRequestInterface) throw new RuntimeException('PSR-7 isolation failed');
-$key = StructuredFields\Vendor\Defuse\Crypto\Key::createNewRandomKey();
-$ciphertext = StructuredFields\Vendor\Defuse\Crypto\Crypto::encrypt('scope-smoke', $key);
-if (StructuredFields\Vendor\Defuse\Crypto\Crypto::decrypt($ciphertext, $key) !== 'scope-smoke') throw new RuntimeException('Crypto smoke failed');
-$jwt = StructuredFields\Vendor\Lcobucci\JWT\Configuration::forSymmetricSigner(
-    new StructuredFields\Vendor\Lcobucci\JWT\Signer\Hmac\Sha256(),
-    StructuredFields\Vendor\Lcobucci\JWT\Signer\Key\InMemory::plainText(random_bytes(32))
+if (!$request instanceof Atshift\Deft\Vendor\Psr\Http\Message\ServerRequestInterface) throw new RuntimeException('PSR-7 isolation failed');
+$key = Atshift\Deft\Vendor\Defuse\Crypto\Key::createNewRandomKey();
+$ciphertext = Atshift\Deft\Vendor\Defuse\Crypto\Crypto::encrypt('scope-smoke', $key);
+if (Atshift\Deft\Vendor\Defuse\Crypto\Crypto::decrypt($ciphertext, $key) !== 'scope-smoke') throw new RuntimeException('Crypto smoke failed');
+$jwt = Atshift\Deft\Vendor\Lcobucci\JWT\Configuration::forSymmetricSigner(
+    new Atshift\Deft\Vendor\Lcobucci\JWT\Signer\Hmac\Sha256(),
+    Atshift\Deft\Vendor\Lcobucci\JWT\Signer\Key\InMemory::plainText(random_bytes(32))
 );
 $token = $jwt->builder()->issuedBy('scope-smoke')->getToken($jwt->signer(), $jwt->signingKey());
 $jwt->validator()->assert($jwt->parser()->parse($token->toString()),
-    new StructuredFields\Vendor\Lcobucci\JWT\Validation\Constraint\SignedWith($jwt->signer(), $jwt->verificationKey()));
-$pkce = new StructuredFields\Vendor\League\OAuth2\Server\CodeChallengeVerifiers\S256Verifier();
+    new Atshift\Deft\Vendor\Lcobucci\JWT\Validation\Constraint\SignedWith($jwt->signer(), $jwt->verificationKey()));
+$pkce = new Atshift\Deft\Vendor\League\OAuth2\Server\CodeChallengeVerifiers\S256Verifier();
 if (!$pkce->verifyCodeChallenge('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk', 'E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM')) throw new RuntimeException('PKCE RFC7636 vector failed');
 echo 'Scoped classmap, OAuth classes, PSR-7, encryption, JWT and PKCE smoke checks passed.' . PHP_EOL;
 `, output]);
@@ -201,11 +201,11 @@ echo 'Scoped classmap, OAuth classes, PSR-7, encryption, JWT and PKCE smoke chec
 $paths = [$argv[1] . '/autoload.php', $argv[2] . '/vendor/autoload.php'];
 if ($argv[3] === 'unscoped-first') $paths = array_reverse($paths);
 foreach ($paths as $file) require $file;
-$scoped = new StructuredFields\Vendor\Nyholm\Psr7\Response();
+$scoped = new Atshift\Deft\Vendor\Nyholm\Psr7\Response();
 $unscoped = new Nyholm\Psr7\Response();
-if (!$scoped instanceof StructuredFields\Vendor\Psr\Http\Message\ResponseInterface || $scoped instanceof Psr\Http\Message\ResponseInterface) throw new RuntimeException('Scoped PSR conflict');
-if (!$unscoped instanceof Psr\Http\Message\ResponseInterface || $unscoped instanceof StructuredFields\Vendor\Psr\Http\Message\ResponseInterface) throw new RuntimeException('Unscoped PSR conflict');
-if (!class_exists(StructuredFields\Vendor\League\OAuth2\Server\AuthorizationServer::class) || !class_exists(League\OAuth2\Server\AuthorizationServer::class)) throw new RuntimeException('OAuth coexistence failed');
+if (!$scoped instanceof Atshift\Deft\Vendor\Psr\Http\Message\ResponseInterface || $scoped instanceof Psr\Http\Message\ResponseInterface) throw new RuntimeException('Scoped PSR conflict');
+if (!$unscoped instanceof Psr\Http\Message\ResponseInterface || $unscoped instanceof Atshift\Deft\Vendor\Psr\Http\Message\ResponseInterface) throw new RuntimeException('Unscoped PSR conflict');
+if (!class_exists(Atshift\Deft\Vendor\League\OAuth2\Server\AuthorizationServer::class) || !class_exists(League\OAuth2\Server\AuthorizationServer::class)) throw new RuntimeException('OAuth coexistence failed');
 echo 'Unprefixed dependency coexistence passed: ' . $argv[3] . PHP_EOL;
 `, output, runtime, order]);
 

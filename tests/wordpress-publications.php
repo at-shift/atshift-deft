@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\Publications;
-use StructuredFields\PublicationMedia;
-use StructuredFields\Connections;
-use StructuredFields\Mcp;
+use Atshift\Deft\Publications;
+use Atshift\Deft\PublicationMedia;
+use Atshift\Deft\Connections;
+use Atshift\Deft\Mcp;
 
 $count = 0;
 function sfp_check( $ok, $message ) { global $count; if ( ! $ok ) throw new RuntimeException( $message ); echo 'PASS ' . ++$count . ': ' . $message . PHP_EOL; }

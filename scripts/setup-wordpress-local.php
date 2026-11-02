@@ -7,14 +7,14 @@ require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 if ( ! is_blog_installed() ) {
     $password = wp_generate_password( 32, false );
-    $installed = wp_install( 'atshift DEFT Local', 'sf_local_admin', 'sf-local@example.invalid', false, '', $password );
+    $installed = wp_install( 'atshift DeFt Local', 'sf_local_admin', 'sf-local@example.invalid', false, '', $password );
     if ( is_wp_error( $installed ) ) throw new RuntimeException( $installed->get_error_message() );
     $path = dirname( __DIR__ ) . '/.local/wp-credentials.json';
     file_put_contents( $path, json_encode( array( 'username' => 'sf_local_admin', 'password' => $password ) ) );
     chmod( $path, 0600 );
 }
 if ( is_plugin_active( 'structured-fields/structured-fields.php' ) ) {
-    throw new RuntimeException( 'Deactivate the legacy Structured Fields plugin in a separate request before activating atshift DEFT. Do not delete saved data.' );
+    throw new RuntimeException( 'Deactivate the legacy Structured Fields plugin in a separate request before activating atshift DeFt. Do not delete saved data.' );
 }
 $result = activate_plugin( 'atshift-deft/atshift-deft.php' );
 if ( is_wp_error( $result ) ) throw new RuntimeException( $result->get_error_message() );

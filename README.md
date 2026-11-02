@@ -1,32 +1,34 @@
-# atshift DEFT
+# atshift DeFt
+
+<img src="wordpress/atshift-deft/assets/icon-128x128.png" alt="atshift DeFt icon" width="96" height="96">
 
 **Focus on your message. Let the AI you already use handle the rest.**
 
-**Start with one thing in DEFT: download the guide for your AI.**
+**Start with one thing in DeFt: download the guide for your AI.**
 
-Give it to the AI you already use, then follow its instructions to connect to WordPress. Once a compatible AI client is connected and authorized, you can create and publish new articles through that conversation, without opening DEFT for everyday authoring.
+Give it to the AI you already use, then follow its instructions to connect to WordPress. Once a compatible AI client is connected and authorized, you can create and publish new articles through that conversation, without opening DeFt for everyday authoring.
 
-Work with your AI on the article, ask it to create the page design and column layout, and tell it where the article should appear. Review the result, then simply ask, **"Publish it."** Ask your AI to select existing categories and tags, too. Published DEFT articles also output JSON-LD and a public, content-only structure that other AI tools can read.
+Work with your AI on the article, ask it to create the page design and column layout, and tell it where the article should appear. Review the result, then simply ask, **"Publish it."** Ask your AI to select existing categories and tags, too. Published DeFt articles also output JSON-LD and a public, content-only structure that other AI tools can read.
 
 **Focus on creating content. Let your AI handle the assembly and publication.**
 
 *Initial setup, permission changes, reconnection and private theme-based previews can still require WordPress sign-in. Site maintenance remains a separate responsibility.*
 
-DEFT stands for **Delegate Execution. Focus on Thinking.**
+DeFt stands for **Delegate Execution. Focus on Thinking.**
 
-Version **0.7.2** adds the missing installation and activation steps for the official MCP Adapter before AI connection setup. MCP Adapter 0.7.1+ must be installed and active for AI connections. Start on an isolated test site with a backup.
+Version **0.7.3** includes review hardening, compatible identifier migration, database-backed private files and the DeFt icon. MCP Adapter 0.7.1+ must be installed and active for AI connections. Start on an isolated test site with a backup.
 
 ## Getting Started
 
 ### STEP 1. Install the Plugin
 
-[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.2/atshift-deft-0.7.2.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
-You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.2). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.3/atshift-deft-0.7.3.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3). GitHub's **Download ZIP** contains source code, not the installable plugin package.
 Upgrading from 0.5.x requires this ZIP replacement once. GitHub packages from 0.6.0 onward receive later official releases through the normal WordPress plugin update screen. Automatic updates remain your choice.
 
 ### STEP 2. Give the Guide to Your AI
 
-Open **atshift DEFT** in WordPress and choose **Download AI guide** in the welcome dialog. Attach the file to your usual AI conversation or add it to your chat project's files.
+Open **atshift DeFt** in WordPress and choose **Download AI guide** in the welcome dialog. Attach the file to your usual AI conversation or add it to your chat project's files.
 After upgrading, download a fresh guide using the same button in **Articles** and ask the AI to read it; an earlier copy does not update itself.
 
 > Read this guide and walk me through connecting to my site.
@@ -39,7 +41,7 @@ If it is already installed, update it if needed and make sure it is active. Ask 
 ### STEP 4. Follow the Connection Instructions
 
 Configure your AI client as guided, then use your own WordPress account to grant only the access you need. Continue once the AI has verified a real connection.
-With MCP Adapter active, open **atshift DEFT > AI connections**. Available connection methods depend on the AI client. Never paste passwords or connection keys into chat.
+With MCP Adapter active, open **atshift DeFt > AI connections**. Available connection methods depend on the AI client. Never paste passwords or connection keys into chat.
 
 ### STEP 5. Try the Sample or Start Your Article
 
@@ -47,7 +49,7 @@ The guide includes an optional sample for trying draft saving and previews witho
 Tell the AI who your article is for and what you want to communicate. Add supporting documents or a layout reference image when useful.
 You can ask the AI to create the **page composition and column layout**, not just the text: arrange headings, images and body sections, combine stacked sections with responsive two-column layouts, and add a supported Q&A presentation. **Work with your current theme's look** or **assemble a separate article layout** from available components. A reference image is optional; the AI checks what the site supports before proposing a layout.
 
-DEFT supports **reusable component appearance**: an authorized AI can register bounded colors, spacing, borders, typography, column proportions and link-button styling inside DEFT. These styled components are shared through the existing catalog and travel with saved articles and previews. No theme Additional CSS changes are needed.
+DeFt supports **reusable component appearance**: an authorized AI can register bounded colors, spacing, borders, typography, column proportions and link-button styling inside DeFt. These styled components are shared through the existing catalog and travel with saved articles and previews. No theme Additional CSS changes are needed.
 
 > Create an announcement for first-time visitors. Organize these materials so the date and registration instructions are easy to find.
 
@@ -57,7 +59,7 @@ For example, add "Keep the look of my current theme" or "Use a two-column layout
 
 **Saving a draft or approving Review does not publish it.** Check the preview, then:
 
-1. **First time only:** open **atshift DEFT > AI connections** as the draft owner (administrator or **atshift DEFT publisher**).
+1. **First time only:** open **atshift DeFt > AI connections** as the draft owner (administrator or **atshift DeFt publisher**).
 2. For a key-based client, check **Allow immediate and scheduled public publication of my drafts**, choose **Create connection**, and add the returned publishing URL and new key as a separate AI connection. Keep the draft connection; its key does not gain publishing rights. For OAuth, choose **Use the publishing endpoint** and grant publication access with the same owner account.
 3. Return to your AI conversation, verify publication access, then say **"Publish this draft now and give me the public URL"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."**
 4. Check the returned result or **Articles > Publication**. **View published post** opens a published article; a scheduled article is not public yet. **Cancel reservation** cancels a pending schedule.
@@ -74,7 +76,7 @@ that support them; the AI confirms the selection with you and does not create te
 Grant publication access only to a trusted connection: it can publish **without another WordPress approval**. Keep keys in secure client settings, never chat. Initial publication only is supported; later draft saves do not update a published post.
 The sample walkthrough remains draft-only. For role requirements, OAuth setup and troubleshooting, see [Publish Now or Schedule](docs/GETTING-STARTED.md#7-publish-now-or-schedule).
 
-DEFT appears below **Settings** in the WordPress menu. Its draft workspace shows the current owner and WordPress role. Once an article is published or scheduled, it leaves the DEFT draft list and appears in the selected destination's list. Scheduled entries are marked **Scheduled (DEFT)** and stay private until DEFT rechecks authorization at the requested time. Use **Manage reservation in DEFT** or ask your AI to change or cancel the reservation; cancelled, invalidated and failed reservations return to drafts. Saved versions and files are retained.
+DeFt appears below **Settings** in the WordPress menu. Its draft workspace shows the current owner and WordPress role. Once an article is published or scheduled, it leaves the DeFt draft list and appears in the selected destination's list. Scheduled entries are marked **Scheduled (DeFt)** and stay private until DeFt rechecks authorization at the requested time. Use **Manage reservation in DeFt** or ask your AI to change or cancel the reservation; cancelled, invalidated and failed reservations return to drafts. Saved versions and files are retained.
 
 See the [Installation and User Guide](docs/GETTING-STARTED.md) for detailed steps and [AI Client Connection Routes](wordpress/atshift-deft/docs/CONNECTIONS.md) for client-specific setup.
 A [Japanese user guide](wordpress/atshift-deft/GETTING-STARTED.ja.md) is also available.
@@ -84,19 +86,19 @@ A [Japanese user guide](wordpress/atshift-deft/GETTING-STARTED.ja.md) is also av
 Choose the destination separately for every article. See [Publication Destinations](docs/PUBLICATION-DESTINATIONS.md) and [Categories and Tags](docs/PUBLICATION-TAXONOMIES.md).
 
 - **Build articles through conversation.** The AI reads available components, fields, and rules to assemble headings, text, images, and links.
-- **Compose pages and columns.** Ask for section order, image-and-text columns, stacked content and Q&A layouts, with an optional design reference image. Supported columns stack on narrow screens; styling stays in DEFT rather than theme Additional CSS.
+- **Compose pages and columns.** Ask for section order, image-and-text columns, stacked content and Q&A layouts, with an optional design reference image. Supported columns stack on narrow screens; styling stays in DeFt rather than theme Additional CSS.
 - **Reuse before creating.** Search the shared component catalog first; add a permitted structure only when existing components are insufficient. Choose presentation variants such as visible or expandable Q&A answers.
 - **Save and resume drafts.** Store articles under their WordPress owner and check version numbers to prevent stale updates.
-- **Trash and restore drafts.** Ask your AI to move an unwanted draft to Trash, or use the trash icon beside it in DEFT. Switch to Trash and use Restore to recover it. Only the owner can do this. Cancel any publication reservation first. Trashing preserves saved versions and files; it does not delete published posts or shared components, and does not reclaim storage.
+- **Trash and restore drafts.** Ask your AI to move an unwanted draft to Trash, or use the trash icon beside it in DeFt. Switch to Trash and use Restore to recover it. Only the owner can do this. Cancel any publication reservation first. Trashing preserves saved versions and files; it does not delete published posts or shared components, and does not reclaim storage.
 - **Use images and PDFs.** Store selected files privately and bind them to a saved article version. Supported existing WordPress media can also be reused.
 - **Review previews, not editing controls.** Use a portable HTML preview or an owner-only preview with the site's actual theme. Make small manual edits when needed.
 - **Publish immediately or schedule.** Let the AI set your requested time through a connection explicitly authorized for publication.
 - **Choose each article's destination.** Select a post, page or eligible custom post type in conversation. The AI asks where to publish when the destination is not yet chosen.
 - **Select categories and tags.** Reuse existing categories, tags or public custom taxonomy terms supported by the destination. The AI proposes a relevant selection for confirmation; native assignment rights are required. No terms are created automatically.
-- **Expose public structure.** Published DEFT pages include minimal JSON-LD and a link to content-only structure JSON. External readers can inspect headings, lists, links and built-in column hints without receiving private editing data. See [Public Structure](docs/PUBLIC-STRUCTURE.md), including access-control and SEO integration notes.
+- **Expose public structure.** Published DeFt pages include minimal JSON-LD and a link to content-only structure JSON. External readers can inspect headings, lists, links and built-in column hints without receiving private editing data. See [Public Structure](docs/PUBLIC-STRUCTURE.md), including access-control and SEO integration notes.
 - **Keep staff work separate.** Articles, files, and connections belong to individual owners. Shared structures can be reused without sharing article content.
 
-DEFT does not include an AI model or require an AI provider's API key in WordPress. Your chosen external AI connects through MCP. The AI service's account, subscription, and supported capabilities are separate requirements.
+DeFt does not include an AI model or require an AI provider's API key in WordPress. Your chosen external AI connects through MCP. The AI service's account, subscription, and supported capabilities are separate requirements.
 
 ## Connection Options
 
@@ -117,7 +119,7 @@ Cloud-hosted AI clients need an externally reachable HTTPS site; they cannot rea
 | PHP | 8.2 or later, with DOM, mbstring, OpenSSL, and Sodium |
 | Database | MySQL / MariaDB with InnoDB and named-lock support |
 | AI connection (required for MCP) | Official [WordPress MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) 0.7.1+ installed and active, and a compatible MCP client |
-| Private files | Storage outside the public document root; see the user guide |
+| Private files | PHP fileinfo and the WordPress InnoDB database; no extra directory configuration |
 | Scheduled publication | WP-Cron; use a server cron job when timing matters |
 
 Node.js and a dedicated AI server are not required on your WordPress host.
@@ -133,9 +135,9 @@ The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twent
 
 Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## Scope of 0.7.2
+## Scope of 0.7.3
 
-DEFT is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
+DeFt is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
 Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.
 Portable HTML previews do not include your theme or JavaScript. Use the owner-only theme preview to check the final presentation.
 
@@ -155,12 +157,11 @@ See [FOLLOW-UP.md](docs/FOLLOW-UP.md) for known limitations and [CHANGELOG.md](C
 ## Translations
 
 The WordPress UI uses gettext and supports additional POT, PO/MO, and JavaScript JSON catalogs.
-The bundled Japanese catalog currently covers only some existing guidance, not the entire interface.
-Both distribution channels include the same versioned POT, Japanese PO/MO and JavaScript catalogs. No additional complete language translations are claimed.
+The GitHub ZIP bundles Japanese PO/MO and JavaScript catalogs covering part of the interface, not a complete UI translation. The WordPress.org ZIP is English-only, without bundled locale catalogs or the Japanese guide. Both retain the same POT and WordPress language-pack support. No additional complete translations are claimed.
 
 ## Distribution Channels
 
-The GitHub ZIP includes a GitHub-only updater; the separate WordPress.org submission ZIP does not. Packages built for the same version have identical core features, plugin slug, data identifiers and translation files. The WordPress.org application is awaiting review; submission is not approval or directory publication.
+The GitHub ZIP includes a GitHub-only updater and Japanese files; the separate WordPress.org submission ZIP includes neither. Core features, plugin slug and data identifiers match. WordPress.org updates and language packs become available through the directory after approval and publication; uploading a review ZIP does not publish an update. The application is awaiting review.
 See [Release and Update Channels](docs/RELEASING.md) for packaging, verification, first-upgrade and channel-switching steps.
 See [Adding Translation Files](wordpress/atshift-deft/languages/README.md).
 

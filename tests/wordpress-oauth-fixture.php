@@ -3,8 +3,8 @@ $_SERVER['REQUEST_METHOD'] = 'GET';
 require_once dirname( __DIR__ ) . '/.local/wordpress/wp-load.php';
 require_once ABSPATH . 'wp-admin/includes/user.php';
 
-use StructuredFields\Connections;
-use StructuredFields\OAuthStore;
+use Atshift\Deft\Connections;
+use Atshift\Deft\OAuthStore;
 
 if ( DB_NAME !== 'sf_prototype_local' || home_url() !== 'http://127.0.0.1:8128' || wp_get_environment_type() !== 'local' ) {
     throw new RuntimeException( 'Use the explicitly local, isolated WordPress site.' );
@@ -45,7 +45,7 @@ if ( 'create' === $action ) {
     if ( $admin ) { sf_oauth_test_owner( $admin->ID, $run ); wp_delete_user( $admin->ID ); }
     echo 'fixture-ok';
 } elseif ( 'keys' === $action ) {
-    $keys = get_option( StructuredFields\OAuth::KEY_OPTION, null );
+    $keys = get_option( Atshift\Deft\OAuth::KEY_OPTION, null );
     $details = is_array( $keys ) && isset( $keys['public'] ) ? openssl_pkey_get_details( openssl_pkey_get_public( $keys['public'] ) ) : null;
     echo wp_json_encode( array( 'configured' => is_array( $keys ), 'type' => $details['type'] ?? null, 'bits' => $details['bits'] ?? 0,
         'publicHash' => isset( $keys['public'] ) ? hash( 'sha256', $keys['public'] ) : null,
@@ -62,6 +62,13 @@ if ( 'create' === $action ) {
     $_COOKIE[LOGGED_IN_COOKIE] = $input['cookie'];
     wp_set_current_user( $user->ID );
     echo wp_create_nonce( 'sf-oauth-consent-' . $input['flow'] );
+} elseif ( 'request-counts' === $action ) {
+    $owner = sf_oauth_test_owner( $argv[3] ?? 0, $run )->ID;
+    echo wp_json_encode( array(
+        'flows' => (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i WHERE owner_id=%d', OAuthStore::flows(), $owner ) ),
+        'grants' => (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM %i WHERE owner_id=%d AND auth_type='oauth'", Connections::table(), $owner ) ),
+        'tokens' => (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i WHERE owner_id=%d', OAuthStore::tokens(), $owner ) ),
+    ) );
 } elseif ( 'clear-flows' === $action ) {
     foreach ( get_users( array( 'meta_key' => '_sf_test_run', 'meta_value' => $run, 'fields' => 'ID' ) ) as $owner ) {
         sf_oauth_test_owner( $owner, $run );
@@ -83,10 +90,10 @@ if ( 'create' === $action ) {
         $claims = json_decode( base64_decode( strtr( $parts[1], '-_', '+/' ), true ), true, 16, JSON_THROW_ON_ERROR );
         $record = OAuthStore::token( $claims['jti'] ?? '', 'access' );
         if ( ! $record || $record['connection_id'] !== $id || ! hash_equals( $record['credential_hash'], hash( 'sha256', $input['token'] ) ) ) throw new RuntimeException( 'Token does not belong to this fixture grant.' );
-        if ( ! StructuredFields\OAuth::libraries() ) throw new RuntimeException( 'OAuth libraries unavailable.' );
-        $keys = get_option( StructuredFields\OAuth::KEY_OPTION );
+        if ( ! Atshift\Deft\OAuth::libraries() ) throw new RuntimeException( 'OAuth libraries unavailable.' );
+        $keys = get_option( Atshift\Deft\OAuth::KEY_OPTION );
         if ( 1 !== openssl_verify( $parts[0] . '.' . $parts[1], base64_decode( strtr( $parts[2], '-_', '+/' ), true ), $keys['public'], OPENSSL_ALGO_SHA256 ) ) throw new RuntimeException( 'Fixture token signature is invalid.' );
-        $secret = json_decode( StructuredFields\Vendor\Defuse\Crypto\Crypto::decryptWithPassword( $keys['encrypted'], wp_salt( 'auth' ) . wp_salt( 'secure_auth' ) ), true, 8, JSON_THROW_ON_ERROR );
+        $secret = json_decode( Atshift\Deft\Vendor\Defuse\Crypto\Crypto::decryptWithPassword( $keys['encrypted'], wp_salt( 'auth' ) . wp_salt( 'secure_auth' ) ), true, 8, JSON_THROW_ON_ERROR );
         $encode = static function( $value ) { return rtrim( strtr( base64_encode( $value ), '+/', '-_' ), '=' ); };
         $payload = $parts[0] . '.' . $encode( wp_json_encode( array_replace( $claims, $input['claims'] ), JSON_THROW_ON_ERROR ) );
         if ( ! openssl_sign( $payload, $signature, $secret['private'], OPENSSL_ALGO_SHA256 ) ) throw new RuntimeException( 'Fixture signing failed.' );
@@ -104,21 +111,32 @@ if ( 'create' === $action ) {
         $tokens = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE connection_id=%s ORDER BY kind,id', OAuthStore::tokens(), $id ), ARRAY_A );
         echo wp_json_encode( array( 'grant' => $row, 'tokens' => $tokens ) );
     }
+} elseif ( 'publication-reservation' === $action ) {
+    $job = Atshift\Deft\Publications::read( $argv[3] ?? '' );
+    if ( ! $job ) throw new RuntimeException( 'No fixture publication.' );
+    sf_oauth_test_owner( $job['owner_id'], $run );
+    $post = get_post( (int) $job['post_id'] );
+    if ( ! $post || ! Atshift\Deft\Publications::matches_post( $job, $post ) ) throw new RuntimeException( 'Invalid fixture reservation.' );
+    echo wp_json_encode( array( 'postId' => $post->ID, 'status' => $post->post_status,
+        'public' => is_post_publicly_viewable( $post ), 'empty' => '' === $post->post_content ) );
 } elseif ( 'publication-cas-cancel' === $action ) {
     $id = $argv[3] ?? '';
-    $job = StructuredFields\Publications::read( $id );
-    if ( ! $job || 'scheduled' !== $job['state'] || $job['post_id'] ) throw new RuntimeException( 'No pending fixture publication.' );
+    $job = Atshift\Deft\Publications::read( $id );
+    if ( ! $job || 'scheduled' !== $job['state'] || ! $job['post_id'] ||
+        Atshift\Deft\Reservations::STATUS !== get_post_status( (int) $job['post_id'] ) ||
+        ! Atshift\Deft\Publications::matches_post( $job, get_post( (int) $job['post_id'] ) ) ) throw new RuntimeException( 'No pending fixture publication.' );
     sf_oauth_test_owner( $job['owner_id'], $run );
-    $fired = false; $table = StructuredFields\Publications::table();
+    $fired = false; $table = Atshift\Deft\Publications::table();
     $barrier = static function( $sql ) use ( &$fired, $wpdb, $table, $id, $job ) {
         if ( ! $fired && str_starts_with( $sql, 'UPDATE `' . $table . '`' ) && str_contains( $sql, "`state` = 'processing'" ) && str_contains( $sql, $wpdb->prepare( '`article_id` = %s', $id ) ) ) {
             $fired = true;
             $wpdb->update( $table, array( 'state' => 'cancelled', 'version' => (int) $job['version'] + 1 ), array( 'article_id' => $id ) );
+            Atshift\Deft\Reservations::hold( Atshift\Deft\Publications::read( $id ) );
         }
         return $sql;
     };
     add_filter( 'query', $barrier );
-    try { StructuredFields\Publications::run( $id, (int) $job['version'] ); }
+    try { Atshift\Deft\Publications::run( $id, (int) $job['version'] ); }
     finally { remove_filter( 'query', $barrier ); }
     if ( ! $fired ) throw new RuntimeException( 'Publication admission barrier was not reached.' );
     echo 'fixture-ok';

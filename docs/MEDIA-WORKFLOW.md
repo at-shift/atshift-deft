@@ -1,5 +1,10 @@
 # Private Asset Intake (introduced in 0.1.0-alpha.2)
 
+Historical design and verification record. The external-directory setup below
+is superseded by [Private Storage](PRIVATE-STORAGE.md). New files use the database;
+only read-only access to already stored legacy files retains the old path policy.
+For current publication behavior, see [Getting Started](GETTING-STARTED.md).
+
 Alpha.3 adds article-field references and existing-media reuse on top of this
 intake boundary. See [Media References](MEDIA-REFERENCES.md). Uploading alone
 still does not change an article snapshot or authorize publication.

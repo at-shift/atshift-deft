@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
-use StructuredFields\Media;
-use StructuredFields\Assets;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
+use Atshift\Deft\Media;
+use Atshift\Deft\Assets;
 $id = 'media-test-' . wp_generate_uuid4();
 $count = 0;
 function media_check( $test, $label ) { global $count; if ( ! $test ) throw new RuntimeException( $label ); echo 'PASS ' . ++$count . ': ' . $label . "\n"; }
@@ -23,7 +23,7 @@ try {
     $save = Store::save( $valid, 1 ); media_check( ! is_wp_error( $save ) && 2 === $save['version'], 'Save private references as immutable v2 snapshot' );
     $row = Store::read( $id, 2 );
     $html = Media::preview_html( $row );
-    media_check( str_contains( $html, 'action=sf_media' ) && str_contains( $html, 'download=' ) && ! str_contains( $html, 'data-sf-media' ), 'Private preview resolves images and PDF download links' );
+    media_check( str_contains( $html, 'action=atshde_media' ) && str_contains( $html, 'download=' ) && ! str_contains( $html, 'data-sf-media' ), 'Private preview resolves images and PDF download links' );
     media_check( str_contains( $html, 'A contextual image description' ) && str_contains( $html, 'Download the application' ), 'Contextual alt and link text survive rendering' );
     media_check( ! str_contains( Store::read( $id, 1 )['payload'], 'assetRef' ), 'Older snapshot is not rewritten' );
     media_check( 2 === Store::save( Snapshot::validate( Snapshot::json( $value ) ), 2 )['version'], 'Same v2 save is idempotent' );
@@ -56,7 +56,7 @@ try {
     file_put_contents( $path, $original . 'changed' ); clearstatcache();
     media_reject( static fn() => Media::preview_html( Store::read( $id, 3 ) ), 'Changed existing media blocks preview instead of switching bytes' );
     file_put_contents( $path, $original ); clearstatcache();
-    media_check( str_contains( Media::preview_html( Store::read( $id, 3 ) ), 'action=sf_media' ), 'Original pinned bytes restore the preview' );
+    media_check( str_contains( Media::preview_html( Store::read( $id, 3 ) ), 'action=atshde_media' ), 'Original pinned bytes restore the preview' );
     $original_meta = get_post_meta( $attachment, '_wp_attached_file', true );
     update_post_meta( $attachment, '_wp_attached_file', ABSPATH . 'wp-config.php' );
     media_reject( static fn() => Media::attachment( (string) $attachment ), 'Reject attachment paths outside uploads' );

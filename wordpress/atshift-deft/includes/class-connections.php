@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -8,8 +8,9 @@ final class Connections {
     const PUBLISH_ROUTE = '/structured-fields-mcp/v1/publishing';
     private static $authenticated = null;
     private static $previous_user = null;
+    private static $active_request = null;
 
-    public static function table() { global $wpdb; return $wpdb->prefix . 'sf_connections'; }
+    public static function table() { global $wpdb; return $wpdb->prefix . 'atshde_connections'; }
     public static function lock_name( $owner ) { return substr( 'sf_conn_' . hash( 'sha256', DB_NAME . ':' . self::table() . ':' . $owner ), 0, 64 ); }
 
     public static function install() {
@@ -32,7 +33,7 @@ final class Connections {
             KEY owner_id (owner_id),
             KEY oauth_client (oauth_client)
         ) ENGINE=InnoDB {$wpdb->get_charset_collate()};" );
-        update_option( 'sf_connections_schema_version', 4, false );
+        update_option( 'atshde_connections_schema_version', 4, false );
     }
 
     public static function ready() {
@@ -45,7 +46,7 @@ final class Connections {
     }
 
     public static function permission( $request ) {
-        return Access::workspace() && wp_get_session_token() && wp_verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ? true : Access::denied();
+        return Access::workspace() && wp_get_session_token() && Access::verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ? true : Access::denied();
     }
 
     public static function listing() {
@@ -100,14 +101,16 @@ final class Connections {
     public static function delete_user( $id ) { global $wpdb; $wpdb->delete( self::table(), array( 'owner_id' => $id ) ); }
 
     public static function guard( $result, $server, $request ) {
+        // A tool's scoped owner context must not authorize a nested/core REST request.
+        if ( null !== self::$active_request ) return new \WP_Error( 'sf_connection_scope', __( 'Nested requests are not permitted in this AI connection.', 'atshift-deft' ), array( 'status' => 403 ) );
         $header = $request->get_header( 'authorization' ) ?? '';
         $target = in_array( $request->get_route(), array( self::ROUTE, self::PUBLISH_ROUTE ), true );
         if ( ! $target && ! preg_match( '/^Bearer\s+sf[co]_/i', $header ) ) return $result;
         self::$authenticated = null;
-        if ( ! $target ) return new \WP_Error( 'sf_connection_scope', __( 'This key is only valid at the atshift DEFT MCP endpoint.', 'atshift-deft' ), array( 'status' => 403 ) );
+        if ( ! $target ) return new \WP_Error( 'sf_connection_scope', __( 'This key is only valid at the atshift DeFt MCP endpoint.', 'atshift-deft' ), array( 'status' => 403 ) );
         if ( null !== $result ) return $result;
         if ( ! self::ready() || ! self::secure() ) return new \WP_Error( 'sf_connection_unavailable', __( 'Secure MCP connection unavailable.', 'atshift-deft' ), array( 'status' => 503 ) );
-        if ( strlen( $request->get_body() ) > 4 * 1024 * 1024 ) return new \WP_Error( 'sf_size', __( 'Payload exceeds 4 MB.', 'atshift-deft' ), array( 'status' => 413 ) );
+        if ( strlen( $request->get_body() ?? '' ) > 4 * 1024 * 1024 ) return new \WP_Error( 'sf_size', __( 'Payload exceeds 4 MB.', 'atshift-deft' ), array( 'status' => 413 ) );
         global $wpdb; $table = self::table();
         if ( preg_match( '/^Bearer\s+sfo_/i', $header ) ) {
             $row = OAuth::authenticate( $header, OAuth::resource( self::PUBLISH_ROUTE === $request->get_route() ) );
@@ -122,6 +125,7 @@ final class Connections {
         self::$previous_user = get_current_user_id();
         wp_set_current_user( (int) $row['owner_id'] );
         self::$authenticated = $row;
+        self::$active_request = $request;
         $wpdb->update( $table, array( 'last_used' => time() ), array( 'id' => $row['id'] ) );
         return $result;
     }
@@ -158,8 +162,10 @@ final class Connections {
 
     public static function finish( $response, $server, $request ) {
         if ( in_array( $request->get_route(), array( self::ROUTE, self::PUBLISH_ROUTE ), true ) ) {
-            if ( null !== self::$previous_user ) wp_set_current_user( self::$previous_user );
-            self::$authenticated = self::$previous_user = null;
+            if ( self::$active_request === $request ) {
+                if ( null !== self::$previous_user ) wp_set_current_user( self::$previous_user );
+                self::$authenticated = self::$previous_user = self::$active_request = null;
+            }
             $response->header( 'Cache-Control', 'private, no-store, max-age=0' );
             $response->header( 'X-Robots-Tag', 'noindex, nofollow' );
             if ( 401 === $response->get_status() && OAuth::ready() ) $response->header( 'WWW-Authenticate', OAuth::challenge( self::PUBLISH_ROUTE === $request->get_route() ) );

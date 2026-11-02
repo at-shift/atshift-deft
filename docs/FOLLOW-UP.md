@@ -2,7 +2,7 @@
 
 ## Local 0.5.0 Rename
 
-- Product: atshift DEFT (D.E.F.T.); slug: `atshift-deft`. See [V0.5.0.md](V0.5.0.md).
+- Product: atshift DeFt; slug: `atshift-deft`. See [V0.5.0.md](V0.5.0.md) for historical release notes.
 - Local work only: no commit, push, release or deployment. Repository name unchanged.
 - Guide-first setup now asks the AI to guide connection and verify live context,
   then offer an optional draft-only sample or continue the original article brief.

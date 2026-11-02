@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,7 +10,7 @@ function runtime_supported( $version_id ) {
 function runtime_notice() {
     if ( ! current_user_can( 'activate_plugins' ) && ! current_user_can( 'manage_network_plugins' ) ) return;
     /* translators: %s: current PHP version. */
-    $message = sprintf( __( 'atshift DEFT requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged.', 'atshift-deft' ), PHP_VERSION );
+    $message = sprintf( __( 'atshift DeFt requires PHP 8.2 or newer. This site runs PHP %s. The plugin is not running until PHP is upgraded. Saved data is unchanged.', 'atshift-deft' ), PHP_VERSION );
     echo '<div class="notice notice-error" role="alert"><p>' . esc_html( $message ) . '</p></div>';
 }
 

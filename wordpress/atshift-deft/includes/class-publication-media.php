@@ -1,14 +1,12 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 defined( 'ABSPATH' ) || exit;
 
 final class PublicationMedia {
-    private static function directory( $id, $create = false ) {
+    private static function directory( $id ) {
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
         if ( ! preg_match( '/^[a-f0-9-]{36}$/D', $id ) ) throw new \RuntimeException( __( 'Invalid publication.', 'atshift-deft' ) );
         $path = Assets::directory() . '/publication-' . $id;
-        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir,WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Frozen media requires a local 0700 directory; plain-text exceptions are escaped by HTML callers or JSON-encoded by REST.
-        if ( $create && ! is_dir( $path ) && ! mkdir( $path, 0700 ) ) throw new \RuntimeException( __( 'Publication storage unavailable.', 'atshift-deft' ) );
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
         if ( ! is_dir( $path ) || is_link( $path ) || realpath( $path ) !== $path || ( fileperms( $path ) & 0077 ) ) throw new \RuntimeException( __( 'Private publication storage required.', 'atshift-deft' ) );
         return $path;
@@ -28,40 +26,37 @@ final class PublicationMedia {
         if ( ! $refs ) return array();
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
         if ( count( $refs ) > 50 ) throw new \RuntimeException( __( 'At most 50 media bindings can be published.', 'atshift-deft' ) );
-        $directory = self::directory( $job['publication_id'], true );
         $files = $unique = array(); $size = 0;
+        $capacity = max( 0, Assets::SITE_BYTES - self::legacy_usage() );
         $resolved = Media::resolve_batch( $refs, $row['article_id'] );
         foreach ( $refs as $key => $usage ) {
             $meta = $resolved[$key]; $hash = $meta['sha256'];
             if ( isset( $unique[$hash] ) ) { $files[$key] = array_merge( $unique[$hash], array( 'filename' => $meta['filename'] ) ); continue; }
-            $bytes = file_get_contents( $meta['path'], false, null, 0, Assets::MAX_BYTES + 1 );
+            $bytes = Media::bytes( $meta );
             // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
             if ( ! is_string( $bytes ) || strlen( $bytes ) !== (int) $meta['bytes'] || ! hash_equals( $meta['sha256'], hash( 'sha256', $bytes ) ) ) throw new \RuntimeException( __( 'Publication media changed.', 'atshift-deft' ) );
             $size += strlen( $bytes );
             // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
             if ( $size > Assets::ARTICLE_BYTES ) throw new \RuntimeException( __( 'Publication media exceeds 100 MiB.', 'atshift-deft' ) );
-            $path = $directory . '/' . $hash . '.bin';
-            if ( ! is_file( $path ) ) {
-                $total = 0;
-                foreach ( glob( Assets::directory() . '/publication-*/*.bin' ) ?: array() as $file ) $total += filesize( $file );
-                // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
-                if ( $total + strlen( $bytes ) > Assets::SITE_BYTES ) throw new \RuntimeException( __( 'Publication media quota reached.', 'atshift-deft' ) );
-                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Exclusive local creation prevents overwriting a frozen publication file.
-                $handle = fopen( $path, 'x+b' );
-                // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
-                if ( ! $handle ) throw new \RuntimeException( __( 'Publication file could not be reserved.', 'atshift-deft' ) );
-                try {
-                    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod,WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- Set 0600 before writing the integrity-verified bytes to the exclusive handle.
-                    if ( ! chmod( $path, 0600 ) || fwrite( $handle, $bytes ) !== strlen( $bytes ) ) throw new \RuntimeException( __( 'Publication file could not be frozen.', 'atshift-deft' ) );
-                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Close the exclusively created local file handle.
-                } finally { fclose( $handle ); }
-            }
-            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
-            if ( is_link( $path ) || ( fileperms( $path ) & 0077 ) || ! hash_equals( $hash, hash_file( 'sha256', $path ) ) ) throw new \RuntimeException( __( 'Publication copy mismatch.', 'atshift-deft' ) );
+            PrivateBlobs::put( 'publication', $job['publication_id'] . ':' . $hash, $bytes, $meta, $capacity );
             $files[$key] = array( 'sha256' => $hash, 'mime' => $meta['mime'], 'filename' => $meta['filename'], 'bytes' => strlen( $bytes ) );
             $unique[$hash] = $files[$key];
         }
         return $files;
+    }
+
+    private static function legacy_usage() {
+        if ( ! defined( 'SF_PRIVATE_MEDIA_DIR' ) ) return 0;
+        try { $base = Assets::directory(); } catch ( \Throwable $error ) { return 0; }
+        $total = 0;
+        foreach ( glob( $base . '/publication-*/*.bin' ) ?: array() as $path ) {
+            if ( is_link( dirname( $path ) ) || is_link( $path ) || ! is_file( $path ) ) continue;
+            $size = filesize( $path );
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; JSON responses encode it and HTML callers escape at output.
+            if ( false === $size ) throw new \RuntimeException( __( 'Publication storage unavailable.', 'atshift-deft' ) );
+            $total += $size;
+        }
+        return $total;
     }
 
     public static function html( $job, $row, $files ) {
@@ -98,10 +93,13 @@ final class PublicationMedia {
         $files = json_decode( $job['files'], true ); $meta = $files[$key] ?? null;
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
         if ( ! $meta || ! preg_match( '/^[a-f0-9]{64}$/D', $meta['sha256'] ) ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );
-        $path = self::directory( $id ) . '/' . $meta['sha256'] . '.bin';
-        // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
-        if ( is_link( $path ) || ! is_file( $path ) || ( fileperms( $path ) & 0077 ) ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );
-        $bytes = file_get_contents( $path, false, null, 0, Assets::MAX_BYTES + 1 );
+        $bytes = PrivateBlobs::get( 'publication', $id . ':' . $meta['sha256'], $meta );
+        if ( null === $bytes ) {
+            $path = self::directory( $id ) . '/' . $meta['sha256'] . '.bin';
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; JSON responses encode it and HTML callers escape at output.
+            if ( is_link( $path ) || ! is_file( $path ) || ( fileperms( $path ) & 0077 ) ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );
+            $bytes = file_get_contents( $path, false, null, 0, Assets::MAX_BYTES + 1 );
+        }
         // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
         if ( ! is_string( $bytes ) || strlen( $bytes ) !== $meta['bytes'] || ! hash_equals( $meta['sha256'], hash( 'sha256', $bytes ) ) ) throw new \RuntimeException( __( 'Unavailable media.', 'atshift-deft' ) );
         return array( $meta, $bytes );
@@ -121,7 +119,7 @@ final class PublicationMedia {
         header( 'Content-Type: ' . $meta['mime'] ); header( 'Content-Length: ' . strlen( $bytes ) );
         header( 'Content-Disposition: ' . ( 'application/pdf' === $meta['mime'] ? 'attachment' : 'inline' ) . '; filename="media.' . pathinfo( $meta['filename'], PATHINFO_EXTENSION ) . '"; filename*=UTF-8\'\'' . rawurlencode( $meta['filename'] ) );
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Exact verified image/PDF response with validated MIME and nosniff, not HTML.
-        if ( 'HEAD' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) echo $bytes;
+        if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' === $_SERVER['REQUEST_METHOD'] ) echo $bytes;
         exit;
     }
 }

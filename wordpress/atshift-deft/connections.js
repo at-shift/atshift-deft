@@ -2,8 +2,8 @@
   "use strict";
   const { __, sprintf } = window.wp.i18n;
   const $ = (id) => document.getElementById(`sf-${id}`);
-  const config = window.sfWordPress;
-  const profiles = window.sfConnectionProfiles;
+  const config = window.atshiftDeftWordPress;
+  const profiles = window.atshiftDeftConnectionProfiles;
   const status = (text) => { $("connection-status").textContent = text; };
   let busy = false;
   let endpoints = {};

@@ -1,6 +1,6 @@
 <?php
 /** GitHub-only distribution adapter. Never included in WordPress.org packages. */
-namespace AtshiftDeft;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -87,7 +87,7 @@ final class GitHubUpdater {
         if ( 'plugin_information' !== $action || 'atshift-deft' !== ( $args->slug ?? '' ) ) return $result;
         $release = self::release();
         if ( ! $release ) return $result;
-        return (object) array( 'name' => 'atshift DEFT', 'slug' => 'atshift-deft', 'version' => $release['version'],
+        return (object) array( 'name' => 'atshift DeFt', 'slug' => 'atshift-deft', 'version' => $release['version'],
             'author' => 'at-shift', 'homepage' => self::REPOSITORY, 'download_link' => $release['package'],
             'requires' => $release['requires'], 'requires_php' => $release['requires_php'], 'tested' => $release['tested'],
             'sections' => array( 'description' => esc_html__( 'Create structured articles with your preferred AI.', 'atshift-deft' ),

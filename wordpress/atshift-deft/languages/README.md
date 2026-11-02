@@ -1,8 +1,10 @@
 # Translation Files
 
 Text domain: `atshift-deft`. Untranslated messages fall back to English.
-The bundled Japanese catalog preserves the existing Japanese welcome, consent
+The GitHub ZIP's Japanese catalog preserves existing Japanese welcome, consent
 and compatibility notices; it is intentionally not a complete UI translation.
+The WordPress.org ZIP includes only this document and the POT template, with
+English source text and support for separately installed WordPress language packs.
 
 ## Add a Language
 

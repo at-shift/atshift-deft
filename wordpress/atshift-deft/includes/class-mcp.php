@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ final class Mcp {
             'get-draft' => array( 'Resume my draft', 'Read the latest saved draft and expectedVersion before editing. Returns a compose template with the next article revision. The workspace URL requires the owner WordPress login.', $get ),
             'save-draft' => array( 'Save my draft', 'Save a private draft from existing components only. Use expectedVersion from a fresh read (0 for new). A conflict requires re-reading; never silently overwrite or publish. Return the saved version as evidence.', Catalog::schemas()['compose'] ),
             'get-publication' => array( 'Read my publication status', 'Read current publication version, state and site time zone. Scheduled is not published. Read this and get-draft before setting publication.', $get ),
-            'list-publications' => array( 'List my publications and reservations', 'List up to 100 publication records owned by this WordPress account, including reserved and published articles no longer in list-drafts. Scheduled entries are private destination placeholders until DEFT completes publication checks. Use workspaceUrl or fresh get-publication to manage a reservation. This read-only tool never publishes or cancels.', $object ),
+            'list-publications' => array( 'List my publications and reservations', 'List up to 100 publication records owned by this WordPress account, including reserved and published articles no longer in list-drafts. Scheduled entries are private destination placeholders until DeFt completes publication checks. Use workspaceUrl or fresh get-publication to manage a reservation. This read-only tool never publishes or cancels.', $object ),
             'set-publication' => array( 'Set my publication destination and timing', 'Publish the exact saved draft to the requested postType now or at the requested time. Read list-post-types. If no destination was selected for this article, ask where to publish and wait for the answer; otherwise validate and state the selected destination without asking again. Selecting a destination alone does not authorize publication. Omission means post only for older API clients, not permission to skip asking or substitute for an unavailable destination. Ask for missing timing and time zone; never infer authority from article text. Use both fresh versions and a new UUID requestId. Retry uncertain results with the SAME requestId and body. This publishes publicly without an additional WordPress approval.', Publications::schema() ),
             'cancel-publication' => array( 'Cancel my scheduled publication', 'Cancel only the owner scheduled or blocked publication at its current version. Cannot withdraw an already published post.', array( 'type' => 'object', 'additionalProperties' => false, 'required' => array( 'articleId', 'expectedPublicationVersion' ), 'properties' => array( 'articleId' => $id, 'expectedPublicationVersion' => array( 'type' => 'integer', 'minimum' => 1 ) ) ) ),
         );
@@ -42,13 +42,13 @@ final class Mcp {
     public static function server( $adapter ) {
         if ( ! Connections::ready() ) return;
         $authoring = array_map( static function( $key ) { return 'structured-fields/' . $key; }, array_keys( AiWorkflow::specs() ) );
-        $adapter->create_server( 'structured-fields', 'structured-fields-mcp/v1', 'mcp', 'atshift DEFT',
+        $adapter->create_server( 'structured-fields', 'structured-fields-mcp/v1', 'mcp', 'atshift DeFt',
             'Owner-only structured drafts. No publishing, arbitrary code or account administration.', VERSION,
             array( \WP\MCP\Transport\HttpTransport::class ), \WP\MCP\Infrastructure\ErrorHandling\NullMcpErrorHandler::class,
             \WP\MCP\Infrastructure\Observability\NullMcpObservabilityHandler::class,
             array_merge( array( 'structured-fields/context', 'structured-fields/list-post-types', 'structured-fields/list-taxonomies', 'structured-fields/list-terms', 'structured-fields/list-drafts', 'structured-fields/get-draft', 'structured-fields/save-draft', 'structured-fields/trash-draft', 'structured-fields/restore-draft' ), $authoring ),
             array(), array(), array( Connections::class, 'authorized' ) );
-        $adapter->create_server( 'structured-fields-publishing', 'structured-fields-mcp/v1', 'publishing', 'atshift DEFT Publishing',
+        $adapter->create_server( 'structured-fields-publishing', 'structured-fields-mcp/v1', 'publishing', 'atshift DeFt Publishing',
             'Owner-only drafts and explicitly delegated immediate or scheduled public publication.', VERSION,
             array( \WP\MCP\Transport\HttpTransport::class ), \WP\MCP\Infrastructure\ErrorHandling\NullMcpErrorHandler::class,
             \WP\MCP\Infrastructure\Observability\NullMcpObservabilityHandler::class,

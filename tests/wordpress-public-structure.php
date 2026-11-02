@@ -1,8 +1,9 @@
 <?php
+require_once __DIR__ . '/wordpress-connection-context.php';
 // Run only against the installed ZIP in the disposable destination test environment.
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() ||
     ! preg_match( '/^sf_deft_post_types_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable test database.' );
-use StructuredFields\{Connections, Mcp, Publications, PublicStructure, Snapshot, Store};
+use Atshift\Deft\{Connections, Mcp, Publications, PublicStructure, Snapshot, Store};
 global $wpdb, $checks;
 $checks = 0;
 function sfj_check( $ok, $message ) { global $checks; if ( ! $ok ) throw new RuntimeException( $message ); ++$checks; }
@@ -19,7 +20,7 @@ $wpdb->insert( Connections::table(), array( 'id' => $key, 'owner_id' => $owner, 
     'created' => time(), 'expires' => time() + HOUR_IN_SECONDS, 'authoring' => 1, 'publishing' => 1 ) );
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $r = new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE ); $r->set_header( 'authorization', 'Bearer sfc_' . $key . '_' . $secret ); $r->set_body( '{}' );
-sfj_good( Connections::guard( null, rest_get_server(), $r ) );
+sfj_good( sf_test_begin_connection( $r ) );
 $published = array();
 foreach ( array( 'post', 'page', 'sf_test_event' ) as $type ) {
     $sample = json_decode( file_get_contents( WP_PLUGIN_DIR . '/atshift-deft/sample.json' ) );
@@ -51,18 +52,18 @@ sfj_check( in_array( 'disclosure', array_column( $flat, 'type' ), true ) && str_
 sfj_check( in_array( 2, array_column( $flat, 'level' ), true ) && in_array( 2, array_column( $flat, 'colspan' ), true ), 'Headings and table spans are typed.' );
 sfj_check( in_array( '/public', array_column( $flat, 'url' ), true ), 'Public relative links are retained.' );
 sfj_check( str_contains( implode( '', array_column( $flat, 'text' ) ), 'world link' ), 'Whitespace between inline elements is not lost.' );
-sfj_check( null === PublicStructure::project( '<div>Outside</div>' ), 'Non-DEFT body rejected.' );
+sfj_check( null === PublicStructure::project( '<div>Outside</div>' ), 'Non-DeFt body rejected.' );
 sfj_check( null === PublicStructure::project( '<div class="sf-article"></div><div class="sf-article"></div>' ), 'Ambiguous roots rejected.' );
 sfj_check( null === PublicStructure::project( '<div class="sf-article">' . str_repeat( '<div>', 66 ) . 'deep' . str_repeat( '</div>', 66 ) . '</div>' ), 'Deep input fails closed.' );
 sfj_check( null === PublicStructure::project( '<div class="sf-article">' . str_repeat( '<br>', 10001 ) . '</div>' ), 'Node budget fails closed.' );
 sfj_check( null === PublicStructure::project( str_repeat( 'a', 4 * 1024 * 1024 + 1 ) ), 'Size budget fails closed.' );
-wp_set_current_user( 0 );
+sf_test_end_connection(); wp_set_current_user( 0 );
 sfj_check( 200 === sfj_http( $p )->get_status(), 'Anonymous published structure is available without credentials.' );
 sfj_check( str_contains( sfj_http( $p )->get_headers()['Cache-Control'], 'no-store' ), 'Successful response is not cached.' );
 sfj_check( str_contains( wp_json_encode( PublicStructure::read( $p ) ), 'Hello' ) && ! str_contains( wp_json_encode( PublicStructure::read( $p ) ), 'A new way to compose' ), 'Projection follows current public body, not private snapshot.' );
-$missing = wp_insert_post( array( 'post_type' => 'post', 'post_status' => 'publish', 'post_title' => 'Not a DEFT publication', 'post_content' => $body ) );
+$missing = wp_insert_post( array( 'post_type' => 'post', 'post_status' => 'publish', 'post_title' => 'Not a DeFt publication', 'post_content' => $body ) );
 sfj_check( 404 === sfj_http( $missing )->get_status(), 'Ordinary unrelated post is not exposed.' );
-update_post_meta( $missing, '_sf_publication', get_post_meta( $p, '_sf_publication', true ) );
+update_post_meta( $missing, '_atshde_publication', get_post_meta( $p, '_atshde_publication', true ) );
 sfj_check( 404 === sfj_http( $missing )->get_status(), 'Copied publication marker cannot expose a different post.' );
 sfj_check( 404 === sfj_http( 2147483647 )->get_status(), 'Unknown ID is uniformly missing.' );
 $private_ids = array( $missing );

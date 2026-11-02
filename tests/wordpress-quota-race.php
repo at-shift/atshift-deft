@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\{Catalog, ComponentBuilder, Snapshot};
+use Atshift\Deft\{Catalog, ComponentBuilder, Snapshot};
 $uid = (int) ( $argv[1] ?? 0 ); $run = $argv[2] ?? ''; $side = $argv[3] ?? ''; $start = (float) ( $argv[4] ?? 0 );
 if ( ! preg_match( '/^[a-f0-9-]{36}$/D', $run ) || get_user_meta( $uid, '_sf_quota_run', true ) !== $run || ! in_array( $side, array( 'a', 'b' ), true ) || $start > microtime( true ) + 10 ) throw new RuntimeException( 'Disposable race only.' );
 wp_set_current_user( $uid ); add_filter( 'sf_shared_component_limit_per_user', static fn() => 2 );

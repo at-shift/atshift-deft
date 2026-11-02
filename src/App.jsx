@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   Wrench,
   ChevronRight,
-  ChevronDown,
   Plus,
   Search,
   Pencil,
@@ -22,7 +21,6 @@ import {
   X,
   Monitor,
   Smartphone,
-  Braces,
   ListTree,
   ArrowLeft,
   Menu,
@@ -31,10 +29,8 @@ import {
   FileCode2,
   RefreshCw,
   Image,
-  Link,
   Layers,
   FlaskConical,
-  ExternalLink,
 } from "lucide-react";
 import {
   STORAGE_KEY,
@@ -1563,7 +1559,7 @@ export default function App() {
     return () => window.removeEventListener("beforeunload", handler);
   }, [dirty, settingsDirty]);
   useEffect(() => {
-    document.title = `${mode === "articles" ? "Articles" : draft?.name || navigation.find((n) => n[0] === page)?.[1]} | atshift DEFT`;
+    document.title = `${mode === "articles" ? "Articles" : draft?.name || navigation.find((n) => n[0] === page)?.[1]} | atshift DeFt`;
   }, [page, draft?.name, mode]);
 
   function leave(action) {
@@ -1639,7 +1635,7 @@ export default function App() {
         <div className="brand">
           <Layers size={23} />
           <span>
-            atshift DEFT<small>設定プロトタイプ</small>
+            atshift DeFt<small>設定プロトタイプ</small>
           </span>
         </div>
         <nav aria-label="設定メニュー">

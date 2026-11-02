@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -37,7 +37,7 @@ final class Behaviors {
     }
 
     public static function state() {
-        return get_option( 'sf_behavior_state', array( 'version' => 0, 'disabled' => array() ) );
+        return get_option( 'atshde_behavior_state', array( 'version' => 0, 'disabled' => array() ) );
     }
 
     public static function active( $id, $revision ) {
@@ -68,7 +68,7 @@ final class Behaviors {
             $entry = self::registry()[$request['id']] ?? null;
             if ( ! $entry || $entry['revision'] !== $body->revision ) throw new \InvalidArgumentException( __( 'Unknown behavior revision.', 'atshift-deft' ) );
             // Refresh the option after acquiring the cross-request lock.
-            wp_cache_delete( 'sf_behavior_state', 'options' );
+            wp_cache_delete( 'atshde_behavior_state', 'options' );
             $state = self::state();
             if ( $state['version'] !== $body->expectedVersion ) return new \WP_Error( 'sf_conflict', __( 'Behavior availability changed. Reload before editing.', 'atshift-deft' ), array( 'status' => 409 ) );
             $key = $request['id'] . '@' . $body->revision;
@@ -77,7 +77,7 @@ final class Behaviors {
             sort( $disabled, SORT_STRING );
             if ( $disabled !== $state['disabled'] ) {
                 $state = array( 'version' => $state['version'] + 1, 'disabled' => $disabled, 'updatedBy' => get_current_user_id(), 'updatedAt' => current_time( 'mysql', true ) );
-                if ( ! update_option( 'sf_behavior_state', $state, false ) ) throw new \RuntimeException( __( 'Behavior availability was not saved.', 'atshift-deft' ) );
+                if ( ! update_option( 'atshde_behavior_state', $state, false ) ) throw new \RuntimeException( __( 'Behavior availability was not saved.', 'atshift-deft' ) );
             }
             return self::listing();
         } catch ( \Throwable $error ) { return new \WP_Error( 'sf_behavior', $error->getMessage(), array( 'status' => 400 ) ); }
@@ -162,7 +162,7 @@ final class Behaviors {
         foreach ( array_keys( $needed ) as $id ) {
             $entry = self::registry()[$id];
             foreach ( $entry['files'] as $file ) {
-                $handle = 'sf-behavior-' . $id . '-' . substr( $entry['revision'], 0, 12 );
+                $handle = 'atshift-deft-behavior-' . $id . '-' . substr( $entry['revision'], 0, 12 );
                 $url = plugins_url( 'behaviors/' . $file, dirname( __DIR__ ) . '/atshift-deft.php' );
                 if ( str_ends_with( $file, '.css' ) ) wp_enqueue_style( $handle, $url, array(), $entry['revision'] );
                 else {

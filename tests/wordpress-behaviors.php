@@ -2,15 +2,15 @@
 require __DIR__ . '/wordpress-media-fixture.php';
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 require_once ABSPATH . 'wp-admin/includes/user.php';
-use StructuredFields\Behaviors;
-use StructuredFields\Catalog;
-use StructuredFields\Review;
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
+use Atshift\Deft\Behaviors;
+use Atshift\Deft\Catalog;
+use Atshift\Deft\Review;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
 
 $run = wp_generate_uuid4(); $prefix = 'behavior-test-' . $run;
 $id = 'media-test-' . $run; $admin = get_current_user_id(); $user = 0; $checks = 0;
-$previous_state = get_option( 'sf_behavior_state', null );
+$previous_state = get_option( 'atshde_behavior_state', null );
 function sf9_check( $condition, $message ) { global $checks; if ( ! $condition ) throw new RuntimeException( $message ); echo 'PASS ' . ++$checks . ': ' . $message . PHP_EOL; }
 function sf9_api( $path, $body = null ) {
     $r = new WP_REST_Request( null === $body ? 'GET' : 'POST', '/structured-fields/v1/' . $path );
@@ -28,7 +28,7 @@ try {
     foreach ( $entries as $entry ) if ( ! $entry['enabled'] ) throw new RuntimeException( 'Run with the bundled behaviors enabled.' );
     wp_set_current_user( 0 ); sf9_check( 403 === sf9_api( 'behaviors' )[0], 'Anonymous callers cannot discover the workspace registry' );
     wp_set_current_user( $admin );
-    $user = wp_insert_user( array( 'user_login' => 'sf_behavior_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author' ) );
+    $user = wp_insert_user( array( 'user_login' => 'sf_behavior_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_author' ) );
     if ( is_wp_error( $user ) ) throw new RuntimeException( 'Could not create temporary author.' );
     wp_set_current_user( $user );
     $context = sf9_api( 'catalog/context' )[1];
@@ -61,9 +61,9 @@ try {
     $row = Store::read( $id ); $validated = Snapshot::validate( $row['payload'] );
     sf9_check( $row['digest'] === $validated['digest'] && $row['payload'] === $validated['payload'], 'V3 canonical settings, payload and digest are stable on round-trip' );
     sf9_check( str_contains( $row['rendered'], 'data-sf-zoom="caption"' ) && str_contains( $row['rendered'], 'data-sf-zoom="image"' ) && str_contains( $row['rendered'], 'data-sf-fade="600"' ), 'Two instances retain independent typed settings and semantic image bindings' );
-    $html = Behaviors::preview( StructuredFields\Media::preview_html( $row ), json_decode( $row['payload'] ) );
+    $html = Behaviors::preview( Atshift\Deft\Media::preview_html( $row ), json_decode( $row['payload'] ) );
     sf9_check( str_contains( $html, 'data-sf-zoom' ) && str_contains( $html, 'src=' ), 'Preview binds owner-private image URLs before enhancement' );
-    $scripts = array_values( array_filter( wp_scripts()->queue, static function( $h ) { return str_starts_with( $h, 'sf-behavior-' ); } ) );
+    $scripts = array_values( array_filter( wp_scripts()->queue, static function( $h ) { return str_starts_with( $h, 'atshift-deft-behavior-' ); } ) );
     sf9_check( 1 === count( $scripts ) && str_contains( $scripts[0], 'image-zoom' ), 'Multiple instances load image JS once; CSS appearance loads no JS' );
     $review = sf9_api( 'articles/' . $id . '/reviews', array( 'expectedVersion' => 2 ) );
     sf9_check( 200 === $review[0] && 'article-managed-assets-and-behaviors' === $review[1]['manifest']['scope'], 'V3 review covers the pinned behavior contract as well as private media' );
@@ -101,7 +101,7 @@ try {
     sf9_check( 400 === sf9_register( $new )[0] && ! Catalog::read( $new['id'] ), 'New registrations cannot introduce a stopped behavior revision' );
     sf9_check( 409 === sf9_api( 'behaviors/image-zoom/availability', $change )[0], 'Stale availability changes fail compare-and-swap' );
     wp_set_current_user( $user );
-    $static = Behaviors::preview( StructuredFields\Media::preview_html( $row ), json_decode( $row['payload'] ) );
+    $static = Behaviors::preview( Atshift\Deft\Media::preview_html( $row ), json_decode( $row['payload'] ) );
     sf9_check( ! str_contains( $static, 'data-sf-zoom' ) && str_contains( $static, '<img' ) && str_contains( $static, 'data-sf-fade' ), 'Stopped JS leaves private images and independent CSS behavior intact' );
     sf9_check( count( sf9_api( 'articles/' . $id )[1]['behaviorWarnings'] ) === 1, 'Stopped behavior is reported explicitly to the article client' );
     sf9_check( 'invalidated' === sf9_api( 'reviews/' . $review[1]['reviewId'] )[1]['state'], 'Behavior availability changes invalidate existing review decisions' );
@@ -117,5 +117,5 @@ try {
     wp_set_current_user( $admin ); sf_media_test_cleanup( $id );
     $wpdb->delete( Catalog::versions(), array( 'component_id' => $prefix ) ); $wpdb->delete( Catalog::table(), array( 'component_id' => $prefix ) );
     if ( $user && ! is_wp_error( $user ) ) wp_delete_user( $user );
-    if ( null === $previous_state ) delete_option( 'sf_behavior_state' ); else update_option( 'sf_behavior_state', $previous_state, false );
+    if ( null === $previous_state ) delete_option( 'atshde_behavior_state' ); else update_option( 'atshde_behavior_state', $previous_state, false );
 }

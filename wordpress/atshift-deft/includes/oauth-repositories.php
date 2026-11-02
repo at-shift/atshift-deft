@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace StructuredFields\OAuth;
+namespace Atshift\Deft\OAuth;
 
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\AccessTokenEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\AuthCodeEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\ClientEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\ScopeEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Exception\OAuthServerException;
-use StructuredFields\Vendor\League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
-use StructuredFields\Vendor\League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\AccessTokenEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\AuthCodeEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\ClientEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\ScopeEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Exception\OAuthServerException;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Repositories\ClientRepositoryInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ final class Clients implements ClientRepositoryInterface {
 
     public function getClientEntity( string $clientIdentifier ): ?ClientEntityInterface {
         if ( null !== $this->context && $clientIdentifier !== $this->context->grant['oauth_client'] ) return null;
-        $row = \StructuredFields\OAuthStore::client( $clientIdentifier );
+        $row = \Atshift\Deft\OAuthStore::client( $clientIdentifier );
         if ( ! is_array( $row ) || empty( $row['active'] ) || ( $row['id'] ?? null ) !== $clientIdentifier ||
             ! is_string( $row['name'] ?? null ) || ! is_string( $row['redirect_uri'] ?? null ) || '' === $row['redirect_uri'] ) return null;
         return new Client( $row );
@@ -41,7 +41,7 @@ abstract class Repository {
     public function __construct( protected readonly Context $context ) {}
 
     protected function activeGrant(): array {
-        $grant = \StructuredFields\OAuthStore::active_grant( $this->context->grant['id'] );
+        $grant = \Atshift\Deft\OAuthStore::active_grant( $this->context->grant['id'] );
         if ( ! is_array( $grant ) || ( $grant['id'] ?? null ) !== $this->context->grant['id'] ||
             ( $grant['oauth_client'] ?? null ) !== $this->context->grant['oauth_client'] ||
             (string) ( $grant['owner_id'] ?? '' ) !== $this->context->owner() ||
@@ -60,7 +60,7 @@ abstract class Repository {
         if ( null === $registered || $registered->getRedirectUri() !== $client->getRedirectUri() ) {
             throw OAuthServerException::invalidGrant( 'Client is no longer authorized.' );
         }
-        $row = \StructuredFields\OAuthStore::client( $client->getIdentifier() );
+        $row = \Atshift\Deft\OAuthStore::client( $client->getIdentifier() );
         $ids = $this->context->scopeIds( $scopes );
         foreach ( array( 'sf:authoring' => 'authoring', 'sf:publish' => 'publishing' ) as $scope => $flag ) {
             if ( in_array( $scope, $ids, true ) && ( empty( $grant[ $flag ] ) || empty( $row[ $flag ] ) ) ) {
@@ -80,9 +80,9 @@ abstract class Repository {
 
     protected function save( string $id, string $kind, array $scopes, \DateTimeImmutable $expiry, string $accessId = '' ): void {
         if ( ! preg_match( '/^[a-f0-9]{80}$/D', $id ) ) throw OAuthServerException::invalidGrant( 'Invalid token identifier.' );
-        if ( \StructuredFields\OAuthStore::token( $id, $kind ) ) throw UniqueTokenIdentifierConstraintViolationException::create();
+        if ( \Atshift\Deft\OAuthStore::token( $id, $kind ) ) throw UniqueTokenIdentifierConstraintViolationException::create();
         // Persist identifiers and authorization metadata only, never serialized credentials.
-        $result = \StructuredFields\OAuthStore::save_token( $id, $kind, $this->context->grant,
+        $result = \Atshift\Deft\OAuthStore::save_token( $id, $kind, $this->context->grant,
             $this->context->resource, $scopes, $expiry, $accessId );
         if ( false === $result ) throw OAuthServerException::serverError( 'Token could not be stored.' );
     }
@@ -93,7 +93,7 @@ abstract class Repository {
     }
 
     protected function revoked( string $id, string $kind ): bool {
-        $row = \StructuredFields\OAuthStore::token( $id, $kind );
+        $row = \Atshift\Deft\OAuthStore::token( $id, $kind );
         if ( ! is_array( $row ) || ( $row['id'] ?? null ) !== $id || ! $this->context->matchesRecord( $row, $kind ) ||
             ! $this->sourceMatches( $id, $kind ) || ! empty( $row['revoked'] ) || (int) ( $row['expires'] ?? 0 ) <= time() ) return true;
         try {
@@ -108,7 +108,7 @@ abstract class Repository {
     }
 
     protected function revoke( string $id, string $kind ): void {
-        $row = \StructuredFields\OAuthStore::token( $id, $kind );
+        $row = \Atshift\Deft\OAuthStore::token( $id, $kind );
         if ( ! $row ) return;
         if ( ! is_array( $row ) || ( $row['id'] ?? null ) !== $id || ! $this->context->matchesRecord( $row, $kind ) ||
             ! $this->sourceMatches( $id, $kind ) ||
@@ -116,7 +116,7 @@ abstract class Repository {
                 ( $this->context->source['access_id'] ?? null ) !== $id ) ) {
             throw OAuthServerException::invalidGrant( 'Token does not match the authorization.' );
         }
-        if ( false === \StructuredFields\OAuthStore::revoke_token( $id, $kind ) ) {
+        if ( false === \Atshift\Deft\OAuthStore::revoke_token( $id, $kind ) ) {
             throw OAuthServerException::serverError( 'Token could not be revoked.' );
         }
     }
@@ -207,7 +207,7 @@ final class RefreshTokens extends Repository implements RefreshTokenRepositoryIn
             throw OAuthServerException::invalidGrant( 'Refresh access token context mismatch.' );
         }
         $ids = $this->validate( $access->getClient(), $access->getScopes(), $access->getUserIdentifier() );
-        $row = \StructuredFields\OAuthStore::token( $access->getIdentifier(), 'access' );
+        $row = \Atshift\Deft\OAuthStore::token( $access->getIdentifier(), 'access' );
         if ( $this->context->issuedAccessId !== $access->getIdentifier() || ! is_array( $row ) ||
             ! $this->context->matchesRecord( $row, 'access' ) || ! empty( $row['revoked'] ) ||
             (int) ( $row['expires'] ?? 0 ) !== $access->getExpiryDateTime()->getTimestamp() ||

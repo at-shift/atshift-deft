@@ -1,22 +1,22 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Catalog {
     const MAX_BYTES = 524288;
-    public static function table() { global $wpdb; return $wpdb->prefix . 'sf_catalog'; }
-    public static function versions() { global $wpdb; return $wpdb->prefix . 'sf_components'; }
+    public static function table() { global $wpdb; return $wpdb->prefix . 'atshde_catalog'; }
+    public static function versions() { global $wpdb; return $wpdb->prefix . 'atshde_components'; }
     public static function permission() {
         return self::can_register() || self::can_manage() ? true : Access::denied();
     }
-    public static function can_register() { return Access::workspace() && ( current_user_can( 'manage_options' ) || current_user_can( 'sf_register_components' ) ); }
-    public static function can_manage() { return Access::workspace() && ( current_user_can( 'manage_options' ) || current_user_can( 'sf_manage_components' ) ); }
+    public static function can_register() { return Access::workspace() && ( current_user_can( 'manage_options' ) || current_user_can( 'atshde_register_components' ) ); }
+    public static function can_manage() { return Access::workspace() && ( current_user_can( 'manage_options' ) || current_user_can( 'atshde_manage_components' ) ); }
     private static function visible( $row ) { return $row && ( 0 === (int) $row['owner_id'] || get_current_user_id() === (int) $row['owner_id'] ); }
     private static function editable( $row ) { return self::visible( $row ) && ( $row['owner_id'] ? Access::workspace() : self::can_manage() ); }
 
     public static function shared_limit( $actor ) {
-        $limit = apply_filters( 'sf_shared_component_limit_per_user', 20, $actor );
+        $limit = apply_filters( 'atshde_shared_component_limit_per_user', apply_filters( 'sf_shared_component_limit_per_user', 20, $actor ), $actor );
         return is_int( $limit ) && $limit >= 0 ? min( 100, $limit ) : 20;
     }
 
@@ -77,7 +77,7 @@ final class Catalog {
                     if ( is_wp_error( $result ) ) return;
                 }
             }
-            update_option( 'sf_catalog_schema_version', 4, false );
+            update_option( 'atshde_catalog_schema_version', 4, false );
         } catch ( \Throwable $error ) { return; }
     }
 

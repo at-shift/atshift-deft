@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\Catalog;
-use StructuredFields\CatalogContext;
-use StructuredFields\ComponentBuilder;
-use StructuredFields\Snapshot;
+use Atshift\Deft\Catalog;
+use Atshift\Deft\CatalogContext;
+use Atshift\Deft\ComponentBuilder;
+use Atshift\Deft\Snapshot;
 $uid = (int) ( $argv[1] ?? 0 ); $run = $argv[2] ?? ''; $side = $argv[3] ?? ''; $start = (float) ( $argv[4] ?? 0 );
 if ( ! preg_match( '/^[a-f0-9-]{36}$/D', $run ) || get_user_meta( $uid, '_sf_personal_run', true ) !== $run || ! in_array( $side, array( 'a', 'b' ), true ) || $start > microtime( true ) + 10 ) throw new RuntimeException( 'Disposable race only.' );
 wp_set_current_user( $uid );

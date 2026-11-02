@@ -56,8 +56,8 @@ async function client(credentials) {
   const line = [...dom.window.document.scripts]
     .flatMap((s) => s.textContent.split("\n"))
     .map((s) => s.trim())
-    .find((s) => s.startsWith("window.sfWordPress="));
-  const config = JSON.parse(line.slice("window.sfWordPress=".length, -1));
+    .find((s) => s.startsWith("window.atshiftDeftWordPress="));
+  const config = JSON.parse(line.slice("window.atshiftDeftWordPress=".length, -1));
   dom.window.close();
   const url = (path) => {
     const u = new URL(config.root),

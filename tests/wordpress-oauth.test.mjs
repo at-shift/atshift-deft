@@ -13,7 +13,7 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 // SF_OAUTH_WAIT_MS optionally waits for the concurrently implemented routes, never skips them.
 const origin = "http://127.0.0.1:8128";
 const issuer = `${origin}/structured-fields-oauth`;
-const authorizeEndpoint = `${origin}/wp-admin/admin-post.php?action=sf_oauth_authorize`;
+const authorizeEndpoint = `${origin}/wp-admin/admin-post.php?action=atshde_oauth_authorize`;
 const redirectUri = "https://oauth-client.example.invalid/callback?registered=1";
 const run = randomUUID();
 const prefix = `sf-oauth-test-${run}-`;
@@ -60,9 +60,9 @@ async function browser(user) {
       const dom = new JSDOM(await response.text());
       try {
         const line = [...dom.window.document.scripts].flatMap(s => s.textContent.split("\n"))
-          .map(s => s.trim()).find(s => s.startsWith("window.sfWordPress="));
+          .map(s => s.trim()).find(s => s.startsWith("window.atshiftDeftWordPress="));
         assert.ok(line, "Connections screen must expose its browser REST nonce");
-        session.settings = JSON.parse(line.slice("window.sfWordPress=".length, -1));
+        session.settings = JSON.parse(line.slice("window.atshiftDeftWordPress=".length, -1));
       } finally { dom.window.close(); }
     },
     async consentNonce(flow) {
@@ -137,7 +137,7 @@ async function consent(session, request) {
     assert.ok(form, "Authorization must render a real consent form");
     assert.equal(form.method.toLowerCase(), "post");
     const values = Object.fromEntries([...form.querySelectorAll("input[name]")].map(input => [input.name, input.value]));
-    assert.equal(values.action, "sf_oauth_authorize");
+    assert.equal(values.action, "atshde_oauth_authorize");
     assert.ok(values.flow); assert.ok(values._wpnonce);
     const decisions = [...form.querySelectorAll('[name="decision"]')].map(input => input.value).sort();
     assert.deepEqual(decisions, ["approve", "deny"]);
@@ -197,6 +197,10 @@ const formPost = (url, body) => fetch(url, {
   method: "POST", redirect: "manual", signal: AbortSignal.timeout(15000),
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   body: new URLSearchParams(Object.entries(body).filter(([, value]) => value !== undefined)),
+});
+const rawFormPost = (url, body, contentType = "application/x-www-form-urlencoded") => fetch(url, {
+  method: "POST", redirect: "manual", signal: AbortSignal.timeout(15000),
+  headers: { "Content-Type": contentType }, body,
 });
 const exchange = (grant, changes = {}) => formPost(tokenEndpoint, {
   grant_type: "authorization_code", client_id: grant.client.id, code: grant.code,
@@ -444,6 +448,13 @@ test("denied consent redirects only to the registered callback, retaining state 
   assert.ok(replay.status >= 400 && replay.status < 500, "Denied flow cannot later be approved");
 });
 
+test("legacy authorization URLs remain authenticated aliases of the new action", async () => {
+  const request = authorization(await register());
+  request.url.searchParams.set("action", "sf_oauth_authorize");
+  const flow = await consent(a, request);
+  callback(await decide(a, flow, { decision: "deny" }), request, "access_denied");
+});
+
 test("authorization refuses missing PKCE, plain PKCE, malformed challenges and unsupported response types", async () => {
   const client = await register();
   for (const changes of [{ code_challenge: undefined }, { code_challenge_method: undefined },
@@ -469,6 +480,42 @@ test("authorization rejects missing or different resources and unknown or unappr
   }
 });
 
+test("ambiguous authorization names are rejected before creating a consent flow", async () => {
+  const client = await register();
+  const request = authorization(client);
+  const before = oauthFixture("request-counts", data.users[0].uid);
+  for (const extra of ["client.id=x", "client+id=x", "client%20id=x", "client_id%00=x",
+    "state[]=x", "state[0]=x", "state[x=x", "state%00=x", "st%61te=x", "state=x", "action[]=x", "action%00=x", "unknown=x"]) {
+    const url = new URL(request.url);
+    url.search = `${extra}&${url.search.slice(1)}`;
+    await rejectedAuthorization(a, { ...request, url }, { noRedirect: true });
+  }
+  assert.equal(oauthFixture("request-counts", data.users[0].uid), before);
+  const flow = await consent(a, request);
+  callback(await decide(a, flow, { decision: "deny" }), request, "access_denied");
+});
+
+test("OAuth form decoding preserves opaque state, exact redirects and encoded parameter names", async () => {
+  const client = await register({ redirectUri: `${redirectUri}&literal=a%2Bb%26c%25` });
+  const request = authorization(client, { state: "  literal + & / ? = % ; \\ \" ' <tag>  " });
+  request.url.search = request.url.search.slice(1).replace("client_id=", "cl%69ent_id=");
+  const flow = await consent(a, request);
+  const result = callback(await decide(a, flow), request);
+  const grant = { ...flow, code: result.searchParams.get("code") };
+  const body = new URLSearchParams({ grant_type: "authorization_code", client_id: client.id, code: grant.code,
+    redirect_uri: grant.params.redirect_uri, code_verifier: grant.verifier, resource: grant.params.resource });
+  await tokenResponse(await rawFormPost(tokenEndpoint, body.toString().replace("client_id=", "cl%69ent_id="),
+    "Application/X-WWW-Form-Urlencoded; charset=UTF-8"), grant);
+});
+
+test("omitted OAuth scope keeps its default while a bare scope is rejected", async () => {
+  const request = authorization(await register(), { scope: undefined });
+  const bare = new URL(request.url); bare.search += "&scope";
+  await rejectedAuthorization(a, { ...request, url: bare }, { noRedirect: true });
+  const flow = await consent(a, request);
+  callback(await decide(a, flow, { decision: "deny" }), request, "access_denied");
+});
+
 test("consent rejects missing or wrong nonce, changed account, and a different session for the same owner", async () => {
   const client = await register();
   for (const nonce of ["", "invalid-nonce"]) {
@@ -485,6 +532,45 @@ test("consent rejects missing or wrong nonce, changed account, and a different s
     "A valid nonce for the same owner in another session cannot adopt a consent flow");
   assert.equal((await json(await a.api("connections"))).items.length, 0);
   assert.equal((await json(await b.api("connections"))).items.length, 0);
+});
+
+test("malformed consent nonces cannot be repaired into valid credentials or consume the flow", async () => {
+  const client = await register();
+  const request = authorization(client);
+  const flow = await consent(a, request);
+  const nonce = flow.values._wpnonce;
+  const before = await json(await a.api("connections"));
+  for (const invalid of [`<b>${nonce}</b>`, ` ${nonce}`, `${nonce}\n`, `${nonce}%00`]) {
+    assert.equal((await decide(a, flow, { _wpnonce: invalid })).status, 400);
+  }
+  const body = new URLSearchParams({ ...flow.values, decision: "approve" });
+  body.delete("_wpnonce"); body.set("_wpnonce[]", nonce);
+  assert.equal((await a.request(flow.formUrl, { method: "POST", body })).status, 400);
+  const after = await json(await a.api("connections"));
+  assert.deepEqual(after.items, before.items, "Rejected nonces do not create or modify a grant");
+  callback(await decide(a, flow, { decision: "deny" }), request, "access_denied");
+});
+
+test("ambiguous consent names are rejected without consuming the original flow", async () => {
+  const request = authorization(await register());
+  const flow = await consent(a, request);
+  const before = oauthFixture("request-counts", data.users[0].uid);
+  const body = new URLSearchParams({ ...flow.values, decision: "approve" }).toString();
+  for (const extra of ["decision[]=deny", "decision%00=deny", "decision=deny", "decisi%6Fn=deny",
+    "flow[]=discard", "_wpnonce[]=discard", "_wpnonce%00=discard", "action[]=discard", "action%00=discard", "unknown=discard"]) {
+    const response = await a.request(flow.formUrl, { method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: `${extra}&${body}` });
+    assert.equal(response.status, 400);
+    assert.equal(response.headers.get("location"), null);
+  }
+  const multipart = new FormData();
+  for (const [name, value] of new URLSearchParams(body)) multipart.set(name, value);
+  assert.equal((await a.request(flow.formUrl, { method: "POST", body: multipart })).status, 400);
+  const formUrl = new URL(flow.formUrl); formUrl.searchParams.set("action", "sf_oauth_authorize");
+  assert.equal((await a.request(formUrl, { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...flow.values, decision: "approve" }) })).status, 400);
+  assert.equal(oauthFixture("request-counts", data.users[0].uid), before);
+  callback(await decide(a, flow, { decision: "deny" }), request, "access_denied");
 });
 
 test("consent flow expires, cannot be replayed, and does not accept an unknown decision", async () => {
@@ -552,6 +638,40 @@ test("token requests reject JSON, duplicate credentials, array parameters and un
   }
   await tokenError(await formPost(tokenEndpoint, { grant_type: "client_credentials", client_id: client.id }), "unsupported_grant_type");
   await tokenResponse(await exchange(grant), grant);
+});
+
+test("ambiguous token and refresh names cannot consume or rotate credentials", async () => {
+  const grant = await codeGrant(await register());
+  const before = oauthFixture("grant", grant.grant.id);
+  const body = new URLSearchParams({ grant_type: "authorization_code", client_id: grant.client.id, code: grant.code,
+    redirect_uri: grant.params.redirect_uri, code_verifier: grant.verifier, resource: grant.params.resource }).toString();
+  for (const extra of ["client.id=x", "client+id=x", "client_id%00=x", "code[]=x", "code%00=x", "co%64e=x",
+    "redirect.uri=x", "code_verifier[]=x", "resource[]=x"]) {
+    await tokenError(await rawFormPost(tokenEndpoint, `${extra}&${body}`), "invalid_request");
+  }
+  assert.equal(oauthFixture("grant", grant.grant.id), before);
+  const token = await tokenResponse(await exchange(grant), grant);
+  const stored = oauthFixture("grant", grant.grant.id);
+  const refreshBody = new URLSearchParams({ grant_type: "refresh_token", client_id: grant.client.id,
+    refresh_token: token.refresh_token, resource: grant.params.resource }).toString();
+  for (const extra of ["refresh.token=x", "refresh_token[]=x", "refresh_token%00=x", "refresh%5Ftoken=x"]) {
+    await tokenError(await rawFormPost(tokenEndpoint, `${extra}&${refreshBody}`), "invalid_request");
+  }
+  assert.equal(oauthFixture("grant", grant.grant.id), stored);
+  await tokenResponse(await refresh(grant, token.refresh_token), grant);
+});
+
+test("ambiguous revocation names cannot revoke a valid connection", async () => {
+  const token = await issued();
+  const before = oauthFixture("grant", token.grant.id);
+  const body = new URLSearchParams({ token: token.refresh_token, client_id: token.client.id }).toString();
+  for (const extra of ["client.id=x", "client+id=x", "client_id%00=x", "token[]=x", "token%00=x", "tok%65n=x"]) {
+    await tokenError(await rawFormPost(revokeEndpoint, `${extra}&${body}`), "invalid_request");
+  }
+  assert.equal(oauthFixture("grant", token.grant.id), before);
+  assert.equal((await formPost(revokeEndpoint, { token: token.refresh_token, client_id: token.client.id })).status, 200);
+  await unauthorized(token.access_token);
+  assert.equal((await rawFormPost(revokeEndpoint, "")).status, 200);
 });
 
 test("authorization codes are one-use and expired codes cannot issue credentials", async () => {
@@ -757,7 +877,10 @@ for (const revoke of ["refresh-reuse", "connection", "oauth-token", "oauth-clien
       articleId: data.users[0].id, expectedVersion: own.version, expectedPublicationVersion: previous.version,
       requestId: randomUUID(), timing: "scheduled", publishAt: new Date(Date.now() + 3600000).toISOString().replace(/\.\d{3}Z$/, "+00:00"), timeZone: "UTC",
     });
-    assert.equal(schedule.state, "scheduled"); assert.equal(schedule.postId, 0);
+    assert.equal(schedule.state, "scheduled"); assert.ok(schedule.postId > 0);
+    assert.deepEqual(JSON.parse(oauthFixture("publication-reservation", data.users[0].id)), {
+      postId: schedule.postId, status: "atshde_reserved", public: false, empty: true,
+    });
     if (revoke === "refresh-reuse") {
       const next = await tokenResponse(await refresh(token, token.refresh_token), token);
       await tokenError(await refresh(token, token.refresh_token), "invalid_grant");
@@ -767,11 +890,14 @@ for (const revoke of ["refresh-reuse", "connection", "oauth-token", "oauth-clien
     else if (revoke === "oauth-client") await json(await admin.api(`oauth-clients/${token.client.id}/revoke`, {}));
     else assert.equal((await formPost(revokeEndpoint, { token: token.refresh_token, client_id: token.client.id })).status, 200);
     const cancelled = await json(await a.api(`publications/${data.users[0].id}`));
-    assert.equal(cancelled.state, "cancelled"); assert.equal(cancelled.postId, 0);
+    assert.equal(cancelled.state, "cancelled"); assert.equal(cancelled.postId, schedule.postId);
     usersFixture("publication-due", data.users[0].id);
     usersFixture("publication-run", data.users[0].id);
     const after = await json(await a.api(`publications/${data.users[0].id}`));
-    assert.equal(after.state, "cancelled"); assert.equal(after.postId, 0);
+    assert.equal(after.state, "cancelled"); assert.equal(after.postId, schedule.postId);
+    assert.deepEqual(JSON.parse(oauthFixture("publication-reservation", data.users[0].id)), {
+      postId: schedule.postId, status: "atshde_reserve_hold", public: false, empty: true,
+    });
     await unauthorized(token.access_token, endpoints.publishingEndpoint);
   });
 }
@@ -812,7 +938,10 @@ for (const mode of ["cancel-at-admission", "grant-expiry"]) {
       // Deterministic database barrier, not a claim of a multi-process stress test.
       assert.match(oauthFixture("publication-cas-cancel", data.users[0].id), /fixture-ok/);
       const result = await json(await a.api(`publications/${data.users[0].id}`));
-      assert.equal(result.state, "cancelled"); assert.equal(result.postId, 0);
+      assert.equal(result.state, "cancelled"); assert.ok(result.postId > 0);
+      assert.deepEqual(JSON.parse(oauthFixture("publication-reservation", data.users[0].id)), {
+        postId: result.postId, status: "atshde_reserve_hold", public: false, empty: true,
+      });
     } else {
       assert.match(oauthFixture("expire-grant", token.grant.id), /fixture-ok/);
       await unauthorized(token.access_token, endpoints.publishingEndpoint);

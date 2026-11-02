@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace StructuredFields\OAuth;
+namespace Atshift\Deft\OAuth;
 
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\AccessTokenEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\AuthCodeEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\ClientEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\ScopeEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\UserEntityInterface;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\AuthCodeTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\ClientTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\EntityTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\RefreshTokenTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\ScopeTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
-use StructuredFields\Vendor\League\OAuth2\Server\Exception\OAuthServerException;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\AccessTokenEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\AuthCodeEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\ClientEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\ScopeEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\UserEntityInterface;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\AuthCodeTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\ClientTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\EntityTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\RefreshTokenTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\ScopeTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
+use Atshift\Deft\Vendor\League\OAuth2\Server\Exception\OAuthServerException;
 
 defined( 'ABSPATH' ) || exit;
 

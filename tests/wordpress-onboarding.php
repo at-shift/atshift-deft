@@ -1,16 +1,16 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
 require_once ABSPATH . 'wp-admin/includes/user.php';
-use StructuredFields\Onboarding;
-use StructuredFields\Catalog;
-use StructuredFields\CatalogContext;
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
+use Atshift\Deft\Onboarding;
+use Atshift\Deft\Catalog;
+use Atshift\Deft\CatalogContext;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
 
 $run = wp_generate_uuid4(); $prefix = 'onboarding-' . $run; $users = array(); $admin = get_current_user_id(); $checks = 0;
 $id = 'media-test-' . $run;
 function sfo_check( $value, $message ) { global $checks; if ( ! $value ) throw new RuntimeException( $message ); echo 'PASS ' . ++$checks . ': ' . $message . PHP_EOL; }
-function sfo_render() { unload_textdomain( 'atshift-deft', true ); ob_start(); StructuredFields\admin_page(); return ob_get_clean(); }
+function sfo_render() { unload_textdomain( 'atshift-deft', true ); ob_start(); Atshift\Deft\admin_page(); return ob_get_clean(); }
 $test_locale = static function() { return get_user_locale(); };
 add_filter( 'pre_determine_locale', $test_locale );
 try {
@@ -18,7 +18,7 @@ try {
     sfo_check( ! Onboarding::first_visit() && '' === sfo_render(), 'Anonymous access cannot consume a first visit or render the workspace' );
     try { Onboarding::document(); $denied = false; } catch ( Throwable $e ) { $denied = true; }
     sfo_check( $denied, 'Anonymous guide generation is denied' );
-    foreach ( array( 'sf_author', 'sf_author', 'subscriber' ) as $i => $role ) {
+    foreach ( array( 'atshde_author', 'atshde_author', 'subscriber' ) as $i => $role ) {
         $uid = wp_insert_user( array( 'user_login' => $prefix . '-' . $i, 'user_pass' => wp_generate_password( 32 ), 'role' => $role ) );
         if ( is_wp_error( $uid ) ) throw new RuntimeException( 'Could not create disposable user.' );
         $users[] = $uid;
@@ -27,15 +27,21 @@ try {
     sfo_check( ! Onboarding::first_visit() && '' === sfo_render(), 'Subscribers cannot consume onboarding or see the download link' );
     wp_set_current_user( $users[0] ); update_user_meta( $users[0], 'locale', 'ja' );
     $first = sfo_render();
+    $bundled_japanese = 'wordpress-org' !== getenv( 'SF_DISTRIBUTION' );
+    if ( $bundled_japanese ) {
     sfo_check( str_contains( $first, 'id="sf-ai-welcome"' ) && str_contains( $first, '手順書をダウンロードして、いつものAIに読ませてください' ) && str_contains( $first, 'AIが接続を案内し' ), 'First Articles visit starts with giving the guide to AI in Japanese' );
     sfo_check( str_contains( $first, '段組や見た目も相談できます' ) && str_contains( $first, '今のテーマに馴染ませたい' ) && str_contains( $first, '記事用に別のレイアウトを組みたい' ), 'Japanese introduction explains theme-aware and separate article layout choices' );
+    } else {
+        sfo_check( str_contains( $first, 'id="sf-ai-welcome"' ) && str_contains( $first, 'Give this guide to your usual AI' ) && str_contains( $first, 'guide you through connecting' ), 'English-only package keeps guide-first onboarding in a Japanese account' );
+        sfo_check( str_contains( $first, 'Ask about layout as well as wording' ) && str_contains( $first, 'assemble a separate article layout' ), 'English-only introduction retains design guidance' );
+    }
     sfo_check( str_contains( $first, '<dialog id="sf-ai-welcome"' ) && str_contains( $first, 'id="sf-ai-welcome-download"' ) && ! str_contains( $first, 'AIへの自動接続・記事の公開には対応していません' ), 'First-use modal contains the focused instruction and download without technical detail' );
-    sfo_check( str_contains( $first, 'id="sf-ai-guide"' ) && str_contains( $first, 'AI用手順書をダウンロード' ), 'Download is available before creating or selecting an article' );
+    sfo_check( str_contains( $first, 'id="sf-ai-guide"' ) && str_contains( $first, $bundled_japanese ? 'AI用手順書をダウンロード' : 'Download AI guide' ), 'Download is available before creating or selecting an article' );
     $dom = new DOMDocument(); @$dom->loadHTML( '<?xml encoding="UTF-8">' . $first ); $xpath = new DOMXPath( $dom );
     $links = $xpath->query( '//dialog[@id="sf-ai-welcome"]//a' );
     sfo_check( 1 === $links->length && 'sf-ai-welcome-download' === $links->item( 0 )->getAttribute( 'id' ), 'The first-use modal has only the guide download action, not connection setup' );
     sfo_check( strpos( $first, 'id="sf-ai-guide"' ) < strpos( $first, 'page=structured-fields-connections' ), 'The persistent toolbar also places the guide before connection settings' );
-    sfo_check( metadata_exists( 'user', $users[0], '_sf_ai_welcome_seen_' . get_current_blog_id() ), 'First visit is stored per account and site, not in browser storage' );
+    sfo_check( metadata_exists( 'user', $users[0], '_atshde_ai_welcome_seen_' . get_current_blog_id() ), 'First visit is stored per account and site, not in browser storage' );
     $second = sfo_render();
     sfo_check( ! str_contains( $second, 'id="sf-ai-welcome"' ) && str_contains( $second, 'id="sf-ai-guide"' ), 'Subsequent visits omit the introduction but retain the download' );
     wp_set_current_user( $users[1] ); $other = sfo_render();
@@ -52,7 +58,7 @@ try {
     if ( is_wp_error( $personal ) ) throw new RuntimeException( $personal->get_error_message() );
     $media = sf_media_test_create( $id );
     $doc = Onboarding::document();
-    sfo_check( str_starts_with( $doc, '# atshift DEFT: Start with Your AI' ) && str_contains( $doc, '## Authoring Rules' ), 'Downloaded Markdown contains the introduction and full AI authoring instructions' );
+    sfo_check( str_starts_with( $doc, '# atshift DeFt: Start with Your AI' ) && str_contains( $doc, '## Authoring Rules' ), 'Downloaded Markdown contains the introduction and full AI authoring instructions' );
     sfo_check( str_contains( $doc, 'https://wordpress.org/plugins/mcp-adapter/' ) && str_contains( $doc, 'version 0.7.1 or newer, installed and active' ) && str_contains( $doc, 'Plugins > Add New Plugin' ) && str_contains( $doc, 'Install Now > Activate' ), 'Downloaded guide links the required official MCP Adapter and explains installation and activation' );
     sfo_check( strpos( $doc, '## Before Connecting: Install MCP Adapter' ) < strpos( $doc, '## Connection Details' ) && str_contains( $doc, 'Do not install, update or activate plugins without explicit approval' ) && str_contains( $doc, 'ask for confirmation from the administrator' ), 'Dependency setup precedes client settings without assuming authority or a live installation check' );
     sfo_check( str_contains( $doc, '## Choose the Actual Client' ) && str_contains( $doc, 'Gemini CLI' ) && str_contains( $doc, 'limited beta' ) && str_contains( $doc, 'pre-register a public client' ), 'Guide distinguishes service clients, limited availability and pre-registered OAuth' );
@@ -79,7 +85,7 @@ try {
     sfo_check( 0 === $data->composeTemplate->expectedVersion && ! $data->composeTemplate->article->blocks && $block->componentRevision === $entry->revision, 'New-article proposal and block templates use current catalog identity' );
     sfo_check( str_contains( $doc, 'fresh Article handoff' ) && str_contains( $doc, 'Automatic AI/MCP connection' ) && str_contains( $doc, 'Prefer native HTML, then CSS' ), 'Guide preserves edit handoff, connection limits and native/CSS-first behavior guidance' );
     parse_str( wp_parse_url( html_entity_decode( Onboarding::url() ), PHP_URL_QUERY ), $query );
-    sfo_check( 'sf_ai_guide' === $query['action'] && wp_verify_nonce( $query['_wpnonce'], 'sf-ai-guide' ), 'Download URL is authenticated and nonce-protected' );
+    sfo_check( 'atshde_ai_guide' === $query['action'] && wp_verify_nonce( $query['_wpnonce'], 'sf-ai-guide' ), 'Download URL uses the product-prefixed action and existing nonce contract' );
     echo 'WordPress onboarding: ' . $checks . ' passed.', PHP_EOL;
 } finally {
     remove_filter( 'pre_determine_locale', $test_locale );

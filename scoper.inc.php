@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 return [
-    'prefix' => 'StructuredFields\\Vendor',
+    'prefix' => 'Atshift\Deft\\Vendor',
     'php-version' => '8.2',
     // The second pass isolates Composer's regenerated loader without double-prefixing.
-    'exclude-namespaces' => ['StructuredFields\\Vendor'],
+    'exclude-namespaces' => ['Atshift\Deft\\Vendor'],
     'expose-global-constants' => false,
     'expose-global-classes' => false,
     'expose-global-functions' => false,

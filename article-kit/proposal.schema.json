@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:structured-fields:article-proposal:v1",
-  "title": "atshift DEFT article proposal (local prototype)",
+  "title": "atshift DeFt article proposal (local prototype)",
   "type": "object",
   "additionalProperties": false,
   "required": [

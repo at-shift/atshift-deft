@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
 import { CookieJar } from "tough-cookie";
 import { JSDOM } from "jsdom";
 
@@ -43,14 +44,14 @@ assert.equal(login.status, 302, "Local test login must succeed");
 const admin = await request("/wp-admin/admin.php?page=structured-fields");
 const dom = new JSDOM(await admin.text());
 const script = [...dom.window.document.scripts].find((el) =>
-  el.textContent.trim().startsWith("window.sfWordPress="),
+  el.textContent.trim().startsWith("window.atshiftDeftWordPress="),
 );
 assert.ok(script, "Expected isolated plugin screen");
 const configLine = script.textContent
   .split("\n")
   .map((line) => line.trim())
-  .find((line) => line.startsWith("window.sfWordPress="));
-const config = JSON.parse(configLine.slice("window.sfWordPress=".length, -1));
+  .find((line) => line.startsWith("window.atshiftDeftWordPress="));
+const config = JSON.parse(configLine.slice("window.atshiftDeftWordPress=".length, -1));
 dom.window.close();
 function api(path) {
   const url = new URL(config.root);
@@ -66,6 +67,17 @@ const headers = {
   "X-WP-Nonce": config.nonce,
   "Content-Type": "application/json",
 };
+const previewSnapshot = JSON.parse(
+  await readFile(new URL("../wordpress/atshift-deft/sample.json", import.meta.url), "utf8"),
+);
+previewSnapshot.article.id = "http-boundary-" + randomUUID();
+const previewSaved = await request(api("articles"), {
+  method: "POST",
+  headers,
+  body: JSON.stringify({ snapshot: previewSnapshot, expectedVersion: 0 }),
+});
+assert.equal(previewSaved.status, 200);
+const previewItem = await previewSaved.json();
 
 test("cookie authentication requires a REST nonce; unauthenticated reads and writes fail", async () => {
   for (const authenticated of [false, true]) {
@@ -106,7 +118,7 @@ test("authenticated response is private, revision-bound, and contains no approva
 });
 
 test("real theme preview needs authenticated user, exact version and valid nonce", async () => {
-  const [item] = await (await request(api("articles"), { headers })).json();
+  const item = previewItem;
   const success = await request(item.previewUrl);
   assert.equal(success.status, 200);
   const html = await success.text();
@@ -114,7 +126,7 @@ test("real theme preview needs authenticated user, exact version and valid nonce
   assert.match(html, /wp-block-post-title|entry-title/);
   const previewDocument = new JSDOM(html);
   assert.match(
-    previewDocument.window.document.querySelector("#sf-preview-inline-css")
+    previewDocument.window.document.querySelector("#atshift-deft-preview-inline-css")
       ?.textContent ?? "",
     /\.sf-article\{overflow-wrap:anywhere\}/,
   );
@@ -142,7 +154,7 @@ test("real theme preview needs authenticated user, exact version and valid nonce
 });
 
 test("malformed preview tokens and array REST versions fail without coercion", async () => {
-  const [item] = await (await request(api("articles"), { headers })).json();
+  const item = previewItem;
   for (const key of ["sf_version", "_sf_nonce"]) {
     for (const suffix of ["[]", "[nested][]"]) {
       const url = new URL(item.previewUrl);
@@ -151,10 +163,14 @@ test("malformed preview tokens and array REST versions fail without coercion", a
       url.searchParams.set(key + suffix, value);
       assert.equal((await request(url)).status, 403);
     }
-    const tagged = new URL(item.previewUrl);
-    tagged.searchParams.set(key, `<b>${tagged.searchParams.get(key)}</b>`);
-    assert.equal((await request(tagged)).status, 403);
+    const original = new URL(item.previewUrl).searchParams.get(key);
+    for (const altered of ["", `<b>${original}</b>`, ` ${original}`, `${original}\n`, `${original}%00`, `${original}\0`, `${original}\\`]) {
+      const bad = new URL(item.previewUrl);
+      bad.searchParams.set(key, altered);
+      assert.equal((await request(bad)).status, 403, `${key}: ${JSON.stringify(altered)}`);
+    }
   }
+  assert.equal((await request(item.previewUrl)).status, 200);
   const url = new URL(api(`articles/${item.articleId}`));
   url.searchParams.set("version[]", "1");
   assert.equal((await request(url, { headers })).status, 400);

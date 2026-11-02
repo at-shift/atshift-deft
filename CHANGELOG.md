@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.3 - 2026-11-03
+
+- Standardize the display name as atshift DeFt, including guides, translated labels and the prepared plugin icon. Keep the `atshift-deft` slug, text domain, update identity and API routes.
+- Isolate PHP and dependencies under `Atshift\Deft`, prefix WordPress identifiers with `atshde_`, and migrate known legacy data while preserving ownership, explicit capability denials, signing material, draft history and existing connection/preview contracts. Ambiguous migration conflicts fail closed.
+- Store new private uploads and frozen publication media in bounded database chunks, without requiring an external private directory. Keep existing private files read-only, with exact size/hash verification; use WordPress APIs for existing Media Library paths.
+- Harden canonical nonce and OAuth form parsing, preserve opaque OAuth state, retain review-screen privacy headers across route aliases, and reject nested REST dispatch through AI connections.
+- Make canonical HTTP input validation and core nonce checks explicit without repairing altered credentials, reducing input/nonce diagnostics while preserving existing authorization and GET/HEAD behavior.
+- Add upgrade/recovery, binary-storage, title-filter, remote-scope, path-portability and multisite regression tests. Document retained compatibility aliases and reviewer clarifications rather than claiming an independent infrastructure audit.
+- Split localization packaging: GitHub includes its updater and partial Japanese catalogs/guide; WordPress.org is English-only without the external updater, retaining the POT and WordPress language-pack support.
+
 ## 0.7.2 - 2026-11-01
 
 - Correct the onboarding omission: the AI guide mentioned MCP Adapter but did not include its installation and activation steps. The official MCP Adapter 0.7.1+ must be installed and active for AI connections; manual JSON import does not require it.

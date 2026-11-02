@@ -19,8 +19,8 @@ async function client(user){
   }
   await request("/wp-login.php");assert.equal((await request("/wp-login.php",{method:"POST",body:new URLSearchParams({log:user.username,pwd:user.password,testcookie:"1"})})).status,302);
   const dom=new JSDOM(await(await request("/wp-admin/admin.php?page=structured-fields")).text());
-  const line=[...dom.window.document.scripts].flatMap(s=>s.textContent.split("\n")).map(s=>s.trim()).find(s=>s.startsWith("window.sfWordPress="));
-  assert.ok(line);const config=JSON.parse(line.slice("window.sfWordPress=".length,-1));dom.window.close();
+  const line=[...dom.window.document.scripts].flatMap(s=>s.textContent.split("\n")).map(s=>s.trim()).find(s=>s.startsWith("window.atshiftDeftWordPress="));
+  assert.ok(line);const config=JSON.parse(line.slice("window.atshiftDeftWordPress=".length,-1));dom.window.close();
   const api=(path,body)=>{
     const url=new URL(config.root);if(url.searchParams.has("rest_route"))url.searchParams.set("rest_route",url.searchParams.get("rest_route")+path);else url.pathname+=path;
     return request(url,{method:body===undefined?"GET":"POST",headers:{"X-WP-Nonce":config.nonce,...(body!==undefined&&!(body instanceof FormData)?{"Content-Type":"application/json"}:{})},...(body===undefined?{}:{body:body instanceof FormData?body:JSON.stringify(body)})});

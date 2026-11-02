@@ -29,7 +29,7 @@ automatically migrated. Custom designer-authored CSS retains its existing trust
 boundary and is not made safe merely by this new compiler.
 
 Regression test: run `tests/wordpress-appearance.php` with WP-CLI `eval-file` in a
-disposable local database named `sf_deft_appearance_*`, with DEFT and MCP Adapter
+disposable local database named `sf_deft_appearance_*`, with DeFt and MCP Adapter
 active. The suite creates local fixtures and a local publication; drop the entire
 disposable database afterward. Optional `SF_APPEARANCE_LEGACY` contains released
 unstyled recipe hashes; `SF_APPEARANCE_ARTIFACT_DIR` receives private QA artifacts.

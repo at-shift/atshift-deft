@@ -1,8 +1,8 @@
 <?php
 require_once dirname( __DIR__ ) . '/.local/wordpress/wp-load.php';
-use StructuredFields\Assets;
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
+use Atshift\Deft\Assets;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
 if ( DB_NAME !== 'sf_prototype_local' || home_url() !== 'http://127.0.0.1:8128' ) throw new RuntimeException( 'Use the isolated local site.' );
 wp_set_current_user( get_user_by( 'login', 'sf_local_admin' )->ID );
 
@@ -12,23 +12,25 @@ function sf_media_test_id( $id ) {
 function sf_media_test_cleanup( $id ) {
     sf_media_test_id( $id );
     global $wpdb;
-    if ( class_exists( 'StructuredFields\\Publications' ) ) {
-        $job = StructuredFields\Publications::read( $id );
+    if ( class_exists( 'Atshift\Deft\\Publications' ) ) {
+        $job = Atshift\Deft\Publications::read( $id );
         if ( $job ) {
-            wp_clear_scheduled_hook( StructuredFields\Publications::HOOK, array( $id, (int) $job['version'] ) );
-            if ( $job['post_id'] && get_post_meta( (int) $job['post_id'], '_sf_publication', true ) === $job['publication_id'] ) wp_delete_post( (int) $job['post_id'], true );
+            foreach ( json_decode( $job['files'] ?: '{}', true ) as $file ) Atshift\Deft\PrivateBlobs::delete( 'publication', $job['publication_id'] . ':' . $file['sha256'] );
+            wp_clear_scheduled_hook( Atshift\Deft\Publications::HOOK, array( $id, (int) $job['version'] ) );
+            if ( $job['post_id'] && get_post_meta( (int) $job['post_id'], '_atshde_publication', true ) === $job['publication_id'] ) wp_delete_post( (int) $job['post_id'], true );
             $dir = Assets::directory() . '/publication-' . $job['publication_id'];
             if ( is_dir( $dir ) && ! is_link( $dir ) ) { foreach ( glob( $dir . '/*.bin' ) ?: array() as $file ) unlink( $file ); rmdir( $dir ); }
-            $wpdb->delete( StructuredFields\Publications::table(), array( 'article_id' => $id ) );
+            $wpdb->delete( Atshift\Deft\Publications::table(), array( 'article_id' => $id ) );
         }
     }
     $table = Assets::table();
     foreach ( $wpdb->get_col( $wpdb->prepare( "SELECT asset_id FROM $table WHERE article_id=%s", $id ) ) as $asset ) {
+        Atshift\Deft\PrivateBlobs::delete( 'asset', $asset );
         $path = Assets::directory() . '/' . $asset . '.bin';
         if ( is_file( $path ) ) unlink( $path );
     }
     $wpdb->delete( $table, array( 'article_id' => $id ) );
-    foreach ( array( 'StructuredFields\\Transfer', 'StructuredFields\\Review' ) as $class ) {
+    foreach ( array( 'Atshift\Deft\\Transfer', 'Atshift\Deft\\Review' ) as $class ) {
         if ( class_exists( $class ) ) $wpdb->delete( $class::table(), array( 'article_id' => $id ) );
     }
     foreach ( get_posts( array( 'post_type' => 'attachment', 'post_status' => 'any', 'posts_per_page' => -1,
@@ -83,11 +85,11 @@ if ( realpath( $_SERVER['SCRIPT_FILENAME'] ?? '' ) === __FILE__ ) {
         foreach ( $ids as $attachment ) file_put_contents( get_attached_file( $attachment ), 'tampered', FILE_APPEND );
         echo 'fixture-ok';
     } elseif ( 'expire-transfers' === $action || 'expire-reviews' === $action ) {
-        $table = 'expire-transfers' === $action ? StructuredFields\Transfer::table() : StructuredFields\Review::table();
+        $table = 'expire-transfers' === $action ? Atshift\Deft\Transfer::table() : Atshift\Deft\Review::table();
         $wpdb->update( $table, array( 'expires' => time() - 1 ), array( 'article_id' => $id ) );
         echo 'fixture-ok';
     } elseif ( 'grant-hashes' === $action ) {
-        $table = StructuredFields\Transfer::table();
+        $table = Atshift\Deft\Transfer::table();
         echo Snapshot::json( $wpdb->get_col( $wpdb->prepare( "SELECT token_hash FROM $table WHERE article_id=%s", $id ) ) );
     } else throw new RuntimeException( 'Unknown fixture operation.' );
 }

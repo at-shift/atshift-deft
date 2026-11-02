@@ -1,9 +1,10 @@
 <?php
+require_once __DIR__ . '/wordpress-connection-context.php';
 // wp eval-file tests/wordpress-draft-trash.php --path=<disposable WordPress>
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() ||
     ! preg_match( '/^sf_deft_post_types_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable local database.' );
 
-use StructuredFields\{Access, Assets, Catalog, Connections, Drafts, Mcp, Publications, PublicationMedia, PublicStructure, Review, Snapshot, Store, Transfer};
+use Atshift\Deft\{Access, Assets, Catalog, Connections, Drafts, Mcp, Publications, PublicationMedia, PublicStructure, Review, Snapshot, Store, Transfer};
 global $wpdb, $checks;
 $checks = 0;
 function sfdt_check( $ok, $label ) { global $checks; if ( ! $ok ) throw new RuntimeException( $label ); ++$checks; }
@@ -25,7 +26,7 @@ function sfdt_key( $user, $publish = false ) {
 function sfdt_connect( $key ) {
     $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
     $r = new WP_REST_Request( 'POST', $key['route'] ); $r->set_body( '{}' ); $r->set_header( 'authorization', 'Bearer ' . $key['token'] );
-    sfdt_good( Connections::guard( null, rest_get_server(), $r ) );
+    sfdt_good( sf_test_begin_connection( $r ) );
 }
 function sfdt_new( $title ) {
     return sfdt_good( Mcp::execute( 'save-draft', array( 'expectedVersion' => 0,
@@ -39,9 +40,9 @@ function sfdt_publish( $d, $now = false ) {
 $run = wp_generate_uuid4();
 $password = wp_generate_password( 32, false );
 $login = 'trash-qa-' . $run;
-$owner = sfdt_good( wp_insert_user( array( 'user_login' => $login, 'user_pass' => $password, 'role' => 'sf_publisher' ) ) );
+$owner = sfdt_good( wp_insert_user( array( 'user_login' => $login, 'user_pass' => $password, 'role' => 'atshde_publisher' ) ) );
 update_user_meta( $owner, 'locale', 'ja' );
-$other = sfdt_good( wp_insert_user( array( 'user_login' => 'trash-other-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_publisher' ) ) );
+$other = sfdt_good( wp_insert_user( array( 'user_login' => 'trash-other-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_publisher' ) ) );
 $admin = get_users( array( 'role' => 'administrator', 'number' => 1 ) )[0]->ID;
 $key = sfdt_key( $owner ); $pubkey = sfdt_key( $owner, true );
 sfdt_connect( $key );
@@ -73,7 +74,7 @@ $wpdb->insert( Assets::table(), array( 'asset_id' => $asset, 'article_id' => $id
     'filename' => 'reference.pdf', 'mime' => 'application/pdf', 'bytes' => strlen( $bytes ), 'created_by' => $owner, 'created_at' => current_time( 'mysql', true ) ) );
 $trashed = sfdt_good( Mcp::execute( 'trash-draft', sfdt_input( $draft ) ) );
 Drafts::install();
-sfdt_check( 1 === (int) get_option( 'sf_drafts_schema_version' ) && 1 === Drafts::state( $id )['stateVersion'] && 'trash' === Drafts::state( $id )['draftState'], 'Repeated activation/schema installation preserves trash state.' );
+sfdt_check( 1 === (int) get_option( 'atshde_drafts_schema_version' ) && 1 === Drafts::state( $id )['stateVersion'] && 'trash' === Drafts::state( $id )['draftState'], 'Repeated activation/schema installation preserves trash state.' );
 sfdt_check( 'trash' === $trashed['draftState'] && 1 === $trashed['stateVersion'] && ! isset( $trashed['previewUrl'], $trashed['snapshot'] ), 'Trash returns metadata only with new state version.' );
 sfdt_check( ! Access::article( $id ) && Access::owns_article( $id ), 'Trash blocks active access but keeps ownership.' );
 sfdt_check( ! in_array( $id, array_column( Store::listing(), 'articleId' ), true ), 'Trash disappears from draft list.' );
@@ -102,6 +103,7 @@ sfdt_good( Mcp::execute( 'get-draft', array( 'articleId' => $id ) ) );
 sfdt_check( ! Publications::read( $id ), 'Lifecycle operations never create publication.' );
 
 // REST uses the same owner and version checks, without accepting a body ID override.
+sf_test_end_connection();
 wp_set_current_user( $owner );
 $route = 'articles/' . $id . '/trash'; $body = array( 'expectedVersion' => 2, 'expectedStateVersion' => 2 );
 sfdt_check( 400 === sfdt_request( $route, $body + array( 'articleId' => 'other' ) )->get_status(), 'REST rejects body ID override.' );

@@ -4,6 +4,21 @@
 #sf-workspace * {
   box-sizing: border-box;
 }
+#sf-workspace .sf-brand-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#sf-workspace .sf-brand-heading img {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+}
+#sf-workspace .sf-brand-heading > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 #sf-workspace small {
   font-size: 13px;
   color: #646970;

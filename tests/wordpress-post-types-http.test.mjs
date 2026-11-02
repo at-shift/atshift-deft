@@ -53,7 +53,8 @@ test('MCP publishes to page/custom type and schedules/cancels the selected targe
   await call(client,'save-draft',{article,expectedVersion:0});
   const schedule=await call(client,'set-publication',{articleId:article.id,expectedVersion:1,expectedPublicationVersion:0,requestId:randomUUID(),
     postType:'page',timing:'scheduled',publishAt:new Date(Date.now()+3600000).toISOString().replace(/\.\d{3}Z$/,'+00:00'),timeZone:'UTC'});
-  assert.equal(schedule.postType,'page');assert.equal(schedule.state,'scheduled');assert.equal(schedule.postId,0);
+  assert.equal(schedule.postType,'page');assert.equal(schedule.state,'scheduled');assert.ok(Number.isInteger(schedule.postId)&&schedule.postId>0);
+  assert.notEqual((await fetch(new URL('?page_id='+schedule.postId,site))).status,200);
   assert.equal((await call(client,'cancel-publication',{articleId:article.id,expectedPublicationVersion:1})).state,'cancelled');
 });
 test('public post/page/custom pages deliver scoped styles, JS and frozen media over HTTP',async()=>{
@@ -61,7 +62,7 @@ test('public post/page/custom pages deliver scoped styles, JS and frozen media o
     const response=await fetch(result.url);assert.equal(response.status,200);
     const dom=new JSDOM(await response.text(),{url:result.url});const document=dom.window.document;
     assert.ok(document.querySelector('.sf-article'));
-    assert.ok(document.querySelector(`[id="sf-publication-${result.postId}-inline-css"]`));
+    assert.ok(document.querySelector(`[id="atshift-deft-publication-${result.postId}-inline-css"]`));
     assert.ok(document.querySelector('script[src*="image-zoom-v1.js"]'));
     assert.equal(document.querySelectorAll('[onerror],[onload]').length,0);
     for(const element of document.querySelectorAll('.sf-article img,.sf-article a')){

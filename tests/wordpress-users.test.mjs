@@ -59,9 +59,9 @@ async function client(credentials) {
   const line = [...dom.window.document.scripts]
     .flatMap((s) => s.textContent.split("\n"))
     .map((s) => s.trim())
-    .find((s) => s.startsWith("window.sfWordPress="));
+    .find((s) => s.startsWith("window.atshiftDeftWordPress="));
   assert.ok(line, "Workspace loads for this role");
-  const config = JSON.parse(line.slice("window.sfWordPress=".length, -1));
+  const config = JSON.parse(line.slice("window.atshiftDeftWordPress=".length, -1));
   dom.window.close();
   const api = async (
     path,
@@ -208,7 +208,7 @@ test("exact-version theme previews and resolved PDFs work only for the owner", a
   assert.equal(r.status, 200);
   const dom = new JSDOM(await r.text());
   const pdf = [...dom.window.document.querySelectorAll("a")].find((x) =>
-    x.href.includes("sf_media"),
+    x.href.includes("atshde_media"),
   )?.href;
   assert.ok(pdf);
   dom.window.close();
@@ -270,6 +270,11 @@ test("review and approval screens do not cross owners or administrator accounts"
     );
     assert.equal((await other.api(`reviews/${review.reviewId}`)).status, 404);
     assert.equal((await other.request(review.reviewUrl)).status, 403);
+    const alias = new URL(review.reviewUrl); alias.searchParams.set("page", "structured-fields-review.php");
+    const denied = await other.request(alias);
+    assert.equal(denied.status, 403);
+    assert.equal(denied.headers.get("referrer-policy"), "no-referrer");
+    assert.ok(!(await denied.text()).includes(review.manifestHash));
     assert.equal(
       (
         await other.request("/wp-admin/admin-post.php", {

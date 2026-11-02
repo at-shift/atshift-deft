@@ -1,9 +1,17 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Access {
+    public static function verify_nonce( $nonce, $action ) {
+        if ( ! is_string( $nonce ) ) return false;
+        $sanitized = sanitize_text_field( $nonce );
+        // Callers unslash request values once; never repair a malformed token into a valid one.
+        if ( '' === $sanitized || $sanitized !== $nonce ) return false;
+        return wp_verify_nonce( $sanitized, $action );
+    }
+
     public static function secure_transport() {
         if ( is_ssl() ) return true;
         return 'local' === wp_get_environment_type() && 'http' === wp_parse_url( home_url(), PHP_URL_SCHEME ) &&
@@ -13,42 +21,42 @@ final class Access {
 
     public static function install() {
         // Never assign this role to existing accounts or change their capabilities.
-        add_role( 'sf_author', 'atshift DEFT author', array( 'read' => true, 'upload_files' => true,
-            'sf_edit_drafts' => true, 'sf_review_drafts' => true ) );
-        add_role( 'sf_designer', 'atshift DEFT designer', array( 'read' => true, 'upload_files' => true,
-            'sf_edit_drafts' => true, 'sf_review_drafts' => true, 'sf_register_components' => true, 'sf_manage_components' => true ) );
-        add_role( 'sf_publisher', 'atshift DEFT publisher', array( 'read' => true, 'upload_files' => true,
-            'sf_edit_drafts' => true, 'sf_review_drafts' => true, 'sf_publish_articles' => true ) );
-        update_option( 'sf_access_schema_version', 3, false );
+        add_role( 'atshde_author', 'atshift DeFt author', array( 'read' => true, 'upload_files' => true,
+            'atshde_edit_drafts' => true, 'atshde_review_drafts' => true ) );
+        add_role( 'atshde_designer', 'atshift DeFt designer', array( 'read' => true, 'upload_files' => true,
+            'atshde_edit_drafts' => true, 'atshde_review_drafts' => true, 'atshde_register_components' => true, 'atshde_manage_components' => true ) );
+        add_role( 'atshde_publisher', 'atshift DeFt publisher', array( 'read' => true, 'upload_files' => true,
+            'atshde_edit_drafts' => true, 'atshde_review_drafts' => true, 'atshde_publish_articles' => true ) );
+        update_option( 'atshde_access_schema_version', 3, false );
     }
 
     public static function workspace( $user_id = null ) {
         $user_id = $user_id ?? get_current_user_id();
-        return $user_id > 0 && ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'sf_edit_drafts' ) );
+        return $user_id > 0 && ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'atshde_edit_drafts' ) );
     }
 
     public static function update_brand_labels() {
         $roles = wp_roles();
         foreach ( array( 'author', 'designer', 'publisher' ) as $name ) {
-            $key = 'sf_' . $name;
+            $key = 'atshde_' . $name;
             if ( ! isset( $roles->roles[ $key ] ) ) continue;
-            $roles->roles[ $key ]['name'] = 'atshift DEFT ' . $name;
-            $roles->role_names[ $key ] = 'atshift DEFT ' . $name;
+            $roles->roles[ $key ]['name'] = 'atshift DeFt ' . $name;
+            $roles->role_names[ $key ] = 'atshift DeFt ' . $name;
         }
         // Rename display labels only; preserve every existing role capability.
         update_option( $roles->role_key, $roles->roles );
-        update_option( 'sf_brand_version', 1, false );
+        update_option( 'atshde_brand_version', 2, false );
     }
 
     public static function reviewer( $user_id = null ) {
         $user_id = $user_id ?? get_current_user_id();
         return self::workspace( $user_id ) && user_can( $user_id, 'upload_files' ) &&
-            ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'sf_review_drafts' ) );
+            ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'atshde_review_drafts' ) );
     }
 
     public static function publisher( $user_id = null ) {
         $user_id = $user_id ?? get_current_user_id();
-        return self::reviewer( $user_id ) && ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'sf_publish_articles' ) );
+        return self::reviewer( $user_id ) && ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'atshde_publish_articles' ) );
     }
 
     public static function owner( $id ) {
@@ -84,12 +92,15 @@ final class Access {
     }
 
     public static function preview_caps( $caps, $cap, $user_id, $args ) {
-        if ( ! in_array( $cap, array( 'read_post', 'edit_post', 'delete_post' ), true ) || empty( $args[0] ) || 'sf_article' !== get_post_type( $args[0] ) ) return $caps;
-        // Compare exact unslashed tokens; never turn malformed IDs into valid ones.
-        $post_id = is_string( $_GET['p'] ?? null ) ? wp_unslash( $_GET['p'] ) : '';
-        $preview = is_string( $_GET['preview'] ?? null ) ? wp_unslash( $_GET['preview'] ) : '';
-        $version = is_string( $_GET['sf_version'] ?? null ) ? wp_unslash( $_GET['sf_version'] ) : '';
-        $nonce = is_string( $_GET['_sf_nonce'] ?? null ) ? wp_unslash( $_GET['_sf_nonce'] ) : '';
+        if ( ! in_array( $cap, array( 'read_post', 'edit_post', 'delete_post' ), true ) || empty( $args[0] ) || 'atshde_article' !== get_post_type( $args[0] ) ) return $caps;
+        $post_id = is_string( $_GET['p'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['p'] ) ) : '';
+        $preview = is_string( $_GET['preview'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['preview'] ) ) : '';
+        $version = is_string( $_GET['sf_version'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['sf_version'] ) ) : '';
+        $nonce = is_string( $_GET['_sf_nonce'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['_sf_nonce'] ) ) : '';
+        // Reject changed tokens: sanitization must not repair malformed credentials or IDs.
+        if ( '' === $nonce || ! isset( $_GET['p'], $_GET['preview'], $_GET['sf_version'], $_GET['_sf_nonce'] ) ||
+            wp_slash( $post_id ) !== $_GET['p'] || wp_slash( $preview ) !== $_GET['preview'] ||
+            wp_slash( $version ) !== $_GET['sf_version'] || wp_slash( $nonce ) !== $_GET['_sf_nonce'] ) return array( 'do_not_allow' );
         // Core draft queries need edit_post; grant it only for this exact read-only preview.
         if ( 'delete_post' === $cap || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ||
             ! in_array( $_SERVER['REQUEST_METHOD'] ?? '', array( 'GET', 'HEAD' ), true ) ||

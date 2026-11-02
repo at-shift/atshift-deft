@@ -50,8 +50,8 @@ const admin = new JSDOM(
 const line = [...admin.window.document.scripts]
   .flatMap((s) => s.textContent.split("\n"))
   .map((s) => s.trim())
-  .find((s) => s.startsWith("window.sfWordPress="));
-const config = JSON.parse(line.slice("window.sfWordPress=".length, -1));
+  .find((s) => s.startsWith("window.atshiftDeftWordPress="));
+const config = JSON.parse(line.slice("window.atshiftDeftWordPress=".length, -1));
 admin.window.close();
 const headers = {
   "X-WP-Nonce": config.nonce,
@@ -183,17 +183,20 @@ test("copied URLs and forged snapshot/version/key/nonce cannot read media", asyn
   }
   assert.equal((await request(saved.previewUrl, {}, false)).status, 403);
 });
-test("media parameters reject array-shaped and markup-wrapped identifiers", async () => {
+test("media parameters reject arrays and altered tokens without repairing them", async () => {
   for (const key of ["article", "version", "key", "_sf_nonce"]) {
     const array = new URL(urls.image);
     const value = array.searchParams.get(key);
     array.searchParams.delete(key);
     array.searchParams.set(key + "[nested][]", value);
     assert.equal((await request(array)).status, 403);
-    const tagged = new URL(urls.image);
-    tagged.searchParams.set(key, `<b>${value}</b>`);
-    assert.equal((await request(tagged)).status, 403);
+    for (const altered of ["", `<b>${value}</b>`, ` ${value}`, `${value}\n`, `${value}%00`, `${value}\0`, `${value}\\`]) {
+      const bad = new URL(urls.image);
+      bad.searchParams.set(key, altered);
+      assert.equal((await request(bad)).status, 403, `${key}: ${JSON.stringify(altered)}`);
+    }
   }
+  assert.equal((await request(urls.image)).status, 200);
 });
 test("reference-only files and cross-article references never enter rendered output", async () => {
   const bad = structuredClone(snapshot);

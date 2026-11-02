@@ -1,11 +1,11 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class OAuth {
     const NS = 'structured-fields-oauth/v1';
-    const KEY_OPTION = 'sf_oauth_server_keys';
+    const KEY_OPTION = 'atshde_oauth_server_keys';
 
     public static function libraries() {
         if ( PHP_VERSION_ID < 80200 ) return false;
@@ -25,7 +25,7 @@ final class OAuth {
 
     public static function resource( $publishing = false ) { return rest_url( ltrim( $publishing ? Connections::PUBLISH_ROUTE : Connections::ROUTE, '/' ) ); }
     public static function issuer() { return home_url( '/structured-fields-oauth' ); }
-    public static function authorize_url() { return admin_url( 'admin-post.php?action=sf_oauth_authorize' ); }
+    public static function authorize_url() { return admin_url( 'admin-post.php?action=atshde_oauth_authorize' ); }
     public static function endpoint( $name ) { return rest_url( self::NS . '/' . $name ); }
     public static function metadata_url() {
         $parts = wp_parse_url( self::issuer() );
@@ -192,15 +192,23 @@ final class OAuth {
         return $scopes;
     }
 
+    public static function decode_form( $encoded, $allowed ) {
+        // Bound work before parsing; preserve names that PHP would otherwise normalize or collapse.
+        if ( ! is_string( $encoded ) || strlen( $encoded ) > 32768 || substr_count( $encoded, '&' ) >= 32 ||
+            preg_match( '/%(?![0-9a-f]{2})/i', $encoded ) ) throw new \InvalidArgumentException();
+        $params = array();
+        foreach ( Vendor\League\Uri\QueryString::parse( $encoded, '&', PHP_QUERY_RFC1738 ) as list( $name, $value ) ) {
+            if ( '' === $name && null === $value ) continue;
+            if ( ! in_array( $name, $allowed, true ) || array_key_exists( $name, $params ) ) throw new \InvalidArgumentException();
+            $params[$name] = $value ?? '';
+        }
+        return $params;
+    }
+
     private static function form_params( $request, $allowed ) {
         $content_type = $request->get_header( 'content-type' );
-        if ( ! is_string( $content_type ) || ! preg_match( '/^application\/x-www-form-urlencoded(?:\s*;|$)/i', $content_type ) || strlen( $request->get_body() ) > 32768 ) throw new \InvalidArgumentException();
-        $params = $request->get_body_params();
-        if ( ! is_array( $params ) || array_diff( array_keys( $params ), $allowed ) ) throw new \InvalidArgumentException();
-        foreach ( $params as $v ) if ( ! is_string( $v ) ) throw new \InvalidArgumentException();
-        // PHP parameter parsing collapses duplicate names; refuse ambiguous credentials.
-        $seen = array(); foreach ( explode( '&', $request->get_body() ) as $pair ) { $name = urldecode( explode( '=', $pair, 2 )[0] ); if ( isset( $seen[$name] ) ) throw new \InvalidArgumentException(); $seen[$name] = true; }
-        return $params;
+        if ( ! is_string( $content_type ) || ! preg_match( '/^application\/x-www-form-urlencoded(?:\s*;|$)/i', $content_type ) ) throw new \InvalidArgumentException();
+        return self::decode_form( $request->get_body(), $allowed );
     }
 
     public static function token( $request ) {

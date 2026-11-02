@@ -1,5 +1,5 @@
 <?php
-namespace AtshiftDeft;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -11,7 +11,7 @@ function legacy_active() {
 }
 
 function legacy_message() {
-    return __( 'Deactivate Structured Fields Prototype before activating atshift DEFT. Saved data will be retained. You do not need to delete the old plugin.', 'atshift-deft' );
+    return __( 'Deactivate Structured Fields Prototype before activating atshift DeFt. Saved data will be retained. You do not need to delete the old plugin.', 'atshift-deft' );
 }
 
 function legacy_notice() {
@@ -25,7 +25,7 @@ function legacy_guard( $file ) {
     add_action( 'admin_notices', __NAMESPACE__ . '\\legacy_notice' );
     add_action( 'network_admin_notices', __NAMESPACE__ . '\\legacy_notice' );
     register_activation_hook( $file, static function() {
-        wp_die( esc_html( legacy_message() ), 'atshift DEFT', array( 'response' => 409, 'back_link' => true ) );
+        wp_die( esc_html( legacy_message() ), 'atshift DeFt', array( 'response' => 409, 'back_link' => true ) );
     } );
     return false;
 }

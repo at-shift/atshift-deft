@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 require_once __DIR__ . '/class-access.php';
@@ -8,6 +8,7 @@ require_once __DIR__ . '/class-behaviors.php';
 require_once __DIR__ . '/class-store.php';
 require_once __DIR__ . '/class-drafts.php';
 require_once __DIR__ . '/class-assets.php';
+require_once __DIR__ . '/class-private-blobs.php';
 require_once __DIR__ . '/class-media.php';
 require_once __DIR__ . '/class-transfer.php';
 require_once __DIR__ . '/class-review.php';
@@ -35,20 +36,21 @@ require_once __DIR__ . '/catalog-page.php';
 register_activation_hook( PLUGIN_FILE, static function() { Store::install(); Drafts::install(); Assets::install(); Transfer::install(); Review::install(); Access::install(); Catalog::install(); } );
 
 add_action( 'init', static function() {
+    if ( 1 !== (int) get_option( 'atshde_blob_schema_version' ) ) PrivateBlobs::install();
     Reservations::register();
-    if ( 4 !== (int) get_option( 'sf_connections_schema_version' ) ) Connections::install();
-    if ( 1 !== (int) get_option( 'sf_oauth_schema_version' ) ) OAuthStore::install();
-    if ( 3 !== (int) get_option( 'sf_publications_schema_version' ) ) Publications::install();
-    if ( 1 !== (int) get_option( 'sf_drafts_schema_version' ) ) Drafts::install();
-    if ( 3 !== (int) get_option( 'sf_access_schema_version' ) ) Access::install();
-    if ( 1 !== (int) get_option( 'sf_brand_version' ) ) Access::update_brand_labels();
-    if ( 1 !== (int) get_option( 'sf_assets_schema_version' ) ) Assets::install();
-    if ( 2 !== (int) get_option( 'sf_transfers_schema_version' ) ) Transfer::install();
-    if ( 2 !== (int) get_option( 'sf_reviews_schema_version' ) ) Review::install();
-    if ( 4 !== (int) get_option( 'sf_catalog_schema_version' ) ) Catalog::install();
-    register_post_type( 'sf_article', array( 'label' => __( 'Structured drafts', 'atshift-deft' ), 'public' => false, 'publicly_queryable' => true,
+    if ( 4 !== (int) get_option( 'atshde_connections_schema_version' ) ) Connections::install();
+    if ( 1 !== (int) get_option( 'atshde_oauth_schema_version' ) ) OAuthStore::install();
+    if ( 3 !== (int) get_option( 'atshde_publications_schema_version' ) ) Publications::install();
+    if ( 1 !== (int) get_option( 'atshde_drafts_schema_version' ) ) Drafts::install();
+    if ( 3 !== (int) get_option( 'atshde_access_schema_version' ) ) Access::install();
+    if ( 2 !== (int) get_option( 'atshde_brand_version' ) ) Access::update_brand_labels();
+    if ( 1 !== (int) get_option( 'atshde_assets_schema_version' ) ) Assets::install();
+    if ( 2 !== (int) get_option( 'atshde_transfers_schema_version' ) ) Transfer::install();
+    if ( 2 !== (int) get_option( 'atshde_reviews_schema_version' ) ) Review::install();
+    if ( 4 !== (int) get_option( 'atshde_catalog_schema_version' ) ) Catalog::install();
+    register_post_type( 'atshde_article', array( 'label' => __( 'Structured drafts', 'atshift-deft' ), 'public' => false, 'publicly_queryable' => true,
         'show_ui' => false, 'show_in_rest' => false, 'exclude_from_search' => true, 'rewrite' => false,
-        'supports' => array( 'title', 'editor' ), 'map_meta_cap' => true, 'capability_type' => 'sf_article',
+        'supports' => array( 'title', 'editor' ), 'map_meta_cap' => true, 'capability_type' => 'atshde_article',
         'capabilities' => array_fill_keys( array( 'edit_posts', 'edit_others_posts', 'publish_posts', 'read_private_posts', 'create_posts', 'delete_posts' ), 'manage_options' ) ) );
 } );
 
@@ -62,15 +64,15 @@ add_filter( 'page_row_actions', array( Reservations::class, 'actions' ), 10, 2 )
 add_filter( 'gettext_with_context', static function( $translation, $text, $context, $domain ) {
     if ( 'default' !== $domain || 'User role' !== $context ) return $translation;
     switch ( $text ) {
-        case 'atshift DEFT author': return __( 'atshift DEFT author', 'atshift-deft' );
-        case 'atshift DEFT designer': return __( 'atshift DEFT designer', 'atshift-deft' );
-        case 'atshift DEFT publisher': return __( 'atshift DEFT publisher', 'atshift-deft' );
+        case 'atshift DeFt author': return __( 'atshift DeFt author', 'atshift-deft' );
+        case 'atshift DeFt designer': return __( 'atshift DeFt designer', 'atshift-deft' );
+        case 'atshift DeFt publisher': return __( 'atshift DeFt publisher', 'atshift-deft' );
         default: return $translation;
     }
 }, 10, 4 );
 add_filter( 'is_post_type_viewable', static function( $viewable, $post_type ) {
     // Queryable only for an authorized preview, never a publicly viewable content type.
-    return 'sf_article' === $post_type->name ? false : $viewable;
+    return 'atshde_article' === $post_type->name ? false : $viewable;
 }, 10, 2 );
 add_action( 'deleted_user', array( ComponentUsage::class, 'delete_user' ) );
 add_action( 'deleted_user', array( Connections::class, 'delete_user' ) );
@@ -80,20 +82,27 @@ add_action( 'rest_api_init', array( OAuth::class, 'routes' ) );
 add_action( 'admin_post_sf_oauth_authorize', array( OAuthConsent::class, 'handle' ) );
 add_action( 'admin_post_nopriv_sf_oauth_authorize', array( OAuthConsent::class, 'handle' ) );
 add_action( 'wp_abilities_api_categories_init', static function() {
-    wp_register_ability_category( 'structured-fields', array( 'label' => 'atshift DEFT', 'description' => 'Private structured drafts.' ) );
+    wp_register_ability_category( 'structured-fields', array( 'label' => 'atshift DeFt', 'description' => 'Private structured drafts.' ) );
 } );
 add_action( 'wp_abilities_api_init', array( Mcp::class, 'register' ) );
 add_action( 'mcp_adapter_init', array( Mcp::class, 'server' ) );
 add_filter( 'rest_pre_dispatch', array( Connections::class, 'guard' ), 5, 3 );
 add_filter( 'rest_post_dispatch', array( Connections::class, 'finish' ), 99, 3 );
 add_action( Publications::HOOK, array( Publications::class, 'run' ), 10, 2 );
+// Previously queued jobs retain their exact version and authorization checks.
+add_action( 'sf_publish_article', array( Publications::class, 'run' ), 10, 2 );
+add_filter( 'request', static function( $query ) {
+    // Old signed preview URLs still point to the migrated private post type.
+    if ( ( $query['post_type'] ?? '' ) === 'sf_article' ) $query['post_type'] = 'atshde_article';
+    return $query;
+} );
 add_action( 'template_redirect', array( PublicationMedia::class, 'serve' ), -10 );
 add_action( 'wp_enqueue_scripts', array( Publications::class, 'assets' ), 20 );
 add_action( 'rest_api_init', array( PublicStructure::class, 'routes' ) );
 add_action( 'wp_head', array( PublicStructure::class, 'head' ), 20 );
 
 add_filter( 'wp_insert_post_data', static function( $data ) {
-    if ( 'sf_article' === $data['post_type'] ) $data['post_status'] = 'draft';
+    if ( 'atshde_article' === $data['post_type'] ) $data['post_status'] = 'draft';
     return $data;
 } );
 
@@ -196,14 +205,14 @@ add_action( 'admin_post_sf_media', array( Media::class, 'serve' ) );
 add_action( 'admin_post_nopriv_sf_media', array( Media::class, 'serve' ) );
 add_action( 'admin_post_sf_decide', array( Review::class, 'submit' ) );
 add_action( 'admin_post_nopriv_sf_decide', array( Review::class, 'submit' ) );
-add_action( 'admin_init', static function() {
-    // Read-only route detection adds privacy headers; it grants no review authority.
-    if ( 'structured-fields-review' === sanitize_key( wp_unslash( $_GET['page'] ?? '' ) ) ) {
-        nocache_headers();
-        header( 'Referrer-Policy: no-referrer' );
-        header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
-    }
-} );
+// New action names are product-prefixed; old signed URLs/forms remain explicit aliases.
+foreach ( array( 'asset' => array( Assets::class, 'serve' ), 'media' => array( Media::class, 'serve' ),
+    'ai_guide' => array( Onboarding::class, 'download' ), 'decide' => array( Review::class, 'submit' ),
+    'oauth_authorize' => array( OAuthConsent::class, 'handle' ) ) as $atshde_action => $atshde_callback ) {
+    add_action( 'admin_post_atshde_' . $atshde_action, $atshde_callback );
+    add_action( 'admin_post_nopriv_atshde_' . $atshde_action, $atshde_callback );
+}
+unset( $atshde_action, $atshde_callback );
 
 add_filter( 'rest_post_dispatch', static function( $response, $server, $request ) {
     if ( str_starts_with( $request->get_route(), '/structured-fields/v1/' ) ) {
@@ -217,14 +226,16 @@ add_filter( 'the_title', array( Store::class, 'title' ), PHP_INT_MAX, 2 );
 
 add_action( 'template_redirect', static function() {
     $requested_id = absint( get_query_var( 'p' ) );
-    if ( ! is_singular( 'sf_article' ) && ( ! $requested_id || 'sf_article' !== get_post_type( $requested_id ) ) ) return;
+    if ( ! is_singular( 'atshde_article' ) && ( ! $requested_id || 'atshde_article' !== get_post_type( $requested_id ) ) ) return;
     global $wpdb;
     $post_id = get_queried_object_id() ?: $requested_id;
     $table = Store::table();
     $row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE post_id=%d', $table, $post_id ), ARRAY_A );
-    $version = is_string( $_GET['sf_version'] ?? null ) ? wp_unslash( $_GET['sf_version'] ) : '';
-    $nonce = is_string( $_GET['_sf_nonce'] ?? null ) ? wp_unslash( $_GET['_sf_nonce'] ) : '';
-    if ( ! $row || ! Access::article( $row['article_id'] ) || ! is_preview() ||
+    $version = is_string( $_GET['sf_version'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['sf_version'] ) ) : '';
+    $nonce = is_string( $_GET['_sf_nonce'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['_sf_nonce'] ) ) : '';
+    if ( '' === $nonce || ! isset( $_GET['sf_version'], $_GET['_sf_nonce'] ) ||
+        wp_slash( $version ) !== $_GET['sf_version'] || wp_slash( $nonce ) !== $_GET['_sf_nonce'] ||
+        ! $row || ! Access::article( $row['article_id'] ) || ! is_preview() ||
         (string) $row['version'] !== $version ||
         ! wp_verify_nonce( $nonce, 'sf-preview-' . $post_id . '-' . $row['digest'] ) ) {
         wp_die( esc_html__( 'This preview requires its authorized WordPress session and exact saved version.', 'atshift-deft' ), esc_html__( 'Private preview', 'atshift-deft' ), array( 'response' => 403 ) );
@@ -242,20 +253,27 @@ add_action( 'template_redirect', static function() {
         return get_the_ID() === $post_id ? $rendered : $content;
     } );
     add_action( 'wp_enqueue_scripts', static function() use ( $row ) {
-        wp_register_style( 'sf-preview', false, array(), VERSION );
-        wp_enqueue_style( 'sf-preview' );
-        wp_add_inline_style( 'sf-preview', '.sf-article{overflow-wrap:anywhere}.sf-article img{max-width:100%;height:auto}.sf-article p{white-space:pre-line}.sf-article table{display:block;overflow:auto}.sf-article pre{white-space:pre-wrap}' . str_replace( '<', '\\3c ', $row['css'] ) );
+        wp_register_style( 'atshift-deft-preview', false, array(), VERSION );
+        wp_enqueue_style( 'atshift-deft-preview' );
+        wp_add_inline_style( 'atshift-deft-preview', '.sf-article{overflow-wrap:anywhere}.sf-article img{max-width:100%;height:auto}.sf-article p{white-space:pre-line}.sf-article table{display:block;overflow:auto}.sf-article pre{white-space:pre-wrap}' . str_replace( '<', '\\3c ', $row['css'] ) );
     } );
 }, 0 );
 
 add_action( 'admin_menu', static function() {
-    $cap = current_user_can( 'manage_options' ) ? 'manage_options' : 'sf_edit_drafts';
-    add_menu_page( 'atshift DEFT', 'atshift DEFT', $cap, 'structured-fields', __NAMESPACE__ . '\\admin_page', 'dashicons-layout', 81 );
+    $cap = current_user_can( 'manage_options' ) ? 'manage_options' : 'atshde_edit_drafts';
+    add_menu_page( 'atshift DeFt', 'atshift DeFt', $cap, 'structured-fields', __NAMESPACE__ . '\\admin_page', plugins_url( 'assets/icon-20x20.png', PLUGIN_FILE ), 81 );
     add_submenu_page( 'structured-fields', __( 'Articles', 'atshift-deft' ), __( 'Articles', 'atshift-deft' ), $cap, 'structured-fields', __NAMESPACE__ . '\\admin_page' );
     add_submenu_page( 'structured-fields', __( 'Components', 'atshift-deft' ), __( 'Components', 'atshift-deft' ), $cap, 'structured-fields-catalog', __NAMESPACE__ . '\\catalog_page' );
     add_submenu_page( 'structured-fields', __( 'AI connections', 'atshift-deft' ), __( 'AI connections', 'atshift-deft' ), $cap, 'structured-fields-connections', __NAMESPACE__ . '\\connections_page' );
     $review_hook = add_submenu_page( '', __( 'Review structured article', 'atshift-deft' ), __( 'Review', 'atshift-deft' ), $cap, 'structured-fields-review', array( Review::class, 'page' ) );
-    add_action( 'load-' . $review_hook, static function() { Review::authorize_page(); global $title; $title = __( 'Review structured article', 'atshift-deft' ); } );
+    add_action( 'load-' . $review_hook, static function() {
+        // Protect the resolved screen (including route aliases), after core's admin headers.
+        nocache_headers();
+        header( 'Referrer-Policy: no-referrer' );
+        header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
+        Review::authorize_page();
+        global $title; $title = __( 'Review structured article', 'atshift-deft' );
+    } );
 } );
 
 function admin_page() {
@@ -270,7 +288,7 @@ function admin_page() {
     }
     ?>
     <div class="wrap" id="sf-workspace">
-        <h1>atshift DEFT <small><?php echo esc_html( VERSION ); ?></small></h1>
+        <h1 class="sf-brand-heading"><img src="<?php echo esc_url( plugins_url( 'assets/icon-128x128.png', PLUGIN_FILE ) ); ?>" width="48" height="48" alt="" aria-hidden="true"><span>atshift DeFt <small><?php echo esc_html( VERSION ); ?></small></span></h1>
         <?php if ( $first_visit ) : ?>
         <dialog id="sf-ai-welcome" aria-labelledby="sf-ai-welcome-title">
             <button type="button" id="sf-ai-welcome-close" class="button" title="<?php esc_attr_e( 'Close', 'atshift-deft' ); ?>" aria-label="<?php esc_attr_e( 'Close', 'atshift-deft' ); ?>"><span class="dashicons dashicons-no-alt" aria-hidden="true"></span></button>
@@ -364,12 +382,12 @@ add_action( 'admin_enqueue_scripts', static function( $hook ) {
     $catalog = get_plugin_page_hookname( 'structured-fields-catalog', 'structured-fields' ) === $hook;
     $connections = get_plugin_page_hookname( 'structured-fields-connections', 'structured-fields' ) === $hook;
     if ( 'toplevel_page_structured-fields' !== $hook && ! $catalog && ! $connections ) return;
-    wp_enqueue_style( 'sf-admin', plugins_url( 'admin.css', PLUGIN_FILE ), array(), VERSION );
+    wp_enqueue_style( 'atshift-deft-admin', plugins_url( 'admin.css', PLUGIN_FILE ), array(), VERSION );
     if ( $connections ) {
-        wp_enqueue_script( 'sf-connection-profiles', plugins_url( 'connection-profiles.js', PLUGIN_FILE ), array( 'wp-i18n' ), VERSION, true );
-        wp_set_script_translations( 'sf-connection-profiles', 'atshift-deft', dirname( PLUGIN_FILE ) . '/languages' );
+        wp_enqueue_script( 'atshift-deft-connection-profiles', plugins_url( 'connection-profiles.js', PLUGIN_FILE ), array( 'wp-i18n' ), VERSION, true );
+        wp_set_script_translations( 'atshift-deft-connection-profiles', 'atshift-deft', dirname( PLUGIN_FILE ) . '/languages' );
     }
-    wp_enqueue_script( 'sf-admin', plugins_url( $connections ? 'connections.js' : ( $catalog ? 'catalog.js' : 'admin.js' ), PLUGIN_FILE ), $connections ? array( 'wp-i18n', 'sf-connection-profiles' ) : array( 'wp-i18n' ), VERSION, true );
-    wp_set_script_translations( 'sf-admin', 'atshift-deft', dirname( PLUGIN_FILE ) . '/languages' );
-    wp_add_inline_script( 'sf-admin', 'window.sfWordPress=' . wp_json_encode( array( 'root' => rest_url( 'structured-fields/v1/' ), 'nonce' => wp_create_nonce( 'wp_rest' ), 'canManageCatalog' => Catalog::can_manage(), 'canRegisterCatalog' => Catalog::can_register(), 'locale' => str_replace( '_', '-', get_user_locale() ), 'sample' => plugins_url( 'sample.json', PLUGIN_FILE ), 'mediaSample' => plugins_url( 'media-sample.json', PLUGIN_FILE ) ) ) . ';', 'before' );
+    wp_enqueue_script( 'atshift-deft-admin', plugins_url( $connections ? 'connections.js' : ( $catalog ? 'catalog.js' : 'admin.js' ), PLUGIN_FILE ), $connections ? array( 'wp-i18n', 'atshift-deft-connection-profiles' ) : array( 'wp-i18n' ), VERSION, true );
+    wp_set_script_translations( 'atshift-deft-admin', 'atshift-deft', dirname( PLUGIN_FILE ) . '/languages' );
+    wp_add_inline_script( 'atshift-deft-admin', 'window.atshiftDeftWordPress=' . wp_json_encode( array( 'root' => rest_url( 'structured-fields/v1/' ), 'nonce' => wp_create_nonce( 'wp_rest' ), 'canManageCatalog' => Catalog::can_manage(), 'canRegisterCatalog' => Catalog::can_register(), 'locale' => str_replace( '_', '-', get_user_locale() ), 'sample' => plugins_url( 'sample.json', PLUGIN_FILE ), 'mediaSample' => plugins_url( 'media-sample.json', PLUGIN_FILE ) ) ) . ';', 'before' );
 } );

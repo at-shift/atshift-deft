@@ -1,16 +1,17 @@
 <?php
+require_once __DIR__ . '/wordpress-connection-context.php';
 // Run with WP-CLI eval-file in a disposable local database, never on a user site.
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:appearance|post_types)_[a-f0-9]+$/D', DB_NAME ) ) {
     throw new RuntimeException( 'Use a disposable local appearance-test database.' );
 }
 
-use StructuredFields\Catalog;
-use StructuredFields\ComponentBuilder;
-use StructuredFields\Connections;
-use StructuredFields\Mcp;
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
-use StructuredFields\Publications;
+use Atshift\Deft\Catalog;
+use Atshift\Deft\ComponentBuilder;
+use Atshift\Deft\Connections;
+use Atshift\Deft\Mcp;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
+use Atshift\Deft\Publications;
 
 $GLOBALS['sf_appearance_checks'] = 0; $run = wp_generate_uuid4();
 function sf_appearance_check( $ok, $message ) {
@@ -35,7 +36,7 @@ function sf_appearance_connect( $key ) {
     $request = new WP_REST_Request( 'POST', $key['route'] );
     $request->set_body( '{}' );
     $request->set_header( 'authorization', 'Bearer ' . $key['token'] );
-    $result = Connections::guard( null, rest_get_server(), $request );
+    $result = sf_test_begin_connection( $request );
     if ( is_wp_error( $result ) ) throw new RuntimeException( $result->get_error_message() );
 }
 function sf_appearance_body( $recipe, $version = 0 ) {
@@ -61,8 +62,8 @@ function sf_appearance_block( $id, $component, $variant = 'default' ) {
 
 sf_appearance_check( Connections::ready(), 'Official MCP Adapter is available.' );
 $admin = get_users( array( 'role' => 'administrator', 'number' => 1 ) )[0]->ID;
-$a = wp_insert_user( array( 'user_login' => 'appearance-a-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_publisher' ) );
-$b = wp_insert_user( array( 'user_login' => 'appearance-b-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author' ) );
+$a = wp_insert_user( array( 'user_login' => 'appearance-a-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_publisher' ) );
+$b = wp_insert_user( array( 'user_login' => 'appearance-b-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_author' ) );
 sf_appearance_check( ! is_wp_error( $a ) && ! is_wp_error( $b ), 'Create isolated test owners.' );
 $key = sf_appearance_key( $a, true ); $other = sf_appearance_key( $b, true ); $old = sf_appearance_key( $a, false );
 // Core may create the theme's initial global-styles record lazily on first render.
@@ -135,7 +136,7 @@ foreach ( array( 'stack', 'qa' ) as $layout ) {
     sf_appearance_check( $rejected, 'Column settings cannot silently apply to ' . $layout );
 }
 
-$draft = $context['composeTemplate']; $draft['article']['title'] = 'DEFT component appearance verification';
+$draft = $context['composeTemplate']; $draft['article']['title'] = 'DeFt component appearance verification';
 $draft['article']['blocks'] = array( sf_appearance_block( 'shared-block-id', $c ), sf_appearance_block( 'blue-panel', $second ),
     sf_appearance_block( 'qa-visible', $q, 'list' ), sf_appearance_block( 'qa-disclosure', $q, 'accordion' ) );
 $saved = sf_appearance_call( 'save-draft', $draft ); $id = $saved['articleId']; $row = Store::read( $id );
@@ -160,7 +161,7 @@ $update['recipe']->appearance->fields[0]->text->color = '#632780';
 wp_set_current_user( $admin );
 $request = new WP_REST_Request( 'POST' ); $request->set_header( 'content-type', 'application/json' );
 // Re-read the manager's catalog receipt; receipts are owner-bound.
-$catalog_request = new WP_REST_Request( 'GET' ); $manager_context = StructuredFields\CatalogContext::get( $catalog_request );
+$catalog_request = new WP_REST_Request( 'GET' ); $manager_context = Atshift\Deft\CatalogContext::get( $catalog_request );
 $update['reuse']['catalogToken'] = $manager_context['catalogToken']; $request->set_body( Snapshot::json( $update ) );
 $updated = Catalog::structure( $request );
 sf_appearance_check( ! is_wp_error( $updated ) && 2 === $updated['version'], 'A manager can version the shared appearance through the existing catalog.' );

@@ -1,10 +1,10 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Review {
-    public static function table() { global $wpdb; return $wpdb->prefix . 'sf_reviews'; }
+    public static function table() { global $wpdb; return $wpdb->prefix . 'atshde_reviews'; }
     public static function install() {
         global $wpdb;
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -25,7 +25,7 @@ final class Review {
             KEY article_id (article_id)
         ) ENGINE=InnoDB {$wpdb->get_charset_collate()};" );
         $columns = $wpdb->get_col( $wpdb->prepare( 'SHOW COLUMNS FROM %i', $table ) );
-        if ( in_array( 'revoked_by', $columns, true ) && in_array( 'revoked_at', $columns, true ) ) update_option( 'sf_reviews_schema_version', 2, false );
+        if ( in_array( 'revoked_by', $columns, true ) && in_array( 'revoked_at', $columns, true ) ) update_option( 'atshde_reviews_schema_version', 2, false );
     }
 
     public static function permission() {
@@ -116,7 +116,7 @@ final class Review {
         if ( true !== self::permission() || ! $cookie_user || (int) $cookie_user !== get_current_user_id() ||
             ! empty( $_SERVER['HTTP_AUTHORIZATION'] ) || ! empty( $_SERVER['PHP_AUTH_USER'] ) ||
             ! $review || ! Access::article( $review['article_id'] ) || ! is_string( $nonce ) || ! in_array( $decision, array( 'approved', 'rejected', 'revoked' ), true ) ||
-            ! wp_verify_nonce( $nonce, 'sf-review-' . $id . '-' . $review['manifest_hash'] ) ) return new \WP_Error( 'sf_review_denied', __( 'Use the authenticated review screen.', 'atshift-deft' ), array( 'status' => 403 ) );
+            ! Access::verify_nonce( $nonce, 'sf-review-' . $id . '-' . $review['manifest_hash'] ) ) return new \WP_Error( 'sf_review_denied', __( 'Use the authenticated review screen.', 'atshift-deft' ), array( 'status' => 403 ) );
         $lock = Store::lock_name( $review['article_id'] );
         if ( '1' !== (string) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s,3)', $lock ) ) ) return new \WP_Error( 'sf_busy', __( 'Retry later.', 'atshift-deft' ), array( 'status' => 409 ) );
         try {
@@ -134,7 +134,7 @@ final class Review {
     }
 
     public static function submit() {
-        if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) wp_die( esc_html__( 'POST required.', 'atshift-deft' ), esc_html__( 'Review', 'atshift-deft' ), array( 'response' => 405 ) );
+        if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || 'POST' !== $_SERVER['REQUEST_METHOD'] ) wp_die( esc_html__( 'POST required.', 'atshift-deft' ), esc_html__( 'Review', 'atshift-deft' ), array( 'response' => 405 ) );
         $id = is_string( $_POST['review'] ?? null ) ? wp_unslash( $_POST['review'] ) : '';
         $decision = is_string( $_POST['decision'] ?? null ) ? wp_unslash( $_POST['decision'] ) : '';
         $nonce = is_string( $_POST['_wpnonce'] ?? null ) ? wp_unslash( $_POST['_wpnonce'] ) : '';
@@ -170,7 +170,7 @@ final class Review {
             echo '<iframe title="' . esc_attr__( 'Exact version preview', 'atshift-deft' ) . '" src="' . esc_url( Store::preview_url( Store::read( $row['article_id'], (int) $row['version'] ) ) ) . '" style="width:100%;height:65vh;border:1px solid #c3c4c7"></iframe>';
         }
         if ( in_array( $state['state'], array( 'pending', 'approved' ), true ) ) {
-            echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px"><input type="hidden" name="action" value="sf_decide"><input type="hidden" name="review" value="' . esc_attr( $id ) . '">';
+            echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px"><input type="hidden" name="action" value="atshde_decide"><input type="hidden" name="review" value="' . esc_attr( $id ) . '">';
             wp_nonce_field( 'sf-review-' . $id . '-' . $row['manifest_hash'] );
             if ( 'pending' === $state['state'] ) echo '<button class="button button-primary" name="decision" value="approved">' . esc_html__( 'Approve this version', 'atshift-deft' ) . '</button><button class="button" name="decision" value="rejected">' . esc_html__( 'Request changes', 'atshift-deft' ) . '</button>';
             else echo '<button class="button" name="decision" value="revoked">' . esc_html__( 'Withdraw approval', 'atshift-deft' ) . '</button>';

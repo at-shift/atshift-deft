@@ -289,4 +289,4 @@ for (const check of checks) {
 }
 document.getElementById("result").textContent =
   `${checks.length - failures}/${checks.length} passed; ${failures} failed`;
-document.title = `${failures ? "FAIL" : "PASS"}: atshift DEFT model tests`;
+document.title = `${failures ? "FAIL" : "PASS"}: atshift DeFt model tests`;

@@ -1,11 +1,12 @@
 <?php
+require_once __DIR__ . '/wordpress-connection-context.php';
 // wp eval-file tests/wordpress-post-types.php --path=<disposable WordPress>
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() ||
     ! preg_match( '/^sf_deft_(?:post_types|appearance)_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable local database.' );
 if ( ! function_exists( 'sf_test_register_post_types' ) ) require __DIR__ . '/wordpress-post-types-fixture.php';
 sf_test_register_post_types();
 
-use StructuredFields\{Access, Assets, Behaviors, Catalog, Connections, Mcp, PostTypes, Publications, PublicationMedia, Review, Snapshot, Store};
+use Atshift\Deft\{Access, Assets, Behaviors, Catalog, Connections, Mcp, PostTypes, Publications, PublicationMedia, Review, Snapshot, Store};
 
 global $component, $checks, $wpdb;
 $checks = 0; $run = wp_generate_uuid4();
@@ -29,7 +30,7 @@ function sfpt_key( $user, $publishing ) {
 function sfpt_connect( $key ) {
     $_SERVER['REMOTE_ADDR'] = '127.0.0.1'; $r = new WP_REST_Request( 'POST', $key['route'] );
     $r->set_body( '{}' ); $r->set_header( 'authorization', 'Bearer ' . $key['token'] );
-    sfpt_good( Connections::guard( null, rest_get_server(), $r ) );
+    sfpt_good( sf_test_begin_connection( $r ) );
 }
 function sfpt_call( $name, $input = array() ) { return sfpt_good( Mcp::execute( $name, json_decode( Snapshot::json( $input ), true ) ) ); }
 function sfpt_draft( $with_media = false ) {
@@ -74,23 +75,23 @@ $zoom = array_column( Behaviors::listing()['items'], null, 'id' )['image-zoom'];
 $component->behaviors = array( (object) array( 'key' => 'enlarge', 'id' => $zoom['id'], 'revision' => $zoom['revision'], 'target' => 'image', 'settings' => (object) $zoom['defaults'] ) );
 $component = sfpt_good( Catalog::register( sfpt_request( array( 'component' => $component, 'expectedVersion' => 0 ) ) ) )['component'];
 $password = wp_generate_password( 32 );
-$user = sfpt_good( wp_insert_user( array( 'user_login' => 'destination-' . $run, 'user_pass' => $password, 'role' => 'sf_publisher' ) ) );
-$other = sfpt_good( wp_insert_user( array( 'user_login' => 'other-destination-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_publisher' ) ) );
+$user = sfpt_good( wp_insert_user( array( 'user_login' => 'destination-' . $run, 'user_pass' => $password, 'role' => 'atshde_publisher' ) ) );
+$other = sfpt_good( wp_insert_user( array( 'user_login' => 'other-destination-' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_publisher' ) ) );
 $draft_key = sfpt_key( $user, false ); $pub_key = sfpt_key( $user, true ); $other_key = sfpt_key( $other, true );
 sfpt_connect( $draft_key );
 $context = sfpt_call( 'context' );
 sfpt_check( ! $context['capabilities']['publish'] && array( 'post' ) === array_column( sfpt_call( 'list-post-types' )['items'], 'postType' ), 'Draft connection discovers only account-eligible destinations without gaining publication authority.' );
 sfpt_check( is_wp_error( Mcp::execute( 'set-publication', array() ) ), 'Discovery cannot bypass draft-only scope.' );
 $draft = sfpt_draft(); sfpt_connect( $pub_key );
-sfpt_check( PostTypes::can_publish( 'post' ) && ! current_user_can( 'publish_posts' ), 'Existing DEFT publisher remains able to publish normal posts without changing roles.' );
-foreach ( array( 'page', 'sf_test_event', 'sf_test_story', 'sf_article', 'attachment', 'revision', 'wp_template', 'custom_css', 'sf_test_private', 'sf_test_hidden', 'sf_test_no_body', 'sf_test_no_create', 'unknown', '', 'POST', '../page', 'page\n', array( 'post' ), 1, null ) as $type ) {
+sfpt_check( PostTypes::can_publish( 'post' ) && ! current_user_can( 'publish_posts' ), 'Existing DeFt publisher remains able to publish normal posts without changing roles.' );
+foreach ( array( 'page', 'sf_test_event', 'sf_test_story', 'atshde_article', 'attachment', 'revision', 'wp_template', 'custom_css', 'sf_test_private', 'sf_test_hidden', 'sf_test_no_body', 'sf_test_no_create', 'unknown', '', 'POST', '../page', 'page\n', array( 'post' ), 1, null ) as $type ) {
     sfpt_check( is_wp_error( Mcp::execute( 'set-publication', sfpt_intent( $draft, $type ) ) ) && ! Publications::read( $draft['articleId'] ), 'Invalid or unauthorized destination does not reserve or fall back: ' . wp_json_encode( $type ) );
 }
 $actor = get_userdata( $user );
 foreach ( array( 'edit_pages', 'publish_pages', 'edit_published_pages', 'edit_posts', 'publish_posts', 'edit_sf_test_events', 'publish_sf_test_events', 'edit_published_sf_test_events' ) as $cap ) $actor->add_cap( $cap );
 wp_set_current_user( 0 ); sfpt_connect( $pub_key );
 $types = sfpt_call( 'list-post-types' );
-sfpt_check( array( 'page', 'post', 'sf_test_event', 'sf_test_story' ) === array_column( $types['items'], 'postType' ), 'Eligible native and custom destinations are discovered without a DEFT allowlist or REST exposure requirement.' );
+sfpt_check( array( 'page', 'post', 'sf_test_event', 'sf_test_story' ) === array_column( $types['items'], 'postType' ), 'Eligible native and custom destinations are discovered without a DeFt allowlist or REST exposure requirement.' );
 sfpt_check( array_reduce( $types['items'], static function( $ok, $type ) { return $ok && $type['accountCanPublish']; }, true ), 'Per-type publication capabilities are reported.' );
 sfpt_check( isset( sfpt_call( 'context' )['publication']['schema']['properties']['postType'] ), 'MCP context advertises destination schema.' );
 wp_set_current_user( 0 ); sfpt_check( is_wp_error( PostTypes::listing() ), 'Anonymous destination discovery is denied.' ); sfpt_connect( $pub_key );
@@ -109,10 +110,10 @@ foreach ( array( 'post', 'page', 'sf_test_event' ) as $type ) {
     sfpt_check( is_wp_error( Mcp::execute( 'set-publication', array_merge( $body, array( 'postType' => 'page' === $type ? 'post' : 'page' ) ) ) ), 'A changed destination cannot reuse requestId: ' . $type );
     sfpt_check( is_wp_error( Mcp::execute( 'set-publication', sfpt_intent( $d, 'page', 1, true ) ) ), 'Published entries cannot be relocated by a new request: ' . $type );
     $row = Store::read( $d['articleId'] );
-    sfpt_check( $before['payload'] === $row['payload'] && $before['digest'] === $row['digest'] && 'sf_article' === get_post_type( $row['post_id'] ), 'Publishing does not migrate or mutate the private draft: ' . $type );
+    sfpt_check( $before['payload'] === $row['payload'] && $before['digest'] === $row['digest'] && 'atshde_article' === get_post_type( $row['post_id'] ), 'Publishing does not migrate or mutate the private draft: ' . $type );
     sfpt_check( get_the_title( $state['postId'] ) === Snapshot::post_title( $d['snapshot']->article->title ), 'Literal title escaping survives destination change: ' . $type );
     $GLOBALS['wp_query'] = new WP_Query( array( 'post_type' => $type, 'p' => $state['postId'] ) ); Publications::assets();
-    sfpt_check( wp_style_is( 'sf-publication-' . $state['postId'], 'enqueued' ) && str_contains( implode( '', wp_styles()->get_data( 'sf-publication-' . $state['postId'], 'after' ) ), '.sf-resources' ), 'Pinned CSS is enqueued: ' . $type );
+    sfpt_check( wp_style_is( 'atshift-deft-publication-' . $state['postId'], 'enqueued' ) && str_contains( implode( '', wp_styles()->get_data( 'atshift-deft-publication-' . $state['postId'], 'after' ) ), '.sf-resources' ), 'Pinned CSS is enqueued: ' . $type );
     sfpt_check( (bool) array_filter( wp_scripts()->queue, static function( $handle ) { return str_contains( $handle, 'image-zoom' ); } ), 'Bundled image behavior is enqueued: ' . $type );
     $job = Publications::read( $d['articleId'] );
     foreach ( json_decode( $job['files'], true ) as $key => $file ) {
@@ -131,10 +132,10 @@ foreach ( array( 'post', 'page', 'sf_test_event' ) as $type ) {
 }
 
 $d = sfpt_draft(); $body = sfpt_intent( $d, 'page' ); $state = sfpt_call( 'set-publication', $body );
-sfpt_check( 'scheduled' === $state['state'] && $state['postId'] > 0 && 'sf_reserved' === get_post_status( $state['postId'] ) && ! is_post_publicly_viewable( $state['postId'] ), 'Selecting a future destination creates a private reservation.' );
+sfpt_check( 'scheduled' === $state['state'] && $state['postId'] > 0 && 'atshde_reserved' === get_post_status( $state['postId'] ) && ! is_post_publicly_viewable( $state['postId'] ), 'Selecting a future destination creates a private reservation.' );
 $replacement = sfpt_call( 'set-publication', sfpt_intent( $d, 'sf_test_event', 1 ) );
 sfpt_check( 'sf_test_event' === $replacement['postType'] && 2 === $replacement['version'], 'A fresh request can change destination before publication.' );
-sfpt_check( 'overdue' === sfpt_due( $d['articleId'], 1 )['state'] && 'sf_reserved' === get_post_status( $replacement['postId'] ), 'Old scheduled worker cannot publish replaced destination.' );
+sfpt_check( 'overdue' === sfpt_due( $d['articleId'], 1 )['state'] && 'atshde_reserved' === get_post_status( $replacement['postId'] ), 'Old scheduled worker cannot publish replaced destination.' );
 sfpt_check( 'sf_test_event' === get_post_type( sfpt_due( $d['articleId'], 2 )['postId'] ), 'Current scheduled worker publishes only the selected destination.' );
 
 foreach ( array( 'unregistered', 'nonpublic', 'noeditor', 'permission' ) as $case ) {
@@ -166,7 +167,7 @@ sfpt_check( 'blocked' === $blocked['state'] && 'draft' === get_post_status( $blo
 remove_filter( 'map_meta_cap', $deny_edit, 100 );
 wp_update_post( array( 'ID' => $blocked['postId'], 'post_type' => 'page' ) );
 $wpdb->update( Publications::table(), array( 'state' => 'processing' ), array( 'article_id' => $d['articleId'] ) );
-sfpt_check( 'blocked' === sfpt_due( $d['articleId'] )['state'] && 'draft' === get_post_status( $blocked['postId'] ), 'Recovery cannot publish a post moved to another destination outside DEFT.' );
+sfpt_check( 'blocked' === sfpt_due( $d['articleId'] )['state'] && 'draft' === get_post_status( $blocked['postId'] ), 'Recovery cannot publish a post moved to another destination outside DeFt.' );
 $d = sfpt_draft(); sfpt_call( 'set-publication', sfpt_intent( $d, 'page' ) );
 $cancelled = sfpt_call( 'cancel-publication', array( 'articleId' => $d['articleId'], 'expectedPublicationVersion' => 1 ) );
 sfpt_check( 'page' === $cancelled['postType'] && 'cancelled' === sfpt_due( $d['articleId'], 1 )['state'], 'Cancellation retains the destination and prevents stale workers from publishing.' );

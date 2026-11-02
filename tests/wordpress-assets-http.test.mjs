@@ -53,8 +53,8 @@ const dom = new JSDOM(
 const configLine = [...dom.window.document.scripts]
   .flatMap((el) => el.textContent.split("\n"))
   .map((line) => line.trim())
-  .find((line) => line.startsWith("window.sfWordPress="));
-const config = JSON.parse(configLine.slice("window.sfWordPress=".length, -1));
+  .find((line) => line.startsWith("window.atshiftDeftWordPress="));
+const config = JSON.parse(configLine.slice("window.atshiftDeftWordPress=".length, -1));
 dom.window.close();
 function api(path) {
   const url = new URL(config.root);
@@ -233,10 +233,13 @@ test("asset endpoints reject arrays and altered tokens instead of normalizing th
     array.searchParams.delete(key);
     array.searchParams.set(key + "[]", value);
     assert.equal((await request(array)).status, 403);
-    const tagged = new URL(reference.contentUrl);
-    tagged.searchParams.set(key, `<b>${value}</b>`);
-    assert.equal((await request(tagged)).status, 403);
+    for (const altered of ["", `<b>${value}</b>`, ` ${value}`, `${value}\n`, `${value}%00`, `${value}\0`, `${value}\\`]) {
+      const bad = new URL(reference.contentUrl);
+      bad.searchParams.set(key, altered);
+      assert.equal((await request(bad)).status, 403, `${key}: ${JSON.stringify(altered)}`);
+    }
   }
+  assert.equal((await request(reference.contentUrl)).status, 200);
 });
 test("spoofed extensions, active types, empty files and malformed envelopes leave no assets", async () => {
   const before = await listing();

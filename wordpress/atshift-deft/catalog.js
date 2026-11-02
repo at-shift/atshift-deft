@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const { __, sprintf } = window.wp.i18n;
-  const config = window.sfWordPress;
+  const config = window.atshiftDeftWordPress;
   const $ = (id) => document.getElementById("sf-" + id);
   let selected = null,
     mode = "shared",

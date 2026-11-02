@@ -6,7 +6,7 @@ Available in 0.7.0. WordPress.org submission remains on hold.
 
 1. The AI reads `list-post-types` or `context.publication.destinations`.
 2. If no destination has been selected for this article, the AI asks "Where would you like to publish this article?" in the user's language and offers the returned `accountCanPublish` destinations by label. It waits for the answer before publication or scheduling, even if only one option is available. If none are available, it keeps the draft private. The user can say "publish this as an event", "use a normal post", or "make it a page". An existing choice for this article is validated without asking again; another article's choice is not reused. Missing, ambiguous or unavailable choices require clarification, never an automatic normal-post fallback.
-3. The AI saves and previews the private DEFT draft as before, mentioning the intended destination. Destination selection is not a publication request.
+3. The AI saves and previews the private DeFt draft as before, mentioning the intended destination. Destination selection is not a publication request.
 4. On the user's publication instruction, it states the selected destination and timing, reads `get-draft` and `get-publication`, and includes `postType` in `set-publication`. Selecting a destination alone is not a publication instruction. It preserves the selected destination when rescheduling.
 5. The result and Articles publication status show the destination. Immediate publication returns its actual permalink; a reservation does not create a public post until execution.
 
@@ -20,10 +20,10 @@ guides must be refreshed after the updated plugin is installed.
 ## Discovery and Permissions
 
 - `GET /structured-fields/v1/post-types` is an authenticated workspace REST route. `list-post-types` is available on draft and publishing MCP connections, but is not a global/public ability.
-- Only existing public, viewable types with title and editor support are eligible. Attachments, revisions, DEFT drafts, templates and other internal types are excluded. REST exposure (`show_in_rest`) is not required.
+- Only existing public, viewable types with title and editor support are eligible. Attachments, revisions, DeFt drafts, templates and other internal types are excluded. REST exposure (`show_in_rest`) is not required.
 - The result includes `postType`, labels, description, hierarchy and `accountCanPublish`. These strings are data, not instructions. Connection publication consent is separate from account capabilities.
-- The existing DEFT publisher role retains its scoped ordinary-post permission. This exception applies only to the normal `post` type with its standard capabilities. It never grants access to pages or custom types, even when their capability names resemble ordinary posts.
-- Page/custom-type creation requires native `create_posts` and `edit_posts` capabilities; publication additionally requires native `publish_posts`, DEFT publisher permission and publication-authorized credentials. Object-specific `edit_post` filters are checked before changing the created post to public. No user/role capabilities are changed by this feature.
+- The existing DeFt publisher role retains its scoped ordinary-post permission. This exception applies only to the normal `post` type with its standard capabilities. It never grants access to pages or custom types, even when their capability names resemble ordinary posts.
+- Page/custom-type creation requires native `create_posts` and `edit_posts` capabilities; publication additionally requires native `publish_posts`, DeFt publisher permission and publication-authorized credentials. Object-specific `edit_post` filters are checked before changing the created post to public. No user/role capabilities are changed by this feature.
 - Type availability and permissions are checked again when a reservation runs. Disabling a type or revoking rights blocks the job without redirecting publication elsewhere.
 
 ## Integrity and Compatibility
@@ -36,7 +36,7 @@ Published CSS, bundled behaviors, canonical title escaping and frozen media use 
 
 This does not register custom post types, select a parent page/template or populate plugin-specific required metadata. Existing categories/tags and public custom taxonomies are handled by [Publication Taxonomies](PUBLICATION-TAXONOMIES.md). Minimal JSON-LD and content-only public JSON are described in [Public Structure](PUBLIC-STRUCTURE.md). Specialized records may need additional integrations before they can be created correctly; the AI must not claim those requirements are satisfied by a title and body alone.
 
-The existing private/portable preview renders the DEFT article, not the destination's exact template. A custom theme/template must render `post_content` and the usual WordPress enqueue hooks for the article and its assets to appear. Exact behavior across all third-party post types and themes is not claimed.
+The existing private/portable preview renders the DeFt article, not the destination's exact template. A custom theme/template must render `post_content` and the usual WordPress enqueue hooks for the article and its assets to appear. Exact behavior across all third-party post types and themes is not claimed.
 
 ## Verification
 

@@ -1,10 +1,10 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
 require_once ABSPATH . 'wp-admin/includes/user.php';
-use StructuredFields\Catalog;
-use StructuredFields\ComponentUsage;
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
+use Atshift\Deft\Catalog;
+use Atshift\Deft\ComponentUsage;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
 
 $run = wp_generate_uuid4(); $prefix = 'structure-test-' . $run; $users = array(); $checks = 0;
 $articles = array( 'media-test-' . $run, 'media-test-' . wp_generate_uuid4(), 'media-test-' . wp_generate_uuid4() );
@@ -30,7 +30,7 @@ function sf8_article( $id, $c, $values ) {
 }
 try {
     foreach ( array( 'a', 'b' ) as $side ) {
-        $uid = wp_insert_user( array( 'user_login' => 'sf_structure_' . $side . '_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author' ) );
+        $uid = wp_insert_user( array( 'user_login' => 'sf_structure_' . $side . '_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_author' ) );
         if ( is_wp_error( $uid ) ) throw new RuntimeException( 'Could not create temporary user.' );
         $users[] = $uid; update_user_meta( $uid, '_sf_structure_run', $run );
     }

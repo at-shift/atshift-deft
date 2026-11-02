@@ -1,12 +1,12 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class OAuthStore {
-    public static function clients() { global $wpdb; return $wpdb->prefix . 'sf_oauth_clients'; }
-    public static function tokens() { global $wpdb; return $wpdb->prefix . 'sf_oauth_tokens'; }
-    public static function flows() { global $wpdb; return $wpdb->prefix . 'sf_oauth_flows'; }
+    public static function clients() { global $wpdb; return $wpdb->prefix . 'atshde_oauth_clients'; }
+    public static function tokens() { global $wpdb; return $wpdb->prefix . 'atshde_oauth_tokens'; }
+    public static function flows() { global $wpdb; return $wpdb->prefix . 'atshde_oauth_flows'; }
 
     public static function install() {
         global $wpdb;
@@ -54,7 +54,7 @@ final class OAuthStore {
         foreach ( array( $clients, $tokens, $flows ) as $table ) {
             if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ) !== $table ) return;
         }
-        update_option( 'sf_oauth_schema_version', 1, false );
+        update_option( 'atshde_oauth_schema_version', 1, false );
     }
 
     public static function client( $id ) {

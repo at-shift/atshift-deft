@@ -36,7 +36,7 @@ test('AI guidance checks the prerequisite before setup and preserves an existing
 
 // Render the real PHP template with isolated permission/escaping stubs, without a site or database.
 const fixture = String.raw`
-namespace StructuredFields {
+namespace Atshift\Deft {
   class Access {
     public static function workspace() { return getenv('TEST_WORKSPACE') === '1'; }
     public static function publisher() { return false; }
@@ -54,7 +54,7 @@ namespace {
   function self_admin_url($path) { return 'https://example.org/wp-admin/' . $path; }
   function current_user_can($cap) { return $cap === 'install_plugins' && getenv('TEST_INSTALL') === '1'; }
   require $argv[1];
-  \StructuredFields\connections_page();
+  \Atshift\Deft\connections_page();
 }`;
 
 for (const canInstall of [false, true]) {

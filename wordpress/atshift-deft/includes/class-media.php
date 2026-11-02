@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -70,7 +70,8 @@ final class Media {
                 // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
                 throw new \InvalidArgumentException( __( 'Use a publication candidate belonging to this article, with its exact hash.', 'atshift-deft' ) );
             }
-            $meta = array_merge( $row, array( 'path' => Assets::verified_path( $row ) ) );
+            Assets::verified_bytes( $row );
+            $meta = $row;
         } elseif ( 'attachment' === $ref->kind ) {
             $meta = self::attachment( $ref->id );
             // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
@@ -109,7 +110,8 @@ final class Media {
             $identity = Snapshot::json( array( get_current_user_id(), $article_id, $ref->kind ?? null, $ref->id ?? null, $ref->sha256 ?? null, $usage['type'] ) );
             if ( ! isset( $verified[$identity] ) ) {
                 $meta = self::resolve( $ref, $article_id, $usage['type'] );
-                if ( ! isset( $files[$meta['path']] ) ) { $bytes += (int) $meta['bytes']; $files[$meta['path']] = true; }
+                $file_identity = $meta['asset_id'] ?? $meta['path'];
+                if ( ! isset( $files[$file_identity] ) ) { $bytes += (int) $meta['bytes']; $files[$file_identity] = true; }
                 // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; REST JSON-encodes messages and HTML callers escape at output.
                 if ( $bytes > Assets::ARTICLE_BYTES ) throw new \InvalidArgumentException( __( 'Article media exceeds 100 MiB.', 'atshift-deft' ) );
                 $verified[$identity] = $meta;
@@ -120,8 +122,15 @@ final class Media {
     }
 
     public static function url( $row, $key ) {
-        return add_query_arg( array( 'action' => 'sf_media', 'article' => $row['article_id'], 'version' => (int) $row['version'], 'key' => $key,
+        return add_query_arg( array( 'action' => 'atshde_media', 'article' => $row['article_id'], 'version' => (int) $row['version'], 'key' => $key,
             '_sf_nonce' => wp_create_nonce( 'sf-media-' . $row['post_id'] . '-' . $row['digest'] . '-' . $key ) ), admin_url( 'admin-post.php' ) );
+    }
+
+    public static function bytes( $meta ) {
+        $bytes = isset( $meta['asset_id'] ) ? Assets::verified_bytes( $meta ) : file_get_contents( $meta['path'], false, null, 0, Assets::MAX_BYTES + 1 );
+        // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Plain-text exception; JSON responses encode it and HTML callers escape at output.
+        if ( ! is_string( $bytes ) || strlen( $bytes ) !== (int) $meta['bytes'] || ! hash_equals( $meta['sha256'], hash( 'sha256', $bytes ) ) ) throw new \RuntimeException( __( 'Media changed during transfer.', 'atshift-deft' ) );
+        return $bytes;
     }
 
     public static function preview_html( $row ) {
@@ -170,11 +179,15 @@ final class Media {
         header( 'Referrer-Policy: no-referrer' );
         header( 'X-Content-Type-Options: nosniff' );
         header( "Content-Security-Policy: default-src 'none'; sandbox" );
-        $id = is_string( $_GET['article'] ?? null ) ? wp_unslash( $_GET['article'] ) : '';
-        $version = is_string( $_GET['version'] ?? null ) ? wp_unslash( $_GET['version'] ) : '';
-        $key = is_string( $_GET['key'] ?? null ) ? wp_unslash( $_GET['key'] ) : '';
-        $nonce = is_string( $_GET['_sf_nonce'] ?? null ) ? wp_unslash( $_GET['_sf_nonce'] ) : '';
-        if ( true !== Assets::permission() || ! is_string( $id ) || ! preg_match( '/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/D', $id ) ||
+        $id = is_string( $_GET['article'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['article'] ) ) : '';
+        $version = is_string( $_GET['version'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['version'] ) ) : '';
+        $key = is_string( $_GET['key'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : '';
+        $nonce = is_string( $_GET['_sf_nonce'] ?? null ) ? sanitize_text_field( wp_unslash( $_GET['_sf_nonce'] ) ) : '';
+        // Sanitization is validation here, never permission to repair a signed reference.
+        if ( '' === $nonce || ! isset( $_GET['article'], $_GET['version'], $_GET['key'], $_GET['_sf_nonce'] ) ||
+            wp_slash( $id ) !== $_GET['article'] || wp_slash( $version ) !== $_GET['version'] ||
+            wp_slash( $key ) !== $_GET['key'] || wp_slash( $nonce ) !== $_GET['_sf_nonce'] ||
+            true !== Assets::permission() || ! is_string( $id ) || ! preg_match( '/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/D', $id ) ||
             ! is_string( $version ) || ! preg_match( '/^[1-9][0-9]{0,8}$/D', $version ) ||
             ! is_string( $key ) || ! preg_match( '/^[a-f0-9]{64}$/D', $key ) || ! is_string( $nonce ) ||
             ! in_array( $_SERVER['REQUEST_METHOD'] ?? '', array( 'GET', 'HEAD' ), true ) ) {
@@ -189,7 +202,7 @@ final class Media {
             if ( ! isset( $refs[ $key ] ) ) throw new \RuntimeException( __( 'Unknown media field.', 'atshift-deft' ) );
             $meta = self::resolve( $refs[ $key ]['ref'], $id, $refs[ $key ]['type'] );
             // Read bounded bytes once, then verify that exact buffer before sending it.
-            $bytes = file_get_contents( $meta['path'], false, null, 0, Assets::MAX_BYTES + 1 );
+            $bytes = self::bytes( $meta );
             if ( ! is_string( $bytes ) || strlen( $bytes ) !== (int) $meta['bytes'] || ! hash_equals( $meta['sha256'], hash( 'sha256', $bytes ) ) ) {
                 throw new \RuntimeException( __( 'Media changed during transfer.', 'atshift-deft' ) );
             }
@@ -201,7 +214,7 @@ final class Media {
         $mode = 'application/pdf' === $meta['mime'] ? 'attachment' : 'inline';
         header( 'Content-Disposition: ' . $mode . '; filename="media.' . pathinfo( $meta['filename'], PATHINFO_EXTENSION ) . '"; filename*=UTF-8\'\'' . rawurlencode( $meta['filename'] ) );
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Integrity-verified image/PDF bytes with a validated MIME type, not an HTML response.
-        if ( 'HEAD' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) echo $bytes;
+        if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' === $_SERVER['REQUEST_METHOD'] ) echo $bytes;
         exit;
     }
 }

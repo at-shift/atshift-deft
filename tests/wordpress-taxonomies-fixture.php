@@ -1,6 +1,6 @@
 <?php
 // Only install in the disposable local destination-test site.
-if ( 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:post_types|appearance)_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable DEFT test database.' );
+if ( 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:post_types|appearance)_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable DeFt test database.' );
 function sf_test_register_taxonomies() {
     register_taxonomy( 'sf_event_topic', 'sf_test_event', array( 'label' => 'Event topics', 'public' => true, 'show_in_rest' => false,
         'hierarchical' => true, 'capabilities' => array( 'assign_terms' => 'assign_sf_event_terms' ) ) );

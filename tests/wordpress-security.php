@@ -1,15 +1,21 @@
 <?php
-namespace StructuredFields {
+namespace Atshift\Deft {
     // Count real file hashing without replacing its integrity behavior.
     function hash_file( ...$args ) { $GLOBALS['sf_security_hashes']++; return \hash_file( ...$args ); }
 }
 namespace {
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\{Snapshot, Store, Media, Assets, ComponentBuilder, Connections, Publications, Review};
+require_once __DIR__ . '/wordpress-connection-context.php';
+use Atshift\Deft\{Snapshot, Store, Media, Assets, ComponentBuilder, Connections, Publications, Review, Reservations};
 $id = 'media-test-' . wp_generate_uuid4(); $count = $failures = 0; $keys = array(); $hook = null;
 $GLOBALS['sf_security_hashes'] = 0;
 function sfs_check( $ok, $label ) { global $count, $failures; $count++; if ( ! $ok ) $failures++; echo ( $ok ? 'PASS ' : 'FAIL ' ) . $count . ': ' . $label . PHP_EOL; }
 function sfs_reject( $fn ) { try { $fn(); return false; } catch ( Throwable $e ) { return true; } }
+function sfs_held_reservation( $job ) {
+    $post = $job && $job['post_id'] ? get_post( (int) $job['post_id'] ) : null;
+    return $post && Publications::matches_post( $job, $post ) && Reservations::INACTIVE === $post->post_status &&
+        ! is_post_publicly_viewable( $post ) && '' === $post->post_content;
+}
 function sfs_key() {
     global $wpdb, $keys;
     $id = wp_generate_uuid4(); $secret = bin2hex( random_bytes( 32 ) ); $keys[] = $id;
@@ -18,7 +24,7 @@ function sfs_key() {
     $request = new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE );
     $request->set_body( '{}' );
     $request->set_header( 'authorization', 'Bearer sfc_' . $id . '_' . $secret );
-    if ( null !== Connections::guard( null, rest_get_server(), $request ) ) throw new RuntimeException( 'Fixture authentication failed.' );
+    if ( null !== sf_test_begin_connection( $request ) ) throw new RuntimeException( 'Fixture authentication failed.' );
     return $id;
 }
 try {
@@ -89,7 +95,7 @@ try {
         $job = Publications::read( $id );
         sfs_check( $triggered && is_wp_error( $result ) && ! $job, $case . ' during manifest work cannot become a session-origin reservation' );
         if ( $job ) { wp_clear_scheduled_hook( Publications::HOOK, array( $id, (int) $job['version'] ) ); $wpdb->delete( Publications::table(), array( 'article_id' => $id ) ); }
-        Connections::finish( new WP_REST_Response(), rest_get_server(), new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE ) );
+        sf_test_end_connection();
     }
     $key = sfs_key(); $result = Publications::set( $request );
     if ( is_wp_error( $result ) ) throw new RuntimeException( $result->get_error_message() );
@@ -105,12 +111,12 @@ try {
     };
     add_filter( 'query', $hook ); Publications::run( $id, $result['version'] ); remove_filter( 'query', $hook ); $hook = null;
     $job = Publications::read( $id );
-    sfs_check( $triggered && 'cancelled' === $job['state'] && ! $job['post_id'], 'Revocation during worker validation cannot overwrite cancellation or publish' );
+    sfs_check( $triggered && 'cancelled' === $job['state'] && sfs_held_reservation( $job ), 'Revocation during worker validation keeps the destination reservation inactive and nonpublic' );
     $wpdb->delete( Publications::table(), array( 'article_id' => $id ) );
-    Connections::finish( new WP_REST_Response(), rest_get_server(), new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE ) );
+    sf_test_end_connection();
     $key_a = sfs_key(); $initial = Publications::set( $request );
     if ( is_wp_error( $initial ) ) throw new RuntimeException( $initial->get_error_message() );
-    Connections::finish( new WP_REST_Response(), rest_get_server(), new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE ) );
+    sf_test_end_connection();
     sfs_key(); $triggered = false;
     $replacement = clone $request; $body = json_decode( $replacement->get_body() );
     $body->requestId = wp_generate_uuid4(); $body->expectedPublicationVersion = $initial['version']; $replacement->set_body( wp_json_encode( $body ) );
@@ -131,13 +137,13 @@ try {
     $result = Publications::set( $request );
     if ( is_wp_error( $result ) ) throw new RuntimeException( $result->get_error_message() );
     $legacy = array( 'connection_id' => '', 'publish_at' => time() - 1 );
-    if ( 2 <= (int) get_option( 'sf_publications_schema_version' ) ) $legacy['authorization'] = '';
+    if ( 2 <= (int) get_option( 'atshde_publications_schema_version' ) ) $legacy['authorization'] = '';
     $wpdb->update( Publications::table(), $legacy, array( 'article_id' => $id ) );
     Publications::run( $id, $result['version'] ); $job = Publications::read( $id );
-    sfs_check( 'blocked' === $job['state'] && ! $job['post_id'], 'Legacy reservations with lost issuer provenance require explicit rescheduling' );
+    sfs_check( 'blocked' === $job['state'] && sfs_held_reservation( $job ), 'Legacy reservations with lost issuer provenance remain inactive and require explicit rescheduling' );
 } finally {
     if ( $hook ) remove_filter( 'query', $hook );
-    Connections::finish( new WP_REST_Response(), rest_get_server(), new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE ) );
+    sf_test_end_connection();
     wp_set_current_user( get_user_by( 'login', 'sf_local_admin' )->ID );
     foreach ( $keys as $key ) $wpdb->delete( Connections::table(), array( 'id' => $key ) );
     sf_media_test_cleanup( $id );

@@ -1,6 +1,6 @@
 # Public Structure and JSON-LD
 
-Version 0.7.0 adds two read-only outputs for published DEFT articles:
+Version 0.7.0 adds two read-only outputs for published DeFt articles:
 
 - A small `application/ld+json` document in the singular page head: `BlogPosting`
   for normal posts, `WebPage` for pages and custom types. It contains the public
@@ -52,13 +52,13 @@ excessive input fail closed with 404. There are no private node IDs to correlate
 
 ## Access and Withdrawal
 
-The endpoint requires a published DEFT job bound to the exact public post, owner
+The endpoint requires a published DeFt job bound to the exact public post, owner
 and destination. Draft, future, private, trashed, password-protected, unrelated or
 reassigned posts return the same 404, including for logged-in administrators.
 The decision is checked on every request. Responses use `no-store`; there is no
 separate public JSON cache. Third-party page caches/CDNs must honor these headers
 and purge HTML when access changes. Previously downloaded public data cannot be
-recalled. Deactivating DEFT removes these outputs and the endpoint.
+recalled. Deactivating DeFt removes these outputs and the endpoint.
 
 Membership/paywall plugins may restrict content without changing WordPress's
 public post status. Such sites MUST disable this projection for restricted posts
@@ -74,8 +74,8 @@ Do not base it on the current visitor's login; eligibility is anonymous-public.
 
 ## SEO Coexistence
 
-DEFT provides a minimal metadata document, not a replacement for an SEO plugin.
-When another plugin already owns the page/article graph, disable only DEFT's
+DeFt provides a minimal metadata document, not a replacement for an SEO plugin.
+When another plugin already owns the page/article graph, disable only DeFt's
 JSON-LD to avoid redundant entities; structure discovery remains available:
 
 ```php

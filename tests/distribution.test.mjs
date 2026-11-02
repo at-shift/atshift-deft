@@ -12,11 +12,15 @@ const github = unzipSync(githubBytes);
 const org = unzipSync(readFileSync(new URL(`atshift-deft-${version}-wordpress-org.zip`, directory)));
 const text = bytes => Buffer.from(bytes).toString();
 
-test('distribution channels differ only in updater bootstrap and implementation', () => {
+const githubOnly = name => name === 'atshift-deft/includes/class-github-updater.php'
+  || name === 'atshift-deft/GETTING-STARTED.ja.md'
+  || /^atshift-deft\/languages\/atshift-deft-[A-Za-z]/.test(name);
+
+test('distribution channels differ only in updater and bundled localization', () => {
   const adapter = 'atshift-deft/includes/class-github-updater.php';
   assert.ok(github[adapter]);
   assert.equal(org[adapter], undefined);
-  assert.deepEqual(Object.keys(github).filter(name => name !== adapter).sort(), Object.keys(org).sort());
+  assert.deepEqual(Object.keys(github).filter(name => !githubOnly(name)).sort(), Object.keys(org).sort());
   for (const name of Object.keys(org)) {
     if (name.endsWith('/atshift-deft.php')) continue;
     assert.deepEqual(github[name], org[name], name);
@@ -44,15 +48,19 @@ test('release manifest pins exact installable ZIP bytes and requirements', () =>
   assert.equal(m.requires_php, header.match(/Requires PHP:\s*(\S+)/)[1]);
 });
 
-test('both channels carry identical matching translation catalogs and no backups', () => {
-  const files = Object.keys(org).filter(name => name.includes('/languages/'));
+test('GitHub bundles Japanese; WordPress.org keeps English and translation support', () => {
+  const files = Object.keys(github).filter(name => name.includes('/languages/'));
   assert.ok(files.some(name => name.endsWith('-ja.mo')));
   assert.ok(files.some(name => /-ja-[a-f0-9]{32}\.json$/.test(name)));
-  for (const name of files) assert.deepEqual(github[name], org[name]);
+  assert.ok(github['atshift-deft/GETTING-STARTED.ja.md']);
+  assert.equal(org['atshift-deft/GETTING-STARTED.ja.md'], undefined);
+  assert.deepEqual(Object.keys(org).filter(name => name.includes('/languages/')).sort(),
+    ['atshift-deft/languages/README.md', 'atshift-deft/languages/atshift-deft.pot']);
+  assert.deepEqual(github['atshift-deft/languages/atshift-deft.pot'], org['atshift-deft/languages/atshift-deft.pot']);
   for (const file of ['atshift-deft.pot', 'atshift-deft-ja.po']) {
-    assert.ok(text(org['atshift-deft/languages/' + file]).includes(`Project-Id-Version: atshift DEFT ${version}\\n`));
+    assert.ok(text(github['atshift-deft/languages/' + file]).includes(`Project-Id-Version: atshift DeFt ${version}\\n`));
   }
-  assert.ok(!Object.keys(org).some(name => /\.po~$|\.env$|node_modules|\.git\//.test(name)));
+  for (const archive of [github, org]) assert.ok(!Object.keys(archive).some(name => /\.po~$|\.env$|node_modules|\.git\//.test(name)));
 });
 
 test('distributions omit upstream shell build tools and retain an exact dependency manifest', () => {
@@ -68,5 +76,24 @@ test('distributions omit upstream shell build tools and retain an exact dependen
     }
     assert.ok(archive[base + 'paragonie/random_compat/LICENSE']);
     assert.ok(archive[base + 'paragonie/random_compat/lib/random.php']);
+  }
+});
+
+test('distributions exclude development-only trees while preserving compatibility files', () => {
+  for (const archive of [github, org]) {
+    for (const name of Object.keys(archive)) {
+      assert.ok(name.startsWith('atshift-deft/'), name);
+      const relative = name.slice('atshift-deft/'.length);
+      assert.doesNotMatch(relative, /^(?:src|server|scripts|tests|ai-kit|article-kit|node_modules|dist|public|wordpress-org|\.local|\.git)\//, name);
+      assert.doesNotMatch(relative, /^docs\/branding\//, name);
+      assert.doesNotMatch(relative, /^(?:package(?:-lock)?\.json|vite\.config\.js|index\.html)$/, name);
+      assert.doesNotMatch(relative, /(?:~|\.(?:bak|old|orig|rej|sqlite|sqlite-shm|sqlite-wal))$/, name);
+    }
+    for (const file of ['includes/legacy-guard.php', 'includes/runtime.php', 'includes/class-private-blobs.php',
+      'includes/oauth-entities.php', 'includes/oauth-repositories.php',
+      'schema/snapshot.json', 'schema/snapshot-v2.json', 'schema/snapshot-v3.json']) {
+      assert.ok(archive['atshift-deft/' + file], file);
+    }
+    assert.ok(archive['atshift-deft/docs/CONNECTIONS.md']);
   }
 });

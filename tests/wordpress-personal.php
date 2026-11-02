@@ -1,10 +1,10 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
 require_once ABSPATH . 'wp-admin/includes/user.php';
-use StructuredFields\Catalog;
-use StructuredFields\ComponentBuilder;
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
+use Atshift\Deft\Catalog;
+use Atshift\Deft\ComponentBuilder;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
 
 $run = wp_generate_uuid4(); $prefix = 'personal-test-' . $run; $users = array(); $checks = 0;
 $article_id = 'media-test-' . $run; $other_article = 'media-test-' . substr( hash( 'sha256', $run ), 0, 36 );
@@ -21,7 +21,7 @@ function sf7_reuse( $context ) { return array( 'catalogToken' => $context['catal
 function sf7_personal( $recipe, $expected = 0, $reuse = null ) { return sf7_api( 'catalog/personal', array( 'recipe' => $recipe, 'expectedVersion' => $expected, 'reuse' => $reuse ?? sf7_reuse( sf7_context() ) ) ); }
 try {
     foreach ( array( 'a', 'b' ) as $name ) {
-        $uid = wp_insert_user( array( 'user_login' => 'sf_personal_' . $name . '_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author' ) );
+        $uid = wp_insert_user( array( 'user_login' => 'sf_personal_' . $name . '_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_author' ) );
         if ( is_wp_error( $uid ) ) throw new RuntimeException( 'Could not create temporary user.' );
         $users[] = $uid; update_user_meta( $uid, '_sf_personal_run', $run );
     }
@@ -96,14 +96,14 @@ try {
     sf7_check( 3 === $current['composeTemplate']['expectedVersion'] && 4 === $current['composeTemplate']['article']['revision'] && ! str_contains( Snapshot::json( $current ), '_wpnonce' ), 'Article handoff provides a fresh composition template without preview credentials' );
     $share = array( 'id' => $prefix . '-shared', 'key' => 'shared_test_' . str_replace( '-', '_', $run ), 'expectedVersion' => 2 );
     sf7_check( 403 === sf7_api( 'catalog/' . $recipe['id'] . '/share', $share )[0], 'Sharing requires its own capability' );
-    $user = new WP_User( $users[0] ); $user->add_cap( 'sf_register_components' ); wp_set_current_user( 0 ); wp_set_current_user( $users[0] );
+    $user = new WP_User( $users[0] ); $user->add_cap( 'atshde_register_components' ); wp_set_current_user( 0 ); wp_set_current_user( $users[0] );
     $result = sf7_api( 'catalog/' . $recipe['id'] . '/share', $share );
     if ( 200 !== $result[0] ) throw new RuntimeException( Snapshot::json( $result ) );
     sf7_check( 200 === $result[0] && 'shared' === $result[1]['scope'] && ! current_user_can( 'manage_options' ), 'Delegated registrar can share an explicit copy without administrator privileges' );
     sf7_check( (int) Catalog::read( $recipe['id'] )['owner_id'] === $users[0] && ! Catalog::read( $recipe['id'] )['enabled'], 'Sharing never transfers or changes the personal source' );
     $shared = $result[1]; $edit = $shared['component']; unset( $edit['revision'] ); $edit['name'] = 'Revised shared name';
     sf7_check( 403 === sf7_api( 'catalog', array( 'component' => $edit, 'expectedVersion' => 1 ) )[0], 'Registration capability alone does not grant shared update rights' );
-    wp_set_current_user( $users[1] ); $user = new WP_User( $users[1] ); $user->add_cap( 'sf_manage_components' ); wp_set_current_user( 0 ); wp_set_current_user( $users[1] );
+    wp_set_current_user( $users[1] ); $user = new WP_User( $users[1] ); $user->add_cap( 'atshde_manage_components' ); wp_set_current_user( 0 ); wp_set_current_user( $users[1] );
     sf7_check( 200 === sf7_api( 'catalog', array( 'component' => $edit, 'expectedVersion' => 1 ) )[0], 'Separate management capability can update a shared definition' );
     $edit['id'] = $prefix . '-no-create'; $edit['key'] = 'no_create';
     sf7_check( 403 === sf7_api( 'catalog', array( 'component' => $edit, 'expectedVersion' => 0 ) )[0], 'Management capability does not silently grant new shared registration' );

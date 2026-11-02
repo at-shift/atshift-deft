@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const { __, sprintf, _n } = window.wp.i18n;
-  const config = window.sfWordPress;
+  const config = window.atshiftDeftWordPress;
   const $ = (id) => document.getElementById(`sf-${id}`);
   const welcome = $("ai-welcome");
   if (welcome) {

@@ -1,8 +1,9 @@
 <?php
+require_once __DIR__ . '/wordpress-connection-context.php';
 // wp eval-file tests/wordpress-reservations.php --path=<disposable WordPress>
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() ||
     ! preg_match( '/^sf_deft_post_types_[a-f0-9]+$/D', DB_NAME ) ) throw new RuntimeException( 'Use a disposable local database.' );
-use StructuredFields\{Access, Connections, Drafts, Mcp, Publications, Reservations, Snapshot, Store};
+use Atshift\Deft\{Access, Connections, Drafts, Mcp, Publications, Reservations, Snapshot, Store};
 global $wpdb, $sf_res_checks; $sf_res_checks = 0;
 function sfre_check( $ok, $label ) { global $sf_res_checks; if ( ! $ok ) throw new RuntimeException( $label ); ++$sf_res_checks; }
 function sfre_good( $value ) { if ( is_wp_error( $value ) ) throw new RuntimeException( $value->get_error_code() . ': ' . $value->get_error_message() ); return $value; }
@@ -28,7 +29,7 @@ $id = wp_generate_uuid4(); $secret = bin2hex( random_bytes( 32 ) );
 $wpdb->insert( Connections::table(), array( 'id' => $id, 'owner_id' => $owner, 'name' => 'Reservation suite', 'secret_hash' => hash( 'sha256', $secret ),
     'created' => time(), 'expires' => time() + HOUR_IN_SECONDS, 'publishing' => 1, 'authoring' => 1 ) );
 $request = new WP_REST_Request( 'POST', Connections::PUBLISH_ROUTE ); $request->set_body( '{}' ); $request->set_header( 'authorization', 'Bearer sfc_' . $id . '_' . $secret );
-sfre_good( Connections::guard( null, rest_get_server(), $request ) );
+sfre_good( sf_test_begin_connection( $request ) );
 
 foreach ( array( 'post', 'page', 'sf_test_story' ) as $type ) {
     $draft = sfre_new(); $row = Store::read( $draft['articleId'] );
@@ -41,14 +42,14 @@ foreach ( array( 'post', 'page', 'sf_test_story' ) as $type ) {
     sfre_check( in_array( $post_id, get_posts( array( 'post_type' => $type, 'post_status' => Reservations::STATUS, 'fields' => 'ids', 'posts_per_page' => -1 ) ), true ), 'Destination status query finds reservation.' );
     sfre_check( in_array( $draft['articleId'], array_column( sfre_good( Mcp::execute( 'list-publications', array() ) )['items'], 'articleId' ), true ), 'AI can rediscover reservation.' );
     sfre_check( sfre_set( $intent )['postId'] === $post_id, 'Idempotent retry retains one destination entry.' );
-    sfre_check( ! current_user_can( 'edit_post', $post_id ) && ! current_user_can( 'delete_post', $post_id ), 'Native editor cannot bypass DEFT reservation checks.' );
+    sfre_check( ! current_user_can( 'edit_post', $post_id ) && ! current_user_can( 'delete_post', $post_id ), 'Native editor cannot bypass DeFt reservation checks.' );
     $caps = get_post_type_object( $type )->cap;
     sfre_check( ! current_user_can( $caps->edit_post, $post_id ) && ! current_user_can( $caps->delete_post, $post_id ), 'Type-specific capabilities also protect the reservation.' );
     sfre_check( is_wp_error( wp_update_post( array( 'ID' => $post_id, 'post_status' => 'publish' ), true ) ), 'Direct update cannot publish reservation early.' );
     check_and_publish_future_post( $post_id );
-    sfre_check( Reservations::STATUS === get_post_status( $post_id ), 'Core future publisher ignores DEFT status.' );
+    sfre_check( Reservations::STATUS === get_post_status( $post_id ), 'Core future publisher ignores DeFt status.' );
     Publications::run( $draft['articleId'], $job['version'] );
-    sfre_check( Reservations::STATUS === get_post_status( $post_id ), 'DEFT cron does not publish before due time.' );
+    sfre_check( Reservations::STATUS === get_post_status( $post_id ), 'DeFt cron does not publish before due time.' );
     $actions = Reservations::actions( array( 'edit' => 'edit', 'trash' => 'trash' ), get_post( $post_id ) );
     sfre_check( isset( $actions['sf_manage'] ) && ! isset( $actions['edit'], $actions['trash'] ), 'Owner can manage reservation from destination row.' );
     $done = sfre_due( $job );

@@ -1,9 +1,9 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 defined( 'ABSPATH' ) || exit;
 
 final class Drafts {
-    public static function table() { global $wpdb; return $wpdb->prefix . 'sf_draft_states'; }
+    public static function table() { global $wpdb; return $wpdb->prefix . 'atshde_draft_states'; }
 
     public static function install() {
         global $wpdb;
@@ -17,7 +17,7 @@ final class Drafts {
             changed_at datetime NOT NULL,
             PRIMARY KEY  (article_id)
         ) ENGINE=InnoDB {$wpdb->get_charset_collate()};" );
-        update_option( 'sf_drafts_schema_version', 1, false );
+        update_option( 'atshde_drafts_schema_version', 1, false );
     }
 
     public static function state( $id ) {

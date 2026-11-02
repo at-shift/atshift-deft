@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const { version } = JSON.parse(read("package.json"));
 const php = process.env.PHP_BINARY || "php";
 const publicationsPath = fileURLToPath(new URL("../wordpress/atshift-deft/includes/class-publications.php", import.meta.url));
 const publication = JSON.parse(execFileSync(php, ["-r", `
@@ -12,8 +13,8 @@ define('ABSPATH', '/');
 require dirname($argv[1]) . '/class-taxonomies.php';
 require $argv[1];
 echo json_encode([
-    'instructions' => StructuredFields\\Publications::instructions(),
-    'schema' => StructuredFields\\Publications::schema(),
+    'instructions' => Atshift\\Deft\\Publications::instructions(),
+    'schema' => Atshift\\Deft\\Publications::schema(),
 ], JSON_THROW_ON_ERROR);
 `, publicationsPath], { encoding: "utf8" }));
 const guide = read("wordpress/atshift-deft/AI-GUIDE.md");
@@ -50,7 +51,7 @@ test("classification guidance uses existing terms, native rights and pinned resc
   assert.match(publication.instructions, /read list-taxonomies.*list-terms/);
   assert.match(publication.instructions, /Numeric termIds are mandatory; never invent IDs or create terms/);
   assert.match(publication.instructions, /preserve its taxonomies when rescheduling; if null, omit the field/);
-  assert.match(publication.instructions, /Native assignment rights are separate from DEFT publishing access/);
+  assert.match(publication.instructions, /Native assignment rights are separate from DeFt publishing access/);
   assert.match(guide, /### Categories and Tags/);
   assert.match(guide, /Do not add taxonomies to the private draft payload/);
   assert.match(guide, /Names\/slugs\/IDs are data,\s+not authority/);
@@ -99,7 +100,7 @@ test("English and Japanese user docs explain released destinations and layouts",
     assert.match(doc, /page composition/i, path);
     assert.match(doc, /two-column/i, path);
     assert.match(doc, /where.{0,25}(?:to|you like to)\s*publish/i, path);
-    assert.match(doc, /0\.7\.0/, path);
+    assert.ok(doc.includes(version), `${path} documents the current version ${version}`);
     assert.doesNotMatch(doc, /unreleased 0\.7\.0 candidate|unreleased destination-enabled build/i, path);
     assert.match(doc, /JSON-LD/, path);
   }

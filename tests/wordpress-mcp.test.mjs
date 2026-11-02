@@ -26,8 +26,8 @@ async function browser(user) {
   await request("/wp-login.php");
   assert.equal((await request("/wp-login.php", {method:"POST",body:new URLSearchParams({log:user.username,pwd:user.password,testcookie:"1"})})).status,302);
   const dom = new JSDOM(await (await request("/wp-admin/admin.php?page=structured-fields-connections")).text());
-  const line = [...dom.window.document.scripts].flatMap(s=>s.textContent.split("\n")).map(s=>s.trim()).find(s=>s.startsWith("window.sfWordPress="));
-  assert.ok(line); const config=JSON.parse(line.slice("window.sfWordPress=".length,-1)); dom.window.close();
+  const line = [...dom.window.document.scripts].flatMap(s=>s.textContent.split("\n")).map(s=>s.trim()).find(s=>s.startsWith("window.atshiftDeftWordPress="));
+  assert.ok(line); const config=JSON.parse(line.slice("window.atshiftDeftWordPress=".length,-1)); dom.window.close();
   function url(path) {const u=new URL(config.root);if(u.searchParams.has("rest_route"))u.searchParams.set("rest_route",u.searchParams.get("rest_route")+path);else u.pathname+=path;return u;}
   return {request, url, api:(path,body)=>request(url(path),{method:body===undefined?"GET":"POST",headers:{"X-WP-Nonce":config.nonce,"Content-Type":"application/json"},...(body===undefined?{}:{body:JSON.stringify(body)})})};
 }
@@ -56,7 +56,7 @@ test("connection issue requires browser session + nonce, stores only a hash, doe
   const list=await json(await a.api("connections")); assert.equal(list.items.length,1); assert.equal(list.publish,false);
   assert.ok(!JSON.stringify(list).includes(key.token));assert.ok(!JSON.stringify(list).includes("secret_hash"));
   assert.equal((await json(await b.api("connections"))).items.length,0);
-  const check=execFileSync("php",["-r",`require $argv[1]; $row=$wpdb->get_row($wpdb->prepare('SELECT * FROM '.StructuredFields\\Connections::table().' WHERE id=%s',$argv[2]),ARRAY_A); echo json_encode(array_keys($row));`,fileURLToPath(new URL("../.local/wordpress/wp-load.php",import.meta.url)),key.id],{encoding:"utf8"});
+  const check=execFileSync("php",["-r",`require $argv[1]; $row=$wpdb->get_row($wpdb->prepare('SELECT * FROM '.Atshift\\Deft\\Connections::table().' WHERE id=%s',$argv[2]),ARRAY_A); echo json_encode(array_keys($row));`,fileURLToPath(new URL("../.local/wordpress/wp-load.php",import.meta.url)),key.id],{encoding:"utf8"});
   assert.ok(JSON.parse(check).includes("secret_hash"));assert.ok(!JSON.parse(check).includes("token"));
 });
 test("official MCP client discovers tools; new authoring tools still deny old keys",async()=>{
@@ -71,7 +71,7 @@ test("official MCP client discovers tools; new authoring tools still deny old ke
 test("generated CLI settings authenticate to the exact WordPress query route without changing grants",async()=>{
   const window={};installI18n(window);runInNewContext(readFileSync(new URL("../wordpress/atshift-deft/connection-profiles.js",import.meta.url),"utf8"),{window,URL});
   for(const id of ["claude-code","gemini-cli","codex"]){
-    const template=window.sfConnectionProfiles.template(id,key.endpoint);
+    const template=window.atshiftDeftConnectionProfiles.template(id,key.endpoint);
     assert.ok(template);assert.ok(!template.text.includes(key.token));
     const env={[template.env]:key.token};let url,auth;
     if(id==="codex"){
@@ -174,7 +174,7 @@ test("permission removal and expiry block existing clients; other users cannot r
   fixture("restore");
   assert.equal((await b.api(`connections/${key.id}/revoke`,{})).status,404);
   const exp=await json(await a.api("connections",{name:"Expiry test"}));
-  execFileSync("php",["-r",`require $argv[1];$wpdb->update(StructuredFields\\Connections::table(),['expires'=>time()-1],['id'=>$argv[2]]);`,fileURLToPath(new URL("../.local/wordpress/wp-load.php",import.meta.url)),exp.id]);
+  execFileSync("php",["-r",`require $argv[1];$wpdb->update(Atshift\\Deft\\Connections::table(),['expires'=>time()-1],['id'=>$argv[2]]);`,fileURLToPath(new URL("../.local/wordpress/wp-load.php",import.meta.url)),exp.id]);
   assert.equal((await fetch(exp.endpoint,{headers:{Authorization:`Bearer ${exp.token}`}})).status,401);
   const bad=key.token.slice(0,-1)+(key.token.endsWith("0")?"1":"0");
   assert.equal((await fetch(key.endpoint,{headers:{Authorization:`Bearer ${bad}`}})).status,401);
@@ -261,6 +261,6 @@ test("revocation and expiry also cancel authority of outstanding MCP-issued tran
   assert.equal((await upload(grant)).status,403);await assert.rejects(()=>authorClient.listTools());
   const exp=await json(await a.api("connections",{name:"Expiring authoring",authoring:true}));const expClient=await connect(exp.token,exp.endpoint);
   const expGrant=(await call(expClient,"prepare-file-transfer",manifest)).data;
-  execFileSync("php",["-r",`require $argv[1];$wpdb->update(StructuredFields\\Connections::table(),['expires'=>time()-1],['id'=>$argv[2]]);`,fileURLToPath(new URL("../.local/wordpress/wp-load.php",import.meta.url)),exp.id]);
+  execFileSync("php",["-r",`require $argv[1];$wpdb->update(Atshift\\Deft\\Connections::table(),['expires'=>time()-1],['id'=>$argv[2]]);`,fileURLToPath(new URL("../.local/wordpress/wp-load.php",import.meta.url)),exp.id]);
   assert.equal((await upload(expGrant)).status,403);
 });

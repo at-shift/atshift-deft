@@ -19,14 +19,15 @@ assert.equal(entry.match(/\* Version:\s*(\S+)/)?.[1], pkg.version);
 assert.equal(entry.match(/const VERSION = '([^']+)'/)?.[1], pkg.version);
 const names = [
   "README.md", "readme.txt", "atshift-deft.php", "admin.js", "admin.css",
-  "includes/plugin.php", "includes/legacy-guard.php",
+  "assets/icon-20x20.png", "assets/icon-128x128.png", "assets/icon-256x256.png",
+  "includes/plugin.php", "includes/legacy-guard.php", "includes/class-prefix-migration.php",
   "includes/i18n.php",
   "includes/runtime.php",
   "oauth.css",
   "includes/class-oauth.php", "includes/class-oauth-store.php", "includes/class-oauth-consent.php",
   "includes/oauth-entities.php", "includes/oauth-repositories.php",
   "includes/class-snapshot.php", "includes/class-store.php", "includes/class-drafts.php",
-  "includes/class-assets.php", "includes/class-access.php",
+  "includes/class-assets.php", "includes/class-private-blobs.php", "includes/class-access.php",
   "includes/class-media.php", "schema/snapshot-v2.json", "media-sample.json",
   "includes/class-transfer.php", "includes/class-review.php",
   "includes/class-catalog.php", "includes/catalog-page.php", "catalog.js",
@@ -40,29 +41,31 @@ const names = [
   "includes/class-public-structure.php",
   "behaviors/fade-in-v1.css", "behaviors/image-zoom-v1.css", "behaviors/image-zoom-v1.js",
   "behaviors/manifest.json",
-  "AI-GUIDE.md", "GETTING-STARTED.ja.md", "docs/CONNECTIONS.md",
+  "AI-GUIDE.md", "docs/CONNECTIONS.md",
   "sample.json", "schema/snapshot.json",
 ];
 const files = {};
+if (channel === "github") names.push("GETTING-STARTED.ja.md");
 for (const name of names) files[`atshift-deft/${name}`] = new Uint8Array(await readFile(new URL(name, source)));
 if (channel === "github") {
   assert.ok(!entry.includes("Update URI:") && !entry.includes("GitHubUpdater"));
-  const bootstrap = "\\AtshiftDeft\\register_translations( __FILE__ );";
+  const bootstrap = "\\Atshift\\Deft\\register_translations( __FILE__ );";
   assert.equal(entry.split(bootstrap).length, 2);
   const githubEntry = entry.replace(" * Version:", " * Update URI: https://github.com/at-shift/atshift-deft\n * Version:")
-    .replace(bootstrap, bootstrap + "\nrequire_once __DIR__ . '/includes/class-github-updater.php';\n\\AtshiftDeft\\GitHubUpdater::register( __FILE__ );");
+    .replace(bootstrap, bootstrap + "\nrequire_once __DIR__ . '/includes/class-github-updater.php';\n\\Atshift\\Deft\\GitHubUpdater::register( __FILE__ );");
   files["atshift-deft/atshift-deft.php"] = new TextEncoder().encode(githubEntry);
   files["atshift-deft/includes/class-github-updater.php"] = new Uint8Array(await readFile(new URL("distribution/github/class-github-updater.php", root)));
 }
 for (const entry of await readdir(new URL("languages/", source), { withFileTypes: true })) {
   if (!entry.isFile() || !/^(?:README\.md|atshift-deft\.pot|atshift-deft-[A-Za-z][A-Za-z0-9_@-]*\.(?:po|mo)|atshift-deft-[A-Za-z][A-Za-z0-9_@-]*-[a-f0-9]{32}\.json)$/.test(entry.name)) continue;
+  if (channel === "wordpress-org" && !["README.md", "atshift-deft.pot"].includes(entry.name)) continue;
   files[`atshift-deft/languages/${entry.name}`] = new Uint8Array(await readFile(new URL(`languages/${entry.name}`, source)));
 }
 for (const name of ["composer.json", "composer.lock", "LICENSE"]) files[`atshift-deft/${name}`] = new Uint8Array(await readFile(new URL(name, root)));
 const manifestBytes = await readFile(new URL("vendor/dependency-manifest.json", source));
 const manifest = JSON.parse(manifestBytes);
 assert.equal(manifest.minimumPhp, "8.2.0");
-assert.equal(manifest.namespacePrefix, "StructuredFields\\Vendor\\");
+assert.equal(manifest.namespacePrefix, "Atshift\\Deft\\Vendor\\");
 assert.equal(manifest.composerLockSha256, createHash("sha256").update(await readFile(new URL("composer.lock", root))).digest("hex"));
 assert.equal(manifest.scoperConfigSha256, createHash("sha256").update(await readFile(new URL("scoper.inc.php", root))).digest("hex"));
 // Upstream PHAR build tooling is not runtime code and is rejected by the directory uploader.

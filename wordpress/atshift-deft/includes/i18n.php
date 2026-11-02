@@ -1,5 +1,5 @@
 <?php
-namespace AtshiftDeft;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 

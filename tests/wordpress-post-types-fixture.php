@@ -1,7 +1,7 @@
 <?php
 // Loaded as a mu-plugin only in the disposable destination-test site.
 if ( 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:post_types|appearance)_[a-f0-9]+$/D', DB_NAME ) ) {
-    throw new RuntimeException( 'Use a disposable DEFT test database.' );
+    throw new RuntimeException( 'Use a disposable DeFt test database.' );
 }
 function sf_test_register_post_types() {
     register_post_type( 'sf_test_event', array( 'label' => 'Events', 'description' => 'Public event announcements',

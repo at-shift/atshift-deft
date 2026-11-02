@@ -96,7 +96,7 @@ const sample = {
   article: {
     id: "wordpress-sample",
     revision: 1,
-    title: "atshift DEFT on WordPress",
+    title: "atshift DeFt on WordPress",
     blocks: [
       {
         id: "intro-one",

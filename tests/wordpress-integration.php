@@ -1,7 +1,7 @@
 <?php
 require dirname( __DIR__ ) . '/.local/wordpress/wp-load.php';
-use StructuredFields\Snapshot;
-use StructuredFields\Store;
+use Atshift\Deft\Snapshot;
+use Atshift\Deft\Store;
 if ( DB_NAME !== 'sf_prototype_local' || home_url() !== 'http://127.0.0.1:8128' ) throw new RuntimeException( 'Tests require the isolated local site.' );
 $count = 0;
 function check( $pass, $message ) {
@@ -75,8 +75,8 @@ try {
     $saved = $first->get_data();
     check( 1 === $saved['version'] && false === $saved['publishAuthorized'], 'Save returns version, never publication authorization' );
     check( get_post_status( $saved['postId'] ) === 'draft', 'Preview post is draft only' );
-    check( ! is_post_type_viewable( 'sf_article' ) && is_post_type_viewable( 'post' ), 'Private previews are not advertised as public content and ordinary posts stay viewable' );
-    check( get_post_type_object( 'sf_article' )->publicly_queryable && str_contains( Store::preview_url( Store::read( $sample->article->id ) ), 'preview=true' ), 'Private preview keeps its explicit authorized query route' );
+    check( ! is_post_type_viewable( 'atshde_article' ) && is_post_type_viewable( 'post' ), 'Private previews are not advertised as public content and ordinary posts stay viewable' );
+    check( get_post_type_object( 'atshde_article' )->publicly_queryable && str_contains( Store::preview_url( Store::read( $sample->article->id ) ), 'preview=true' ), 'Private preview keeps its explicit authorized query route' );
     $read = api( 'GET', 'articles/' . $sample->article->id );
     check( $read->get_data()['snapshot'] == $sample, 'Round-trip preserves canonical article and components' );
     $same = api( 'POST', 'articles', array( 'snapshot' => $sample, 'expectedVersion' => 1 ) )->get_data();

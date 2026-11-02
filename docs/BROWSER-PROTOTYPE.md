@@ -1,7 +1,7 @@
 # ブラウザー試作の開発
 
 この文書は独立したVite/Reactの実験環境について説明します。
-WordPress版DEFTの接続・下書き・公開機能とは別で、WordPressへの自動同期はありません。
+WordPress版DeFtの接続・下書き・公開機能とは別で、WordPressへの自動同期はありません。
 
 ## 起動
 

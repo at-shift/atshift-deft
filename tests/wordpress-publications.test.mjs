@@ -23,8 +23,8 @@ async function browser(user) {
   await request("/wp-login.php");
   assert.equal((await request("/wp-login.php", {method:"POST",body:new URLSearchParams({log:user.username,pwd:user.password,testcookie:"1"})})).status,302);
   const dom = new JSDOM(await (await request("/wp-admin/admin.php?page=structured-fields-connections")).text());
-  const line = [...dom.window.document.scripts].flatMap(s=>s.textContent.split("\n")).map(s=>s.trim()).find(s=>s.startsWith("window.sfWordPress="));
-  assert.ok(line); const config=JSON.parse(line.slice("window.sfWordPress=".length,-1)); dom.window.close();
+  const line = [...dom.window.document.scripts].flatMap(s=>s.textContent.split("\n")).map(s=>s.trim()).find(s=>s.startsWith("window.atshiftDeftWordPress="));
+  assert.ok(line); const config=JSON.parse(line.slice("window.atshiftDeftWordPress=".length,-1)); dom.window.close();
   function url(path) {const u=new URL(config.root);if(u.searchParams.has("rest_route"))u.searchParams.set("rest_route",u.searchParams.get("rest_route")+path);else u.pathname+=path;return u;}
   return {request, url, api:(path,body)=>request(url(path),{method:body===undefined?"GET":"POST",headers:{"X-WP-Nonce":config.nonce,"Content-Type":"application/json"},...(body===undefined?{}:{body:JSON.stringify(body)})})};
 }
@@ -116,7 +116,7 @@ test("immediate publication serves frozen images/PDF publicly, never executes ar
   assert.equal(createHash("sha256").update(Buffer.from(await imageResponse.arrayBuffer())).digest("hex"),data.users[0].data.staged.image.sha256);
   const pdf=dom.window.document.querySelector('.sf-article a[href*="sf_public_media"]');assert.ok(pdf);
   const pdfResponse=await fetch(pdf.href);assert.equal(pdfResponse.status,200);assert.match(pdfResponse.headers.get("content-disposition"),/^attachment/);
-  assert.ok(dom.window.document.querySelector('[id^="sf-publication-"]'));dom.window.close();
+  assert.ok(dom.window.document.querySelector('[id^="atshift-deft-publication-"]'));dom.window.close();
   fixture("publication-shortcodes",data.users[0].id);
   assert.equal((await fetch((await json(await a.api(`articles/${data.users[0].id}`))).previewUrl)).status,403);
   const repeat=await good("get-publication",{articleId:data.users[0].id});assert.equal(repeat.postId,immediate.postId);
@@ -143,6 +143,42 @@ test("public media needs no private nonce but rejects malformed identifiers",asy
       url.searchParams.set(malformed === "array" ? key + "[]" : key, malformed === "array" ? value : `<b>${value}</b>`);
       assert.equal((await fetch(url)).status,404);
     }
+  }
+  for(const [key,value] of [["sf_public_media",randomUUID()],["sf_media_key","0".repeat(64)]]) {
+    const url=new URL(mediaUrl);url.searchParams.set(key,value);
+    const denied=await fetch(url);assert.equal(denied.status,404);assert.equal((await denied.arrayBuffer()).byteLength,0);
+  }
+});
+test("public media GET and HEAD are anonymous and read-only; other methods cannot serve bytes",async()=>{
+  const before=await json(await a.api(`publications/${data.users[0].id}`));
+  const get=await fetch(mediaUrl), bytes=Buffer.from(await get.arrayBuffer());
+  assert.equal(get.status,200);
+  assert.match(get.headers.get("cache-control"),/no-store/);
+  assert.equal(get.headers.get("x-content-type-options"),"nosniff");
+  assert.equal(get.headers.get("referrer-policy"),"no-referrer");
+  assert.equal(get.headers.get("content-security-policy"),"default-src 'none'; sandbox");
+  const head=await fetch(mediaUrl,{method:"HEAD"});
+  assert.equal(head.status,200);assert.equal((await head.arrayBuffer()).byteLength,0);
+  assert.equal(Number(head.headers.get("content-length")),bytes.length);
+  assert.equal(head.headers.get("content-type"),get.headers.get("content-type"));
+  for(const method of ["POST","PUT","PATCH","DELETE","OPTIONS"]) {
+    const response=await fetch(mediaUrl,{method});
+    assert.equal(response.status,404,method);assert.equal((await response.arrayBuffer()).byteLength,0);
+  }
+  assert.deepEqual(await json(await a.api(`publications/${data.users[0].id}`)),before);
+});
+test("public media rechecks publication state, destination ownership and visibility on every request",async()=>{
+  for(const state of ["job-scheduled","job-processing","job-blocked","job-cancelled","post-draft","post-private","post-pending","post-future","post-trash","password","owner","type","binding"]) {
+    try {
+      fixture("publication-media-guard",data.users[0].id,state);
+      for(const method of ["GET","HEAD"]) {
+        const denied=await fetch(mediaUrl,{method});
+        assert.equal(denied.status,404,`${state} ${method}`);
+        assert.equal((await denied.arrayBuffer()).byteLength,0);
+      }
+    } finally { fixture("publication-media-guard",data.users[0].id,"public"); }
+    const restored=await fetch(mediaUrl);assert.equal(restored.status,200,state);
+    assert.equal(createHash("sha256").update(Buffer.from(await restored.arrayBuffer())).digest("hex"),data.users[0].data.staged.image.sha256);
   }
 });
 test("capability loss blocks due jobs and revoked connections cancel pending reservations",async()=>{

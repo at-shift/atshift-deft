@@ -1,19 +1,21 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Store {
     public static function title( $title, $post_id = 0 ) {
+        // Only DeFt supplies a replacement title. Preserve other plugins' filter output verbatim;
+        // their HTML/plain-text sink owns escaping, and globally escaping here breaks that contract.
         if ( ! $post_id ) return $title;
         $post = get_post( $post_id );
         if ( ! $post ) return $title;
-        if ( 'sf_article' === $post->post_type ) {
+        if ( 'atshde_article' === $post->post_type ) {
             global $wpdb; $table = self::table();
             $row = $wpdb->get_row( $wpdb->prepare( 'SELECT payload FROM %i WHERE post_id=%d', $table, $post_id ), ARRAY_A );
             return Snapshot::post_title( json_decode( $row['payload'] ?? '{}' )->article->title ?? $post->post_title );
         }
-        $publication = get_post_meta( $post_id, '_sf_publication', true );
+        $publication = get_post_meta( $post_id, '_atshde_publication', true );
         if ( ! $publication ) return $title;
         $job = Publications::by_publication( $publication );
         $row = $job && Publications::matches_post( $job, $post ) ? self::read( $job['article_id'], (int) $job['article_version'] ) : null;
@@ -24,7 +26,7 @@ final class Store {
     }
     public static function table() {
         global $wpdb;
-        return $wpdb->prefix . 'sf_snapshots';
+        return $wpdb->prefix . 'atshde_snapshots';
     }
 
     public static function install() {
@@ -54,7 +56,7 @@ final class Store {
     }
 
     public static function preview_url( $row ) {
-        return add_query_arg( array( 'post_type' => 'sf_article', 'p' => (int) $row['post_id'], 'preview' => 'true',
+        return add_query_arg( array( 'post_type' => 'atshde_article', 'p' => (int) $row['post_id'], 'preview' => 'true',
             'sf_version' => (int) $row['version'], '_sf_nonce' => wp_create_nonce( 'sf-preview-' . $row['post_id'] . '-' . $row['digest'] ) ), home_url( '/' ) );
     }
 
@@ -108,7 +110,7 @@ final class Store {
             }
             if ( false === $wpdb->query( 'START TRANSACTION' ) ) throw new \RuntimeException( __( 'Could not start transaction.', 'atshift-deft' ) );
             // Each immutable snapshot owns a separate draft used only for authenticated theme preview.
-            $post_id = wp_insert_post( wp_slash( array( 'post_type' => 'sf_article', 'post_status' => 'draft',
+            $post_id = wp_insert_post( wp_slash( array( 'post_type' => 'atshde_article', 'post_status' => 'draft',
                 'post_title' => Snapshot::post_title( $validated['snapshot']->article->title ), 'post_content' => '',
                 'post_author' => get_current_user_id(), 'comment_status' => 'closed', 'ping_status' => 'closed' ) ), true );
             if ( is_wp_error( $post_id ) ) throw new \RuntimeException( __( 'Could not create preview draft.', 'atshift-deft' ) );

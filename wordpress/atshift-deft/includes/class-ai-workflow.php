@@ -1,5 +1,5 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -91,7 +91,7 @@ final class AiWorkflow {
             if ( ! $image ) { $warnings[] = 'PDF links are displayed as text; document bytes are not exported in this preview.'; continue; }
             $encoded_size = 4 * (int) ceil( (int) $meta['bytes'] / 3 );
             if ( $encoded_size > $budget ) { $warnings[] = 'An image exceeds the remaining 2 MiB preview media budget; use the owner theme preview to inspect it.'; continue; }
-            $bytes = file_get_contents( $meta['path'], false, null, 0, Assets::MAX_BYTES + 1 );
+            $bytes = Media::bytes( $meta );
             if ( ! is_string( $bytes ) || strlen( $bytes ) !== (int) $meta['bytes'] || ! hash_equals( $meta['sha256'], hash( 'sha256', $bytes ) ) ) throw new \RuntimeException();
             $element->setAttribute( 'src', 'data:' . $meta['mime'] . ';base64,' . base64_encode( $bytes ) );
             $budget -= $encoded_size;

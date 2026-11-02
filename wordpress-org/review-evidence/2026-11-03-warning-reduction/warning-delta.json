@@ -1,0 +1,74 @@
+{
+  "before": 449,
+  "after": 405,
+  "reduction": 44,
+  "addedSuppressions": 0,
+  "byCode": [
+    {
+      "code": "unexpected_markdown_file",
+      "before": 2,
+      "after": 2,
+      "reduction": 0
+    },
+    {
+      "code": "WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound",
+      "before": 38,
+      "after": 38,
+      "reduction": 0
+    },
+    {
+      "code": "WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound",
+      "before": 4,
+      "after": 4,
+      "reduction": 0
+    },
+    {
+      "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+      "before": 181,
+      "after": 181,
+      "reduction": 0
+    },
+    {
+      "code": "WordPress.DB.DirectDatabaseQuery.NoCaching",
+      "before": 158,
+      "after": 158,
+      "reduction": 0
+    },
+    {
+      "code": "WordPress.Security.ValidatedSanitizedInput.InputNotSanitized",
+      "before": 23,
+      "after": 7,
+      "reduction": 16
+    },
+    {
+      "code": "WordPress.Security.NonceVerification.Recommended",
+      "before": 31,
+      "after": 7,
+      "reduction": 24
+    },
+    {
+      "code": "WordPress.Security.ValidatedSanitizedInput.MissingUnslash",
+      "before": 4,
+      "after": 0,
+      "reduction": 4
+    },
+    {
+      "code": "WordPress.Security.NonceVerification.Missing",
+      "before": 6,
+      "after": 6,
+      "reduction": 0
+    },
+    {
+      "code": "PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound",
+      "before": 1,
+      "after": 1,
+      "reduction": 0
+    },
+    {
+      "code": "WordPress.DB.DirectDatabaseQuery.SchemaChange",
+      "before": 1,
+      "after": 1,
+      "reduction": 0
+    }
+  ]
+}

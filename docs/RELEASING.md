@@ -1,6 +1,14 @@
 # Release and Update Channels
 
-## 0.7.2 Artifacts
+## 0.7.3 Artifacts
+
+- GitHub: `atshift-deft-0.7.3.zip`, its `.sha256`, and `atshift-deft-update.json`; includes the GitHub updater and partial Japanese catalogs/guide.
+- WordPress.org: `atshift-deft-0.7.3-wordpress-org.zip`; English-only, with no GitHub updater or bundled locale catalogs/Japanese guide. The POT and WordPress language-pack support remain.
+- Shared core files match byte-for-byte outside the updater bootstrap. This channel split is intentional from 0.7.3 onward.
+- Use `RELEASE-0.7.3.md` for release notes and backup/migration cautions. Preparing files is not publication or submission; record actual results separately.
+- WordPress.org updates begin only after approval and directory publication. Updating the pending application does not update installed sites.
+
+## 0.7.2 Artifacts (Previous)
 
 - GitHub: `atshift-deft-0.7.2.zip`, its `.sha256`, and `atshift-deft-update.json`.
 - WordPress.org: `atshift-deft-0.7.2-wordpress-org.zip`, without the GitHub updater; accepted as an update to the pending application on 2026-11-01.
@@ -48,10 +56,10 @@ translation extraction without copying feature code between branches.
 2. Run `npm run i18n:pot` and `npm run i18n:compile`. Review translations; preserve technical IDs and placeholders.
 3. Run `npm run build:wordpress`, then `npm run pack:wordpress` and `npm run pack:wordpress-org` from `main`.
 4. Run `npm run test:distribution`, branding/i18n tests, PHP lint and the disposable WordPress integration tests. Install each actual ZIP before Plugin Check. Never point test fixtures at a user database.
-5. Confirm the submission ZIP has no updater, `Update URI` or GitHub runtime HTTP requests. Compare both archives and every language file byte-for-byte outside the allowed adapter differences.
+5. Confirm the submission ZIP has no updater, `Update URI`, GitHub runtime HTTP requests, bundled locale catalogs or Japanese guide. Compare shared files byte-for-byte; verify Japanese gettext/JavaScript in the GitHub package, and English fallback plus added language-pack loading in the WordPress.org package.
 6. Obtain explicit approval immediately before pushing branches, publishing a release or submitting the plugin ZIP. Submission is not approval; record the actual WordPress.org result separately.
 
-Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.2`, targeting the
+Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.3`, targeting the
 verified `main` commit. Upload the three GitHub files above before publishing.
 Do not rebuild or replace the ZIP after its manifest/checksum are published.
 Download the public assets independently and verify their bytes and SHA-256.
@@ -78,7 +86,7 @@ disabled by the adapter.
 0.5.x has no GitHub updater. Back up, upload the current GitHub ZIP via **Plugins >
 Add New > Upload Plugin**, and choose **Replace current with uploaded** once.
 Subsequent newer releases appear through normal plugin updates. Inactive plugins
-cannot run this adapter; activate DEFT to check GitHub updates.
+cannot run this adapter; activate DeFt to check GitHub updates.
 
 To switch channels, manually replace the installed ZIP with the desired channel
 of the same or newer version; no deletion or data migration is needed. Identical
@@ -89,8 +97,8 @@ to WordPress.org, and a WordPress.org install never fetches GitHub updates.
 
 The AI uses an explicitly authorized external MCP client; no hosted AI backend or
 provider API key is bundled. MCP Adapter is a separately installed dependency,
-not downloaded or installed by DEFT. Private file storage requires configuration
-outside public document roots. See the packaged readme for external-service and
+not downloaded or installed by DeFt. New private files use the database; legacy
+private directories remain read-only compatibility sources. See the packaged readme for external-service and
 publication-permission disclosures.
 
 Plugin Check warnings must be reviewed, not hidden globally. Existing authoritative

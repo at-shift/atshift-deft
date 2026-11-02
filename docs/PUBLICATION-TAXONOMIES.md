@@ -44,7 +44,7 @@ Connection keys remain restricted to their MCP endpoint, not these REST routes.
 Term lookup requires the taxonomy's native `assign_terms` capability; individual
 `assign_term` filters are reported and rechecked before assignment. Publication
 still needs a publishing connection and the destination's creation/publication
-permissions. DEFT publisher does not automatically acquire native taxonomy rights.
+permissions. DeFt publisher does not automatically acquire native taxonomy rights.
 No roles or existing accounts are changed.
 
 Selection is stored only in the publication manifest, never the canonical private
@@ -67,12 +67,12 @@ Changing any pinned term identity, deleting a term, detaching/hiding a taxonomy 
 losing assignment permission blocks a pending reservation. It does not silently
 remove that term or substitute a default. Renaming a term deliberately requires a
 new publication request with fresh versions. General site edits after publication
-are outside DEFT's initial-publication contract.
+are outside DeFt's initial-publication contract.
 
 Terms are assigned using integer IDs while the generated WordPress post is still
 private. Requested relationships are read back before and after publication.
 For explicit assignments the final terms/status write is transactional; the posts,
-postmeta, terms, term taxonomy, relationships and DEFT job tables must use InnoDB.
+postmeta, terms, term taxonomy, relationships and DeFt job tables must use InnoDB.
 Detected assignment failures roll back the final public status, leaving a blocked
 job/private generated post. WordPress hooks can have external side effects that
 database rollback cannot undo; third-party integrations still need site testing.

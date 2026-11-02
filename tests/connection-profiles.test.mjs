@@ -10,7 +10,7 @@ const source = readFileSync(new URL("../wordpress/atshift-deft/connection-profil
 const window = {};
 installI18n(window);
 runInNewContext(source, { window, URL });
-const api = window.sfConnectionProfiles;
+const api = window.atshiftDeftConnectionProfiles;
 const endpoint = "https://example.org/site/?rest_route=%2Fstructured-fields%2Fmcp";
 
 test("all clients have distinct, honest routes; OAuth and JSON never issue a key", () => {
@@ -88,7 +88,7 @@ test("desktop and web instructions use distinct observed menus and authenticatio
   assert.equal(web.auth, "oauth");
   assert.equal(api.route(web.id, endpoint).allowed, false);
   assert.match(web.steps.join("\n"), /View agents, then Add > Add custom MCP server/);
-  assert.match(web.steps.join("\n"), /does not prove that DEFT OAuth works/);
+  assert.match(web.steps.join("\n"), /does not prove that DeFt OAuth works/);
   const claudeOAuth = api.profiles.find(p => p.id === "claude-oauth");
   const claudeHeader = api.profiles.find(p => p.id === "claude");
   assert.match(claudeOAuth.steps.join("\n"), /Settings > Connectors > Add/);
@@ -115,8 +115,8 @@ test("downloaded guide documents private Claude headers and scoped cloud trouble
   assert.match(japanese, /公開はしていません/);
   assert.match(connections, /## Cloud Connection Errors/);
   assert.match(connections, /obtain approval before changes/);
-  assert.match(connections, /Do not turn off\s+all overseas restrictions, WAF, login protection or DEFT authentication/);
-  assert.match(connections, /DEFT does not change these server settings itself/);
+  assert.match(connections, /Do not turn off\s+all overseas restrictions, WAF, login protection or DeFt authentication/);
+  assert.match(connections, /DeFt does not change these server settings itself/);
   assert.match(guide, /Do not automatically recreate keys or disable protections/);
   for (const document of [english, japanese]) {
     assert.match(document, /CONNECTIONS\.md#cloud-connection-errors/);
@@ -130,7 +130,7 @@ test("Japanese client guidance resolves from the compiled path-specific catalog"
   const translated = {};
   installI18n(translated).setLocaleData(catalog.locale_data.messages, "atshift-deft");
   runInNewContext(source, { window: translated, URL });
-  const profiles = translated.sfConnectionProfiles.profiles;
+  const profiles = translated.atshiftDeftConnectionProfiles.profiles;
   const desktop = profiles.find(p => p.id === "codex-desktop");
   assert.equal(desktop.label, "Codex（デスクトップ版）");
   assert.match(desktop.steps.join("\n"), /Bearer トークン環境変数.*空欄/);
@@ -145,7 +145,7 @@ test("connection UI gates key creation, exports no secrets and keeps issued scop
   const w = dom.window, $ = id => w.document.getElementById(`sf-${id}`);
   const requests = [], token = "sfc_disposable_secret_DO_NOT_EXPORT";
   let connected = false;
-  w.sfWordPress = { root: "https://example.org/wp-json/structured-fields/v1/", nonce: "test" };
+  w.atshiftDeftWordPress = { root: "https://example.org/wp-json/structured-fields/v1/", nonce: "test" };
   w.fetch = async (url, options) => {
     requests.push({ url: String(url), options });
     const data = options.method === "POST" ? { id: "fixture", token, endpoint } : { ready: true, secure: true, endpoint, publishingEndpoint: endpoint + "-publishing", items: connected && !String(url).includes("oauth-clients") ? [{id:"fixture",name:"UI test",last_used:1,expires:9999999999}] : [] };

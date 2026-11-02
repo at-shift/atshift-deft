@@ -1,27 +1,27 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 defined( 'ABSPATH' ) || exit;
 
 final class Reservations {
-    const STATUS = 'sf_reserved';
-    const INACTIVE = 'sf_reserve_hold';
+    const STATUS = 'atshde_reserved';
+    const INACTIVE = 'atshde_reserve_hold';
     private static $writing = false;
 
     public static function register() {
-        // Do not use core's future status: it can publish without DEFT's authorization checks.
-        register_post_status( self::STATUS, array( 'label' => __( 'Scheduled (DEFT)', 'atshift-deft' ),
+        // Do not use core's future status: it can publish without DeFt's authorization checks.
+        register_post_status( self::STATUS, array( 'label' => __( 'Scheduled (DeFt)', 'atshift-deft' ),
             'public' => false, 'protected' => true, 'internal' => false, 'exclude_from_search' => true,
             'show_in_admin_all_list' => true, 'show_in_admin_status_list' => true,
             /* translators: %s: number of scheduled destination entries. */
-            'label_count' => _n_noop( 'Scheduled (DEFT) <span class="count">(%s)</span>', 'Scheduled (DEFT) <span class="count">(%s)</span>', 'atshift-deft' ) ) );
-        register_post_status( self::INACTIVE, array( 'label' => __( 'Inactive DEFT reservation', 'atshift-deft' ),
+            'label_count' => _n_noop( 'Scheduled (DeFt) <span class="count">(%s)</span>', 'Scheduled (DeFt) <span class="count">(%s)</span>', 'atshift-deft' ) ) );
+        register_post_status( self::INACTIVE, array( 'label' => __( 'Inactive DeFt reservation', 'atshift-deft' ),
             'public' => false, 'internal' => true, 'exclude_from_search' => true,
             'show_in_admin_all_list' => false, 'show_in_admin_status_list' => false ) );
     }
 
     public static function managed( $post ) {
         return $post instanceof \WP_Post && in_array( $post->post_status, array( self::STATUS, self::INACTIVE ), true ) &&
-            (bool) get_post_meta( $post->ID, '_sf_publication', true );
+            (bool) get_post_meta( $post->ID, '_atshde_publication', true );
     }
 
     public static function write( $callback ) {
@@ -40,21 +40,21 @@ final class Reservations {
     }
 
     public static function post_states( $states, $post ) {
-        if ( self::STATUS === $post->post_status ) $states['sf_reserved'] = __( 'Scheduled (DEFT)', 'atshift-deft' );
+        if ( self::STATUS === $post->post_status ) $states['atshde_reserved'] = __( 'Scheduled (DeFt)', 'atshift-deft' );
         return $states;
     }
 
     public static function date_status( $status, $post ) {
-        return self::STATUS === $post->post_status ? esc_html__( 'Scheduled (DEFT)', 'atshift-deft' ) : $status;
+        return self::STATUS === $post->post_status ? esc_html__( 'Scheduled (DeFt)', 'atshift-deft' ) : $status;
     }
 
     public static function actions( $actions, $post ) {
         if ( ! self::managed( $post ) ) return $actions;
         unset( $actions['edit'], $actions['inline hide-if-no-js'], $actions['trash'], $actions['view'] );
-        $job = Publications::by_publication( get_post_meta( $post->ID, '_sf_publication', true ) );
+        $job = Publications::by_publication( get_post_meta( $post->ID, '_atshde_publication', true ) );
         if ( $job && Publications::matches_post( $job, $post ) && Access::article( $job['article_id'] ) ) {
             $url = add_query_arg( array( 'page' => 'structured-fields', 'sf_article' => $job['article_id'] ), admin_url( 'admin.php' ) );
-            $actions['sf_manage'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Manage reservation in DEFT', 'atshift-deft' ) . '</a>';
+            $actions['sf_manage'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Manage reservation in DeFt', 'atshift-deft' ) . '</a>';
         }
         return $actions;
     }
@@ -77,7 +77,7 @@ final class Reservations {
                 'post_title' => Snapshot::post_title( json_decode( $row['payload'] )->article->title ), 'post_content' => '', 'post_excerpt' => '',
                 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', (int) $job['publish_at'] ),
                 'post_date' => wp_date( 'Y-m-d H:i:s', (int) $job['publish_at'], wp_timezone() ),
-                'comment_status' => 'closed', 'ping_status' => 'closed', 'meta_input' => array( '_sf_publication' => $job['publication_id'] ) );
+                'comment_status' => 'closed', 'ping_status' => 'closed', 'meta_input' => array( '_atshde_publication' => $job['publication_id'] ) );
             if ( $post_id ) $data['ID'] = $post_id;
             $post = self::write( static fn() => wp_insert_post( wp_slash( $data ), true ) );
             if ( is_wp_error( $post ) || ! $post ) throw new \RuntimeException( __( 'Could not create reservation post.', 'atshift-deft' ) );

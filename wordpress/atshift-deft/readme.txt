@@ -1,10 +1,10 @@
-=== atshift DEFT ===
+=== atshift DeFt ===
 Contributors: atshift
 Tags: ai, mcp, publishing, structured-content
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.7.2
+Stable tag: 0.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,17 +12,17 @@ Create and publish WordPress articles with your usual AI. Focus on your content,
 
 == Description ==
 
-Start with one thing in DEFT: download the guide for your AI.
+Start with one thing in DeFt: download the guide for your AI.
 
 Give it to the AI you already use, then follow its instructions to connect to
 WordPress. Once a compatible AI client is connected and authorized, you can create
-and publish new articles through that conversation, without opening DEFT for
+and publish new articles through that conversation, without opening DeFt for
 everyday authoring.
 
 Work with your AI on the article, ask it to create the page design and column
 layout, and tell it where the article should appear. Review the result, then
 simply ask, "Publish it." Ask your AI to select existing categories and tags, too.
-Published DEFT articles also output JSON-LD and a public, content-only structure
+Published DeFt articles also output JSON-LD and a public, content-only structure
 that other AI tools can read.
 
 Focus on creating content. Let your AI handle the assembly and publication.
@@ -32,7 +32,7 @@ can still require WordPress sign-in. Site maintenance remains a separate respons
 
 This is an early release. Evaluate it on an isolated test site before production use.
 It does not replace atshift Fields or migrate existing posts.
-DEFT stands for Delegate Execution. Focus on Thinking.
+DeFt stands for Delegate Execution. Focus on Thinking.
 
 The AI guide is available from the Articles screen. Drafts retain
 typed content, pinned component versions, private media references and an
@@ -42,11 +42,11 @@ the appropriate WordPress role.
 Ask the AI for page composition and column layouts as well as text: headings,
 images, stacked sections, responsive two-column sections and supported Q&A.
 Describe the design in conversation or provide an optional reference image.
-Reuse your theme's look or assemble an article layout from DEFT components;
+Reuse your theme's look or assemble an article layout from DeFt components;
 supported component styling does not require changes to theme Additional CSS.
 
-See README.md for architecture and deployment constraints, GETTING-STARTED.ja.md
-for installation and usage, and AI-GUIDE.md for the external-AI authoring contract.
+See README.md for installation, architecture and deployment constraints,
+and AI-GUIDE.md for the external-AI authoring contract.
 These Markdown files are required documentation shipped with the plugin.
 
 == Installation ==
@@ -55,14 +55,16 @@ These Markdown files are required documentation shipped with the plugin.
    If upgrading from Structured Fields Prototype, deactivate the old plugin first.
    Do not delete its data. The new slug is atshift-deft; this is not an in-place update.
 2. Upload the plugin ZIP using Plugins > Add New > Upload Plugin and activate it.
-3. Open atshift DEFT and download the AI guide.
-4. Provision private local storage outside all public document roots before uploading files.
+3. Open atshift DeFt and download the AI guide.
+4. Private images and PDFs use the WordPress database; PHP fileinfo is required. No extra storage path is needed.
 5. Before AI connection setup, an administrator must install and activate the official [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) 0.7.1 or newer. Open Plugins > Add New Plugin, search for MCP Adapter by WordPress.org, then choose Install Now > Activate. If already installed, update if needed and ensure it is active. Ask your site administrator if you cannot install or activate plugins. Manual JSON import does not require it.
 6. Give the downloaded guide to your AI, follow connection setup, then try the optional private sample.
 7. Describe the article and its layout, review the saved preview, and explicitly request publication only after granting publishing access.
 
-Private storage requires PHP fileinfo, local Unix permissions and explicit server
-configuration. HTTPS is required except for explicitly local loopback development.
+Private storage requires PHP fileinfo and database capacity. Legacy-data migration
+requires InnoDB core tables; back up database and files before upgrading, and do not
+mix old/new plugin workers or downgrade only plugin files.
+HTTPS is required except for explicitly local loopback development.
 No AI provider credentials or external AI service are bundled with this plugin.
 
 == Frequently Asked Questions ==
@@ -80,14 +82,14 @@ the owning user's publishing authorization through the supported connection.
 
 = Can I delete a saved draft? =
 
-Published and scheduled articles leave the DEFT draft list and appear in their
-selected destination. Scheduled entries are marked Scheduled (DEFT) and remain
-private until DEFT's authorization checks pass at the requested time. Cancelled,
+Published and scheduled articles leave the DeFt draft list and appear in their
+selected destination. Scheduled entries are marked Scheduled (DeFt) and remain
+private until DeFt's authorization checks pass at the requested time. Cancelled,
 invalidated and failed reservations return to drafts. Saved versions and files
 are retained. Ask your AI to find reservations with list-publications or use
-Manage reservation in DEFT from the destination list.
+Manage reservation in DeFt from the destination list.
 
-Ask your AI to move the draft to Trash, or select the trash icon in DEFT's
+Ask your AI to move the draft to Trash, or select the trash icon in DeFt's
 draft list. Restore it from the Trash view using the undo icon or your AI.
 Only the owner can trash or restore it. Cancel any publication reservation first.
 Saved versions and files are retained; published posts and shared components
@@ -97,7 +99,7 @@ deletion or automatic purge, and Trash does not reclaim storage.
 = Can my AI decorate components without editing my theme? =
 
 Yes. An authorized authoring connection can reuse or create shared structures with
-typed color, spacing, border, typography, column and link-button options. DEFT
+typed color, spacing, border, typography, column and link-button options. DeFt
 generates component-scoped CSS. Saved articles retain their component revisions.
 Arbitrary CSS and JavaScript are not accepted by the AI structure-creation tool.
 
@@ -108,7 +110,7 @@ public custom post types. If you have not chosen a destination for the article,
 the AI guide instructs it to ask where to publish, show available destinations and
 wait for your answer. An existing choice is validated and stated without asking
 again. Choosing a destination alone does not publish. Native WordPress permissions
-and separate DEFT publication access still apply.
+and separate DeFt publication access still apply.
 
 = Can the AI select categories and tags? =
 
@@ -120,7 +122,7 @@ terms or lost permissions stop pending reservations.
 
 = Is machine-readable public content available? =
 
-Published DEFT pages include minimal BlogPosting/WebPage JSON-LD and a discoverable
+Published DeFt pages include minimal BlogPosting/WebPage JSON-LD and a discoverable
 public structure JSON endpoint. It describes public HTML headings, lists, images,
 links and built-in layout hints, not private snapshots, component definitions,
 CSS/JS or account data. Drafts and password-protected or withdrawn posts return 404.
@@ -130,7 +132,7 @@ with atshift_deft_json_ld_enabled. See the Public Structure documentation in Git
 
 == External Services ==
 
-DEFT does not call an AI provider on its own. You connect your chosen external AI
+DeFt does not call an AI provider on its own. You connect your chosen external AI
 client through the separately installed WordPress MCP Adapter. That authorized
 client receives the shared component catalog and the owner's requested drafts,
 previews and files. Sending material to that client is subject to the provider's
@@ -146,6 +148,13 @@ GitHub privacy: https://docs.github.com/en/site-policy/privacy-policies/github-g
 The GitHub updater is excluded from WordPress.org packages.
 
 == Changelog ==
+
+= 0.7.3 =
+* Add the DeFt icon and standardize the display name while preserving the plugin slug and API identity.
+* Isolate code and dependencies under Atshift\Deft, migrate known legacy data to atshde_ identifiers, and retain compatible connections, roles, drafts and reservations.
+* Store new private uploads and frozen media in verified database chunks; preserve read-only access to existing private files and support relocated WordPress paths.
+* Harden nonce and OAuth input handling, review privacy headers, title output and AI REST isolation. Add upgrade, recovery, storage, multisite and HTTP regressions.
+* Distribute an English-only WordPress.org package without the GitHub updater; keep translation support for WordPress language packs. The separate GitHub ZIP includes its updater and partial Japanese translations.
 
 = 0.7.2 =
 * Add the previously missing installation and activation steps for the official MCP Adapter to the AI guide. MCP Adapter 0.7.1 or newer must be installed and active for AI connections; manual JSON import does not require it.

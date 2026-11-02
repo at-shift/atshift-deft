@@ -25,10 +25,16 @@ async function draft(client){
 }
 function intent(id,taxonomies,type='post',now=true,version=0){return{articleId:id,expectedVersion:1,expectedPublicationVersion:version,requestId:randomUUID(),postType:type,
   taxonomies,timing:now?'now':'scheduled',publishAt:now?'':new Date(Date.now()+3600000).toISOString().replace(/\.\d{3}Z$/,'+00:00'),timeZone:now?'':'UTC'};}
+const draftTools=['context','list-post-types','list-taxonomies','list-terms','list-drafts','get-draft','save-draft','trash-draft','restore-draft',
+  'create-structure','list-media','prepare-file-transfer','get-preview'];
+function assertTools(tools,publishing=false){
+  const expected=[...draftTools,...(publishing?['list-publications','get-publication','set-publication','cancel-publication']:[])];
+  assert.deepEqual(tools.map(t=>t.name).sort(),expected.map(n=>'structured-fields-'+n).sort());
+}
 
 test('both MCP scopes expose authenticated read-only taxonomy discovery',async()=>{
   const client=await connect(fixture.keys.draft);const tools=(await client.listTools()).tools;
-  assert.equal(tools.length,11);
+  assertTools(tools);
   for(const name of ['list-taxonomies','list-terms'])assert.ok(tools.some(t=>t.name==='structured-fields-'+name));
   assert.ok(!tools.some(t=>t.name==='structured-fields-set-publication'));
   const taxa=await call(client,'list-taxonomies',{postType:'post'});
@@ -44,7 +50,7 @@ test('both MCP scopes expose authenticated read-only taxonomy discovery',async()
   }
 });
 test('MCP assigns exact categories and tags, with retry and owner-scoped results',async()=>{
-  const client=await connect(fixture.keys.publish);assert.equal((await client.listTools()).tools.length,14);
+  const client=await connect(fixture.keys.publish);assertTools((await client.listTools()).tools,true);
   const id=await draft(client);
   const selection=[{taxonomy:'category',termIds:[fixture.category,fixture.child]},{taxonomy:'post_tag',termIds:[fixture.tag]}];
   const body=intent(id,selection);const result=await call(client,'set-publication',body);
@@ -59,7 +65,8 @@ test('MCP custom taxonomy reservations retain selection and reject cross-destina
   const selection=[{taxonomy:'sf_event_topic',termIds:[fixture.event]}];
   assert.equal((await call(client,'set-publication',intent(id,selection,'post'))).error,true);
   const state=await call(client,'set-publication',intent(id,selection,'sf_test_event',false));
-  assert.equal(state.state,'scheduled');assert.equal(state.postId,0);assert.deepEqual(state.taxonomies,selection);
+  assert.equal(state.state,'scheduled');assert.ok(Number.isInteger(state.postId)&&state.postId>0);assert.deepEqual(state.taxonomies,selection);
+  assert.notEqual((await fetch(new URL('?p='+state.postId,site))).status,200);
   const update=await call(client,'set-publication',intent(id,state.taxonomies,'sf_test_event',false,1));
   assert.equal(update.version,2);assert.deepEqual(update.taxonomies,selection);
   assert.equal((await call(client,'cancel-publication',{articleId:id,expectedPublicationVersion:2})).state,'cancelled');

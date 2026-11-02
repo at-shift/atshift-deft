@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\Connections;
-use StructuredFields\Mcp;
+use Atshift\Deft\Connections;
+use Atshift\Deft\Mcp;
 
 $checks = 0;
 function sfc_check( $ok, $message ) { global $checks; if ( ! $ok ) throw new RuntimeException( $message ); echo 'PASS ' . ++$checks . ': ' . $message . PHP_EOL; }
@@ -21,6 +21,12 @@ try {
     }
     $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
     sfc_check( Connections::secure(), 'Explicit local environment and loopback request permit development HTTP' );
+    $empty = new WP_REST_Request( 'GET', Connections::ROUTE );
+    set_error_handler( static function( $severity, $message ) { throw new RuntimeException( $message ); } );
+    try {
+        $result = Connections::guard( null, rest_get_server(), $empty );
+        sfc_check( is_wp_error( $result ) && 401 === $result->get_error_data()['status'], 'Empty request body is denied without a PHP diagnostic' );
+    } finally { restore_error_handler(); }
     $_SERVER['REMOTE_ADDR'] = '192.0.2.1';
     sfc_check( ! Connections::secure(), 'Non-loopback requests cannot use local HTTP credentials' );
     if ( ! defined( 'WP_MCP_VERSION' ) ) sfc_check( ! Connections::ready(), 'Missing adapter disables connection readiness without breaking the plugin' );

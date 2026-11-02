@@ -1,18 +1,18 @@
 # Installation and User Guide
 
-**atshift DEFT 0.7.2** / November 1, 2026
+**atshift DeFt 0.7.3** / November 3, 2026
 
-Version 0.7.2 adds the missing MCP Adapter installation and activation steps before AI connection setup. After upgrading,
-download a fresh AI guide from DEFT; an earlier downloaded guide does not update itself.
+Version 0.7.3 includes review hardening, compatible data migration and database-backed private files. Back up database and files before upgrading; see [migration requirements](PREFIX-MIGRATION.md). After upgrading,
+download a fresh AI guide from DeFt; an earlier downloaded guide does not update itself.
 
-DEFT means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
+DeFt means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
 
-This is a development release. Start on an isolated test site with a backup, not your production site. DEFT is not a replacement for atshift Fields / CFS and does not migrate existing posts.
+This is a development release. Start on an isolated test site with a backup, not your production site. DeFt is not a replacement for atshift Fields / CFS and does not migrate existing posts.
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.2/atshift-deft-0.7.2.zip) and activate **atshift DEFT**.
-2. Open DEFT, choose **Download AI guide**, and give that file to your usual AI.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.3/atshift-deft-0.7.3.zip) and activate **atshift DeFt**.
+2. Open DeFt, choose **Download AI guide**, and give that file to your usual AI.
 3. Say, **"Read this guide and walk me through connecting to my site."** Before configuring the AI client, have an administrator install and activate the official [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) **0.7.1+** through **Plugins > Add New Plugin** (author: **WordPress.org**). Update it if needed when already installed.
 4. Follow the client-specific setup and authorize only the required access.
 5. After the AI verifies the connection, try the optional sample or start your own article. Ask for page composition and responsive columns as well as text; a layout reference image is optional.
@@ -33,28 +33,28 @@ If you have not chosen, the AI asks where to publish and waits for your answer.
 | Database | MySQL / MariaDB with InnoDB and named-lock support |
 | Remote AI access | An externally reachable HTTPS site |
 | MCP connection | Official [WordPress MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) 0.7.1+ installed and active, and a compatible MCP client |
-| Private file uploads | PHP fileinfo, Unix permissions, and a directory outside the public document root |
+| Private file uploads | PHP fileinfo and the WordPress InnoDB database; no extra storage path |
 
 Node.js, a separate AI server, and an AI provider's API key are not required on your WordPress host. You still need the appropriate AI account and client capabilities. A browser extension is not required for the normal user workflow.
 
 The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twenty-Five. The declared minimum versions, multisite, other themes, and other hosting environments have not all been verified.
 
-On PHP below 8.2, DEFT stops before loading its implementation and shows an administrator notice. Existing data is not changed, but scheduled publication and other plugin functions cannot run. Check PHP before updating.
+On PHP below 8.2, DeFt stops before loading its implementation and shows an administrator notice. Existing data is not changed, but scheduled publication and other plugin functions cannot run. Check PHP before updating.
 The HTTP exception is for an explicitly configured loopback development environment only. A cloud AI service cannot access your computer's `127.0.0.1` or `localhost`.
 
-## 2. Install DEFT
+## 2. Install DeFt
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.7.2.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.2). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.7.3.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
-4. Upload the ZIP, install it, and activate **atshift DEFT**.
-5. Open **atshift DEFT** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.
+4. Upload the ZIP, install it, and activate **atshift DeFt**.
+5. Open **atshift DeFt** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.
 
 Use the named plugin ZIP, not GitHub's automatically generated **Source code (zip)**. The source archive does not contain the built runtime dependencies. This version is not distributed through WordPress.org.
 
 ### Moving from Structured Fields Prototype
 
-Back up the entire test environment, deactivate the old **Structured Fields Prototype**, then install and activate DEFT. Do not activate both plugins together. The old plugin may remain installed but inactive; do not delete its data.
+Back up the entire test environment, deactivate the old **Structured Fields Prototype**, then install and activate DeFt. Do not activate both plugins together. The old plugin may remain installed but inactive; do not delete its data.
 
 The changed slug makes this a separate WordPress installation identity, not an automatic in-place update. Existing internal storage names, permissions, and connection URLs are preserved. Do not manually replace `structured-fields` in the MCP endpoint, OAuth issuer, or `page=structured-fields` admin URL. Check saved articles, components, connections, and reservations after activation.
 
@@ -66,12 +66,12 @@ An administrator can assign the appropriate role under **Users**:
 
 | Role | Access |
 | --- | --- |
-| atshift DEFT author | Own articles, files, and review records; bounded creation of shared structures |
-| atshift DEFT publisher | Author access plus immediate/scheduled publication of own drafts and publishing connections |
-| atshift DEFT designer | Author access plus shared component registration, editing, and deactivation |
-| Administrator | Shared component administration and own work; DEFT does not provide access to another owner's private articles or components |
+| atshift DeFt author | Own articles, files, and review records; bounded creation of shared structures |
+| atshift DeFt publisher | Author access plus immediate/scheduled publication of own drafts and publishing connections |
+| atshift DeFt designer | Author access plus shared component registration, editing, and deactivation |
+| Administrator | Shared component administration and own work; DeFt does not provide access to another owner's private articles or components |
 
-Only trusted people should receive designer access: shared HTML/CSS can affect presentation beyond an individual article. DEFT does not automatically change existing users' roles. Role changes can affect their other WordPress capabilities, so test with a dedicated account first.
+Only trusted people should receive designer access: shared HTML/CSS can affect presentation beyond an individual article. DeFt does not automatically change existing users' roles. Role changes can affect their other WordPress capabilities, so test with a dedicated account first.
 Staff handover and ownership transfer are not implemented. Do not work around isolation by sharing an account or connection key.
 
 ## 4. Give the Guide to Your AI
@@ -101,7 +101,7 @@ All MCP connection routes require the official [MCP Adapter plugin](https://word
 
 1. As an administrator, open **Plugins > Add New Plugin** and search for **MCP Adapter** by **WordPress.org**.
 2. Choose **Install Now > Activate**. If already installed, update it if needed and make sure it is active.
-3. Return to **atshift DEFT > AI connections** and continue below. If you cannot install or activate plugins, ask your site administrator to complete this step.
+3. Return to **atshift DeFt > AI connections** and continue below. If you cannot install or activate plugins, ask your site administrator to complete this step.
 
 Manual JSON import does not require MCP Adapter. A working connection does not need this setup repeated.
 
@@ -111,9 +111,9 @@ Use the exact client route shown under **AI connections**. The [AI Client Connec
 
 For **Codex desktop**, choose its separate desktop entry, then use **Settings > Plugins > Add > Add MCP server**. Select **Streamable HTTP**, not STDIO. Later edits use the gear beside your server name in the **MCP** tab. Follow the field-by-field header instructions in [Codex Desktop App](../wordpress/atshift-deft/docs/CONNECTIONS.md#codex-desktop-app), not the CLI environment template.
 
-For **Claude Desktop**, use **Settings > Connectors > Add**. If your private connector offers **Request headers**, choose **No sign-in** and add `Authorization` with the full value `Bearer <connection-key>`. This skips OAuth, not DEFT authentication. Follow the [Claude steps](../wordpress/atshift-deft/docs/CONNECTIONS.md#claude); never share an owner's key in an organization connector.
+For **Claude Desktop**, use **Settings > Connectors > Add**. If your private connector offers **Request headers**, choose **No sign-in** and add `Authorization` with the full value `Bearer <connection-key>`. This skips OAuth, not DeFt authentication. Follow the [Claude steps](../wordpress/atshift-deft/docs/CONNECTIONS.md#claude); never share an owner's key in an organization connector.
 
-For **ChatGPT web**, the observed Japanese entry is **設定 > プラグイン > エージェント一覧を見る > 追加 > カスタムMCPサーバーを追加**. The last menu is in the plugin directory, not the installed-plugin settings list. DEFT uses OAuth here; successful Codex testing does not establish Chat/Work compatibility. See [ChatGPT Web Entry](../wordpress/atshift-deft/docs/CONNECTIONS.md#chatgpt-web-entry).
+For **ChatGPT web**, the observed Japanese entry is **設定 > プラグイン > エージェント一覧を見る > 追加 > カスタムMCPサーバーを追加**. The last menu is in the plugin directory, not the installed-plugin settings list. DeFt uses OAuth here; successful Codex testing does not establish Chat/Work compatibility. See [ChatGPT Web Entry](../wordpress/atshift-deft/docs/CONNECTIONS.md#chatgpt-web-entry).
 
 If a cloud connector fails while a local client works, check hosting access restrictions as well as credentials. On Xserver, review the domain's **WordPress security > Overseas access restrictions > REST API access restriction** with its administrator. Do not disable protections wholesale; see [Cloud Connection Errors](../wordpress/atshift-deft/docs/CONNECTIONS.md#cloud-connection-errors).
 
@@ -127,11 +127,11 @@ If a cloud connector fails while a local client works, check hosting access rest
 
 Application registration is shared site configuration; consent and data remain owner-specific. Grants last up to 30 days, access tokens last ten minutes, and refresh tokens rotate. **Revoke** cancels your connection. An administrator's **Disable application** affects all connections and pending reservations for that application.
 
-Dynamic client registration and client-secret authentication are not supported. If OAuth discovery shows a warning, the host may need routing configuration for the displayed metadata URLs. DEFT does not create a public tunnel for a local site.
+Dynamic client registration and client-secret authentication are not supported. If OAuth discovery shows a warning, the host may need routing configuration for the displayed metadata URLs. DeFt does not create a public tunnel for a local site.
 
 ### Connection Key
 
-1. Ensure the MCP Adapter is active, then open **atshift DEFT > AI connections** as the intended owner.
+1. Ensure the MCP Adapter is active, then open **atshift DeFt > AI connections** as the intended owner.
 2. Choose **Your AI / client**, read the displayed requirements, and name the connection.
 3. To delegate bounded layout creation, private-file transfers, and portable previews, explicitly select **Allow reusable layouts, private file transfers and portable previews**.
 4. Choose **Create connection**. Store the displayed endpoint and `Authorization: Bearer <connection-key>` in the client's secure MCP settings.
@@ -167,7 +167,7 @@ arrangement or show a reference image; neither code nor a reference image is req
 
 The AI should reuse your stated preference or suggest a suitable layout, not require a design questionnaire. A reference image is a guide to structure, not a guarantee of exact reproduction. MCP does not supply an inventory of the theme's styles, and theme settings are not changed automatically. A separate layout still appears within the theme, so check both directions in the owner-only theme preview.
 
-An authoring connection can decorate supported structures inside DEFT. For example: "Give the deadline a contrasting background and make the registration link a button. Keep this design reusable without touching my theme." The AI reuses a styled catalog component or registers a new content-free appearance recipe. Colors, spacing, borders, typography and column proportions are bounded settings, not raw CSS. The generated decoration is stored with the component and saved article, including portable previews and publication. Existing articles keep their original revisions. Styles outside this contract and custom designer-authored markup still require a separate designer/administrator task.
+An authoring connection can decorate supported structures inside DeFt. For example: "Give the deadline a contrasting background and make the registration link a button. Keep this design reusable without touching my theme." The AI reuses a styled catalog component or registers a new content-free appearance recipe. Colors, spacing, borders, typography and column proportions are bounded settings, not raw CSS. The generated decoration is stored with the component and saved article, including portable previews and publication. Existing articles keep their original revisions. Styles outside this contract and custom designer-authored markup still require a separate designer/administrator task.
 
 Chat attachments do not transfer automatically. The AI client must be able to read actual file bytes and make the HTTP upload. Word documents and text can serve as source material for the AI, but managed uploads are limited to JPEG, PNG, WebP, and PDF.
 
@@ -175,7 +175,7 @@ Chat attachments do not transfer automatically. The AI client must be able to re
 
 Open **Articles > Edit article** to edit values, reorder/remove components, or change available presentation variants. Choose **Save draft**, then check the preview. Required fields and stale versions are validated when saving.
 
-To try saving without AI, choose **New article**, enter a **Title**, add **Introduction** using the **+** button, fill **Heading** and **Body**, and save. Reload and select the article to verify that it was retained. DEFT drafts are separate from the standard WordPress **Posts** list and are not public.
+To try saving without AI, choose **New article**, enter a **Title**, add **Introduction** using the **+** button, fill **Heading** and **Body**, and save. Reload and select the article to verify that it was retained. DeFt drafts are separate from the standard WordPress **Posts** list and are not public.
 
 ### Trash and Restore
 
@@ -190,8 +190,8 @@ finding a Publish button in the draft editor. **Articles > How to publish or
 schedule** links to setup. Publication is a separate, powerful permission; grant
 it only to a trusted client.
 
-1. Use the WordPress account that owns the draft. An administrator already has publication capability; other staff need **atshift DEFT publisher**. If the option is missing, ask your administrator about this same account. Do not switch owners or share keys.
-2. First time only, open **atshift DEFT > AI connections** and select your client. For a key-based connection, select **Allow immediate and scheduled public publication of my drafts**, choose **Create connection**, and add the returned publishing URL and new key as a separate AI connection. Keep the draft connection; changing its URL alone or reusing its old key will not work. Put the new key only in secure client settings. For OAuth, choose **Use the publishing endpoint**, use an administrator-registered application that permits publication, and grant `sf:publish` in individual consent with the same WordPress owner.
+1. Use the WordPress account that owns the draft. An administrator already has publication capability; other staff need **atshift DeFt publisher**. If the option is missing, ask your administrator about this same account. Do not switch owners or share keys.
+2. First time only, open **atshift DeFt > AI connections** and select your client. For a key-based connection, select **Allow immediate and scheduled public publication of my drafts**, choose **Create connection**, and add the returned publishing URL and new key as a separate AI connection. Keep the draft connection; changing its URL alone or reusing its old key will not work. Put the new key only in secure client settings. For OAuth, choose **Use the publishing endpoint**, use an administrator-registered application that permits publication, and grant `sf:publish` in individual consent with the same WordPress owner.
 3. Return to the same AI conversation and ask for a read-only publication-access check. Review the saved article, then say **"Publish this draft now and give me the public URL"** or **"Publish on November 5 at 9:00 a.m., Japan Standard Time."** Setup alone is not a request to publish.
 4. The AI should ask for any missing timing details, then use the latest saved version to publish or schedule it. In the destination-enabled build described below, it also asks where to publish if you have not chosen a destination for this article.
 5. Check the result and **Articles > Publication**. **View published post** opens the returned public URL after publication. A scheduled article is not public yet. Cancel a pending reservation through the AI or **Cancel reservation**.
@@ -213,7 +213,7 @@ If you already specified the destination for this article, the AI validates and
 states it with the intended timing without asking again. A different article gets
 its own choice; choosing a destination alone is not a publication instruction.
 The AI uses the exact `postType` in the publication request. Pages and custom
-types require their native WordPress creation/publication rights as well as DEFT
+types require their native WordPress creation/publication rights as well as DeFt
 access. Missing, ambiguous or unavailable destinations are not silently replaced
 with normal posts. See [Publication Destinations](PUBLICATION-DESTINATIONS.md) for
 limits.
@@ -227,21 +227,21 @@ custom taxonomies. A page without categories is not forced to use post categorie
 No new terms are created. If you have no preference, the AI explains the site's
 WordPress defaults; a normal post normally receives the default category.
 
-Native taxonomy assignment permissions are required in addition to DEFT access.
-The DEFT publisher role alone does not grant them. Ask an administrator if the
+Native taxonomy assignment permissions are required in addition to DeFt access.
+The DeFt publisher role alone does not grant them. Ask an administrator if the
 selection is unavailable; no role changes are made automatically. The selected
 terms appear in **Articles > Publication**. Renaming, deleting or moving a selected
 term in its hierarchy, detaching a taxonomy or losing permissions stops a pending
 reservation. Reconfirm the latest selection before rescheduling.
 
-Scheduling creates a private **Scheduled (DEFT)** entry in the selected destination's WordPress list immediately. The article leaves the DEFT draft list, while its saved versions and private files remain intact. The destination entry holds the title, date and classification; its body and media become public only after DEFT's checks at the requested time. It does not use WordPress's independent future-post publisher. Use **Manage reservation in DEFT** in the destination list, or ask your AI to use `list-publications` and then the appropriate publication tools. WordPress list visibility still requires the native capabilities for that destination; DEFT does not grant them automatically. Cancelled, invalidated and failed reservations return to DEFT drafts. Successfully published articles stay in the destination list. Legacy reservations without destination entries remain visible in DEFT until rescheduled or executed.
+Scheduling creates a private **Scheduled (DeFt)** entry in the selected destination's WordPress list immediately. The article leaves the DeFt draft list, while its saved versions and private files remain intact. The destination entry holds the title, date and classification; its body and media become public only after DeFt's checks at the requested time. It does not use WordPress's independent future-post publisher. Use **Manage reservation in DeFt** in the destination list, or ask your AI to use `list-publications` and then the appropriate publication tools. WordPress list visibility still requires the native capabilities for that destination; DeFt does not grant them automatically. Cancelled, invalidated and failed reservations return to DeFt drafts. Successfully published articles stay in the destination list. Legacy reservations without destination entries remain visible in DeFt until rescheduled or executed.
 
 Older API requests without a destination retain the ordinary-post default for compatibility; the AI guide must not use that default to skip asking. WP-Cron may run late on low-traffic sites; use a server cron job when timing matters. Updating an already-published post is not implemented: a later **Save draft** does not update its public content.
 Published managed files are served from pinned private copies, not automatically added to the normal Media Library. Deactivation stops reservations, managed-file delivery, and styles.
 
 ### Public Machine-Readable Content
 
-Published DEFT pages provide minimal JSON-LD and a content-only structure JSON link.
+Published DeFt pages provide minimal JSON-LD and a content-only structure JSON link.
 Drafts, private settings and account details are excluded. Withdrawing publication
 also withdraws the endpoint. See [Public Structure](PUBLIC-STRUCTURE.md) for the
 format, access-control integration, cache caveats and optional SEO opt-out.
@@ -277,14 +277,14 @@ Prefer native HTML, then CSS, and JavaScript only when needed. Q&A uses native e
 
 ## 10. Configure Private Images and PDFs
 
-You can postpone this setup while trying a text-only sample. Before using private uploads, have the server administrator create a dedicated directory outside every public document root and configure the real absolute paths in `wp-config.php`:
+Private uploads and frozen publication files use bounded chunks in the WordPress
+database. PHP fileinfo and InnoDB are required; no extra directory or configuration
+file edit is needed. Private files never receive a direct uploads URL.
 
-```php
-define( 'SF_PRIVATE_MEDIA_DIR', '/srv/private/structured-fields' );
-define( 'SF_PUBLIC_DOCUMENT_ROOT', '/srv/www/example/public' );
-```
-
-These are examples, not paths to copy unchanged. Back up the configuration first. Ensure the storage is not exposed by another site, alias, or CDN. Private subdirectories use mode 0700 and files use 0600. Symlinks or uncertain public boundaries are rejected rather than falling back to normal uploads. Windows ACL environments are not supported.
+For an upgrade, keep the previous private-media directory and its existing
+configuration: legacy files remain readable in place, without new writes there.
+Back up the database, configuration and those legacy files together. See
+[Private Storage](PRIVATE-STORAGE.md) for compatibility and retention details.
 
 1. Save your article, then open **Private files**.
 2. Choose **Reference only** for background materials or **Publication candidate** for files intended for the article.
@@ -309,7 +309,7 @@ Resume with the same WordPress account. Deactivation retains data, but retention
 
 | Situation | Action |
 | --- | --- |
-| DEFT menu is missing | Check the WordPress account's role. |
+| DeFt menu is missing | Check the WordPress account's role. |
 | Another person's article is unavailable | This is intentional isolation. Do not share a login to bypass it. |
 | `sf_catalog_stale` / Catalog changed | Read the current catalog and request a fresh handoff. |
 | `sf_reuse_component` | Use the specified existing component; check your private list if relevant. |

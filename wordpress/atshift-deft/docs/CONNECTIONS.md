@@ -12,7 +12,7 @@ Do not require the user to understand every route or prepare a separate sample f
 
 | Client | Route | Current implementation |
 | --- | --- | --- |
-| ChatGPT web (Chat / Work) | Remote MCP plugin + individual OAuth consent | Add-menu entry verified; DEFT OAuth and article workflow not yet verified |
+| ChatGPT web (Chat / Work) | Remote MCP plugin + individual OAuth consent | Add-menu entry verified; DeFt OAuth and article workflow not yet verified |
 | Claude OAuth | Individual OAuth consent | Pre-registered public client; check PKCE S256/no-secret support |
 | Claude web / Desktop remote connector | Request headers where the limited beta is available | Desktop connection and sample draft save reported successful in one setup; preview/publication not yet verified; private single-owner use only |
 | Claude Code | Streamable HTTP + environment-backed Bearer header | Configuration template available |
@@ -84,17 +84,17 @@ including when configured in the desktop app. See [Claude's network requirements
 1. Confirm the exact endpoint and the client's authentication route. For a key,
    check the header name and `Bearer ` prefix privately; never request the key in
    chat or screenshots. A generic connection error alone does not identify its cause.
-2. Compare the failing time with hosting/WAF logs. DEFT returns `401` for missing
+2. Compare the failing time with hosting/WAF logs. DeFt returns `401` for missing
    or invalid credentials; an unauthenticated browser visit returning `401` is
    expected. A `403` can come from hosting, a security plugin or application access
    rules. A missing WAF log entry does not prove the request reached WordPress.
 3. On Xserver, inspect **WordPressセキュリティ設定 > 対象ドメイン > 国外アクセス制限 >
    REST APIアクセス制限**. This protection can block cloud access to `/wp-json`.
-   Settings can affect the domain and other sites under it, not only DEFT.
+   Settings can affect the domain and other sites under it, not only DeFt.
 4. Ask the site administrator to review the narrowest supported exception, such as
    an allowlist using the provider's current official outbound IP ranges. Confirm
    the actual exception scope and obtain approval before changes. Do not turn off
-   all overseas restrictions, WAF, login protection or DEFT authentication merely
+   all overseas restrictions, WAF, login protection or DeFt authentication merely
    to connect. Do not regenerate credentials automatically or change endpoint
    routing just to bypass a restriction.
 5. After an approved correction, reconnect and call read-only context from the
@@ -104,15 +104,15 @@ including when configured in the desktop app. See [Claude's network requirements
 Host-specific settings and allowlist formats can change. Consult the current
 [Xserver security manual](https://www.xserver.ne.jp/manual/man_server_wpsecurity.php)
 and [Anthropic outbound IP documentation](https://platform.claude.com/docs/en/api/ip-addresses),
-not a copied static IP list. DEFT does not change these server settings itself.
+not a copied static IP list. DeFt does not change these server settings itself.
 
 ## Codex Desktop App
 
-Select **Codex (desktop app)** in DEFT's AI connections. This is not the CLI/IDE
+Select **Codex (desktop app)** in DeFt's AI connections. This is not the CLI/IDE
 configuration-template route. The Japanese desktop UI was checked on 2026-10-31:
 
 1. Open **設定 > プラグイン > 追加 > MCPサーバーを追加** (Settings > Plugins > Add > Add MCP server).
-2. Give the server a recognizable name. In **タイプ**, choose **ストリーミング可能なHTTP** (Streamable HTTP), not STDIO. Paste the complete DEFT endpoint into **URL**, preserving any query string.
+2. Give the server a recognizable name. In **タイプ**, choose **ストリーミング可能なHTTP** (Streamable HTTP), not STDIO. Paste the complete DeFt endpoint into **URL**, preserving any query string.
 3. For this direct-header route, leave **Bearer トークン環境変数** empty. In **ヘッダー**, put `Authorization` on the left and `Bearer <connection-key>` on the right, replacing the placeholder privately with the issued key. Use one ASCII space after `Bearer`. `Bearer` is not the header name; `Authorization` is not an environment-variable value for this setup.
 4. Save. To change an existing server, open the **MCP** tab under Plugins and select the gear beside the server name you chose. Keep its toggle enabled. Do not recreate a working connection just to edit it.
 5. Return to the same conversation and request a read-only context check. If tools are not loaded, use Restart if shown, or restart the app and resume. Verify the intended endpoint through the actual conversation tool, not only a CLI/SDK check or enabled toggle.
@@ -152,10 +152,10 @@ opens the directory containing **追加**. The directory is also available at
 [official custom MCP guide](https://developers.openai.com/api/docs/guides/custom-mcp-server).
 
 Official plugin support includes both Chat and Work, subject to account/workspace
-availability. For DEFT, use the OAuth route below, not the desktop's fixed-key
+availability. For DeFt, use the OAuth route below, not the desktop's fixed-key
 header instructions and not No authentication. Install the created plugin and
 select it in the intended conversation, then verify a live context response there.
-Finding the creation menu does not verify DEFT OAuth, tool use, file transfer or
+Finding the creation menu does not verify DeFt OAuth, tool use, file transfer or
 preview rendering. Those web flows still require real-account testing.
 
 ### OAuth Setup

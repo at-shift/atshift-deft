@@ -1,6 +1,6 @@
 <?php
 require dirname( __DIR__ ) . '/.local/wordpress/wp-load.php';
-use StructuredFields\Assets;
+use Atshift\Deft\Assets;
 if ( DB_NAME !== 'sf_prototype_local' || home_url() !== 'http://127.0.0.1:8128' ) throw new RuntimeException( 'Tests require the isolated local site.' );
 $count = 0;
 function check_asset( $condition, $label ) {
@@ -16,15 +16,16 @@ $temp = tempnam( sys_get_temp_dir(), 'sf-asset-' );
 $link = sys_get_temp_dir() . '/sf-link-' . wp_generate_uuid4();
 $limited = 0;
 try {
-    check_asset( Assets::available(), 'Configured storage is outside the public root' );
+    check_asset( Assets::available(), 'Private database storage is available' );
     $original_server = $_SERVER;
     $quoted_root = sys_get_temp_dir() . "/sf-root-'" . wp_generate_uuid4();
     if ( ! mkdir( $quoted_root, 0700 ) ) throw new RuntimeException( 'Could not create disposable root.' );
     try {
         $_SERVER['DOCUMENT_ROOT'] = wp_slash( $quoted_root );
-        check_asset( Assets::available(), 'Slashed server root with a quote is checked as its exact filesystem path' );
+        check_asset( Assets::available(), 'Database storage does not depend on the server document root' );
         $_SERVER['DOCUMENT_ROOT'] = array( $quoted_root );
-        check_asset( ! Assets::available(), 'Non-string server document root fails closed' );
+        asset_rejects( static fn() => Assets::directory(), 'Non-string document root fails closed for legacy file reads' );
+        check_asset( Assets::available(), 'Malformed document root cannot disable database storage' );
     } finally { $_SERVER = $original_server; rmdir( $quoted_root ); }
     check_asset( 0 === ( fileperms( Assets::directory() ) & 0077 ), 'Storage directory excludes group/other access' );
     asset_rejects( static fn() => Assets::validate_storage_path( ABSPATH, array( ABSPATH ) ), 'Reject public WordPress root' );

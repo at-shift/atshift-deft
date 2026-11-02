@@ -1,11 +1,11 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
-use StructuredFields\{Catalog, ComponentUsage, Snapshot};
+use Atshift\Deft\{Catalog, ComponentUsage, Snapshot};
 
 $original_prefix = $wpdb->prefix;
 $prefix = 'sf_upgrade_' . bin2hex( random_bytes( 8 ) ) . '_';
 $sources = array( Catalog::table(), Catalog::versions(), ComponentUsage::table() );
-$tables = array( $prefix . 'sf_catalog', $prefix . 'sf_components', $prefix . 'sf_component_usage' );
+$tables = array( $prefix . 'atshde_catalog', $prefix . 'atshde_components', $prefix . 'atshde_component_usage' );
 $schema = 3; $checks = 0;
 function sfu_check( $ok, $label ) { global $checks; if ( ! $ok ) throw new RuntimeException( $label ); echo 'PASS ' . ++$checks . ': ' . $label . PHP_EOL; }
 $read_schema = static function() use ( &$schema ) { return $schema; };
@@ -18,8 +18,8 @@ try {
     $table = $tables[0]; $versions = $tables[1];
     if ( false === $wpdb->query( "ALTER TABLE $table DROP INDEX creator_owner, DROP COLUMN creator_id" ) ) throw new RuntimeException( 'Could not prepare alpha.11 schema.' );
     $wpdb->prefix = $prefix;
-    add_filter( 'pre_option_sf_catalog_schema_version', $read_schema );
-    add_filter( 'pre_update_option_sf_catalog_schema_version', $write_schema, 10, 2 );
+    add_filter( 'pre_option_atshde_catalog_schema_version', $read_schema );
+    add_filter( 'pre_update_option_atshde_catalog_schema_version', $write_schema, 10, 2 );
     $c = json_decode( file_get_contents( dirname( __DIR__ ) . '/wordpress/atshift-deft/sample.json' ) )->components[0];
     $c->id = 'legacy-migration'; $c->key = 'legacy_migration'; unset( $c->revision ); $c = Snapshot::component( $c ); $old_revision = $c->revision;
     $old_payload = Snapshot::json( $c );
@@ -43,12 +43,12 @@ try {
     Catalog::install(); $again = Catalog::read( $c->id ); unset( $again['creator_id'] );
     sfu_check( $before === $again && 4 === $schema, 'Repeated installation remains idempotent' );
 } finally {
-    remove_filter( 'query', $deny_alter ); remove_filter( 'pre_option_sf_catalog_schema_version', $read_schema ); remove_filter( 'pre_update_option_sf_catalog_schema_version', $write_schema );
+    remove_filter( 'query', $deny_alter ); remove_filter( 'pre_option_atshde_catalog_schema_version', $read_schema ); remove_filter( 'pre_update_option_atshde_catalog_schema_version', $write_schema );
     $wpdb->prefix = $original_prefix;
     foreach ( array_reverse( $tables ) as $table ) {
         if ( ! str_starts_with( $table, $prefix ) ) throw new RuntimeException( 'Unexpected migration table.' );
         $wpdb->query( "DROP TABLE IF EXISTS $table" );
     }
 }
-sfu_check( 4 === (int) get_option( 'sf_catalog_schema_version' ) && $original_prefix === $wpdb->prefix && ! $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $prefix ) . '%' ) ), 'Disposable tables are removed without changing site schema state' );
+sfu_check( 4 === (int) get_option( 'atshde_catalog_schema_version' ) && $original_prefix === $wpdb->prefix && ! $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $prefix ) . '%' ) ), 'Disposable tables are removed without changing site schema state' );
 echo "Catalog upgrade checks: $checks passed.\n";

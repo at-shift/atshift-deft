@@ -1,10 +1,10 @@
 <?php
-namespace StructuredFields;
+namespace Atshift\Deft;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Transfer {
-    public static function table() { global $wpdb; return $wpdb->prefix . 'sf_transfers'; }
+    public static function table() { global $wpdb; return $wpdb->prefix . 'atshde_transfers'; }
 
     public static function install() {
         global $wpdb;
@@ -28,7 +28,7 @@ final class Transfer {
             PRIMARY KEY  (transfer_id),
             KEY article_id (article_id)
         ) ENGINE=InnoDB {$wpdb->get_charset_collate()};" );
-        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ) === $table ) update_option( 'sf_transfers_schema_version', 2, false );
+        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ) === $table ) update_option( 'atshde_transfers_schema_version', 2, false );
     }
 
     public static function secure_transport() {

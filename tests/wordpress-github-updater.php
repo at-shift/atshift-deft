@@ -1,9 +1,12 @@
 <?php
-// WP-CLI eval-file, after installing a disposable 0.5.9 fixture or released 0.6.0/0.7.0/0.7.1 GitHub package.
-if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:appearance|post_types)_[a-f0-9]+$/D', DB_NAME ) ) {
+// WP-CLI eval-file, after installing a disposable 0.5.9 fixture or an older released GitHub package.
+if ( ! defined( 'WP_CLI' ) || ! WP_CLI || 'local' !== wp_get_environment_type() || ! preg_match( '/^sf_deft_(?:appearance|post_types|prefix)_[a-f0-9]+$/D', DB_NAME ) ) {
     throw new RuntimeException( 'Use a disposable local release-test database.' );
 }
-use AtshiftDeft\GitHubUpdater;
+use DeftUpdaterTest as GitHubUpdater;
+// This fixture must run before the installed old namespace is replaced on disk.
+$runtime_namespace = class_exists( \Atshift\Deft\GitHubUpdater::class ) ? 'Atshift\\Deft' : 'AtshiftDeft';
+class_alias( $runtime_namespace . '\\GitHubUpdater', 'DeftUpdaterTest' );
 
 $artifact = getenv( 'SF_RELEASE_DIR' );
 $manifest = json_decode( file_get_contents( $artifact . '/atshift-deft-update.json' ), true );
@@ -11,7 +14,7 @@ $zip = file_get_contents( $artifact . '/atshift-deft-' . $manifest['version'] . 
 $file = 'atshift-deft/atshift-deft.php';
 $entry = WP_PLUGIN_DIR . '/' . $file;
 $header = get_plugin_data( $entry, false, false );
-if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0', '0.7.0', '0.7.1' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
+if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0', '0.7.0', '0.7.1', '0.7.2' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
 $GLOBALS['deft_update_checks'] = 0;
 function deft_update_check( $ok, $message ) {
     if ( ! $ok ) throw new RuntimeException( $message );
@@ -19,9 +22,11 @@ function deft_update_check( $ok, $message ) {
 }
 function deft_update_state() {
     global $wpdb;
+    $namespace = class_exists( \Atshift\Deft\Store::class ) ? 'Atshift\\Deft' : 'StructuredFields';
+    $store = $namespace . '\\Store'; $catalog = $namespace . '\\Catalog';
     return json_encode( array( get_theme_mods(),
-        $wpdb->get_results( 'SELECT * FROM ' . StructuredFields\Store::table() . ' ORDER BY article_id', ARRAY_A ),
-        $wpdb->get_results( 'SELECT * FROM ' . StructuredFields\Catalog::table() . ' ORDER BY component_id', ARRAY_A ) ) );
+        $wpdb->get_results( 'SELECT * FROM ' . $store::table() . ' ORDER BY article_id', ARRAY_A ),
+        $wpdb->get_results( 'SELECT * FROM ' . $catalog::table() . ' ORDER BY component_id', ARRAY_A ) ) );
 }
 $base = GitHubUpdater::REPOSITORY . '/releases/download/v' . $manifest['version'] . '/';
 $valid_release = array( 'draft' => false, 'prerelease' => false, 'tag_name' => 'v' . $manifest['version'],

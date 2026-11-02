@@ -1,0 +1,219 @@
+{
+  "totals": {
+    "errors": 2,
+    "warnings": 0,
+    "fixable": 0
+  },
+  "files": {
+    "wordpress/atshift-deft/includes/class-public-structure.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/runtime.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-oauth-store.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-ai-workflow.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-catalog.php": {
+      "errors": 1,
+      "warnings": 0,
+      "messages": [
+        {
+          "message": "Hook names invoked by a theme/plugin should start with the theme/plugin prefix. Found: \"sf_shared_component_limit_per_user\".",
+          "source": "WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 19,
+          "column": 90
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/class-component-usage.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-publications.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/catalog-page.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-behaviors.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-assets.php": {
+      "errors": 1,
+      "warnings": 0,
+      "messages": [
+        {
+          "message": "Hook names invoked by a theme/plugin should start with the theme/plugin prefix. Found: \"sf_private_media_limit_per_user\".",
+          "source": "WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 14,
+          "column": 87
+        }
+      ]
+    },
+    "wordpress/atshift-deft/includes/class-component-appearance.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-reservations.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-connections.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-media.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-oauth-consent.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-prefix-migration.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/plugin.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-catalog-context.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-snapshot.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-review.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/legacy-guard.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/connections-page.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-oauth.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/oauth-entities.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-onboarding.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/i18n.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-transfer.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-mcp.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-taxonomies.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-drafts.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-component-builder.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/oauth-repositories.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-store.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-access.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-private-blobs.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-post-types.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/includes/class-publication-media.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "wordpress/atshift-deft/atshift-deft.php": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    }
+  }
+}

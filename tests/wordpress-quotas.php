@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/wordpress-media-fixture.php';
 require_once ABSPATH . 'wp-admin/includes/user.php';
-use StructuredFields\{Catalog, CatalogContext, ComponentBuilder, Snapshot, Assets};
+use Atshift\Deft\{Catalog, CatalogContext, ComponentBuilder, Snapshot, Assets};
 $run = wp_generate_uuid4(); $prefix = 'quota-test-' . $run; $users = array(); $checks = 0; $admin = get_current_user_id();
 function sfq_check( $ok, $label ) { global $checks; if ( ! $ok ) throw new RuntimeException( $label ); echo 'PASS ' . ++$checks . ': ' . $label . PHP_EOL; }
 function sfq_recipe( $index ) {
@@ -20,7 +20,7 @@ function sfq_create( $recipe, $expected = 0 ) {
 $limit_filter = static fn( $limit, $actor ) => 2;
 try {
     foreach ( array( 'a', 'b' ) as $side ) {
-        $uid = wp_insert_user( array( 'user_login' => 'sf_quota_' . $side . '_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'sf_author' ) );
+        $uid = wp_insert_user( array( 'user_login' => 'sf_quota_' . $side . '_' . $run, 'user_pass' => wp_generate_password( 32 ), 'role' => 'atshde_author' ) );
         if ( is_wp_error( $uid ) ) throw new RuntimeException( 'Fixture user failed.' );
         $users[] = $uid; update_user_meta( $uid, '_sf_quota_run', $run );
     }
@@ -55,7 +55,7 @@ try {
     add_filter( 'sf_shared_component_limit_per_user', $limit_filter, 10, 2 );
     wp_set_current_user( $users[1] );
     sfq_check( 2 === Catalog::shared_limit( $users[1] ) && ! is_wp_error( sfq_create( sfq_recipe( 21 ), 1 ) ), 'Trusted limit override preserves unchanged retries' );
-    ( new WP_User( $users[1] ) )->set_role( 'sf_designer' );
+    ( new WP_User( $users[1] ) )->set_role( 'atshde_designer' );
     wp_set_current_user( 0 ); wp_set_current_user( $users[1] );
     $start = microtime( true ) + 2; $jobs = array();
     foreach ( array( 'a', 'b' ) as $side ) {
