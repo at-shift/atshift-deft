@@ -8,6 +8,10 @@
 - Use `RELEASE-0.7.3.md` for release notes and backup/migration cautions. Preparing files is not publication or submission; record actual results separately.
 - WordPress.org updates begin only after approval and directory publication. Updating the pending application does not update installed sites.
 
+GitHub publication and the existing WordPress.org application's replacement upload
+are confirmed in [the 0.7.3 record](WORDPRESS-ORG-REVIEW-0.7.3.md). The review still
+requires the applicant's email reply and reviewer approval.
+
 ## 0.7.2 Artifacts (Previous)
 
 - GitHub: `atshift-deft-0.7.2.zip`, its `.sha256`, and `atshift-deft-update.json`.

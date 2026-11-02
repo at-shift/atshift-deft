@@ -1,8 +1,18 @@
 # WordPress.org Review Candidate 0.7.3
 
-Prepared on 2026-11-03 for the existing `atshift-deft` application. Publication and
-upload outcomes are recorded separately after they happen; this verification
-record alone is not evidence of a completed upload or review approval.
+Prepared and published/submitted on 2026-11-03 (Japan time) for the existing
+`atshift-deft` application. See the confirmed outcomes below. Submission is not
+review approval or a WordPress.org directory release.
+
+## Confirmed Publication and Upload
+
+- GitHub `main` and tag `v0.7.3` reached `c7a8947f13d20078cd03cdfd98b4e3e9d4b7a16d`.
+- [v0.7.3](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3) is the latest published, non-draft, non-prerelease release. ZIP, SHA-256 and update metadata downloaded from GitHub exactly match the verified local files. The unauthenticated public ZIP URL also succeeds and matches byte-for-byte. No GitHub Actions runs were configured for this commit.
+- The existing WordPress.org application displayed: "New version of atshift DeFt uploaded for review." Its newest submitted file is `atshift-deft-0.7.3-wordpress-org.zip`, version 0.7.3, and the assigned slug remains `atshift-deft`.
+- The submitted ZIP was independently downloaded through the review page's Plugin Check blueprint reference and matches the local submission ZIP byte-for-byte and by SHA-256. The UI uses November 2 (UTC); the local submission date is November 3 (Japan time).
+- Additional Information includes the 404-warning explanation/link, channel separation and naming/content-only-scope questions. The site strips a backslash from displayed namespace text; the linked source and verification record preserve the exact `Atshift\Deft` namespace.
+- Review remains **Being Reviewed**, waiting for an email response from the applicant. The page explicitly requests a reply to the existing review email. Uploading the ZIP does not send that reply or establish approval.
+- Previous releases/submissions remain unchanged. No existing user website was manually updated.
 
 ## Artifacts
 

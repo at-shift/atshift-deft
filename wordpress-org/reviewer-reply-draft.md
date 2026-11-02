@@ -1,7 +1,8 @@
 # Reviewer Reply Draft
 
-Not sent. After owner approval, attach only the verified WordPress.org-format
-candidate ZIP, without the GitHub updater. The full implementation checklist,
+An adapted version was posted in the existing application's Additional Information
+with the verified English-only 0.7.3 WordPress.org ZIP on 2026-11-03 (Japan time).
+The email reply has not been sent. The full implementation checklist,
 hashes and tests are linked from `docs/WORDPRESS-ORG-REVIEW-0.7.3.md`. The review email asks
 for a short reply with context, not a change list; keep the detailed report separate.
 
