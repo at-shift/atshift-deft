@@ -1,4 +1,4 @@
-# atshift DeFt 0.7.3
+# atshift DeFt 0.7.4
 
 License: GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
 
@@ -32,7 +32,7 @@ is intended only for an isolated test site, not a production website.
 
 ## Install
 
-Download `atshift-deft-0.7.3.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3), which also includes its SHA-256 checksum. Upload it through Plugins >
+Download `atshift-deft-0.7.4.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.4), which also includes its SHA-256 checksum. Upload it through Plugins >
 Add New > Upload Plugin, activate it, and open **atshift DeFt** as an administrator.
 Developers can build scoped PHP dependencies with `npm run build:php-deps`, then
 build the ZIP with `npm run pack:wordpress` from the repository. GitHub's source
@@ -40,6 +40,7 @@ archive is not the installable plugin package.
 For manual installation, place the `atshift-deft` folder in `wp-content/plugins`.
 
 DeFt means **Delegate Execution. Focus on Thinking.**
+Version 0.7.4 fixes draft listing when WordPress and DeFt post-type columns use different database collations. It does not rewrite database columns or saved content. This GitHub-only release leaves the pending WordPress.org submission at 0.7.3.
 Version 0.7.3 adds review hardening, compatible identifier migration, database-backed private files and the DeFt icon. Back up the database and files before updating. Legacy-data migration requires InnoDB core tables; do not run old and new plugin workers together or downgrade only the plugin files. MCP Adapter 0.7.1+ must be installed and active for AI connections.
 Version 0.7.0 adds per-article destinations, existing category/tag selection and public structure JSON with JSON-LD. Saved-data identities and connection permissions are preserved.
 Version 0.7.1 adds owner-only draft trash/restoration, owner information and private

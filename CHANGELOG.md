@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.4 - 2026-11-03
+
+- Fix draft listing when WordPress and DeFt post-type columns use different database collations. Compare machine post-type identifiers as exact binary strings without rewriting database columns or saved content.
+- Add disposable mixed-collation regression coverage for draft listing, reservations, cancellation, publication and failure recovery. Make reservation tests fail explicitly on database query errors.
+- Release through GitHub only, retaining the GitHub updater and partial Japanese catalogs/guide. The existing WordPress.org submission and its 0.7.3 artifacts remain unchanged.
+
 ## 0.7.3 - 2026-11-03
 
 - Standardize the display name as atshift DeFt, including guides, translated labels and the prepared plugin icon. Keep the `atshift-deft` slug, text domain, update identity and API routes.

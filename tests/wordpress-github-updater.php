@@ -14,7 +14,7 @@ $zip = file_get_contents( $artifact . '/atshift-deft-' . $manifest['version'] . 
 $file = 'atshift-deft/atshift-deft.php';
 $entry = WP_PLUGIN_DIR . '/' . $file;
 $header = get_plugin_data( $entry, false, false );
-if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0', '0.7.0', '0.7.1', '0.7.2' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
+if ( ! in_array( $header['Version'], array( '0.5.9', '0.6.0', '0.7.0', '0.7.1', '0.7.2', '0.7.3' ), true ) || ! version_compare( $manifest['version'], $header['Version'], '>' ) || ! class_exists( GitHubUpdater::class ) ) throw new RuntimeException( 'Install the guarded older package first.' );
 $GLOBALS['deft_update_checks'] = 0;
 function deft_update_check( $ok, $message ) {
     if ( ! $ok ) throw new RuntimeException( $message );

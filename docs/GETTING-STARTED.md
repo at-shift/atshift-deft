@@ -1,8 +1,8 @@
 # Installation and User Guide
 
-**atshift DeFt 0.7.3** / November 3, 2026
+**atshift DeFt 0.7.4** / November 3, 2026
 
-Version 0.7.3 includes review hardening, compatible data migration and database-backed private files. Back up database and files before upgrading; see [migration requirements](PREFIX-MIGRATION.md). After upgrading,
+Version 0.7.4 fixes draft listing across different WordPress and DeFt post-type collations without changing saved content or database collations. It retains the compatible data migration and database-backed private files introduced in 0.7.3. Back up database and files before upgrading; see [migration requirements](PREFIX-MIGRATION.md). After upgrading,
 download a fresh AI guide from DeFt; an earlier downloaded guide does not update itself.
 
 DeFt means **Delegate Execution. Focus on Thinking.** Use your preferred AI to assemble structured articles, save drafts, review previews, and set an immediate or scheduled publication time.
@@ -11,7 +11,7 @@ This is a development release. Start on an isolated test site with a backup, not
 
 ## Quick Start
 
-1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.3/atshift-deft-0.7.3.zip) and activate **atshift DeFt**.
+1. Install the [WordPress plugin ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.4/atshift-deft-0.7.4.zip) and activate **atshift DeFt**.
 2. Open DeFt, choose **Download AI guide**, and give that file to your usual AI.
 3. Say, **"Read this guide and walk me through connecting to my site."** Before configuring the AI client, have an administrator install and activate the official [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) **0.7.1+** through **Plugins > Add New Plugin** (author: **WordPress.org**). Update it if needed when already installed.
 4. Follow the client-specific setup and authorize only the required access.
@@ -45,7 +45,7 @@ The HTTP exception is for an explicitly configured loopback development environm
 ## 2. Install DeFt
 
 1. Back up the test site's files and database.
-2. Download `atshift-deft-0.7.3.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3). The SHA-256 file is available there too.
+2. Download `atshift-deft-0.7.4.zip` from the [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.4). The SHA-256 file is available there too.
 3. Sign into WordPress as an administrator and open **Plugins > Add New Plugin > Upload Plugin**.
 4. Upload the ZIP, install it, and activate **atshift DeFt**.
 5. Open **atshift DeFt** in the sidebar. Under **Components**, check that **Introduction** and **Article resources** are available.

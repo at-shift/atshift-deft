@@ -1,20 +1,22 @@
 # atshift DeFt 試作版の導入・利用手順
 
 DeFt は **Delegate Execution. Focus on Thinking.** の略です。
-0.7.3 のプラグインslugは `atshift-deft` です。開発初期のため、まず独立したテストサイトで試してください。
+0.7.4 のプラグインslugは `atshift-deft` です。開発初期のため、まず独立したテストサイトで試してください。
 
 ### 旧 Structured Fields Prototype からの移行
 
 1. テストサイトをバックアップします。
 2. プラグイン一覧で旧 **Structured Fields Prototype** を停止します。データは削除しません。
-3. `atshift-deft-0.7.3.zip` をインストールし、**atshift DeFt** を有効化します。
+3. `atshift-deft-0.7.4.zip` をインストールし、**atshift DeFt** を有効化します。
 4. 保存済み記事・部品・接続・予約を確認します。旧版と新版は同時に有効化しません。
 
 slugが変わるため、旧版への上書き更新ではありません。旧版は停止したまま残せます。
 内部の保存名・権限名・接続URLは引き継ぎます。MCP endpoint、OAuth issuer、
 `page=structured-fields` を手作業で `atshift-deft` に置き換えないでください。
 
-対象: **0.7.3** / 2026-11-03
+対象: **0.7.4** / 2026-11-03
+
+0.7.4では、WordPressとDeFtのデータベースで文字列の比較設定が異なる場合に、保存済みの下書きが一覧に表示されない不具合を修正しました。保存内容やデータベースの比較設定自体は変更しません。今回はGitHubのみの更新で、WordPress.org提出版は0.7.3のままです。
 
 0.7.3では、審査対応の堅牢化、既存データを維持した識別子の移行、非公開ファイルのデータベース保存、アイコンを追加しました。更新前にデータベースとファイルをバックアップしてください。旧データの移行にはInnoDBが必要で、旧版と新版の同時稼働やプラグインファイルだけのダウングレードには対応しません。AI接続にはMCP Adapter 0.7.1以上の導入・有効化が必須です。
 
@@ -24,7 +26,7 @@ GitHub版には日本語翻訳とこのガイドを同梱します。WordPress.o
 
 0.7.0では投稿先・既存カテゴリー/タグの選択と、公開内容だけの構造JSON・JSON-LD出力に対応しました。更新後はDeFtからAI用手順書をダウンロードし直し、AIに読ませてください。以前ダウンロードしたファイルは自動更新されません。
 
-0.5.xからは一度だけZIPで上書き更新してください。0.6.0以降のGitHub配布版は、今後の正式なGitHub ReleaseをWordPressのプラグイン更新画面で受け取れます。自動更新の有効・無効はWordPress側の設定に従います。WordPress.org申請版にはGitHub更新機構を含めず、同じバージョンの翻訳ファイルを両方に同梱します。申請は審査完了・公開を意味しません。
+0.5.xからは一度だけZIPで上書き更新してください。0.6.0以降のGitHub配布版は、今後の正式なGitHub ReleaseをWordPressのプラグイン更新画面で受け取れます。自動更新の有効・無効はWordPress側の設定に従います。WordPress.org申請版にはGitHub更新機構と日本語ファイルを含めません。申請は審査完了・公開を意味しません。
 
 この版は検証用です。本番サイトではなく、バックアップを取得した独立したテストサイトで試してください。
 既存の atshift Fields / CFS を置き換えるプラグインではありません。既存投稿の移行も行いません。
@@ -58,11 +60,11 @@ AIに「この下書きをゴミ箱に入れて」「ゴミ箱から復元して
 
 1. テストサイトのWordPressとデータベースをバックアップする。
 2. 管理者でログインし、「プラグイン」→「新規追加」→「プラグインのアップロード」を開く。
-3. `atshift-deft-0.7.3.zip` を選択し、インストール・有効化する。
+3. `atshift-deft-0.7.4.zip` を選択し、インストール・有効化する。
 4. 左メニューの **atshift DeFt** を開く。
 5. **Components** に初期部品の **Introduction** と **Article resources** が表示されることを確認する。
 
-インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.org版は審査待ちで、配布開始は承認後です。
+インストール用ZIPとSHA-256は [GitHub Release](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.4) から取得します。GitHubの「Download ZIP」はソース一式で、インストール用ZIPとは別です。WordPress.org版は審査待ちで、配布開始は承認後です。
 開発者はリポジトリで `npm run build:php-deps`、`npm run pack:wordpress` の順に実行すると `.local/releases/` に依存ライブラリ同梱ZIPとSHA-256を作成できます。
 サーバーへNode.jsや別のAIサービスを設置する必要はありません。
 

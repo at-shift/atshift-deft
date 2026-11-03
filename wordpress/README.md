@@ -1,14 +1,14 @@
-# atshift DeFt for WordPress 0.7.3
+# atshift DeFt for WordPress 0.7.4
 
-0.7.3 adds review hardening, compatible identifier migration, database-backed private files and the DeFt icon. See [release notes](../docs/RELEASE-0.7.3.md) for backup and migration requirements.
+0.7.4 fixes draft listing across different WordPress and DeFt post-type collations without rewriting saved content or database columns. See [release notes](../docs/RELEASE-0.7.4.md) for verification and upgrade requirements.
 Installable ZIPs and checksums are distributed through GitHub Releases. Earlier release assets are unchanged.
 For installation and everyday use, see the [Installation and User Guide](../docs/GETTING-STARTED.md).
 See [V0.5.0.md](../docs/V0.5.0.md) for identity and legacy activation steps.
 
 Alpha.14 was the preceding private GitHub code checkpoint. Its OAuth and runtime changes remain:
 [ALPHA14.md](../docs/ALPHA14.md). Existing keys and separately delegated publication
-remain unchanged. GitHub and WordPress.org submission packages built from this source share version 0.7.3;
-this does not imply a WordPress.org release or a production installation.
+remain unchanged. Version 0.7.4 is released through GitHub only; the existing WordPress.org submission remains at 0.7.3.
+This does not imply a WordPress.org release or a production installation.
 
 Development candidate, not for production use. Earlier `0.2.0` labels were local-only
 prototype labels and were never released. The browser package and WordPress

@@ -4,7 +4,7 @@ Tags: ai, mcp, publishing, structured-content
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.7.3
+Stable tag: 0.7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -148,6 +148,11 @@ GitHub privacy: https://docs.github.com/en/site-policy/privacy-policies/github-g
 The GitHub updater is excluded from WordPress.org packages.
 
 == Changelog ==
+
+= 0.7.4 =
+* Fix draft listing when WordPress and DeFt post-type columns use different database collations. Saved drafts remain intact; no database collation or content changes are required.
+* Add mixed-collation regression coverage for draft listing, reservations, cancellation, publication and failure recovery.
+* GitHub-only release with the existing updater and Japanese files. The pending WordPress.org submission remains at 0.7.3.
 
 = 0.7.3 =
 * Add the DeFt icon and standardize the display name while preserving the plugin slug and API identity.

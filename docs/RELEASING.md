@@ -1,6 +1,13 @@
 # Release and Update Channels
 
-## 0.7.3 Artifacts
+## 0.7.4 Artifacts
+
+- GitHub only: `atshift-deft-0.7.4.zip`, its `.sha256`, and `atshift-deft-update.json`; includes the GitHub updater and partial Japanese catalogs/guide.
+- Fixes mixed-collation draft listing without rewriting database columns or saved content. Use `RELEASE-0.7.4.md` for release notes.
+- Do not replace the existing WordPress.org submission, submission branch or 0.7.3 artifacts for this release. Any locally built WordPress.org-format archive is for packaging tests only, not an approved upload.
+- Earlier GitHub releases remain immutable. Publication does not authorize manually replacing a running site; installed GitHub copies follow the owner's normal update preferences.
+
+## 0.7.3 Artifacts (Previous)
 
 - GitHub: `atshift-deft-0.7.3.zip`, its `.sha256`, and `atshift-deft-update.json`; includes the GitHub updater and partial Japanese catalogs/guide.
 - WordPress.org: `atshift-deft-0.7.3-wordpress-org.zip`; English-only, with no GitHub updater or bundled locale catalogs/Japanese guide. The POT and WordPress language-pack support remain.
@@ -63,7 +70,7 @@ translation extraction without copying feature code between branches.
 5. Confirm the submission ZIP has no updater, `Update URI`, GitHub runtime HTTP requests, bundled locale catalogs or Japanese guide. Compare shared files byte-for-byte; verify Japanese gettext/JavaScript in the GitHub package, and English fallback plus added language-pack loading in the WordPress.org package.
 6. Obtain explicit approval immediately before pushing branches, publishing a release or submitting the plugin ZIP. Submission is not approval; record the actual WordPress.org result separately.
 
-Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.3`, targeting the
+Publish a non-draft, non-prerelease GitHub Release tagged `v0.7.4`, targeting the
 verified `main` commit. Upload the three GitHub files above before publishing.
 Do not rebuild or replace the ZIP after its manifest/checksum are published.
 Download the public assets independently and verify their bytes and SHA-256.

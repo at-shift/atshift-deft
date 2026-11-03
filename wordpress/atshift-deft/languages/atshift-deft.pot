@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: atshift DeFt 0.7.3\n"
+"Project-Id-Version: atshift DeFt 0.7.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/atshift-deft\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -453,12 +453,12 @@ msgid "Catalog storage limit reached."
 msgstr ""
 
 #: includes/class-catalog.php:251
-#: includes/class-store.php:109
+#: includes/class-store.php:110
 msgid "InnoDB tables are required."
 msgstr ""
 
 #: includes/class-catalog.php:253
-#: includes/class-store.php:111
+#: includes/class-store.php:112
 msgid "Could not start transaction."
 msgstr ""
 
@@ -1464,39 +1464,39 @@ msgstr ""
 msgid "Choose drafts or Trash."
 msgstr ""
 
-#: includes/class-store.php:95
+#: includes/class-store.php:96
 msgid "Another save is in progress."
 msgstr ""
 
-#: includes/class-store.php:100
+#: includes/class-store.php:101
 msgid "Use active catalog components or this article's saved component revisions. New designs require an administrator."
 msgstr ""
 
-#: includes/class-store.php:102
+#: includes/class-store.php:103
 msgid "The saved version changed. Reload it before saving."
 msgstr ""
 
-#: includes/class-store.php:104
+#: includes/class-store.php:105
 msgid "Changed content must have a newer article revision."
 msgstr ""
 
-#: includes/class-store.php:105
+#: includes/class-store.php:106
 msgid "This prototype allows 100 saved versions per article."
 msgstr ""
 
-#: includes/class-store.php:116
+#: includes/class-store.php:117
 msgid "Could not create preview draft."
 msgstr ""
 
-#: includes/class-store.php:120
+#: includes/class-store.php:121
 msgid "Could not save snapshot."
 msgstr ""
 
-#: includes/class-store.php:122
+#: includes/class-store.php:123
 msgid "Could not commit snapshot."
 msgstr ""
 
-#: includes/class-store.php:128
+#: includes/class-store.php:129
 msgid "The snapshot was not saved."
 msgstr ""
 

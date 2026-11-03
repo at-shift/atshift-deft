@@ -16,14 +16,14 @@ Work with your AI on the article, ask it to create the page design and column la
 
 DeFt stands for **Delegate Execution. Focus on Thinking.**
 
-Version **0.7.3** includes review hardening, compatible identifier migration, database-backed private files and the DeFt icon. MCP Adapter 0.7.1+ must be installed and active for AI connections. Start on an isolated test site with a backup.
+Version **0.7.4** fixes draft listing on databases with different WordPress and DeFt post-type collations, without changing saved content or database collations. MCP Adapter 0.7.1+ must be installed and active for AI connections. Start on an isolated test site with a backup.
 
 ## Getting Started
 
 ### STEP 1. Install the Plugin
 
-[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.3/atshift-deft-0.7.3.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
-You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.3). GitHub's **Download ZIP** contains source code, not the installable plugin package.
+[Download the WordPress ZIP](https://github.com/at-shift/atshift-deft/releases/download/v0.7.4/atshift-deft-0.7.4.zip), then open **Plugins > Add New Plugin > Upload Plugin** in WordPress and install and activate it.
+You need **WordPress 6.9+** and **PHP 8.2+**. The [release page includes the SHA-256 checksum](https://github.com/at-shift/atshift-deft/releases/tag/v0.7.4). GitHub's **Download ZIP** contains source code, not the installable plugin package.
 Upgrading from 0.5.x requires this ZIP replacement once. GitHub packages from 0.6.0 onward receive later official releases through the normal WordPress plugin update screen. Automatic updates remain your choice.
 
 ### STEP 2. Give the Guide to Your AI
@@ -135,7 +135,7 @@ The tested environment is WordPress 7.1, PHP 8.3.36, MySQL 8.4, and Twenty Twent
 
 Report vulnerability details privately through the support form below, not in a public issue. Never send credentials.
 
-## Scope of 0.7.3
+## Scope of 0.7.4
 
 DeFt is **separate from atshift Fields / CFS**. It does not automatically convert or migrate existing posts.
 Attaching a file to chat does not automatically upload it to WordPress: the AI client must be able to read the file's bytes and perform the HTTP transfer.
@@ -161,7 +161,7 @@ The GitHub ZIP bundles Japanese PO/MO and JavaScript catalogs covering part of t
 
 ## Distribution Channels
 
-The GitHub ZIP includes a GitHub-only updater and Japanese files; the separate WordPress.org submission ZIP includes neither. Core features, plugin slug and data identifiers match. WordPress.org updates and language packs become available through the directory after approval and publication; uploading a review ZIP does not publish an update. The application is awaiting review.
+The GitHub ZIP includes a GitHub-only updater and Japanese files; the separate WordPress.org submission ZIP includes neither. Version 0.7.4 is a GitHub-only maintenance release; the pending WordPress.org submission remains at 0.7.3 without this fix. Plugin slug and data identifiers are unchanged. WordPress.org updates and language packs become available through the directory after approval and publication; uploading a review ZIP does not publish an update. The application is awaiting review.
 See [Release and Update Channels](docs/RELEASING.md) for packaging, verification, first-upgrade and channel-switching steps.
 See [Adding Translation Files](wordpress/atshift-deft/languages/README.md).
 

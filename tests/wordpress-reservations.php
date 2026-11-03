@@ -20,7 +20,12 @@ function sfre_intent( $draft, $type = 'post', $version = 0, $now = false ) {
 }
 function sfre_set( $body ) { return sfre_good( Mcp::execute( 'set-publication', $body ) ); }
 function sfre_cancel( $job ) { return sfre_good( Mcp::execute( 'cancel-publication', array( 'articleId' => $job['articleId'], 'expectedPublicationVersion' => $job['version'] ) ) ); }
-function sfre_listed( $id ) { return in_array( $id, array_column( Store::listing(), 'articleId' ), true ); }
+function sfre_listed( $id ) {
+    global $wpdb;
+    $rows = Store::listing();
+    if ( $wpdb->last_error ) throw new RuntimeException( $wpdb->last_error );
+    return in_array( $id, array_column( $rows, 'articleId' ), true );
+}
 function sfre_due( $job ) { global $wpdb; $wpdb->update( Publications::table(), array( 'publish_at' => time() - 5 ), array( 'article_id' => $job['articleId'] ) ); Publications::run( $job['articleId'], $job['version'] ); return sfre_good( Publications::state( $job['articleId'] ) ); }
 
 $owner = get_users( array( 'role' => 'administrator', 'number' => 1 ) )[0]->ID;
